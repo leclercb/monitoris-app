@@ -1,0 +1,162 @@
+/* Ant Design */
+
+.ant-btn {
+    border-width: 2px !important;
+}
+
+.ant-menu-item {
+    height: 30px !important;
+    line-height: 30px !important;
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+}
+
+.ant-layout-sider {
+    overflow-y: auto;
+}
+
+.ant-layout-footer {
+    padding: 3px 50px !important;
+}
+
+.ant-spin-nested-loading, .ant-spin-container {
+    min-height: 100%;
+    height: 100%;
+}
+
+.ant-form-item {
+    margin-bottom: 3px !important;
+}
+
+.ant-select {
+    min-width: 100px;
+}
+
+ant-input:focus {
+    box-shadow: none !important;
+}
+
+.ant-input[disabled] {
+    color: #000000 !important;
+}
+
+.ant-list {
+    overflow-y: auto !important;
+    max-height: 500px !important;
+}
+
+.ant-list-item:hover {
+    cursor: pointer;
+}
+
+.ant-modal-body {
+    max-height: 70vh;
+    overflow: auto;
+}
+
+.ant-menu-item-active, .ant-dropdown-menu-item-active, .ant-dropdown-menu-submenu-active {
+    background-color: #e6f6ff !important;
+}
+
+.ant-tag {
+    font-weight: bold;
+    text-shadow: -1px 0 #444444, 0 1px #444444, 1px 0 #444444, 0 -1px #444444;
+}
+
+/* React SplitPane */
+
+.Resizer {
+    background: #000000;
+    opacity: .2;
+    z-index: 1;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding;
+    background-clip: padding-box;
+}
+
+.Resizer:hover {
+    -webkit-transition: all 2s ease;
+    transition: all 2s ease;
+}
+
+.Resizer.horizontal {
+    height: 11px;
+    margin: -5px 0;
+    border-top: 5px solid rgba(255, 255, 255, 0);
+    border-bottom: 5px solid rgba(255, 255, 255, 0);
+    cursor: row-resize;
+    width: 100%;
+}
+
+.Resizer.horizontal:hover {
+    border-top: 5px solid rgba(0, 0, 0, 0.5);
+    border-bottom: 5px solid rgba(0, 0, 0, 0.5);
+}
+
+.Resizer.vertical {
+    width: 11px;
+    margin: 0 -5px;
+    border-left: 5px solid rgba(255, 255, 255, 0);
+    border-right: 5px solid rgba(255, 255, 255, 0);
+    cursor: col-resize;
+}
+
+.Resizer.vertical:hover {
+    border-left: 5px solid rgba(0, 0, 0, 0.5);
+    border-right: 5px solid rgba(0, 0, 0, 0.5);
+}
+
+.Resizer.disabled {
+    cursor: not-allowed;
+}
+
+.Resizer.disabled:hover {
+    border-color: transparent;
+}
+
+/* React RTE */
+
+.rte-editor {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
+    font-size: 14px !important;
+    overflow: auto !important;
+    max-height: calc(100% - 55px) !important;
+}
+
+/* React Virtualized */
+
+.ReactVirtualized__Table__Grid {
+    outline: 0;
+}
+
+.ReactVirtualized__Table__row {
+    outline: 0;
+}
+
+.ReactVirtualized__Table__headerColumn, .ReactVirtualized__Table__rowColumn {
+    margin-right: 3px;
+}
+
+/* RC Color Picker */
+
+.rc-color-picker-trigger {
+    border: 1px solid #d9d9d9 !important;
+    width: 50px !important;
+    height: 32px !important;
+    box-shadow: 0 0 0 5px #ffffff inset !important;
+    margin-top: 3px !important;
+}
+
+/* TaskUnifier */
+
+.selected-list-item {
+    background-color: #0e67c4;
+    color: #ffffff;
+}
+
+.object-actions:hover {
+    color: #e6f6ff !important;
+}

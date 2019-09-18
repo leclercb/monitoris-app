@@ -1,0 +1,24 @@
+.task-calendar .rbc-event-label {
+    margin-bottom: 5px;
+}
+
+.task-calendar .wrapper-start-date .rbc-event,
+.task-calendar .wrapper-due-date .rbc-event,
+.task-calendar .wrapper-selected .rbc-event {
+    background-color: inherit;
+    border: none !important;
+    color: inherit;
+    padding: 0;
+}
+
+.task-calendar .wrapper-start-date .rbc-event {
+    border: 2px solid #32cd32 !important;
+}
+
+.task-calendar .wrapper-due-date .rbc-event {
+    border: 2px solid #1e90ff !important;
+}
+
+.task-calendar .wrapper-selected .rbc-event {
+    border: 2px solid #ff1e29 !important;
+}
