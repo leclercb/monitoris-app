@@ -3,7 +3,7 @@ import Joyride, { STATUS } from 'react-joyride';
 import { getConfig } from 'constants/JoyrideConfig';
 import { useJoyrideApi } from 'hooks/UseJoyrideApi';
 
-function withJoyride(Component) {
+function withJoyride(Component, id) {
     function WithJoyride(props) {
         const joyrideApi = useJoyrideApi();
 

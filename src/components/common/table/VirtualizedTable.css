@@ -13,7 +13,7 @@
 .DragHandle {
     flex: 0 0 16px;
     cursor: col-resize;
-    color: #0e67c4;
+    color: #d2291f;
     z-index: 2;
 }
 
@@ -35,5 +35,5 @@
 }
 
 .DropOver {
-    border: 1px dashed #0e67c4 !important;
+    border: 1px dashed #d2291f !important;
 }

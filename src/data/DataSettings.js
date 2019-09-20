@@ -247,20 +247,20 @@ export function getCategories() {
                     options: {
                         values: [
                             {
-                                title: 'Calendar',
-                                value: 'taskCalendar'
+                                title: 'Explorer',
+                                value: 'explorer'
                             },
                             {
-                                title: 'Notes',
-                                value: 'note'
+                                title: 'Alerts',
+                                value: 'alert'
                             },
                             {
-                                title: 'Tasks',
-                                value: 'task'
+                                title: 'Instances',
+                                value: 'instance'
                             }
                         ]
                     },
-                    value: 'task',
+                    value: 'explorer',
                     editable: false,
                     visible: false
                 },

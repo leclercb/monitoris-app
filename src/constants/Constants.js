@@ -1,7 +1,7 @@
 export default {
-    color: '#0e67c4',
+    color: '#d2291f',
     selectionForegroundColor: '#ffffff',
-    selectionBackgroundColor: '#0e67c4',
+    selectionBackgroundColor: '#d2291f',
     fadeIconColor: '#e3ebf2',
     lightIconColor: '#bed5e6',
     disabledColor: '#cccccc',
@@ -16,5 +16,5 @@ export default {
     conditionTreeGroupNotColor: '#ffc8c5',
     conditionTreeGroupNotActiveColor: '#e3afac',
     defaultTaskTemplateColor: '#ffd632',
-    badgeColor: '#0e67c4'
+    badgeColor: '#d2291f'
 };

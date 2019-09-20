@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout, Spin } from 'antd';
 import { useSelector } from 'react-redux';
+import AlertView from 'components/alerts/views/AlertView';
 import ModalCategoryManager from 'components/categories/ModalCategoryManager';
 import InstanceView from 'components/instances/views/InstanceView';
 import Header from 'components/layout/Header';
@@ -16,10 +17,14 @@ function AppLayout() {
 
     const getView = () => {
         switch (selectedView) {
+            case 'explorer':
+                return <AlertView />;
+            case 'alert':
+                return <AlertView />;
             case 'instance':
                 return <InstanceView />;
             default:
-                return <InstanceView />;
+                return <AlertView />;
         }
     };
 

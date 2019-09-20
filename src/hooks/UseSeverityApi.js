@@ -5,7 +5,7 @@ import { getSeverities } from 'selectors/SeveritySelectors';
 
 export function useSeverityApi() {
     const dispatch = useDispatch();
-    const severitys = useSelector(getSeverities);
+    const severities = useSelector(getSeverities);
 
     const addSeverityCallback = useCallback(
         severity => dispatch(addSeverity(severity)),
@@ -28,7 +28,7 @@ export function useSeverityApi() {
     );
 
     return {
-        severitys,
+        severities,
         addSeverity: addSeverityCallback,
         duplicateSeverity: duplicateSeverityCallback,
         updateSeverity: updateSeverityCallback,

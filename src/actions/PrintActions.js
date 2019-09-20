@@ -1,7 +1,5 @@
-import sortBy from 'lodash/sortBy';
 import uuid from 'uuid/v4';
 import { updateProcess } from 'actions/ThreadActions';
-import { getSettings } from 'selectors/SettingSelectors';
 import { printDocument, printTable } from 'utils/PrintUtils';
 
 export function printAlerts(alerts) {

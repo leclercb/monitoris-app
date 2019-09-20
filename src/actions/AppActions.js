@@ -1,8 +1,9 @@
 import uuid from 'uuid/v4';
 import { loadAlertsFromServer } from 'actions/AlertActions';
-import { checkIsBusy, updateProcess } from 'actions/ThreadActions';
-import { loadSettingsFromServer } from 'actions/SettingActions';
 import { loadInstancesFromServer } from 'actions/InstanceActions';
+import { loadSettingsFromServer } from 'actions/SettingActions';
+import { loadSeveritiesFromServer } from 'actions/SeverityActions';
+import { checkIsBusy, updateProcess } from 'actions/ThreadActions';
 import { merge } from 'utils/ObjectUtils';
 
 export function loadData(options) {
@@ -33,7 +34,8 @@ export function _loadDataFromServer(options) {
         try {
             const promises = [
                 dispatch(loadAlertsFromServer()),
-                dispatch(loadInstancesFromServer())
+                dispatch(loadInstancesFromServer()),
+                dispatch(loadSeveritiesFromServer())
             ];
 
             if (!options.skipSettings) {
