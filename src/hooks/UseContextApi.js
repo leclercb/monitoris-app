@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContext, deleteContext, duplicateContext, updateContext } from 'actions/ContextActions';
+import { addContext, deleteContext, duplicateContext, updateContext } from 'actions/InstanceActions';
 import { getContextsFilteredByVisibleState } from 'selectors/ContextSelectors';
 
 export function useContextApi() {

@@ -1,21 +1,6 @@
-import {
-    loadFromFile,
-    loadFromServer,
-    saveToFile
-} from 'actions/ActionUtils';
+import { loadFromServer } from 'actions/ActionUtils';
 import { getSettings } from 'selectors/SettingSelectors';
 import { merge } from 'utils/ObjectUtils';
-
-export const loadSettingsFromFile = (file, core = false) => {
-    return async dispatch => {
-        const data = await dispatch(loadFromFile('settings', file));
-        await dispatch(setSettings(data, core));
-    };
-};
-
-export function saveSettingsToFile(file, data) {
-    return saveToFile('settings', file, data);
-}
 
 export const loadSettingsFromServer = (core = false) => {
     return async dispatch => {
@@ -65,23 +50,5 @@ export function updateSettings(settings, options) {
 export function setSelectedView(view) {
     return updateSettings({
         selectedView: view
-    }, { skipServerUpdate: true });
-}
-
-export function setSelectedCalendarView(view) {
-    return updateSettings({
-        selectedCalendarView: view
-    }, { skipServerUpdate: true });
-}
-
-export function setShowCompletedTasks(show) {
-    return updateSettings({
-        showCompletedTasks: show
-    }, { skipServerUpdate: false });
-}
-
-export function setCalendarDateMode(mode) {
-    return updateSettings({
-        calendarDateMode: mode
     }, { skipServerUpdate: true });
 }

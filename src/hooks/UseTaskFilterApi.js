@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTaskFilter, deleteTaskFilter, duplicateTaskFilter, updateTaskFilter } from 'actions/TaskFilterActions';
+import { addTaskFilter, deleteTaskFilter, duplicateTaskFilter, updateTaskFilter } from 'actions/AlertActions';
 import { getTaskFiltersFilteredByVisibleState } from 'selectors/TaskFilterSelectors';
 
 export function useTaskFilterApi() {

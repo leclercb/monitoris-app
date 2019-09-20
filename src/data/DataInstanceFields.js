@@ -1,6 +1,6 @@
 import { addColorsToArray } from 'utils/ColorUtils';
 
-export function getGoalFields() {
+export function getInstanceFields() {
     return addColorsToArray([
         {
             static: true,
@@ -42,23 +42,23 @@ export function getGoalFields() {
         },
         {
             static: true,
-            id: 'level',
-            title: 'Level',
-            type: 'goalLevel',
+            id: 'host',
+            title: 'Host',
+            type: 'text',
             editable: true
         },
         {
             static: true,
-            id: 'contributesTo',
-            title: 'Contributes To',
-            type: 'goalContributesTo',
+            id: 'port',
+            title: 'Port',
+            type: 'number',
             editable: true
         },
         {
             static: true,
-            id: 'archived',
-            title: 'Archived',
-            type: 'boolean',
+            id: 'password',
+            title: 'Password',
+            type: 'password',
             editable: true
         }
     ]);

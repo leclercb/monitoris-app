@@ -6,18 +6,7 @@ import { addTask } from 'actions/TaskActions';
 import { setSelectedView } from 'actions/SettingActions';
 
 export function initializeShortcuts() {
-    if (process.env.REACT_APP_MODE === 'electron') {
-        const { ipcRenderer } = window.require('electron');
-
-        ipcRenderer.on('menu-add-note', async () => {
-            await executeAddNote();
-        });
-
-        ipcRenderer.on('menu-add-task', async () => {
-            await executeAddTask();
-        });
-    } else {
-        Mousetrap.bind(['command+alt+n', 'ctrl+shift+n'], async () => {
+    Mousetrap.bind(['command+alt+n', 'ctrl+shift+n'], async () => {
             await executeAddNote();
             return false;
         });
@@ -26,7 +15,6 @@ export function initializeShortcuts() {
             await executeAddTask();
             return false;
         });
-    }
 }
 
 async function executeAddNote() {

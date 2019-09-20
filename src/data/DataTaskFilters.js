@@ -15,42 +15,6 @@ export function createSearchTaskFilter(searchValue) {
     };
 }
 
-export function hasCompletedTaskConditionOnly(filter) {
-    if (filter.condition) {
-        return filter.condition.field === 'completed' &&
-            filter.condition.type === 'equal' &&
-            filter.condition.value === true;
-    }
-
-    return false;
-}
-
-export function addNonCompletedTasksCondition(filter) {
-    filter = clone(filter);
-
-    const conditions = [
-        {
-            id: uuid(),
-            field: 'completed',
-            type: 'equal',
-            value: false
-        }
-    ];
-
-    if (filter.condition) {
-        conditions.push(filter.condition);
-    }
-
-    return {
-        ...filter,
-        condition: {
-            id: uuid(),
-            operator: 'AND',
-            conditions
-        }
-    };
-}
-
 export function getDefaultSelectedTaskFilter() {
     return getGeneralTaskFilters().find(taskFilter => taskFilter.id === 'all');
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'antd';
-import { getContextFields } from 'data/DataContextFields';
+import { getContextFields } from 'data/DataInstanceFields';
 import { getInputForType } from 'data/DataFieldComponents';
 import { getValuePropNameForType } from 'data/DataFieldTypes';
 import { ContextPropType } from 'proptypes/ContextPropTypes';
