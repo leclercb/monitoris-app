@@ -1,28 +1,3 @@
-import React from 'react';
-import { Checkbox, Modal, Select, notification } from 'antd';
-import moment from 'moment';
-import { getUserDataPath } from 'actions/ActionUtils';
-import { loadData, saveData, setNoteFieldManagerOptions, setTaskFieldManagerOptions } from 'actions/AppActions';
-import { getBackups, restoreBackup } from 'actions/BackupActions';
-import { testConnection } from 'actions/RequestActions';
-import { resetDataForSynchronization, selectSynchronizationApp, synchronize } from 'actions/SynchronizationActions';
-import FileField from 'components/common/FileField';
-import ProLockedMessage from 'components/pro/ProLockedMessage';
-import ProUnlockedMessage from 'components/pro/ProUnlockedMessage';
-import { getPriorities } from 'data/DataPriorities';
-import { getStatuses } from 'data/DataStatuses';
-import { verifyLicense } from 'utils/LicenseUtils';
-import { getSynchronizationApp } from 'utils/SynchronizationUtils';
-import { checkLatestVersion } from 'utils/VersionUtils';
-
-export function isCoreSetting(settingId) {
-    return !!getCategories().find(category => {
-        return category.settings.find(setting => {
-            return setting.id === settingId && setting.core === true;
-        });
-    });
-}
-
 export function getSettings() {
     const settings = {};
 
@@ -53,16 +28,6 @@ export function getCategorySettings(category, options = {}) {
     }
 
     const settings = [...category.settings];
-
-    const { noteFields, taskFields } = options;
-
-    if (category.type === 'noteField' && noteFields) {
-        noteFields.forEach(field => settings.push(category.createSetting(field)));
-    }
-
-    if (category.type === 'taskField' && taskFields) {
-        taskFields.forEach(field => settings.push(category.createSetting(field)));
-    }
 
     return settings;
 }
@@ -193,62 +158,6 @@ export function getCategories() {
             ]
         },
         {
-            id: 'taskFields',
-            title: 'Task edition form',
-            icon: 'columns',
-            type: 'taskField',
-            settings: [
-                {
-                    id: 'editCustomTaskFields',
-                    title: 'Edit custom task fields',
-                    type: 'button',
-                    value: (settings, updateSettings, dispatch) => {
-                        dispatch(setTaskFieldManagerOptions({ visible: true }));
-                    },
-                    editable: true
-                },
-                {
-                    id: 'taskFieldVisible_id',
-                    title: 'Show field "ID"',
-                    type: 'boolean',
-                    value: false,
-                    editable: false,
-                    visible: false
-                },
-                {
-                    id: 'taskFieldVisible_creationDate',
-                    title: 'Show field "Creation date"',
-                    type: 'boolean',
-                    value: false,
-                    editable: false,
-                    visible: false
-                },
-                {
-                    id: 'taskFieldVisible_updateDate',
-                    title: 'Show field "Update date"',
-                    type: 'boolean',
-                    value: false,
-                    editable: false,
-                    visible: false
-                },
-                {
-                    id: 'taskFieldVisible_completionDate',
-                    title: 'Show field "Completion date"',
-                    type: 'boolean',
-                    value: false,
-                    editable: false,
-                    visible: false
-                }
-            ],
-            createSetting: field => ({
-                id: `taskFieldVisible_${field.id}`,
-                title: `Show field "${field.title}"`,
-                type: 'boolean',
-                value: true,
-                editable: true
-            })
-        },
-        {
             id: 'theme',
             title: 'Theme & Colors',
             icon: 'paint-roller',
@@ -325,18 +234,6 @@ export function getCategories() {
                     editable: true
                 }
             ]
-        },
-        {
-            id: 'priorityColors',
-            title: 'Priority colors',
-            icon: 'paint-roller',
-            settings: getPriorities().map(priority => ({
-                id: 'priority_' + priority.id,
-                title: 'Priority ' + priority.title,
-                type: 'color',
-                value: priority.color,
-                editable: true
-            }))
         },
         {
             id: 'window',

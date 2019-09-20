@@ -22,7 +22,7 @@ export function CloudMaxObjectsReachedMessage() {
             image={(<Icon color="#ffecb3" icon="lock" size={64} />)}
             description="You have reached the maximum number of objects !">
             <Button onClick={onClick} style={{ marginRight: 10 }}>Click here to get more information</Button>
-            <Button type="primary" onClick={onBuyItem}>Subscribe to TaskUnifier Cloud Pro</Button>
+            <Button type="primary" onClick={onBuyItem}>Subscribe to RedisMon Pro</Button>
         </Empty>
     );
 }

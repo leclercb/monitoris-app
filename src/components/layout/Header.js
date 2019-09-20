@@ -5,124 +5,61 @@ import LeftRight from 'components/common/LeftRight';
 import Logo from 'components/common/Logo';
 import Spacer from 'components/common/Spacer';
 import UserMenu from 'components/layout/UserMenu';
+import { useAlertApi } from 'hooks/UseAlertApi';
 import { useAppApi } from 'hooks/UseAppApi';
-import { useNoteApi } from 'hooks/UseNoteApi';
+import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { usePrintApi } from 'hooks/UsePrintApi';
-import { useTaskApi } from 'hooks/UseTaskApi';
-import { useTaskTemplateApi } from 'hooks/UseTaskTemplateApi';
-import { applyTaskTemplate } from 'utils/TaskTemplateUtils';
 
 function Header() {
     const appApi = useAppApi();
-    const noteApi = useNoteApi();
-    const taskApi = useTaskApi();
+    const alertApi = useAlertApi();
+    const instanceApi = useInstanceApi();
     const printApi = usePrintApi();
-    const taskTemplatesApi = useTaskTemplateApi();
 
-    const onAddNote = async () => {
-        const note = await noteApi.addNote();
-        noteApi.setSelectedNoteIds(note.id);
-        appApi.setEditingCell(note.id, 'title');
+    const onAddAlert = async () => {
+        const alert = await alertApi.addAlert();
+        alertApi.setSelectedAlertId(alert.id);
     };
 
-    const onRemoveNotes = () => {
-        noteApi.deleteNote(noteApi.selectedNoteIds);
+    const onRemoveAlert = () => {
+        alertApi.deleteAlert(alertApi.selectedAlertId);
     };
 
-    const onPrintNotes = () => {
-        printApi.printNotes(noteApi.notes);
+    const onPrintAlerts = () => {
+        printApi.printAlerts(alertApi.notes);
     };
 
-    const onAddTask = async () => {
-        let task = {};
-
-        const taskTemplate = taskTemplatesApi.taskTemplates.find(taskTemplate =>
-            taskTemplate.id === taskApi.selectedTaskFilter.taskTemplate);
-
-        applyTaskTemplate(taskTemplate, task);
-
-        task = await taskApi.addTask(task);
-        taskApi.setSelectedTaskIds(task.id);
-        appApi.setEditingCell(task.id, 'title');
+    const onAddInstance = async () => {
+        const instance = await instanceApi.addInstance();
+        instanceApi.setSelectedInstanceId(instance.id);
     };
 
-    const onEditTask = () => {
-        appApi.setTaskEditionManagerOptions({
-            visible: true,
-            taskId: taskApi.selectedTaskIds[0]
-        });
+    const onRemoveInstance = () => {
+        instanceApi.deleteInstance(instanceApi.selectedInstanceId);
     };
 
-    const onRemoveTasks = () => {
-        taskApi.deleteTask(taskApi.selectedTaskIds);
-    };
-
-    const onPrintTasks = () => {
-        printApi.printTasks(taskApi.tasks);
-    };
-
-    const onSave = () => {
-        appApi.saveData();
-    };
-
-    const onBackup = () => {
-        appApi.backupData();
-    };
-
-    const onSetBatchAddTasksManagerVisible = () => {
-        appApi.setBatchAddTasksManagerOptions({ visible: true });
-    };
-
-    const onSetBatchEditTasksManagerVisible = () => {
-        appApi.setBatchEditTasksManagerOptions({ visible: true });
+    const onPrintInstances = () => {
+        printApi.printInstances(instanceApi.notes);
     };
 
     const onSetCategoryManagerVisible = () => {
         appApi.setCategoryManagerOptions({ visible: true });
     };
 
-    const onSetReminderManagerVisible = () => {
-        appApi.setReminderManagerOptions({ visible: true });
-    };
-
-    const onSetNoteFieldManagerVisible = () => {
-        appApi.setNoteFieldManagerOptions({ visible: true });
-    };
-
-    const onSetNoteFilterManagerVisible = () => {
-        appApi.setNoteFilterManagerOptions({ visible: true });
-    };
-
-    const onSetTaskFieldManagerVisible = () => {
-        appApi.setTaskFieldManagerOptions({ visible: true });
-    };
-
-    const onSetTaskFilterManagerVisible = () => {
-        appApi.setTaskFilterManagerOptions({ visible: true });
-    };
-
-    const onSetTaskTemplateManagerVisible = () => {
-        appApi.setTaskTemplateManagerOptions({ visible: true });
-    };
-
     const onSetSettingsVisible = () => {
         appApi.setSettingManagerOptions({ visible: true });
     };
 
-    const onSynchronize = () => {
-        appApi.synchronize();
+    const onShowExplorerContent = () => {
+        appApi.setSelectedView('explorer');
     };
 
-    const onShowTaskContent = () => {
-        appApi.setSelectedView('task');
+    const onShowAlertContent = () => {
+        appApi.setSelectedView('alert');
     };
 
-    const onShowTaskCalendarContent = () => {
-        appApi.setSelectedView('taskCalendar');
-    };
-
-    const onShowNoteContent = () => {
-        appApi.setSelectedView('note');
+    const onShowInstanceContent = () => {
+        appApi.setSelectedView('instance');
     };
 
     const createButton = (icon, text, onClick, disabled = false) => {
@@ -144,82 +81,47 @@ function Header() {
                 {appApi.pro ? (
                     <img src="resources/images/pro_badge.png" height={32} alt="Pro" style={{ marginRight: 10 }} />
                 ) : null}
-                {process.env.REACT_APP_MODE === 'electron' ? (<Logo alt={true} size={40} />) : (<UserMenu />)}
+                {process.env.REACT_APP_MODE === 'electron' ? (<Logo size={40} />) : (<UserMenu />)}
             </React.Fragment>
         )}>
             <Button.Group style={{ marginRight: 50 }}>
                 <Button
-                    type={appApi.selectedView === 'task' ? 'dashed' : 'default'}
-                    onClick={onShowTaskContent}>
-                    <Icon icon="tasks" text="Tasks" />
+                    type={appApi.selectedView === 'explorer' ? 'dashed' : 'default'}
+                    onClick={onShowExplorerContent}>
+                    <Icon icon="tasks" text="Explorer" />
                 </Button>
                 <Button
-                    type={appApi.selectedView === 'taskCalendar' ? 'dashed' : 'default'}
-                    onClick={onShowTaskCalendarContent}>
-                    <Icon icon="calendar-alt" text="Calendar" />
+                    type={appApi.selectedView === 'alert' ? 'dashed' : 'default'}
+                    onClick={onShowAlertContent}>
+                    <Icon icon="calendar-alt" text="Alerts" />
                 </Button>
                 <Button
-                    type={appApi.selectedView === 'note' ? 'dashed' : 'default'}
-                    onClick={onShowNoteContent}>
-                    <Icon icon="book" text="Notes" />
+                    type={appApi.selectedView === 'instance' ? 'dashed' : 'default'}
+                    onClick={onShowInstanceContent}>
+                    <Icon icon="book" text="Instances" />
                 </Button>
             </Button.Group>
-            {appApi.selectedView === 'note' ?
-                createButton('plus', 'Add Note', onAddNote)
+            {appApi.selectedView === 'alert' ?
+                createButton('plus', 'Add Alert', onAddAlert)
                 : null}
-            {appApi.selectedView === 'note' ?
-                createButton('trash-alt', 'Remove Note(s)', onRemoveNotes)
+            {appApi.selectedView === 'alert' ?
+                createButton('trash-alt', 'Remove Alert', onRemoveAlert)
                 : null}
-            {appApi.selectedView === 'note' ?
-                createButton('print', 'Print Notes', onPrintNotes)
+            {appApi.selectedView === 'alert' ?
+                createButton('print', 'Print Alerts', onPrintAlerts)
                 : null}
-            {appApi.selectedView === 'note' ?
-                createButton('filter', 'Note Filter Manager', onSetNoteFilterManagerVisible)
+            {appApi.selectedView === 'instance' ?
+                createButton('plus', 'Add Instance', onAddInstance)
                 : null}
-            {appApi.selectedView === 'note' ?
-                createButton('columns', 'Note Field Manager', onSetNoteFieldManagerVisible)
+            {appApi.selectedView === 'instance' ?
+                createButton('trash-alt', 'Remove Instance', onRemoveInstance)
                 : null}
-            {appApi.selectedView === 'task' || appApi.selectedView === 'taskCalendar' ?
-                createButton('plus', 'Add Task', onAddTask)
-                : null}
-            {appApi.selectedView === 'task' || appApi.selectedView === 'taskCalendar' ?
-                createButton('list', 'Batch Add Tasks', onSetBatchAddTasksManagerVisible)
-                : null}
-            {(appApi.selectedView === 'task' || appApi.selectedView === 'taskCalendar') ?
-                createButton('edit', 'Edit Task', onEditTask, taskApi.selectedTaskIds.length !== 1)
-                : null}
-            {appApi.selectedView === 'task' || appApi.selectedView === 'taskCalendar' ?
-                createButton('magic', 'Batch Edit Tasks', onSetBatchEditTasksManagerVisible, taskApi.selectedTaskIds.length <= 1 || taskApi.selectedTaskIds.length > 50)
-                : null}
-            {appApi.selectedView === 'task' || appApi.selectedView === 'taskCalendar' ?
-                createButton('trash-alt', 'Remove Task(s)', onRemoveTasks)
-                : null}
-            {appApi.selectedView === 'task' || appApi.selectedView === 'taskCalendar' ?
-                createButton('print', 'Print Tasks', onPrintTasks)
-                : null}
-            {appApi.selectedView === 'task' || appApi.selectedView === 'taskCalendar' ?
-                createButton('filter', 'Task Filter Manager', onSetTaskFilterManagerVisible)
-                : null}
-            {appApi.selectedView === 'task' || appApi.selectedView === 'taskCalendar' ?
-                createButton('tasks', 'Task Template Manager', onSetTaskTemplateManagerVisible)
-                : null}
-            {appApi.selectedView === 'task' || appApi.selectedView === 'taskCalendar' ?
-                createButton('columns', 'Task Field Manager', onSetTaskFieldManagerVisible)
+            {appApi.selectedView === 'instance' ?
+                createButton('print', 'Print Instances', onPrintInstances)
                 : null}
             <Spacer />
             <Spacer />
             {createButton('cubes', 'Category Manager', onSetCategoryManagerVisible)}
-            {createButton('bell', 'Reminder Manager', onSetReminderManagerVisible)}
-            {process.env.REACT_APP_MODE === 'electron' ?
-                createButton('save', 'Save', onSave)
-                : null}
-            {process.env.REACT_APP_MODE === 'electron' ?
-                createButton('box-open', 'Backup', onBackup)
-                : null}
-            {createButton('cog', 'Settings', onSetSettingsVisible)}
-            {process.env.REACT_APP_MODE === 'electron' ?
-                createButton('sync-alt', 'Synchronization', onSynchronize)
-                : null}
         </LeftRight>
     );
 }

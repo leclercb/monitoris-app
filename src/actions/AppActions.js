@@ -96,6 +96,15 @@ export function setJoyrideOptions(options) {
     };
 }
 
+export function setCategoryManagerOptions(options) {
+    return async dispatch => {
+        dispatch({
+            type: 'SET_CATEGORY_MANAGER_OPTIONS',
+            ...options
+        });
+    };
+}
+
 export function setSettingManagerOptions(options) {
     return async dispatch => {
         dispatch({

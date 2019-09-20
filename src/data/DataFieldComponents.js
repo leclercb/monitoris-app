@@ -1,20 +1,15 @@
 /* eslint react/display-name: 0 react/prop-types: 0 */
 
 import React from 'react';
-import moment from 'moment';
-import { Checkbox, Input, InputNumber, Progress, Select, Tag } from 'antd';
+import { Checkbox, Input, InputNumber, Select, Tag } from 'antd';
 import { getFieldType } from 'data/DataFieldTypes';
-import AlertTitle from 'components/alerts/AlertTitle';
-import AlertSelect from 'components/alerts/AlertSelect';
+import AlertTitle from 'components/alerts/common/AlertTitle';
+import AlertSelect from 'components/alerts/common/AlertSelect';
 import ColorPicker from 'components/common/ColorPicker';
-import DatePicker from 'components/common/DatePicker';
-import InstanceTitle from 'components/instances/InstanceTitle';
-import InstanceSelect from 'components/instances/InstanceSelect';
-import {
-    toStringNumber,
-    toStringPassword,
-    toStringRepeat
-} from 'utils/StringUtils';
+import StarCheckbox from 'components/common/StarCheckbox';
+import InstanceTitle from 'components/instances/common/InstanceTitle';
+import InstanceSelect from 'components/instances/common/InstanceSelect';
+import { toStringPassword } from 'utils/StringUtils';
 
 export function getDefaultGetValueFromEvent(e) {
     if (!e || !e.target) {
@@ -81,6 +76,21 @@ export function getFieldComponents(type, options) {
                 input: props => (
                     <ColorPicker
                         onClose={props.onCommit}
+                        {...removeExtraProps(props)} />
+                )
+            };
+
+            break;
+        }
+        case 'instance': {
+            configuration = {
+                render: value => (
+                    <InstanceTitle instanceId={value} />
+                ),
+                input: props => (
+                    <InstanceSelect
+                        onBlur={props.onCommit}
+                        dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
                 )
             };

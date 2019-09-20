@@ -10,6 +10,7 @@ import PrivateComponent from 'components/common/PrivateComponent';
 import { store } from 'store/Store';
 import 'index.css';
 
+configure();
 initializeShortcuts();
 
 window.addEventListener('error', function (e) {
@@ -21,24 +22,12 @@ window.addEventListener('error', function (e) {
     return false;
 });
 
-let element = (
-    <React.Suspense fallback={(<LoadingIndicator />)}>
-        <App />
-    </React.Suspense>
-);
-
-if (process.env.REACT_APP_MODE === 'react') {
-    configure();
-
-    element = (
-        <PrivateComponent>
-            {element}
-        </PrivateComponent>
-    );
-}
-
 ReactDOM.render(
     <Provider store={store}>
-        {element}
+        <PrivateComponent>
+            <React.Suspense fallback={(<LoadingIndicator />)}>
+                <App />
+            </React.Suspense>
+        </PrivateComponent>
     </Provider>,
     document.getElementById('root'));

@@ -1,87 +1,38 @@
-import moment from 'moment';
-import { getPriorityIndex } from 'data/DataPriorities';
-import { getContactsFilteredByVisibleState } from 'selectors/ContactSelectors';
-import { getContextsFilteredByVisibleState } from 'selectors/ContextSelectors';
-import { getFoldersFilteredByVisibleState } from 'selectors/FolderSelectors';
-import { getGoalsFilteredByVisibleState } from 'selectors/GoalSelectors';
-import { getLocationsFilteredByVisibleState } from 'selectors/LocationSelectors';
-import { getNoteFieldsIncludingDefaults } from 'selectors/NoteFieldSelectors';
-import { getNotesFilteredByVisibleState } from 'selectors/NoteSelectors';
-import { getTaskFieldsIncludingDefaults } from 'selectors/TaskFieldSelectors';
-import { getTasksFilteredByVisibleState } from 'selectors/TaskSelectors';
-import { getTaskTemplatesFilteredByVisibleState } from 'selectors/TaskTemplateSelectors';
+import { getAlerts } from 'selectors/AlertSelectors';
+import { getInstances } from 'selectors/InstanceSelectors';
+import { getSeverities } from 'selectors/SeveritySelectors';
 import {
     compareBooleans,
-    compareContacts,
-    compareDates,
-    compareGoalLevels,
     compareNumbers,
     compareObjects,
-    comparePriorities,
-    compareRepeats,
-    compareSortDirections,
-    compareStatuses,
     compareStrings
 } from 'utils/CompareUtils';
-import { equals } from 'utils/ObjectUtils';
 import {
     toString,
     toStringArray,
     toStringBoolean,
-    toStringContact,
-    toStringDate,
-    toStringDuration,
-    toStringGoalLevel,
     toStringNumber,
     toStringObject,
-    toStringPassword,
-    toStringPriority,
-    toStringRepeat,
-    toStringSortDirection,
-    toStringStatus,
-    toStringTimer
+    toStringPassword
 } from 'utils/StringUtils';
 
 export function getFieldTypes() {
     return [
+        'alert',
         'boolean',
         'color',
-        'contact',
-        'context',
         'date',
         'dateTime',
-        'file',
-        'folder',
-        'goal',
-        'goalContributesTo',
-        'goalLevel',
-        'importance',
-        'length',
-        'linkedContactLinks',
-        'linkedFileLinks',
-        'linkedTaskLinks',
-        'location',
-        'money',
-        'note',
-        'noteField',
+        'instance',
         'number',
         'password',
-        'priority',
-        'progress',
-        'reminder',
-        'repeat',
         'select',
         'selectTags',
-        'sortDirection',
+        'severity',
         'star',
-        'status',
         'tags',
-        'task',
-        'taskField',
-        'taskTemplate',
         'text',
-        'textarea',
-        'timer'
+        'textarea'
     ];
 }
 
@@ -124,7 +75,7 @@ export function getFieldType(type, options) {
                 width: 200,
                 alwaysInEdition: false,
                 valuePropName: 'value',
-                compare: (a, b, state) => compareAlerts(a, b, getAlerts(state)),
+                compare: (a, b, state) => compareObjects(a, b, getAlerts(state)),
                 toString: (value, state) => toStringObject(value, getAlerts(state)),
                 conditions: [
                     {

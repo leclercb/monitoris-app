@@ -10,7 +10,7 @@ export function ProUnlockedMessage({ license }) {
             image={(<Icon color={Constants.fadeIconColor} icon="lock-open" size={64} />)}
             description={(
                 <span>
-                    TaskUnifier Pro has been successfully activated !<br />
+                    RedisMon Pro has been successfully activated !<br />
                     <strong>Item: </strong>{license.itemName}<br />
                     <strong>Owner: </strong>{license.firstName} {license.lastName}<br />
                     <strong>Email: </strong>{license.email}

@@ -1,4 +1,3 @@
-import { findChildren, findParents } from 'utils/HierarchyUtils';
 import { clone, removePrivateKeys } from 'utils/ObjectUtils';
 
 const Objects = property => (state = [], action) => {
@@ -21,49 +20,7 @@ const Objects = property => (state = [], action) => {
         }
         case 'DELETE_OBJECT': {
             const objectIds = Array.isArray(action.objectId) ? action.objectId : [action.objectId];
-            const objects = state.filter(object => objectIds.includes(object.id));
-            const objectIdsWithChildren = [...objectIds];
-
-            objects.forEach(object => {
-                const children = findChildren(object, state);
-                objectIdsWithChildren.push(...children.map(child => child.id));
-            });
-
-            return state.map(object => {
-                if (object.state === 'LOADED' || object.state === 'TO_UPDATE') {
-                    if (objectIdsWithChildren.includes(object.id)) {
-                        object = { ...object };
-                        object.updateDate = action.updateDate;
-                        object.state = action.options.force === true ? 'DELETED' : 'TO_DELETE';
-                    }
-
-                    return object;
-                }
-
-                if (object.state === 'TO_DELETE') {
-                    if (objectIdsWithChildren.includes(object.id)) {
-                        object = { ...object };
-                        object.state = 'DELETED';
-                    }
-
-                    return object;
-                }
-
-                return object;
-            });
-        }
-        case 'CLEAN_OBJECTS': {
-            return state.filter(object => {
-                if (object.state === 'DELETED') {
-                    return false;
-                }
-
-                if (object.state === 'TO_DELETE' && Object.keys(object.refIds).length === 0) {
-                    return false;
-                }
-
-                return true;
-            });
+            return state.filter(object => !objectIds.includes(object.id));
         }
         default:
             return state;
@@ -111,8 +68,7 @@ const addObject = (state, action) => {
     const newObject = {
         ...clone(action.object),
         creationDate: action.creationDate,
-        updateDate: action.creationDate,
-        state: 'LOADED'
+        updateDate: action.creationDate
     };
 
     if (action.options.keepRefIds !== true) {
@@ -120,18 +76,6 @@ const addObject = (state, action) => {
     }
 
     removePrivateKeys(newObject);
-
-    const parents = findParents(newObject, newState);
-
-    if (newObject.id === newObject.parent || parents.find(parent => parent.id === newObject.id)) {
-        throw Error('The parent cannot become a child of himself');
-    }
-
-    for (let i = 0; i < parents.length; i++) {
-        if (parents[i].state !== 'LOADED' && parents[i].state !== 'TO_UPDATE') {
-            throw Error('The parent object cannot be used as it is not in a valid state');
-        }
-    }
 
     newState.push(newObject);
 
@@ -153,30 +97,13 @@ const updateObject = (state, action) => {
 
     const oldObject = newState[index];
 
-    if (oldObject.state !== 'LOADED' && oldObject.state !== 'TO_UPDATE') {
-        throw Error('The object cannot be updated as it is not in a valid state');
-    }
-
     const updatedObject = {
         ...action.object,
         creationDate: oldObject.creationDate,
-        updateDate: action.updateDate,
-        state: action.options.loaded === true ? 'LOADED' : 'TO_UPDATE'
+        updateDate: action.updateDate
     };
 
     removePrivateKeys(updatedObject);
-
-    const parents = findParents(updatedObject, newState);
-
-    if (updatedObject.id === updatedObject.parent || parents.find(parent => parent.id === updatedObject.id)) {
-        throw Error('The parent cannot become a child of himself');
-    }
-
-    for (let i = 0; i < parents.length; i++) {
-        if (parents[i].state !== 'LOADED' && parents[i].state !== 'TO_UPDATE') {
-            throw Error('The parent object cannot be used as it is not in a valid state');
-        }
-    }
 
     newState[index] = updatedObject;
 

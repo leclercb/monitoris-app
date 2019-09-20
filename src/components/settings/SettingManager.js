@@ -5,26 +5,17 @@ import Icon from 'components/common/Icon';
 import { getInputForType } from 'data/DataFieldComponents';
 import { getValuePropNameForType } from 'data/DataFieldTypes';
 import { getCategories, getCategorySettings } from 'data/DataSettings';
-import { useNoteFieldApi } from 'hooks/UseNoteFieldApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
-import { useTaskFieldApi } from 'hooks/UseTaskFieldApi';
 import { getDefaultFormItemLayout, onCommitForm } from 'utils/FormUtils';
 
 function SettingManager(props) {
-    const noteFieldApi = useNoteFieldApi();
-    const taskFieldApi = useTaskFieldApi();
     const settingsApi = useSettingsApi();
     const [selectedCategoryId, setSelectedCategoryId] = useState('general');
 
     const categories = getCategories().filter(category => !category.mode || category.mode === process.env.REACT_APP_MODE);
     const category = categories.find(category => category.id === selectedCategoryId);
-    const settings = getCategorySettings(
-        category,
-        {
-            noteFields: noteFieldApi.noteFields,
-            taskFields: taskFieldApi.taskFields
-        }).filter(setting =>
-            setting.visible !== false && (!setting.mode || setting.mode === process.env.REACT_APP_MODE));
+    const settings = getCategorySettings(category, {}).filter(setting =>
+        setting.visible !== false && (!setting.mode || setting.mode === process.env.REACT_APP_MODE));
 
     const getSettingValue = setting => {
         if (setting.id in settingsApi.settings) {

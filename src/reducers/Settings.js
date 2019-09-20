@@ -1,24 +1,13 @@
-import { getSettings, isCoreSetting } from 'data/DataSettings';
+import { getSettings } from 'data/DataSettings';
 
 const Settings = () => (state = {
     ...getSettings()
 }, action) => {
     switch (action.type) {
         case 'SET_SETTINGS': {
-            const coreSettings = {};
-
-            if (!action.core) {
-                Object.keys(state).forEach(settingId => {
-                    if (isCoreSetting(settingId)) {
-                        coreSettings[settingId] = state[settingId];
-                    }
-                });
-            }
-
             return {
                 ...getSettings(),
-                ...action.settings,
-                ...coreSettings
+                ...action.settings
             };
         }
         case 'UPDATE_SETTINGS': {
