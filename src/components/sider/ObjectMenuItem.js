@@ -9,7 +9,7 @@ import ObjectMenu from 'components/sider/ObjectMenu';
 import Constants from 'constants/Constants';
 import 'components/sider/ObjectMenuItem.css';
 
-function ObjectMenuItem({ badge, object, onManage, onEdit, onDelete, dropType, onDrop }) {
+function ObjectMenuItem({ object, onManage, onEdit, onDelete, dropType, onDrop }) {
     const [collectedDropProps, drop] = useDrop({
         accept: dropType || [],
         drop: item => onDrop ? onDrop(item.data.object, object) : null,
@@ -61,12 +61,7 @@ function ObjectMenuItem({ badge, object, onManage, onEdit, onDelete, dropType, o
         <ObjectMenu onAction={onAction}>
             <div ref={drop}>
                 <LeftRight
-                    right={(
-                        <React.Fragment>
-                            {createEditDeleteButtons(object, onEdit, onDelete)}
-                            {badge}
-                        </React.Fragment>
-                    )}
+                    right={createEditDeleteButtons(object, onEdit, onDelete)}
                     className={className}>
                     <Icon icon="circle" color={object.color} text={object.title} />
                 </LeftRight>

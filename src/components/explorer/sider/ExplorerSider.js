@@ -2,18 +2,16 @@ import React, { useState } from 'react';
 import { Input, Menu, Tooltip } from 'antd';
 import Icon from 'components/common/Icon';
 import LeftRight from 'components/common/LeftRight';
-import ObjectMenuItem from 'components/sider/ObjectMenuItem';
 import { useAppApi } from 'hooks/UseAppApi';
-import { useInstanceApi } from 'hooks/UseInstanceApi';
+import InstanceSelect from 'components/instances/common/InstanceSelect';
 
-function InstanceSider() {
+function ExplorerSider() {
     const appApi = useAppApi();
-    const instanceApi = useInstanceApi();
 
-    const [openKeys, setOpenKeys] = useState(['instances']);
+    const [openKeys, setOpenKeys] = useState(['actions']);
 
     const onSelect = event => {
-        instanceApi.setSelectedInstanceId(event.item.props.instance.id);
+
     };
 
     const onOpenChange = key => {
@@ -45,6 +43,9 @@ function InstanceSider() {
             className="joyride-task-sider"
             style={{ backgroundColor: '#ffffff', height: '100%' }}>
             <div style={{ width: '100%', padding: 10, textAlign: 'center' }}>
+                <InstanceSelect style={{ width: '100%' }} />
+            </div>
+            <div style={{ width: '100%', padding: 10, textAlign: 'center' }}>
                 <Tooltip title="Press enter to search" placement="bottom">
                     <Input.Search
                         allowClear={true}
@@ -55,28 +56,20 @@ function InstanceSider() {
                 </Tooltip>
             </div>
             <Menu
-                selectedKeys={[instanceApi.selectedInstanceId]}
+                selectedKeys={[]}
                 openKeys={openKeys}
                 onSelect={onSelect}
                 mode="inline">
                 <Menu.SubMenu
-                    key="instances"
-                    title={createCategorySubMenu('Instances', 'thumbtack', () => onOpenChange('instances'))}>
-                    {instanceApi.instances.map(instance => (
-                        <Menu.Item key={instance.id} instance={instance}>
-                            <ObjectMenuItem
-                                object={instance}
-                                onManage={null}
-                                onEdit={null}
-                                onDelete={() => instanceApi.deleteInstance(instance.id)}
-                                dropType="task"
-                                onDrop={null} />
-                        </Menu.Item>
-                    ))}
+                    key="actions"
+                    title={createCategorySubMenu('Actions', 'thumbtack', () => onOpenChange('actions'))}>
+                    <Menu.Item>
+                        Get Info
+                    </Menu.Item>
                 </Menu.SubMenu>
             </Menu >
         </div>
     );
 }
 
-export default InstanceSider;
+export default ExplorerSider;

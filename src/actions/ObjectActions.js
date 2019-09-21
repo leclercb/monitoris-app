@@ -74,9 +74,11 @@ export function addObject(
             dispatch(updateProcess({
                 id: processId,
                 state: 'ERROR',
-                title: `Add "${object.title}" of type "${property}"`,
+                title: `Add "${object ? object.title : ''}" of type "${property}"`,
                 error: error.toString()
             }));
+
+            throw error;
         }
     };
 }
@@ -105,6 +107,8 @@ export function duplicateObject(property, object, options = {}) {
                 title: `Duplicate object(s) of type "${property}"`,
                 error: error.toString()
             }));
+
+            throw error;
         }
     };
 }
@@ -143,6 +147,8 @@ export function updateObject(property, object, options = {}) {
                 title: `Update "${object.title}" of type "${property}"`,
                 error: error.toString()
             }));
+
+            throw error;
         }
     };
 }
@@ -174,6 +180,8 @@ export function deleteObject(property, objectId, options = {}) {
                 title: `Remove object(s) of type "${property}"`,
                 error: error.toString()
             }));
+
+            throw error;
         }
     };
 }

@@ -3,6 +3,7 @@ import { Layout, Spin } from 'antd';
 import { useSelector } from 'react-redux';
 import AlertView from 'components/alerts/views/AlertView';
 import ModalCategoryManager from 'components/categories/ModalCategoryManager';
+import ExplorerView from 'components/explorer/views/ExplorerView';
 import InstanceView from 'components/instances/views/InstanceView';
 import Header from 'components/layout/Header';
 import ModalSettingManager from 'components/settings/ModalSettingManager';
@@ -18,7 +19,7 @@ function AppLayout() {
     const getView = () => {
         switch (selectedView) {
             case 'explorer':
-                return <AlertView />;
+                return <ExplorerView />;
             case 'alert':
                 return <AlertView />;
             case 'instance':

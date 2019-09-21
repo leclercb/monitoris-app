@@ -2,7 +2,7 @@ import React from 'react';
 import { Empty } from 'antd';
 import SplitPane from 'react-split-pane';
 import InstanceForm from 'components/instances/common/InstanceForm';
-import InstanceList from 'components/instances/common/InstanceList';
+import InstanceSider from 'components/instances/sider/InstanceSider';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 
@@ -22,11 +22,13 @@ function InstanceView() {
             defaultSize={settingsApi.settings.instanceViewSplitPaneSize}
             onDragFinished={size => onInstanceViewSplitPaneSizeChange(size)}
             paneStyle={{ overflowY: 'auto' }}>
-            <InstanceList />
-            <div style={{ height: '100%' }}>
-                {instanceApi.selectedInstance ? (
-                    <InstanceForm key={instanceApi.selectedInstanceId} instance={instanceApi.selectedInstance} updateInstance={instanceApi.updateInstance} />
-                ) : <Empty description="Please select an alert" />}
+            <InstanceSider />
+            <div style={{ height: '100%', padding: 25 }}>
+                <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
+                    {instanceApi.selectedInstance ? (
+                        <InstanceForm key={instanceApi.selectedInstanceId} instance={instanceApi.selectedInstance} updateInstance={instanceApi.updateInstance} />
+                    ) : <Empty description="Please select an alert" />}
+                </div>
             </div>
         </SplitPane>
     );
