@@ -19,7 +19,7 @@ export function getSeverities() {
             color: '#8bc34a'
         },
         {
-            id: 'critical',
+            id: 'crit',
             title: 'Critical',
             color: '#ffeb3b'
         }

@@ -56,9 +56,9 @@ function FilterConditionForm(props) {
                 <Col span={10}>
                     {severityApi.severities.map(severity => (
                         <Form.Item>
-                            {getFieldDecorator('value', {
+                            {getFieldDecorator(`value_${severity.id}`, {
                                 valuePropName: getValuePropNameForType(conditionFieldType),
-                                initialValue: props.condition.value
+                                initialValue: props.condition[`value_${severity.id}`]
                             })(
                                 getInputForType(
                                     conditionFieldType,

@@ -17,6 +17,10 @@ export function toStringObject(value, objects) {
     return object ? object.title : '';
 }
 
+export function toStringObjects(value, objects) {
+    return (value || []).map(v => toStringObject(v, objects)).join(', ');
+}
+
 export function toStringDate(value, format) {
     if (!value) {
         return '';

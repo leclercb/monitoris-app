@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
 import { useSeverityApi } from 'hooks/UseSeverityApi';
 
-export const SeveritySelect = React.forwardRef(function SeveritySelect(props, ref) {
+export const SeveritiesSelect = React.forwardRef(function SeveritiesSelect(props, ref) {
     const severityApi = useSeverityApi();
-    const value = severityApi.severities.find(severity => severity.id === props.value) ? props.value : undefined;
+    const value = (props.value || []).filter(severityId => !!severityApi.severities.find(severity => severity.id === severityId));
 
     return (
-        <Select ref={ref} allowClear={true} {...props} value={value}>
+        <Select ref={ref} allowClear={true} {...props} mode="multiple" value={value}>
             {severityApi.severities.map(severity => (
                 <Select.Option key={severity.id} value={severity.id}>
                     <Icon icon="circle" color={severity.color} text={severity.title} />
@@ -19,10 +19,10 @@ export const SeveritySelect = React.forwardRef(function SeveritySelect(props, re
     );
 });
 
-SeveritySelect.displayName = 'ForwardRefSeveritySelect';
+SeveritiesSelect.displayName = 'ForwardRefSeveritiesSelect';
 
-SeveritySelect.propTypes = {
-    value: PropTypes.string
+SeveritiesSelect.propTypes = {
+    value: PropTypes.arrayOf(PropTypes.string.isRequired)
 };
 
-export default SeveritySelect;
+export default SeveritiesSelect;
