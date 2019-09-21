@@ -7,11 +7,6 @@ const App = () => (state = {
         id: null,
         run: false
     },
-    categoryManager: {
-        visible: false,
-        category: 'severities',
-        objectId: null
-    },
     settingManager: {
         visible: false
     }
@@ -51,15 +46,6 @@ const App = () => (state = {
                 joyride: {
                     id: 'id' in action ? action.id : state.joyride.id,
                     run: 'run' in action ? action.run : state.joyride.run
-                }
-            };
-        case 'SET_CATEGORY_MANAGER_OPTIONS':
-            return {
-                ...state,
-                categoryManager: {
-                    visible: 'visible' in action ? action.visible : state.categoryManager.visible,
-                    category: 'category' in action ? action.category : state.categoryManager.category,
-                    objectId: 'objectId' in action ? action.objectId : state.categoryManager.objectId
                 }
             };
         case 'SET_SETTING_MANAGER_OPTIONS':

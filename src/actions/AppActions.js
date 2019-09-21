@@ -2,7 +2,6 @@ import uuid from 'uuid/v4';
 import { loadAlertsFromServer } from 'actions/AlertActions';
 import { loadInstancesFromServer } from 'actions/InstanceActions';
 import { loadSettingsFromServer } from 'actions/SettingActions';
-import { loadSeveritiesFromServer } from 'actions/SeverityActions';
 import { checkIsBusy, updateProcess } from 'actions/ThreadActions';
 import { merge } from 'utils/ObjectUtils';
 
@@ -34,8 +33,7 @@ export function _loadDataFromServer(options) {
         try {
             const promises = [
                 dispatch(loadAlertsFromServer()),
-                dispatch(loadInstancesFromServer()),
-                dispatch(loadSeveritiesFromServer())
+                dispatch(loadInstancesFromServer())
             ];
 
             if (!options.skipSettings) {
@@ -111,15 +109,6 @@ export function setJoyrideOptions(options) {
     return async dispatch => {
         dispatch({
             type: 'SET_JOYRIDE_OPTIONS',
-            ...options
-        });
-    };
-}
-
-export function setCategoryManagerOptions(options) {
-    return async dispatch => {
-        dispatch({
-            type: 'SET_CATEGORY_MANAGER_OPTIONS',
             ...options
         });
     };

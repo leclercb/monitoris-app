@@ -1,6 +1,4 @@
 import { getAlerts } from 'selectors/AlertSelectors';
-import { getInstances } from 'selectors/InstanceSelectors';
-import { getSeverities } from 'selectors/SeveritySelectors';
 import {
     compareBooleans,
     compareNumbers,

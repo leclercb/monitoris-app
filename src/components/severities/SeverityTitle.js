@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
-import { useSeverity } from 'hooks/UseSeverity';
+import { useSeverityApi } from 'hooks/UseSeverityApi';
 
 export function SeverityTitle(props) {
-    const severity = useSeverity(props.severityId);
+    const severityApi = useSeverityApi();
+
+    const severity = severityApi.severities.find(severity => severity.id === props.severityId);
+
     return severity ? <Icon icon="circle" color={severity.color} text={severity.title} /> : <span>&nbsp;</span>;
 }
 
