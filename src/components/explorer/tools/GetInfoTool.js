@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Empty, Tree } from 'antd';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 
 function GetInfoTool() {
@@ -18,8 +19,34 @@ function GetInfoTool() {
         getInfo();
     }, [instanceId]);
 
+    if (!info) {
+        return (<Empty description="Please select an instance" />);
+    }
+
+    const createTreeNodes = object => {
+        if (typeof object === 'object') {
+            return Object.keys(object).map(key => {
+                const value = object[key];
+
+                if (typeof value === 'object') {
+                    return (
+                        <Tree.TreeNode key={key} title={key}>
+                            {createTreeNodes(object[key])}
+                        </Tree.TreeNode>
+                    );
+                }
+
+                return (<Tree.TreeNode key={key} title={`${key} = ${value}`} />);
+            })
+        }
+
+        return (<Tree.TreeNode title={object} />);
+    };
+
     return (
-        <span>{info}</span>
+        <Tree>
+            {createTreeNodes(info)}
+        </Tree>
     );
 }
 

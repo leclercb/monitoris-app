@@ -3,7 +3,7 @@ const config = {
         cloudItemSku: 'rm-cloud-pro-1y'
     },
     local: {
-        apiUrl: 'https://api-dev.redismon.app',
+        apiUrl: 'http://localhost:2000',
         authUrl: 'http://localhost:2300',
         cloudUrl: 'http://localhost:2100/cloud',
         maintenanceUrl: 'http://localhost:2100/maintenance',
