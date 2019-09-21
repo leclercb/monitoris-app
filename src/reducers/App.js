@@ -1,6 +1,8 @@
 const App = () => (state = {
     selectedAlertId: null,
     selectedInstanceId: null,
+    selectedExplorerInstanceId: null,
+    selectedExplorerToolId: null,
     joyride: {
         id: null,
         run: false
@@ -32,6 +34,16 @@ const App = () => (state = {
             return {
                 ...state,
                 selectedInstanceId: action.instanceId
+            };
+        case 'SET_SELECTED_EXPLORER_INSTANCE_ID':
+            return {
+                ...state,
+                selectedExplorerInstanceId: action.instanceId
+            };
+        case 'SET_SELECTED_EXPLORER_TOOL_ID':
+            return {
+                ...state,
+                selectedExplorerToolId: action.toolId
             };
         case 'SET_JOYRIDE_OPTIONS':
             return {

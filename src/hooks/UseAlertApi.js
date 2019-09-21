@@ -33,7 +33,7 @@ export function useAlertApi() {
     );
 
     const setSelectedAlertIdCallback = useCallback(
-        noteIds => dispatch(setSelectedAlertId(noteIds)),
+        alertId => dispatch(setSelectedAlertId(alertId)),
         [dispatch]
     );
 

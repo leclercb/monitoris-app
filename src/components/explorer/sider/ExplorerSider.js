@@ -3,15 +3,17 @@ import { Input, Menu, Tooltip } from 'antd';
 import Icon from 'components/common/Icon';
 import LeftRight from 'components/common/LeftRight';
 import { useAppApi } from 'hooks/UseAppApi';
+import { useInstanceApi } from 'hooks/UseInstanceApi';
 import InstanceSelect from 'components/instances/common/InstanceSelect';
 
 function ExplorerSider() {
     const appApi = useAppApi();
+    const instanceApi = useInstanceApi();
 
-    const [openKeys, setOpenKeys] = useState(['actions']);
+    const [openKeys, setOpenKeys] = useState(['tools']);
 
     const onSelect = event => {
-
+        appApi.setSelectedExplorerToolId(event.key);
     };
 
     const onOpenChange = key => {
@@ -43,7 +45,11 @@ function ExplorerSider() {
             className="joyride-task-sider"
             style={{ backgroundColor: '#ffffff', height: '100%' }}>
             <div style={{ width: '100%', padding: 10, textAlign: 'center' }}>
-                <InstanceSelect style={{ width: '100%' }} />
+                <InstanceSelect
+                    value={instanceApi.selectedExplorerInstanceId}
+                    onChange={value => instanceApi.setSelectedExplorerInstanceId(value)}
+                    placeholder="Select an instance..."
+                    style={{ width: '100%' }} />
             </div>
             <div style={{ width: '100%', padding: 10, textAlign: 'center' }}>
                 <Tooltip title="Press enter to search" placement="bottom">
@@ -61,9 +67,9 @@ function ExplorerSider() {
                 onSelect={onSelect}
                 mode="inline">
                 <Menu.SubMenu
-                    key="actions"
-                    title={createCategorySubMenu('Actions', 'thumbtack', () => onOpenChange('actions'))}>
-                    <Menu.Item>
+                    key="tools"
+                    title={createCategorySubMenu('Tools', 'thumbtack', () => onOpenChange('tools'))}>
+                    <Menu.Item key="info">
                         Get Info
                     </Menu.Item>
                 </Menu.SubMenu>

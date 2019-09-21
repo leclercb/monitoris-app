@@ -89,6 +89,24 @@ export function setSelectedInstanceId(instanceId) {
     };
 }
 
+export function setSelectedExplorerInstanceId(instanceId) {
+    return async dispatch => {
+        dispatch({
+            type: 'SET_SELECTED_EXPLORER_INSTANCE_ID',
+            instanceId
+        });
+    };
+}
+
+export function setSelectedExplorerToolId(toolId) {
+    return async dispatch => {
+        dispatch({
+            type: 'SET_SELECTED_EXPLORER_TOOL_ID',
+            toolId
+        });
+    };
+}
+
 export function setJoyrideOptions(options) {
     return async dispatch => {
         dispatch({

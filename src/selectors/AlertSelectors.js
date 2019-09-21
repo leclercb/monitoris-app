@@ -22,7 +22,7 @@ export const getAlertSelector = () => createSelector(
 export const getSelectedAlert = createSelector(
     getAlerts,
     getSelectedAlertId,
-    (alerts, selectedAlertId) => {
-        return alerts.find(alert => alert.id === selectedAlertId);
+    (alerts, alertId) => {
+        return alerts.find(alert => alert.id === alertId);
     }
 );

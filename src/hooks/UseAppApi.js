@@ -5,13 +5,15 @@ import {
     setCategoryManagerOptions,
     setEditingCell,
     setSettingManagerOptions,
+    setSelectedExplorerToolId,
 } from 'actions/AppActions';
 import { setSelectedView } from 'actions/SettingActions';
 import {
     getCategoryManager,
     getEditingCell,
     getSettingManager,
-    isPro
+    isPro,
+    getSelectedExplorerToolId
 } from 'selectors/AppSelectors';
 import { getSelectedView } from 'selectors/SettingSelectors';
 
@@ -20,6 +22,7 @@ export function useAppApi() {
 
     const pro = useSelector(isPro);
     const selectedView = useSelector(getSelectedView);
+    const selectedExplorerToolId = useSelector(getSelectedExplorerToolId);
     const editingCell = useSelector(getEditingCell);
     const categoryManager = useSelector(getCategoryManager);
     const settingManager = useSelector(getSettingManager);
@@ -31,6 +34,11 @@ export function useAppApi() {
 
     const setSelectedViewCallback = useCallback(
         view => dispatch(setSelectedView(view)),
+        [dispatch]
+    );
+
+    const setSelectedExplorerToolIdCallback = useCallback(
+        toolId => dispatch(setSelectedExplorerToolId(toolId)),
         [dispatch]
     );
 
@@ -52,11 +60,13 @@ export function useAppApi() {
     return {
         pro,
         selectedView,
+        selectedExplorerToolId,
         editingCell,
         categoryManager,
         settingManager,
         loadData: loadDataCallback,
         setSelectedView: setSelectedViewCallback,
+        setSelectedExplorerToolId: setSelectedExplorerToolIdCallback,
         setEditingCell: setEditingCellCallback,
         setCategoryManagerOptions: setCategoryManagerOptionsCallback,
         setSettingManagerOptions: setSettingManagerOptionsCallback
