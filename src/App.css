@@ -55,7 +55,7 @@ ant-input:focus {
 }
 
 .ant-menu-item-active, .ant-dropdown-menu-item-active, .ant-dropdown-menu-submenu-active {
-    background-color: #e6f6ff !important;
+    background-color: #cccccc !important;
 }
 
 .ant-tag {
@@ -153,10 +153,10 @@ ant-input:focus {
 /* TaskUnifier */
 
 .selected-list-item {
-    background-color: #0e67c4;
+    background-color: #d2291f;
     color: #ffffff;
 }
 
 .object-actions:hover {
-    color: #e6f6ff !important;
+    color: #cccccc !important;
 }

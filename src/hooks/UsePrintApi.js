@@ -1,22 +1,22 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { printNotes, printTasks } from 'actions/PrintActions';
+import { printAlerts, printInstances } from 'actions/PrintActions';
 
 export function usePrintApi() {
     const dispatch = useDispatch();
 
-    const printNotesCallback = useCallback(
-        notes => dispatch(printNotes(notes)),
+    const printAlertsCallback = useCallback(
+        alerts => dispatch(printAlerts(alerts)),
         [dispatch]
     );
 
-    const printTasksCallback = useCallback(
-        tasks => dispatch(printTasks(tasks)),
+    const printInstancesCallback = useCallback(
+        instances => dispatch(printInstances(instances)),
         [dispatch]
     );
 
     return {
-        printNotes: printNotesCallback,
-        printTasks: printTasksCallback
+        printAlerts: printAlertsCallback,
+        printInstances: printInstancesCallback
     };
 }

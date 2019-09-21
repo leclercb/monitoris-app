@@ -1,25 +1,9 @@
 import uuid from 'uuid/v4';
 import moment from 'moment';
-import {
-    loadFromFile,
-    loadFromServer,
-    saveToFile
-} from 'actions/ActionUtils';
+import { loadFromServer } from 'actions/ActionUtils';
 import { updateProcess } from 'actions/ThreadActions';
 import Constants from 'constants/Constants';
 import { getObjectById } from 'selectors/ObjectSelectors';
-import { filterByStatic } from 'utils/CategoryUtils';
-
-export function loadObjectsFromFile(property, file) {
-    return async dispatch => {
-        const data = await dispatch(loadFromFile(property, file));
-        await dispatch(setObjects(property, data));
-    };
-}
-
-export function saveObjectsToFile(property, file, data) {
-    return saveToFile(property, file, filterByStatic(data));
-}
 
 export function loadObjectsFromServer(property, options, params) {
     return async dispatch => {
@@ -90,9 +74,11 @@ export function addObject(
             dispatch(updateProcess({
                 id: processId,
                 state: 'ERROR',
-                title: `Add "${object.title}" of type "${property}"`,
+                title: `Add "${object ? object.title : ''}" of type "${property}"`,
                 error: error.toString()
             }));
+
+            throw error;
         }
     };
 }
@@ -121,6 +107,8 @@ export function duplicateObject(property, object, options = {}) {
                 title: `Duplicate object(s) of type "${property}"`,
                 error: error.toString()
             }));
+
+            throw error;
         }
     };
 }
@@ -159,6 +147,8 @@ export function updateObject(property, object, options = {}) {
                 title: `Update "${object.title}" of type "${property}"`,
                 error: error.toString()
             }));
+
+            throw error;
         }
     };
 }
@@ -190,15 +180,8 @@ export function deleteObject(property, objectId, options = {}) {
                 title: `Remove object(s) of type "${property}"`,
                 error: error.toString()
             }));
-        }
-    };
-}
 
-export function cleanObjects(property) {
-    return async dispatch => {
-        await dispatch({
-            type: 'CLEAN_OBJECTS',
-            property
-        });
+            throw error;
+        }
     };
 }

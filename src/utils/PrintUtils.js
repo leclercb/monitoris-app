@@ -24,7 +24,7 @@ export function printDocument(title, orientation = 'p') {
     doc.setFontSize(14);
     doc.setFontType('bold');
     doc.setTextColor(14, 103, 196);
-    doc.text(50, 30, 'TaskUnifier');
+    doc.text(50, 30, 'RedisMon');
 
     // Title
     doc.setFontSize(14);

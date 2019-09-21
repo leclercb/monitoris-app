@@ -1,7 +1,7 @@
 export default {
-    color: '#0e67c4',
+    color: '#d2291f',
     selectionForegroundColor: '#ffffff',
-    selectionBackgroundColor: '#0e67c4',
+    selectionBackgroundColor: '#d2291f',
     fadeIconColor: '#e3ebf2',
     lightIconColor: '#bed5e6',
     disabledColor: '#cccccc',
@@ -15,9 +15,6 @@ export default {
     conditionTreeGroupOrActiveColor: '#d4d7e2',
     conditionTreeGroupNotColor: '#ffc8c5',
     conditionTreeGroupNotActiveColor: '#e3afac',
-    archivedColor: '#5e666d',
     defaultTaskTemplateColor: '#ffd632',
-    badgeColor: '#0e67c4',
-    calendarDateModeColor_startDate: '#32cd32',
-    calendarDateModeColor_dueDate: '#1e90ff'
+    badgeColor: '#d2291f'
 };

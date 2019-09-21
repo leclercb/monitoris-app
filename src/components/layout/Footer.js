@@ -8,7 +8,7 @@ function Footer() {
             <span>
                 <Logo size={12} />
                 <Spacer size={3} />
-                TaskUnifier &copy; 2019 Created by BL-IT
+                RedisMon &copy; 2019 Created by BL-IT
             </span>
         </React.Fragment>
     );
