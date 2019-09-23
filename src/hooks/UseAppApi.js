@@ -2,16 +2,16 @@ import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     loadData,
-    setCategoryManagerOptions,
     setEditingCell,
     setSettingManagerOptions,
+    setSelectedExplorerToolId,
 } from 'actions/AppActions';
 import { setSelectedView } from 'actions/SettingActions';
 import {
-    getCategoryManager,
     getEditingCell,
     getSettingManager,
-    isPro
+    isPro,
+    getSelectedExplorerToolId
 } from 'selectors/AppSelectors';
 import { getSelectedView } from 'selectors/SettingSelectors';
 
@@ -20,8 +20,8 @@ export function useAppApi() {
 
     const pro = useSelector(isPro);
     const selectedView = useSelector(getSelectedView);
+    const selectedExplorerToolId = useSelector(getSelectedExplorerToolId);
     const editingCell = useSelector(getEditingCell);
-    const categoryManager = useSelector(getCategoryManager);
     const settingManager = useSelector(getSettingManager);
 
     const loadDataCallback = useCallback(
@@ -34,13 +34,13 @@ export function useAppApi() {
         [dispatch]
     );
 
-    const setEditingCellCallback = useCallback(
-        (objectId, fieldId) => dispatch(setEditingCell(objectId, fieldId)),
+    const setSelectedExplorerToolIdCallback = useCallback(
+        toolId => dispatch(setSelectedExplorerToolId(toolId)),
         [dispatch]
     );
 
-    const setCategoryManagerOptionsCallback = useCallback(
-        options => dispatch(setCategoryManagerOptions(options)),
+    const setEditingCellCallback = useCallback(
+        (objectId, fieldId) => dispatch(setEditingCell(objectId, fieldId)),
         [dispatch]
     );
 
@@ -52,13 +52,13 @@ export function useAppApi() {
     return {
         pro,
         selectedView,
+        selectedExplorerToolId,
         editingCell,
-        categoryManager,
         settingManager,
         loadData: loadDataCallback,
         setSelectedView: setSelectedViewCallback,
+        setSelectedExplorerToolId: setSelectedExplorerToolIdCallback,
         setEditingCell: setEditingCellCallback,
-        setCategoryManagerOptions: setCategoryManagerOptionsCallback,
         setSettingManagerOptions: setSettingManagerOptionsCallback
     };
 }

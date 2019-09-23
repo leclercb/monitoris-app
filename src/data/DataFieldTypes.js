@@ -1,6 +1,4 @@
 import { getAlerts } from 'selectors/AlertSelectors';
-import { getInstances } from 'selectors/InstanceSelectors';
-import { getSeverities } from 'selectors/SeveritySelectors';
 import {
     compareBooleans,
     compareNumbers,
@@ -13,8 +11,10 @@ import {
     toStringBoolean,
     toStringNumber,
     toStringObject,
+    toStringObjects,
     toStringPassword
 } from 'utils/StringUtils';
+import { getSeverities } from 'data/DataSeverities';
 
 export function getFieldTypes() {
     return [
@@ -28,6 +28,7 @@ export function getFieldTypes() {
         'password',
         'select',
         'selectTags',
+        'severities',
         'severity',
         'star',
         'tags',
@@ -292,15 +293,15 @@ export function getFieldType(type, options) {
 
             break;
         }
-        case 'select': {
+        case 'severities': {
             configuration = {
-                title: 'Select',
+                title: 'Severities',
                 allowCreation: true,
                 width: 200,
                 alwaysInEdition: false,
                 valuePropName: 'value',
-                compare: (a, b) => compareStrings(a, b),
-                toString: value => toString(value),
+                compare: (a, b, state) => compareObjects(a, b, getSeverities()),
+                toString: (value, state) => toStringObjects(value, getSeverities()),
                 conditions: [
                     {
                         type: 'equal',
@@ -317,62 +318,43 @@ export function getFieldType(type, options) {
                         }
                     }
                 ],
-                conditionsFieldType: 'select',
-                options: [
-                    {
-                        id: 'values',
-                        title: 'Values',
-                        type: 'selectTags'
-                    }
-                ]
+                conditionsFieldType: 'severities',
+                options: []
             };
 
             break;
         }
-        case 'selectTags': {
+        case 'severity': {
             configuration = {
-                title: 'Select Tags',
+                title: 'Severity',
                 allowCreation: true,
                 width: 200,
                 alwaysInEdition: false,
                 valuePropName: 'value',
-                compare: () => 0,
-                toString: value => toStringArray(value),
+                compare: (a, b, state) => compareObjects(a, b, getSeverities()),
+                toString: (value, state) => toStringObject(value, getSeverities()),
                 conditions: [
                     {
-                        type: 'contain',
-                        title: 'Contains',
+                        type: 'equal',
+                        title: 'Equals',
                         apply: (conditionValue, objectValue) => {
-                            const taskTags = objectValue || [];
-                            const conditionTags = conditionValue || [];
-
-                            return conditionTags.every(conditionTag => taskTags.includes(conditionTag));
+                            return conditionValue === objectValue;
                         }
                     },
                     {
-                        type: 'notContain',
-                        title: 'Does not contain',
+                        type: 'notEqual',
+                        title: 'Does not equal',
                         apply: (conditionValue, objectValue) => {
-                            const taskTags = objectValue || [];
-                            const conditionTags = conditionValue || [];
-
-                            return !conditionTags.every(conditionTag => taskTags.includes(conditionTag));
+                            return conditionValue !== objectValue;
                         }
                     }
                 ],
-                conditionsFieldType: 'selectTags',
-                options: [
-                    {
-                        id: 'values',
-                        title: 'Values',
-                        type: 'selectTags'
-                    }
-                ]
+                conditionsFieldType: 'severity',
+                options: []
             };
 
             break;
         }
-
         case 'star': {
             configuration = {
                 title: 'Star',

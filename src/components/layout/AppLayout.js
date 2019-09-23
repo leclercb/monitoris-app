@@ -2,7 +2,6 @@ import React from 'react';
 import { Layout, Spin } from 'antd';
 import { useSelector } from 'react-redux';
 import AlertView from 'components/alerts/views/AlertView';
-import ModalCategoryManager from 'components/categories/ModalCategoryManager';
 import ExplorerView from 'components/explorer/views/ExplorerView';
 import InstanceView from 'components/instances/views/InstanceView';
 import Header from 'components/layout/Header';
@@ -33,7 +32,6 @@ function AppLayout() {
         <React.Fragment>
             <NotificationManager />
             <ModalThreadManager />
-            <ModalCategoryManager />
             <ModalSettingManager />
             <Spin style={{ minHeight: '100%', height: '100%' }} spinning={busy}>
                 <Layout style={{ minHeight: '100%', height: '100%' }}>

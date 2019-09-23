@@ -9,6 +9,10 @@ import ColorPicker from 'components/common/ColorPicker';
 import StarCheckbox from 'components/common/StarCheckbox';
 import InstanceTitle from 'components/instances/common/InstanceTitle';
 import InstanceSelect from 'components/instances/common/InstanceSelect';
+import SeveritiesSelect from 'components/severities/SeveritiesSelect';
+import SeveritiesTitle from 'components/severities/SeveritiesTitle';
+import SeverityTitle from 'components/severities/SeverityTitle';
+import SeveritySelect from 'components/severities/SeveritySelect';
 import { toStringPassword } from 'utils/StringUtils';
 
 export function getDefaultGetValueFromEvent(e) {
@@ -127,67 +131,32 @@ export function getFieldComponents(type, options) {
 
             break;
         }
-        case 'select': {
-            let values = options && options.values ? options.values : [];
-            values = Array.isArray(values) ? values : [values];
-
+        case 'severities': {
             configuration = {
                 render: value => (
-                    value ? value : <span>&nbsp;</span>
+                    <SeveritiesTitle severityIds={value} />
                 ),
                 input: props => (
-                    <Select
+                    <SeveritiesSelect
                         onBlur={props.onCommit}
                         dropdownMatchSelectWidth={false}
-                        {...removeExtraProps(props)}>
-                        {values.map(value => {
-                            value = typeof value === 'object' ? value : {
-                                title: value,
-                                value
-                            };
-
-                            return (
-                                <Select.Option key={value.value} value={value.value}>
-                                    {value.title}
-                                </Select.Option>
-                            );
-                        })}
-                    </Select>
+                        {...removeExtraProps(props)} />
                 )
             };
 
             break;
         }
-        case 'selectTags': {
-            let values = options && options.values ? options.values : [];
-            values = Array.isArray(values) ? values : [values];
-
+        case 'severity': {
             configuration = {
-                render: values => (
-                    values ? values.map(value => (<Tag key={value}>{value}</Tag>)) : <span>&nbsp;</span>
+                render: value => (
+                    <SeverityTitle severityId={value} />
                 ),
-                input: props => {
-                    return (
-                        <Select
-                            onBlur={props.onCommit}
-                            dropdownMatchSelectWidth={false}
-                            mode="tags"
-                            {...removeExtraProps(props)}>
-                            {values.map(value => {
-                                value = typeof value === 'object' ? value : {
-                                    title: value,
-                                    value
-                                };
-
-                                return (
-                                    <Select.Option key={value.value} value={value.value}>
-                                        {value.title}
-                                    </Select.Option>
-                                );
-                            })}
-                        </Select>
-                    );
-                }
+                input: props => (
+                    <SeveritySelect
+                        onBlur={props.onCommit}
+                        dropdownMatchSelectWidth={false}
+                        {...removeExtraProps(props)} />
+                )
             };
 
             break;

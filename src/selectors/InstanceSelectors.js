@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { getSelectedInstanceId } from 'selectors/AppSelectors';
+import { getSelectedInstanceId, getSelectedExplorerInstanceId } from 'selectors/AppSelectors';
 import { compareStrings } from 'utils/CompareUtils';
 
 export const getInstances = state => state.instances;
@@ -22,7 +22,15 @@ export const getInstanceSelector = () => createSelector(
 export const getSelectedInstance = createSelector(
     getInstances,
     getSelectedInstanceId,
-    (instances, selectedInstanceId) => {
-        return instances.find(instance => instance.id === selectedInstanceId);
+    (instances, instanceId) => {
+        return instances.find(instance => instance.id === instanceId);
+    }
+);
+
+export const getSelectedExplorerInstance = createSelector(
+    getInstances,
+    getSelectedExplorerInstanceId,
+    (instances, instanceId) => {
+        return instances.find(instance => instance.id === instanceId);
     }
 );

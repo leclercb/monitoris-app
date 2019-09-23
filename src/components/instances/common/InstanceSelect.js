@@ -6,7 +6,7 @@ import { useInstanceApi } from 'hooks/UseInstanceApi';
 
 export const InstanceSelect = React.forwardRef(function InstanceSelect(props, ref) {
     const instanceApi = useInstanceApi();
-    const value = instanceApi.instances.find(instance => instance.id === props.value) ? props.value : null;
+    const value = instanceApi.instances.find(instance => instance.id === props.value) ? props.value : undefined;
 
     return (
         <Select ref={ref} allowClear={true} {...props} value={value}>

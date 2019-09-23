@@ -1,16 +1,19 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedInstanceId } from 'actions/AppActions';
-import { addInstance, deleteInstance, duplicateInstance, updateInstance } from 'actions/InstanceActions';
-import { getSelectedInstanceId } from 'selectors/AppSelectors';
-import { getInstances, getSelectedInstance } from 'selectors/InstanceSelectors';
+import { setSelectedInstanceId, setSelectedExplorerInstanceId } from 'actions/AppActions';
+import { addInstance, deleteInstance, duplicateInstance, updateInstance, executeCommand } from 'actions/InstanceActions';
+import { getSelectedInstanceId, getSelectedExplorerInstanceId } from 'selectors/AppSelectors';
+import { getInstances, getSelectedInstance, getSelectedExplorerInstance } from 'selectors/InstanceSelectors';
 
 export function useInstanceApi() {
     const dispatch = useDispatch();
     const instances = useSelector(getInstances);
 
     const selectedInstanceId = useSelector(getSelectedInstanceId);
+    const selectedExplorerInstanceId = useSelector(getSelectedExplorerInstanceId);
+
     const selectedInstance = useSelector(getSelectedInstance);
+    const selectedExplorerInstance = useSelector(getSelectedExplorerInstance);
 
     const addInstanceCallback = useCallback(
         instance => dispatch(addInstance(instance)),
@@ -33,18 +36,32 @@ export function useInstanceApi() {
     );
 
     const setSelectedInstanceIdCallback = useCallback(
-        noteIds => dispatch(setSelectedInstanceId(noteIds)),
+        instanceId => dispatch(setSelectedInstanceId(instanceId)),
+        [dispatch]
+    );
+
+    const setSelectedExplorerInstanceIdCallback = useCallback(
+        instanceId => dispatch(setSelectedExplorerInstanceId(instanceId)),
+        [dispatch]
+    );
+
+    const executeCommandCallback = useCallback(
+        (instanceId, command) => dispatch(executeCommand(instanceId, command)),
         [dispatch]
     );
 
     return {
         instances,
         selectedInstanceId,
+        selectedExplorerInstanceId,
         selectedInstance,
+        selectedExplorerInstance,
         addInstance: addInstanceCallback,
         duplicateInstance: duplicateInstanceCallback,
         updateInstance: updateInstanceCallback,
         deleteInstance: deleteInstanceCallback,
-        setSelectedInstanceId: setSelectedInstanceIdCallback
+        setSelectedInstanceId: setSelectedInstanceIdCallback,
+        setSelectedExplorerInstanceId: setSelectedExplorerInstanceIdCallback,
+        executeCommand: executeCommandCallback
     };
 }

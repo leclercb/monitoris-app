@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'antd';
-import { getSeverityFields } from 'data/DataSeverityFields';
-import { getInputForType } from 'data/DataFieldComponents';
-import { getValuePropNameForType } from 'data/DataFieldTypes';
-import { SeverityPropType } from 'proptypes/SeverityPropTypes';
-import { getDefaultFormItemLayout, onCommitForm } from 'utils/FormUtils';
+import { getInstanceFields } from './node_modules/data/DataInstanceFields';
+import { getInputForType } from './node_modules/data/DataFieldComponents';
+import { getValuePropNameForType } from './node_modules/data/DataFieldTypes';
+import { InstancePropType } from './node_modules/proptypes/InstancePropTypes';
+import { getDefaultFormItemLayout, onCommitForm } from './node_modules/utils/FormUtils';
 
-function SeverityForm(props) {
-    const fields = getSeverityFields();
+function InstanceForm(props) {
+    const fields = getInstanceFields();
 
     const { getFieldDecorator } = props.form;
 
@@ -20,13 +20,13 @@ function SeverityForm(props) {
                 <Form.Item key={field.id} label={field.title}>
                     {getFieldDecorator(field.id, {
                         valuePropName: getValuePropNameForType(field.type),
-                        initialValue: props.severity[field.id]
+                        initialValue: props.instance[field.id]
                     })(
                         getInputForType(
                             field.type,
                             field.options,
                             {
-                                onCommit: () => onCommitForm(props.form, props.severity, props.updateSeverity)
+                                onCommit: () => onCommitForm(props.form, props.instance, props.updateInstance)
                             })
                     )}
                 </Form.Item>
@@ -35,10 +35,10 @@ function SeverityForm(props) {
     );
 }
 
-SeverityForm.propTypes = {
+InstanceForm.propTypes = {
     form: PropTypes.object.isRequired,
-    severity: SeverityPropType.isRequired,
-    updateSeverity: PropTypes.func.isRequired
+    instance: InstancePropType.isRequired,
+    updateInstance: PropTypes.func.isRequired
 };
 
-export default Form.create({ name: 'severity' })(SeverityForm);
+export default Form.create({ name: 'instance' })(InstanceForm);

@@ -42,10 +42,6 @@ function Header() {
         printApi.printInstances(instanceApi.notes);
     };
 
-    const onSetCategoryManagerVisible = () => {
-        appApi.setCategoryManagerOptions({ visible: true });
-    };
-
     const onSetSettingsVisible = () => {
         appApi.setSettingManagerOptions({ visible: true });
     };
@@ -121,7 +117,7 @@ function Header() {
                 : null}
             <Spacer />
             <Spacer />
-            {createButton('cubes', 'Category Manager', onSetCategoryManagerVisible)}
+            {createButton('cog', 'Settings', onSetSettingsVisible)}
         </LeftRight>
     );
 }

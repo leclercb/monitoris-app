@@ -2,7 +2,6 @@ import uuid from 'uuid/v4';
 import { loadAlertsFromServer } from 'actions/AlertActions';
 import { loadInstancesFromServer } from 'actions/InstanceActions';
 import { loadSettingsFromServer } from 'actions/SettingActions';
-import { loadSeveritiesFromServer } from 'actions/SeverityActions';
 import { checkIsBusy, updateProcess } from 'actions/ThreadActions';
 import { merge } from 'utils/ObjectUtils';
 
@@ -34,8 +33,7 @@ export function _loadDataFromServer(options) {
         try {
             const promises = [
                 dispatch(loadAlertsFromServer()),
-                dispatch(loadInstancesFromServer()),
-                dispatch(loadSeveritiesFromServer())
+                dispatch(loadInstancesFromServer())
             ];
 
             if (!options.skipSettings) {
@@ -89,19 +87,28 @@ export function setSelectedInstanceId(instanceId) {
     };
 }
 
-export function setJoyrideOptions(options) {
+export function setSelectedExplorerInstanceId(instanceId) {
     return async dispatch => {
         dispatch({
-            type: 'SET_JOYRIDE_OPTIONS',
-            ...options
+            type: 'SET_SELECTED_EXPLORER_INSTANCE_ID',
+            instanceId
         });
     };
 }
 
-export function setCategoryManagerOptions(options) {
+export function setSelectedExplorerToolId(toolId) {
     return async dispatch => {
         dispatch({
-            type: 'SET_CATEGORY_MANAGER_OPTIONS',
+            type: 'SET_SELECTED_EXPLORER_TOOL_ID',
+            toolId
+        });
+    };
+}
+
+export function setJoyrideOptions(options) {
+    return async dispatch => {
+        dispatch({
+            type: 'SET_JOYRIDE_OPTIONS',
             ...options
         });
     };
