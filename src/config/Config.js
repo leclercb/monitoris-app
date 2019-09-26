@@ -20,7 +20,7 @@ const config = {
     },
     dev: {
         apiUrl: 'https://api-dev.redismon.app',
-        proxyUrl: 'https://proxy-dev.redismon.app',
+        proxyUrl: 'http://development.ibg3w55kp5.eu-west-1.elasticbeanstalk.com',
         authUrl: 'https://auth-dev.redismon.app',
         cloudUrl: 'https://www-dev.redismon.app/cloud',
         maintenanceUrl: 'https://www-dev.redismon.app/maintenance',
