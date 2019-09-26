@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Empty, Tree } from 'antd';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
+import { parseRedisString } from 'utils/FormatUtils';
 
 function GetInfoTool() {
     const instanceApi = useInstanceApi();
@@ -11,8 +12,8 @@ function GetInfoTool() {
     useEffect(() => {
         const getInfo = async () => {
             if (instanceId) {
-                const info = await instanceApi.executeCommand(instanceId, 'INFO');
-                setInfo(info);
+                const info = await instanceApi.getInfo(instanceId);
+                setInfo(parseRedisString(info));
             }
         };
 

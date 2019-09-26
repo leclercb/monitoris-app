@@ -11,6 +11,5 @@ export default combineReducers({
     instances: Objects('instances'),
     session: Session(),
     settings: Settings(),
-    severities: Objects('severities'),
     thread: Thread()
 });

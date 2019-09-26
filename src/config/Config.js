@@ -4,6 +4,7 @@ const config = {
     },
     local: {
         apiUrl: 'http://localhost:2000',
+        proxyUrl: 'http://localhost:5000',
         authUrl: 'http://localhost:2300',
         cloudUrl: 'http://localhost:2100/cloud',
         maintenanceUrl: 'http://localhost:2100/maintenance',
@@ -19,6 +20,7 @@ const config = {
     },
     dev: {
         apiUrl: 'https://api-dev.redismon.app',
+        proxyUrl: 'https://proxy-dev.redismon.app',
         authUrl: 'https://auth-dev.redismon.app',
         cloudUrl: 'https://www-dev.redismon.app/cloud',
         maintenanceUrl: 'https://www-dev.redismon.app/maintenance',
@@ -34,6 +36,7 @@ const config = {
     },
     prod: {
         apiUrl: 'https://api.redismon.app',
+        proxyUrl: 'https://proxy.redismon.app',
         authUrl: 'https://auth.redismon.app',
         cloudUrl: 'https://www.redismon.app/cloud',
         maintenanceUrl: 'https://www.redismon.app/maintenance',

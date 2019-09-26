@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedInstanceId, setSelectedExplorerInstanceId } from 'actions/AppActions';
-import { addInstance, deleteInstance, duplicateInstance, updateInstance, executeCommand } from 'actions/InstanceActions';
+import { addInstance, deleteInstance, duplicateInstance, updateInstance, executeCommand, getStatus, getInfo } from 'actions/InstanceActions';
 import { getSelectedInstanceId, getSelectedExplorerInstanceId } from 'selectors/AppSelectors';
 import { getInstances, getSelectedInstance, getSelectedExplorerInstance } from 'selectors/InstanceSelectors';
 
@@ -45,8 +45,18 @@ export function useInstanceApi() {
         [dispatch]
     );
 
+    const getStatusCallback = useCallback(
+        instanceId => dispatch(getStatus(instanceId)),
+        [dispatch]
+    );
+
+    const getInfoCallback = useCallback(
+        instanceId => dispatch(getInfo(instanceId)),
+        [dispatch]
+    );
+
     const executeCommandCallback = useCallback(
-        (instanceId, command) => dispatch(executeCommand(instanceId, command)),
+        (instanceId, command, parameters) => dispatch(executeCommand(instanceId, command, parameters)),
         [dispatch]
     );
 
@@ -62,6 +72,8 @@ export function useInstanceApi() {
         deleteInstance: deleteInstanceCallback,
         setSelectedInstanceId: setSelectedInstanceIdCallback,
         setSelectedExplorerInstanceId: setSelectedExplorerInstanceIdCallback,
+        getStatus: getStatusCallback,
+        getInfo: getInfoCallback,
         executeCommand: executeCommandCallback
     };
 }

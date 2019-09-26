@@ -1,4 +1,8 @@
 const App = () => (state = {
+    editingCell: {
+        objectId: null,
+        fieldId: null
+    },
     selectedAlertId: null,
     selectedInstanceId: null,
     selectedExplorerInstanceId: null,

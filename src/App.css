@@ -117,15 +117,6 @@ ant-input:focus {
     border-color: transparent;
 }
 
-/* React RTE */
-
-.rte-editor {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
-    font-size: 14px !important;
-    overflow: auto !important;
-    max-height: calc(100% - 55px) !important;
-}
-
 /* React Virtualized */
 
 .ReactVirtualized__Table__Grid {
@@ -150,7 +141,7 @@ ant-input:focus {
     margin-top: 3px !important;
 }
 
-/* TaskUnifier */
+/* RedisMon */
 
 .selected-list-item {
     background-color: #d2291f;
