@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Divider, Form } from 'antd';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import InstanceForm from 'components/instances/common/InstanceForm';
 import { useAppApi } from 'hooks/UseAppApi';
@@ -11,21 +12,28 @@ function InstanceEdition(props) {
     const instanceApi = useInstanceApi();
 
     const [status, setStatus] = useState(null);
+    const [refreshDate, setRefreshDate] = useState('');
 
-    useEffect(() => {
-        const getStatus = async () => {
-            const status = await instanceApi.getStatus();
+    const getStatus = async () => {
+        try {
+            const status = await instanceApi.getStatus(props.instance.id);
             setStatus(status);
-        };
-
-        getStatus();
-    }, [props.instance]);
+            setRefreshDate(moment().toISOString());
+        } catch (e) {
+            setStatus(null);
+            setRefreshDate('');
+        }
+    };
 
     const goToExplorer = () => {
         instanceApi.setSelectedExplorerInstanceId(props.instance.id);
         appApi.setSelectedExplorerToolId('info');
         appApi.setSelectedView('explorer');
     };
+
+    useEffect(() => {
+        getStatus();
+    }, [props.instance.id]);
 
     return (
         <React.Fragment>
@@ -36,7 +44,13 @@ function InstanceEdition(props) {
             {status && status.connected && (
                 <Alert
                     message="Connected"
-                    description="The instance is currently connected."
+                    description={(
+                        <div>
+                            The instance is currently connected.
+                            <br />
+                            Refreshed on: {refreshDate}
+                        </div>
+                    )}
                     type="success"
                     showIcon
                 />
@@ -44,7 +58,13 @@ function InstanceEdition(props) {
             {status && !status.connected && (
                 <Alert
                     message="Disconnected"
-                    description="The instance is currently disconnected."
+                    description={(
+                        <div>
+                            The instance is currently disconnected.
+                            <br />
+                            Refreshed on: {refreshDate}
+                        </div>
+                    )}
                     type="warning"
                     showIcon
                 />
@@ -58,7 +78,10 @@ function InstanceEdition(props) {
                 />
             )}
             <Divider>Actions</Divider>
-            <Button onClick={() => goToExplorer()} type="primary" block>
+            <Button onClick={() => getStatus()} type="dashed" style={{ marginBottom: 20 }} block>
+                Refresh status
+            </Button>
+            <Button onClick={() => goToExplorer()} type="dashed" block>
                 Go to the explorer
             </Button>
         </React.Fragment>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Empty } from 'antd';
 import SplitPane from 'react-split-pane';
-import InstanceForm from 'components/instances/common/InstanceForm';
+import InstanceEdition from 'components/instances/common/InstanceEdition';
 import InstanceSider from 'components/instances/sider/InstanceSider';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
@@ -26,7 +26,7 @@ function InstanceView() {
             <div style={{ height: '100%', padding: 25 }}>
                 <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
                     {instanceApi.selectedInstance ? (
-                        <InstanceForm key={instanceApi.selectedInstanceId} instance={instanceApi.selectedInstance} updateInstance={instanceApi.updateInstance} />
+                        <InstanceEdition key={instanceApi.selectedInstanceId} instance={instanceApi.selectedInstance} updateInstance={instanceApi.updateInstance} />
                     ) : <Empty description="Please select an alert" />}
                 </div>
             </div>

@@ -44,7 +44,7 @@ export function getInstanceFields() {
             static: true,
             id: 'secret',
             title: 'Secret',
-            type: 'secret',
+            type: 'password',
             editable: true
         }
     ]);
