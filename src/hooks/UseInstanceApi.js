@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedInstanceId, setSelectedExplorerInstanceId } from 'actions/AppActions';
-import { addInstance, deleteInstance, duplicateInstance, updateInstance, executeCommand, getStatus, getInfo } from 'actions/InstanceActions';
-import { getSelectedInstanceId, getSelectedExplorerInstanceId } from 'selectors/AppSelectors';
-import { getInstances, getSelectedInstance, getSelectedExplorerInstance } from 'selectors/InstanceSelectors';
+import { setSelectedExplorerInstanceId, setSelectedInstanceId } from 'actions/AppActions';
+import { addInstance, deleteInstance, duplicateInstance, executeCommand, getInfo, getStatus, updateInstance } from 'actions/InstanceActions';
+import { getSelectedExplorerInstanceId, getSelectedInstanceId } from 'selectors/AppSelectors';
+import { getInstances, getSelectedExplorerInstance, getSelectedInstance } from 'selectors/InstanceSelectors';
 
 export function useInstanceApi() {
     const dispatch = useDispatch();

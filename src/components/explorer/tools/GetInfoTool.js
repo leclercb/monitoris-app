@@ -38,7 +38,7 @@ function GetInfoTool() {
                 }
 
                 return (<Tree.TreeNode key={key} title={`${key} = ${value}`} />);
-            })
+            });
         }
 
         return (<Tree.TreeNode title={object} />);

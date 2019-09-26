@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { getSelectedInstanceId, getSelectedExplorerInstanceId } from 'selectors/AppSelectors';
+import { getSelectedExplorerInstanceId, getSelectedInstanceId } from 'selectors/AppSelectors';
 import { compareStrings } from 'utils/CompareUtils';
 
 export const getInstances = state => state.instances;

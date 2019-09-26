@@ -5,7 +5,7 @@ function Logo({ size, style }) {
     return (
         <img
             alt="Logo"
-            src={`resources/images/logo.png`}
+            src={'resources/images/logo.png'}
             style={{
                 ...style,
                 width: size,

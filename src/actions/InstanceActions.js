@@ -49,7 +49,7 @@ export function getStatus(instanceId) {
         dispatch(updateProcess({
             id: processId,
             state: 'RUNNING',
-            title: `Get status from server`
+            title: 'Get status from server'
         }));
 
         try {
@@ -88,7 +88,7 @@ export function getInfo(instanceId) {
         dispatch(updateProcess({
             id: processId,
             state: 'RUNNING',
-            title: `Get info from server`
+            title: 'Get info from server'
         }));
 
         try {
@@ -127,7 +127,7 @@ export function executeCommand(instanceId, command, parameters) {
         dispatch(updateProcess({
             id: processId,
             state: 'RUNNING',
-            title: `Execute command on server`
+            title: 'Execute command on server'
         }));
 
         try {

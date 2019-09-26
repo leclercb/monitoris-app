@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     loadData,
     setEditingCell,
-    setSettingManagerOptions,
     setSelectedExplorerToolId,
+    setSettingManagerOptions
 } from 'actions/AppActions';
 import { setSelectedView } from 'actions/SettingActions';
 import {
     getEditingCell,
+    getSelectedExplorerToolId,
     getSettingManager,
-    isPro,
-    getSelectedExplorerToolId
+    isPro
 } from 'selectors/AppSelectors';
 import { getSelectedView } from 'selectors/SettingSelectors';
 

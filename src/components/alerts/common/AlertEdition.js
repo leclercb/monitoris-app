@@ -1,6 +1,6 @@
 import React from 'react';
+import { Divider, Form } from 'antd';
 import PropTypes from 'prop-types';
-import { Form, Divider } from 'antd';
 import FilterConditionTree from 'components/filters/FilterConditionTree';
 import AlertForm from 'components/alerts/common/AlertForm';
 import NotificationTable from 'components/alerts/common/NotificationTable';
