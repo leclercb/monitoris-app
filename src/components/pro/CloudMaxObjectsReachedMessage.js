@@ -3,7 +3,7 @@ import { Button, Empty, message } from 'antd';
 import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
 import { getConfig } from 'config/Config';
-import { openExternalLink } from 'utils/ElectronUtils';
+import { openExternalLink } from 'utils/LinkUtils';
 
 export function CloudMaxObjectsReachedMessage({ session, buyItem }) {
     const onClick = () => {
@@ -28,6 +28,6 @@ export function CloudMaxObjectsReachedMessage({ session, buyItem }) {
 CloudMaxObjectsReachedMessage.propTypes = {
     session: PropTypes.object.isRequired,
     buyItem: PropTypes.func.isRequired
-}
+};
 
 export default CloudMaxObjectsReachedMessage;

@@ -14,7 +14,7 @@ export function printDocument(title, orientation = 'p') {
 
     // Blue rectangle
     doc.setDrawColor(0);
-    doc.setFillColor(14, 103, 196);
+    doc.setFillColor(210, 41, 31);
     doc.rect(0, 50, doc.internal.pageSize.getWidth(), 10, 'F');
 
     // TaskUnifier Logo
@@ -23,7 +23,7 @@ export function printDocument(title, orientation = 'p') {
     // TaskUnifier
     doc.setFontSize(14);
     doc.setFontType('bold');
-    doc.setTextColor(14, 103, 196);
+    doc.setTextColor(210, 41, 31);
     doc.text(50, 30, 'RedisMon');
 
     // Title
@@ -64,7 +64,7 @@ export function printForm(doc, title, fields, record, state, subLevel = 0) {
         doc.setFont('helvetica');
         doc.setFontSize(11);
         doc.setFontType('normal');
-        doc.setTextColor(0, 140, 75);
+        doc.setTextColor(210, 41, 31);
         doc.text(title, 20, startY + 30);
     }
 
@@ -84,7 +84,7 @@ export function printForm(doc, title, fields, record, state, subLevel = 0) {
             headStyles: {
                 fontSize: subLevel === 0 ? 8 : 7,
                 cellPadding: subLevel === 0 ? 3 : [1, 3, 1, 3],
-                fillColor: subLevel === 0 ? [0, 140, 75] : [170, 170, 170]
+                fillColor: subLevel === 0 ? [210, 41, 31] : [170, 170, 170]
             },
             body: getFormData(fields, record, state),
             bodyStyles: {
@@ -118,7 +118,7 @@ export function printTable(doc, title, fields, records, state, subLevel = 0, pri
         doc.setFont('helvetica');
         doc.setFontSize(11);
         doc.setFontType('normal');
-        doc.setTextColor(0, 140, 75);
+        doc.setTextColor(210, 41, 31);
         doc.text(title, 20, startY + 30);
     }
 
@@ -136,7 +136,7 @@ export function printTable(doc, title, fields, records, state, subLevel = 0, pri
         headStyles: {
             fontSize: subLevel === 0 ? 8 : 7,
             cellPadding: subLevel === 0 ? 3 : [1, 3, 1, 3],
-            fillColor: subLevel === 0 ? [14, 103, 196] : [170, 170, 170]
+            fillColor: subLevel === 0 ? [210, 41, 31] : [170, 170, 170]
         },
         bodyStyles: {
             fontSize: 7

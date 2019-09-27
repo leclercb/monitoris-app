@@ -3,11 +3,9 @@ import { Input, Menu, Tooltip } from 'antd';
 import Icon from 'components/common/Icon';
 import LeftRight from 'components/common/LeftRight';
 import ObjectMenuItem from 'components/sider/ObjectMenuItem';
-import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 
 function InstanceSider() {
-    const appApi = useAppApi();
     const instanceApi = useInstanceApi();
 
     const [openKeys, setOpenKeys] = useState(['instances']);

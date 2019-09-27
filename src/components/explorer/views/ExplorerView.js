@@ -22,7 +22,7 @@ function ExplorerView() {
             default:
                 return (<Empty />);
         }
-    }
+    };
 
     return (
         <SplitPane

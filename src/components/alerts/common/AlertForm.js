@@ -1,41 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Divider } from 'antd';
-import FilterConditionTree from 'components/filters/FilterConditionTree';
-import FilterForm from 'components/filters/FilterForm';
-import NotificationTable from 'components/alerts/common/NotificationTable';
-import { getAlertNotificationFields } from 'data/DataAlertNotificationFields';
+import { Form } from 'antd';
+import { getAlertFields } from 'data/DataAlertFields';
+import { getInputForType } from 'data/DataFieldComponents';
+import { getValuePropNameForType } from 'data/DataFieldTypes';
 import { AlertPropType } from 'proptypes/AlertPropTypes';
-import { getRedisFields } from 'data/DataRedisFields';
+import { getDefaultFormItemLayout, onCommitForm } from 'utils/FormUtils';
 
 function AlertForm(props) {
-    const onUpdateNotifications = notifications => {
-        props.updateAlert({
-            ...props.alert,
-            notifications
-        });
-    };
+    const fields = getAlertFields();
+
+    const { getFieldDecorator } = props.form;
+
+    const formItemLayout = getDefaultFormItemLayout();
 
     return (
-        <React.Fragment>
-            <FilterForm
-                filter={props.alert}
-                updateFilter={props.updateAlert} />
-            <Divider>Filters</Divider>
-            <FilterConditionTree
-                filter={props.alert}
-                context={{
-                    fields: getRedisFields()
-                }}
-                updateFilter={props.updateAlert} />
-            <Divider>Notifications</Divider>
-            <NotificationTable
-                notifications={props.alert.notifications || []}
-                notificationFields={getAlertNotificationFields()}
-                updateNotifications={onUpdateNotifications}
-                orderSettingPrefix="alertNotificationColumnOrder_"
-                widthSettingPrefix="alertNotificationColumnWidth_" />
-        </React.Fragment>
+        <Form {...formItemLayout}>
+            {fields.filter(field => field.visible !== false).map(field => (
+                <Form.Item key={field.id} label={field.title}>
+                    {getFieldDecorator(field.id, {
+                        valuePropName: getValuePropNameForType(field.type),
+                        initialValue: props.alert[field.id]
+                    })(
+                        getInputForType(
+                            field.type,
+                            field.options,
+                            {
+                                disabled: !field.editable,
+                                onCommit: () => onCommitForm(props.form, props.alert, props.updateAlert)
+                            })
+                    )}
+                </Form.Item>
+            ))}
+        </Form>
     );
 }
 

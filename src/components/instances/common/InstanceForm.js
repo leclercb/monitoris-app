@@ -26,6 +26,7 @@ function InstanceForm(props) {
                             field.type,
                             field.options,
                             {
+                                readOnly: !field.editable,
                                 onCommit: () => onCommitForm(props.form, props.instance, props.updateInstance)
                             })
                     )}

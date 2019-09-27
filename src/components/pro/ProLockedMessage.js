@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
 import { getConfig } from 'config/Config';
 import { useSessionApi } from 'hooks/UseSessionApi';
-import { openExternalLink } from 'utils/ElectronUtils';
+import { openExternalLink } from 'utils/LinkUtils';
 
 export function ProLockedMessage({ info }) {
     const sessionApi = useSessionApi();

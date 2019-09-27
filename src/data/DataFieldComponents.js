@@ -1,7 +1,7 @@
 /* eslint react/display-name: 0 react/prop-types: 0 */
 
 import React from 'react';
-import { Checkbox, Input, InputNumber, Select, Tag } from 'antd';
+import { Checkbox, Input, InputNumber, Select } from 'antd';
 import { getFieldType } from 'data/DataFieldTypes';
 import AlertTitle from 'components/alerts/common/AlertTitle';
 import AlertSelect from 'components/alerts/common/AlertSelect';

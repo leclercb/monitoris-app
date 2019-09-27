@@ -4,10 +4,8 @@ import Icon from 'components/common/Icon';
 import LeftRight from 'components/common/LeftRight';
 import ObjectMenuItem from 'components/sider/ObjectMenuItem';
 import { useAlertApi } from 'hooks/UseAlertApi';
-import { useAppApi } from 'hooks/UseAppApi';
 
 function AlertSider() {
-    const appApi = useAppApi();
     const alertApi = useAlertApi();
 
     const [openKeys, setOpenKeys] = useState(['alerts']);

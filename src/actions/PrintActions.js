@@ -1,11 +1,13 @@
 import uuid from 'uuid/v4';
-import { updateProcess } from 'actions/ThreadActions';
 import { printDocument, printTable } from 'utils/PrintUtils';
+import { getAlertFields } from 'data/DataAlertFields';
+import { updateProcess } from 'actions/ThreadActions';
+import { getInstanceFields } from 'data/DataInstanceFields';
 
 export function printAlerts(alerts) {
     return (dispatch, getState) => {
         const state = getState();
-        const fields = [];
+        const fields = getAlertFields();
 
         return printObjects(
             dispatch,
@@ -21,7 +23,7 @@ export function printAlerts(alerts) {
 export function printInstances(instances) {
     return (dispatch, getState) => {
         const state = getState();
-        const fields = [];
+        const fields = getInstanceFields();
 
         return printObjects(
             dispatch,

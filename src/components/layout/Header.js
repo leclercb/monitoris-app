@@ -26,7 +26,7 @@ function Header() {
     };
 
     const onPrintAlerts = () => {
-        printApi.printAlerts(alertApi.notes);
+        printApi.printAlerts(alertApi.alerts);
     };
 
     const onAddInstance = async () => {
@@ -39,7 +39,7 @@ function Header() {
     };
 
     const onPrintInstances = () => {
-        printApi.printInstances(instanceApi.notes);
+        printApi.printInstances(instanceApi.instances);
     };
 
     const onSetSettingsVisible = () => {
@@ -82,9 +82,9 @@ function Header() {
         )}>
             <Button.Group style={{ marginRight: 50 }}>
                 <Button
-                    type={appApi.selectedView === 'explorer' ? 'dashed' : 'default'}
-                    onClick={onShowExplorerContent}>
-                    <Icon icon="tasks" text="Explorer" />
+                    type={appApi.selectedView === 'instance' ? 'dashed' : 'default'}
+                    onClick={onShowInstanceContent}>
+                    <Icon icon="book" text="Instances" />
                 </Button>
                 <Button
                     type={appApi.selectedView === 'alert' ? 'dashed' : 'default'}
@@ -92,9 +92,9 @@ function Header() {
                     <Icon icon="calendar-alt" text="Alerts" />
                 </Button>
                 <Button
-                    type={appApi.selectedView === 'instance' ? 'dashed' : 'default'}
-                    onClick={onShowInstanceContent}>
-                    <Icon icon="book" text="Instances" />
+                    type={appApi.selectedView === 'explorer' ? 'dashed' : 'default'}
+                    onClick={onShowExplorerContent}>
+                    <Icon icon="tasks" text="Explorer" />
                 </Button>
             </Button.Group>
             {appApi.selectedView === 'alert' ?
