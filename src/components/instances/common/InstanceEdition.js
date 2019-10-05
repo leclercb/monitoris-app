@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Button, Divider, Form } from 'antd';
+import { Alert, Button, Col, Divider, Form, Row } from 'antd';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import Icon from 'components/common/Icon';
 import InstanceForm from 'components/instances/common/InstanceForm';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
@@ -78,12 +79,18 @@ function InstanceEdition(props) {
                 />
             )}
             <Divider>Actions</Divider>
-            <Button onClick={() => getStatus()} type="dashed" style={{ marginBottom: 20 }} block>
-                Refresh status
-            </Button>
-            <Button onClick={() => goToExplorer()} type="dashed" block>
-                Go to the explorer
-            </Button>
+            <Row gutter={20}>
+                <Col span={12}>
+                    <Button onClick={() => getStatus()} type="dashed" style={{ height: 50 }} block>
+                        <Icon icon="sync-alt" text="Refresh status" />
+                    </Button>
+                </Col>
+                <Col span={12}>
+                    <Button onClick={() => goToExplorer()} type="dashed" style={{ height: 50 }} block>
+                        <Icon icon="search" text="Go to the explorer" />
+                    </Button>
+                </Col>
+            </Row>
         </React.Fragment>
     );
 }

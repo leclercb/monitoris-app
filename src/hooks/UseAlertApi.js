@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addAlert, deleteAlert, duplicateAlert, updateAlert } from 'actions/AlertActions';
+import { addAlert, deleteAlert, duplicateAlert, testNotification, updateAlert } from 'actions/AlertActions';
 import { setSelectedAlertId } from 'actions/AppActions';
 import { getAlerts, getSelectedAlert } from 'selectors/AlertSelectors';
 import { getSelectedAlertId } from 'selectors/AppSelectors';
@@ -37,6 +37,11 @@ export function useAlertApi() {
         [dispatch]
     );
 
+    const testNotificationCallback = useCallback(
+        (type, destination) => dispatch(testNotification(type, destination)),
+        [dispatch]
+    );
+
     return {
         alerts,
         selectedAlertId,
@@ -45,6 +50,7 @@ export function useAlertApi() {
         duplicateAlert: duplicateAlertCallback,
         updateAlert: updateAlertCallback,
         deleteAlert: deleteAlertCallback,
-        setSelectedAlertId: setSelectedAlertIdCallback
+        setSelectedAlertId: setSelectedAlertIdCallback,
+        testNotification: testNotificationCallback
     };
 }

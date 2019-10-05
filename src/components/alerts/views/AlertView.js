@@ -26,7 +26,11 @@ function AlertView() {
             <div style={{ height: '100%', padding: 25 }}>
                 <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
                     {alertApi.selectedAlert ? (
-                        <AlertEdition key={alertApi.selectedAlertId} alert={alertApi.selectedAlert} updateAlert={alertApi.updateAlert} />
+                        <AlertEdition
+                            key={alertApi.selectedAlertId}
+                            alert={alertApi.selectedAlert}
+                            updateAlert={alertApi.updateAlert}
+                            testNotification={alertApi.testNotification} />
                     ) : <Empty description="Please select an alert" />}
                 </div>
             </div>

@@ -14,7 +14,7 @@ function SettingManager(props) {
 
     const categories = getCategories().filter(category => !category.mode || category.mode === process.env.REACT_APP_MODE);
     const category = categories.find(category => category.id === selectedCategoryId);
-    const settings = getCategorySettings(category, {}).filter(setting =>
+    const settings = getCategorySettings(category).filter(setting =>
         setting.visible !== false && (!setting.mode || setting.mode === process.env.REACT_APP_MODE));
 
     const getSettingValue = setting => {

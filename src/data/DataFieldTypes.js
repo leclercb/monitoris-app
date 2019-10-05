@@ -300,8 +300,8 @@ export function getFieldType(type, options) {
                 width: 200,
                 alwaysInEdition: false,
                 valuePropName: 'value',
-                compare: (a, b, state) => compareObjects(a, b, getSeverities()),
-                toString: (value, state) => toStringObjects(value, getSeverities()),
+                compare: (a, b) => compareObjects(a, b, getSeverities()),
+                toString: value => toStringObjects(value, getSeverities()),
                 conditions: [
                     {
                         type: 'equal',
@@ -331,8 +331,8 @@ export function getFieldType(type, options) {
                 width: 200,
                 alwaysInEdition: false,
                 valuePropName: 'value',
-                compare: (a, b, state) => compareObjects(a, b, getSeverities()),
-                toString: (value, state) => toStringObject(value, getSeverities()),
+                compare: (a, b) => compareObjects(a, b, getSeverities()),
+                toString: value => toStringObject(value, getSeverities()),
                 conditions: [
                     {
                         type: 'equal',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Empty } from 'antd';
+import { Button, Empty, message } from 'antd';
 import sortBy from 'lodash/sortBy';
 import PropTypes from 'prop-types';
 import { Column, Table } from 'react-virtualized';
@@ -40,6 +40,16 @@ function NotificationTable(props) {
     const onDeleteNotifications = notificationIds => {
         const notifications = props.notifications.filter(notification => !notificationIds.includes(notification.id));
         props.updateNotifications(notifications);
+    };
+
+    const onTestNotifications = async notificationIds => {
+        const notifications = props.notifications.filter(notification => notificationIds.includes(notification.id));
+
+        for (let notification of notifications) {
+            await props.testNotification(notification.type, notification.destination);
+        }
+
+        message.info('The sample notification has been successfully sent');
     };
 
     const onDropNotification = (dragData, dropData) => {
@@ -154,12 +164,21 @@ function NotificationTable(props) {
                 </Table>
             )}
             <div style={{ marginTop: 10 }}>
-                <Button onClick={() => onAddNotification()}>
+                <Button
+                    onClick={() => onAddNotification()}>
                     Add
                 </Button>
                 <Spacer />
-                <Button onClick={() => onDeleteNotifications(selectedNotificationIds)}>
+                <Button
+                    onClick={() => onDeleteNotifications(selectedNotificationIds)}
+                    disabled={selectedNotificationIds.length === 0}>
                     Delete
+                </Button>
+                <Spacer />
+                <Button
+                    onClick={() => onTestNotifications(selectedNotificationIds)}
+                    disabled={selectedNotificationIds.length !== 1}>
+                    Send sample notification
                 </Button>
             </div>
         </React.Fragment>
@@ -170,6 +189,7 @@ NotificationTable.propTypes = {
     notifications: PropTypes.arrayOf(AlertNotificationPropType.isRequired).isRequired,
     notificationFields: PropTypes.arrayOf(FieldPropType.isRequired).isRequired,
     updateNotifications: PropTypes.func.isRequired,
+    testNotification: PropTypes.func.isRequired,
     orderSettingPrefix: PropTypes.string.isRequired,
     widthSettingPrefix: PropTypes.string.isRequired
 };
