@@ -23,7 +23,7 @@ function AlertView() {
             onDragFinished={size => onAlertViewSplitPaneSizeChange(size)}
             paneStyle={{ overflowY: 'auto' }}>
             <AlertSider />
-            <div style={{ height: '100%', padding: 25 }}>
+            <div style={{ minHeight: '100%', padding: 25 }}>
                 <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
                     {alertApi.selectedAlert ? (
                         <AlertEdition

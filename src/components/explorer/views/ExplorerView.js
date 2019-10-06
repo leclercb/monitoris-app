@@ -2,6 +2,7 @@ import React from 'react';
 import { Empty } from 'antd';
 import SplitPane from 'react-split-pane';
 import GetInfoTool from 'components/explorer/tools/GetInfoTool';
+import ScanTool from 'components/explorer/tools/ScanTool';
 import ExplorerSider from 'components/explorer/sider/ExplorerSider';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
@@ -19,6 +20,8 @@ function ExplorerView() {
         switch (appApi.selectedExplorerToolId) {
             case 'info':
                 return (<GetInfoTool />);
+            case 'scan':
+                return (<ScanTool />);
             default:
                 return (<Empty />);
         }
@@ -32,7 +35,7 @@ function ExplorerView() {
             onDragFinished={size => onExplorerViewSplitPaneSizeChange(size)}
             paneStyle={{ overflowY: 'auto' }}>
             <ExplorerSider />
-            <div style={{ height: '100%', padding: 25 }}>
+            <div style={{ minHeight: '100%', padding: 25 }}>
                 <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
                     {getToolFromId()}
                 </div>

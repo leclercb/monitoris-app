@@ -62,7 +62,7 @@ function ExplorerSider() {
                 </Tooltip>
             </div>
             <Menu
-                selectedKeys={[]}
+                selectedKeys={[appApi.selectedExplorerToolId]}
                 openKeys={openKeys}
                 onSelect={onSelect}
                 mode="inline">
@@ -70,7 +70,10 @@ function ExplorerSider() {
                     key="tools"
                     title={createCategorySubMenu('Tools', 'thumbtack', () => onOpenChange('tools'))}>
                     <Menu.Item key="info">
-                        Get Info
+                        <Icon icon="info-circle" text="Get Info" />
+                    </Menu.Item>
+                    <Menu.Item key="scan">
+                        <Icon icon="barcode" text="Scan" />
                     </Menu.Item>
                 </Menu.SubMenu>
             </Menu >

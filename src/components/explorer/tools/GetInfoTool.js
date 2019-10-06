@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Empty, Tree } from 'antd';
+import { Empty, Input, Table } from 'antd';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { parseRedisString } from 'utils/FormatUtils';
 
@@ -8,6 +8,7 @@ function GetInfoTool() {
 
     const instanceId = instanceApi.selectedExplorerInstanceId;
     const [info, setInfo] = useState(null);
+    const [searchValue, setSearchValue] = useState('');
 
     useEffect(() => {
         const getInfo = async () => {
@@ -20,34 +21,47 @@ function GetInfoTool() {
         getInfo();
     }, [instanceId]);
 
-    if (!info) {
+    if (!instanceId) {
         return (<Empty description="Please select an instance" />);
     }
 
-    const createTreeNodes = object => {
-        if (typeof object === 'object') {
-            return Object.keys(object).map(key => {
-                const value = object[key];
+    if (!info) {
+        return (<Empty description="No data to display" />);
+    }
 
-                if (typeof value === 'object') {
-                    return (
-                        <Tree.TreeNode key={key} title={key}>
-                            {createTreeNodes(object[key])}
-                        </Tree.TreeNode>
-                    );
-                }
-
-                return (<Tree.TreeNode key={key} title={`${key} = ${value}`} />);
-            });
+    const columns = [
+        {
+            title: 'Key',
+            dataIndex: 'key',
+            key: 'key',
+            render: key => <strong>{key}</strong>
+        },
+        {
+            title: 'Value',
+            dataIndex: 'value',
+            key: 'value'
         }
+    ];
 
-        return (<Tree.TreeNode title={object} />);
-    };
+    const dataSource = Object.keys(info).sort().filter(key => key.includes(searchValue)).map(key => ({
+        key,
+        value: info[key]
+    }));
 
     return (
-        <Tree>
-            {createTreeNodes(info)}
-        </Tree>
+        <React.Fragment>
+            <Input.Search
+                allowClear={true}
+                onSearch={value => setSearchValue(value)}
+                style={{
+                    width: 400,
+                    marginBottom: 20
+                }} />
+            <Table
+                dataSource={dataSource}
+                columns={columns}
+                pagination={false} />
+        </React.Fragment>
     );
 }
 
