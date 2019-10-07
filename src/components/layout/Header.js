@@ -84,17 +84,17 @@ function Header() {
                 <Button
                     type={appApi.selectedView === 'instance' ? 'dashed' : 'default'}
                     onClick={onShowInstanceContent}>
-                    <Icon icon="book" text="Instances" />
+                    <Icon icon="server" text="Instances" />
                 </Button>
                 <Button
                     type={appApi.selectedView === 'alert' ? 'dashed' : 'default'}
                     onClick={onShowAlertContent}>
-                    <Icon icon="calendar-alt" text="Alerts" />
+                    <Icon icon="bell" text="Alerts" />
                 </Button>
                 <Button
                     type={appApi.selectedView === 'explorer' ? 'dashed' : 'default'}
                     onClick={onShowExplorerContent}>
-                    <Icon icon="tasks" text="Explorer" />
+                    <Icon icon="binoculars" text="Explorer" />
                 </Button>
             </Button.Group>
             {appApi.selectedView === 'alert' ?

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Empty } from 'antd';
 import SplitPane from 'react-split-pane';
-import GetInfoTool from 'components/explorer/tools/GetInfoTool';
+import InfoTool from 'components/explorer/tools/InfoTool';
 import ScanTool from 'components/explorer/tools/ScanTool';
 import ExplorerSider from 'components/explorer/sider/ExplorerSider';
 import { useAppApi } from 'hooks/UseAppApi';
@@ -19,7 +19,7 @@ function ExplorerView() {
     const getToolFromId = () => {
         switch (appApi.selectedExplorerToolId) {
             case 'info':
-                return (<GetInfoTool />);
+                return (<InfoTool />);
             case 'scan':
                 return (<ScanTool />);
             default:

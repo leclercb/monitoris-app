@@ -49,7 +49,7 @@ function NotificationTable(props) {
             await props.testNotification(notification.type, notification.destination);
         }
 
-        message.info('The sample notification has been successfully sent');
+        message.success('The sample notification has been successfully sent');
     };
 
     const onDropNotification = (dragData, dropData) => {

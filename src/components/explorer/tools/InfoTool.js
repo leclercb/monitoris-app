@@ -60,7 +60,8 @@ function GetInfoTool() {
             <Table
                 dataSource={dataSource}
                 columns={columns}
-                pagination={false} />
+                pagination={false}
+                size="small" />
         </React.Fragment>
     );
 }
