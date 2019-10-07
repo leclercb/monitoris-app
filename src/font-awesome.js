@@ -32,7 +32,8 @@ import {
     faServer,
     faSpinner,
     faStar,
-    faThumbtack,
+    faSyncAlt,
+    faTools,
     faTrashAlt
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -67,5 +68,6 @@ library.add(faSearch);
 library.add(faServer);
 library.add(faSpinner);
 library.add(faStar);
-library.add(faThumbtack);
+library.add(faSyncAlt);
+library.add(faTools);
 library.add(faTrashAlt);

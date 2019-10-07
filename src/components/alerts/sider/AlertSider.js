@@ -59,7 +59,7 @@ function AlertSider() {
                 mode="inline">
                 <Menu.SubMenu
                     key="alerts"
-                    title={createCategorySubMenu('Alerts', 'thumbtack', () => onOpenChange('alerts'))}>
+                    title={createCategorySubMenu('Alerts', 'bell', () => onOpenChange('alerts'))}>
                     {alertApi.alerts.map(alert => (
                         <Menu.Item key={alert.id} alert={alert}>
                             <ObjectMenuItem

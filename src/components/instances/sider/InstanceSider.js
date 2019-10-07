@@ -59,7 +59,7 @@ function InstanceSider() {
                 mode="inline">
                 <Menu.SubMenu
                     key="instances"
-                    title={createCategorySubMenu('Instances', 'thumbtack', () => onOpenChange('instances'))}>
+                    title={createCategorySubMenu('Instances', 'server', () => onOpenChange('instances'))}>
                     {instanceApi.instances.map(instance => (
                         <Menu.Item key={instance.id} instance={instance}>
                             <ObjectMenuItem

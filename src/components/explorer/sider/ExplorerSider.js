@@ -68,7 +68,7 @@ function ExplorerSider() {
                 mode="inline">
                 <Menu.SubMenu
                     key="tools"
-                    title={createCategorySubMenu('Tools', 'thumbtack', () => onOpenChange('tools'))}>
+                    title={createCategorySubMenu('Tools', 'tools', () => onOpenChange('tools'))}>
                     <Menu.Item key="info">
                         <Icon icon="info-circle" text="Get Info" />
                     </Menu.Item>
