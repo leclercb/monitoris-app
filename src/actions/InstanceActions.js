@@ -124,12 +124,6 @@ export function executeCommand(instanceId, command, parameters) {
     return async dispatch => {
         const processId = uuid();
 
-        dispatch(updateProcess({
-            id: processId,
-            state: 'RUNNING',
-            title: 'Execute command on server'
-        }));
-
         try {
             const result = await sendRequest(
                 {
@@ -155,6 +149,7 @@ export function executeCommand(instanceId, command, parameters) {
             dispatch(updateProcess({
                 id: processId,
                 state: 'ERROR',
+                title: 'Execute command on server',
                 error: getErrorMessages(error, true)
             }));
 
