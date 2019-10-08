@@ -22,8 +22,13 @@ function App() {
     useEffect(() => {
         appApi.loadData();
         webSocketApi.connectWebSocket();
-        webSocketApi.addMessageListener(event => {
+    }, []);
+
+    useEffect(() => {
+        const removeMessageListener = webSocketApi.addMessageListener(event => {
             try {
+                console.debug('Message received', event);
+
                 const message = JSON.parse(event.data);
 
                 switch (message.type) {
@@ -56,7 +61,9 @@ function App() {
                 // Skip message
             }
         });
-    }, []);
+
+        return removeMessageListener;
+    }, [instanceApi.instances]);
 
     return (
         <DndProvider backend={HTML5Backend}>

@@ -23,7 +23,7 @@ export function connectWebSocket() {
 }
 
 export function closeWebSocket() {
-    return async () => {
+    return () => {
         if (!webSocket) {
             return;
         }
@@ -34,14 +34,14 @@ export function closeWebSocket() {
 }
 
 export function addMessageListener(listener) {
-    return async () => {
+    return () => {
         listeners.push(listener);
         return () => listeners.splice(listeners.indexOf(listener), 1);
     };
 }
 
 export function removeMessageListener(listener) {
-    return async () => {
+    return () => {
         listeners.splice(listeners.indexOf(listener), 1);
     };
 }
