@@ -1,5 +1,7 @@
 # Todo List
 
+Store instance status in redux
+
 Review src/components
 Review src/data
-Review src/constatns/JoyrideConfig.js
+Review src/constants/JoyrideConfig.js

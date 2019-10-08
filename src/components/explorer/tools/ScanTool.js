@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Divider, Empty, Input, Select, Table } from 'antd';
+import { Button, Col, Divider, Empty, Input, Row, Select, Table } from 'antd';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import KeyData from 'components/explorer/tools/keydata/KeyData';
 
@@ -104,34 +104,40 @@ function ScanTool() {
                 style={{ marginLeft: 10 }}>
                 Continue Scanning
             </Button>
-            <Table
-                dataSource={dataSource}
-                columns={columns}
-                pagination={{
-                    pageSize: 10,
-                    size: 'small'
-                }}
-                size="small"
-                rowSelection={{
-                    type: 'checkbox',
-                    selectedRowKeys: selectedKeys,
-                    onChange: selectedRowKeys => setSelectedKeys(selectedRowKeys),
-                }}
-                footer={() => (
-                    <React.Fragment>
-                        <Button
-                            onClick={() => deleteSelectedKeys()}
-                            disabled={selectedKeys.length === 0 || selectedKeys.length > 100}>
-                            Delete
-                        </Button>
-                    </React.Fragment>
-                )} />
-            {selectedKeys.length === 1 && (
-                <React.Fragment>
-                    <Divider>Key Data</Divider>
-                    <KeyData redisKey={selectedKeys[0]} />
-                </React.Fragment>
-            )}
+            <Row gutter={20}>
+                <Col span={10}>
+                    <Table
+                        dataSource={dataSource}
+                        columns={columns}
+                        pagination={{
+                            pageSize: 10,
+                            size: 'small'
+                        }}
+                        size="small"
+                        rowSelection={{
+                            type: 'checkbox',
+                            selectedRowKeys: selectedKeys,
+                            onChange: selectedRowKeys => setSelectedKeys(selectedRowKeys),
+                        }}
+                        footer={() => (
+                            <React.Fragment>
+                                <Button
+                                    onClick={() => deleteSelectedKeys()}
+                                    disabled={selectedKeys.length === 0 || selectedKeys.length > 100}>
+                                    Delete
+                                </Button>
+                            </React.Fragment>
+                        )} />
+                </Col>
+                {selectedKeys.length === 1 && (
+                    <Col span={14}>
+                        <React.Fragment>
+                            <Divider>Key Data</Divider>
+                            <KeyData redisKey={selectedKeys[0]} />
+                        </React.Fragment>
+                    </Col>
+                )}
+            </Row>
         </React.Fragment>
     );
 }
