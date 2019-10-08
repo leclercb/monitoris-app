@@ -131,10 +131,7 @@ function ScanTool() {
                 </Col>
                 {selectedKeys.length === 1 && (
                     <Col span={14}>
-                        <React.Fragment>
-                            <Divider>Key Data</Divider>
-                            <KeyData redisKey={selectedKeys[0]} />
-                        </React.Fragment>
+                        <KeyData redisKey={selectedKeys[0]} />
                     </Col>
                 )}
             </Row>
