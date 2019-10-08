@@ -11,7 +11,7 @@ function ScanTool() {
     const [scanResult, setScanResult] = useState(null);
     const [searchValue, setSearchValue] = useState('');
     const [searchType, setSearchType] = useState(null);
-    const [selectedKey, setSelectedKey] = useState(null);
+    const [selectedKeys, setSelectedKeys] = useState([]);
 
     const executeScan = async value => {
         const parameters = [scanResult ? scanResult[0] : '0', 'MATCH', value, 'COUNT', '1000'];
@@ -50,6 +50,11 @@ function ScanTool() {
                 ...result[1]
             ]);
         }
+    }
+
+    const deleteSelectedKeys = async () => {
+        await instanceApi.executeCommand(instanceId, 'del', selectedKeys);
+        setKeys(keys.filter(key => !selectedKeys.includes(key)));
     }
 
     if (!instanceId) {
@@ -108,14 +113,23 @@ function ScanTool() {
                 }}
                 size="small"
                 rowSelection={{
-                    type: 'radio',
-                    selectedRowKeys: [selectedKey],
-                    onChange: selectedRowKeys => setSelectedKey(selectedRowKeys[0]),
-                }} />
-            {selectedKey && (
+                    type: 'checkbox',
+                    selectedRowKeys: selectedKeys,
+                    onChange: selectedRowKeys => setSelectedKeys(selectedRowKeys),
+                }}
+                footer={() => (
+                    <React.Fragment>
+                        <Button
+                            onClick={() => deleteSelectedKeys()}
+                            disabled={selectedKeys.length === 0 || selectedKeys.length > 100}>
+                            Delete
+                        </Button>
+                    </React.Fragment>
+                )} />
+            {selectedKeys.length === 1 && (
                 <React.Fragment>
                     <Divider>Key Data</Divider>
-                    <KeyData redisKey={selectedKey} />
+                    <KeyData redisKey={selectedKeys[0]} />
                 </React.Fragment>
             )}
         </React.Fragment>
