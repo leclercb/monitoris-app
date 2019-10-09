@@ -5,6 +5,7 @@ const App = () => (state = {
     },
     selectedAlertId: null,
     selectedInstanceId: null,
+    selectedDashboardId: null,
     selectedExplorerInstanceId: null,
     selectedExplorerToolId: null,
     joyride: {
@@ -33,6 +34,11 @@ const App = () => (state = {
             return {
                 ...state,
                 selectedInstanceId: action.instanceId
+            };
+        case 'SET_SELECTED_DASHBOARD_ID':
+            return {
+                ...state,
+                selectedDashboardId: action.dashboardId
             };
         case 'SET_SELECTED_EXPLORER_INSTANCE_ID':
             return {

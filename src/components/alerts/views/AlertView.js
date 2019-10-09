@@ -12,7 +12,6 @@ function AlertView() {
 
     const onAlertViewSplitPaneSizeChange = size => {
         settingsApi.updateSettings({ alertViewSplitPaneSize: size });
-        window.dispatchEvent(new Event('app-resize'));
     };
 
     return (

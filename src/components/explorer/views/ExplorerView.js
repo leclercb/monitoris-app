@@ -13,7 +13,6 @@ function ExplorerView() {
 
     const onExplorerViewSplitPaneSizeChange = size => {
         settingsApi.updateSettings({ explorerViewSplitPaneSize: size });
-        window.dispatchEvent(new Event('app-resize'));
     };
 
     const getToolFromId = () => {

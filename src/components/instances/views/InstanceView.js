@@ -12,7 +12,6 @@ function InstanceView() {
 
     const onInstanceViewSplitPaneSizeChange = size => {
         settingsApi.updateSettings({ instanceViewSplitPaneSize: size });
-        window.dispatchEvent(new Event('app-resize'));
     };
 
     return (

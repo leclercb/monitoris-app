@@ -5,6 +5,7 @@ import {
     faBell,
     faBinoculars,
     faCalendarAlt,
+    faChartLine,
     faCheck,
     faCircle,
     faCog,
@@ -17,6 +18,7 @@ import {
     faExclamationCircle,
     faExclamationTriangle,
     faFilter,
+    faHeartbeat,
     faInfoCircle,
     faKey,
     faList,
@@ -41,6 +43,7 @@ library.add(faBarcode);
 library.add(faBell);
 library.add(faBinoculars);
 library.add(faCalendarAlt);
+library.add(faChartLine);
 library.add(faCheck);
 library.add(faCircle);
 library.add(faCog);
@@ -53,6 +56,7 @@ library.add(faEdit);
 library.add(faExclamationCircle);
 library.add(faExclamationTriangle);
 library.add(faFilter);
+library.add(faHeartbeat);
 library.add(faInfoCircle);
 library.add(faKey);
 library.add(faList);

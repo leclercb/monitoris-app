@@ -181,6 +181,14 @@ export function getCategories() {
                     visible: false
                 },
                 {
+                    id: 'dashboardViewSplitPaneSize',
+                    title: 'Dashboard view split pane size',
+                    type: 'number',
+                    value: 300,
+                    editable: false,
+                    visible: false
+                },
+                {
                     id: 'explorerViewSplitPaneSize',
                     title: 'Explorer view split pane size',
                     type: 'number',

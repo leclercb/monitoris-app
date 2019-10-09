@@ -5,6 +5,7 @@ export const getEditingCell = state => state.app.editingCell;
 
 export const getSelectedAlertId = state => state.app.selectedAlertId;
 export const getSelectedInstanceId = state => state.app.selectedInstanceId;
+export const getSelectedDashboardId = state => state.app.selectedDashboardId;
 export const getSelectedExplorerInstanceId = state => state.app.selectedExplorerInstanceId;
 export const getSelectedExplorerToolId = state => state.app.selectedExplorerToolId;
 

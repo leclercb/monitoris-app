@@ -46,6 +46,10 @@ function Header() {
         appApi.setSettingManagerOptions({ visible: true });
     };
 
+    const onShowDashboardContent = () => {
+        appApi.setSelectedView('dashboard');
+    };
+
     const onShowExplorerContent = () => {
         appApi.setSelectedView('explorer');
     };
@@ -82,6 +86,16 @@ function Header() {
         )}>
             <Button.Group style={{ marginRight: 50 }}>
                 <Button
+                    type={appApi.selectedView === 'dashboard' ? 'dashed' : 'default'}
+                    onClick={onShowDashboardContent}>
+                    <Icon icon="chart-line" text="Dashboard" />
+                </Button>
+                <Button
+                    type={appApi.selectedView === 'explorer' ? 'dashed' : 'default'}
+                    onClick={onShowExplorerContent}>
+                    <Icon icon="binoculars" text="Explorer" />
+                </Button>
+                <Button
                     type={appApi.selectedView === 'instance' ? 'dashed' : 'default'}
                     onClick={onShowInstanceContent}>
                     <Icon icon="server" text="Instances" />
@@ -90,11 +104,6 @@ function Header() {
                     type={appApi.selectedView === 'alert' ? 'dashed' : 'default'}
                     onClick={onShowAlertContent}>
                     <Icon icon="bell" text="Alerts" />
-                </Button>
-                <Button
-                    type={appApi.selectedView === 'explorer' ? 'dashed' : 'default'}
-                    onClick={onShowExplorerContent}>
-                    <Icon icon="binoculars" text="Explorer" />
                 </Button>
             </Button.Group>
             {appApi.selectedView === 'alert' ?

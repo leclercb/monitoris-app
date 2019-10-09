@@ -87,6 +87,15 @@ export function setSelectedInstanceId(instanceId) {
     };
 }
 
+export function setSelectedDashboardId(dashboardId) {
+    return async dispatch => {
+        dispatch({
+            type: 'SET_SELECTED_DASHBOARD_ID',
+            dashboardId
+        });
+    };
+}
+
 export function setSelectedExplorerInstanceId(instanceId) {
     return async dispatch => {
         dispatch({
