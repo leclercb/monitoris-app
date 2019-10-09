@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input } from 'antd';
+import { Button, Input, Select } from 'antd';
 import PropTypes from 'prop-types';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 
 function StringValue({ redisKey, length }) {
@@ -8,6 +10,7 @@ function StringValue({ redisKey, length }) {
 
     const instanceId = instanceApi.selectedExplorerInstanceId;
     const [edit, setEdit] = useState(false);
+    const [language, setLanguage] = useState('json');
     const [value, setValue] = useState(null);
     const [newValue, setNewValue] = useState(null);
 
@@ -50,9 +53,7 @@ function StringValue({ redisKey, length }) {
     if (edit) {
         return (
             <React.Fragment>
-                {edit ? (
-                    <Input.TextArea defaultValue={newValue} onChange={event => setNewValue(event.target.value)} />
-                ) : value}
+                <Input.TextArea defaultValue={newValue} onChange={event => setNewValue(event.target.value)} />
                 <Button
                     onClick={onSave}
                     style={{ marginTop: 10 }}>
@@ -69,12 +70,31 @@ function StringValue({ redisKey, length }) {
 
     return (
         <React.Fragment>
-            <Input.TextArea value={value} readOnly />
+            <SyntaxHighlighter
+                language={language}
+                style={atomOneLight}
+                customStyle={{
+                    wordBreak: 'break-all',
+                    whiteSpace: 'pre-wrap'
+                }}>
+                {value || ''}
+            </SyntaxHighlighter>
             <Button
                 onClick={onEdit}
                 style={{ marginTop: 10 }}>
                 Edit
             </Button>
+            <Select
+                placeholder="Language"
+                value={language}
+                onChange={language => setLanguage(language)}
+                style={{
+                    width: 80,
+                    marginLeft: 10
+                }}>
+                <Select.Option value="json">JSON</Select.Option>
+                <Select.Option value="xml">XML</Select.Option>
+            </Select>
         </React.Fragment>
     );
 }

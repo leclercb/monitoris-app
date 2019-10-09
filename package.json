@@ -37,6 +37,7 @@
         "react-redux": "^7.1.1",
         "react-scripts": "3.2.0",
         "react-split-pane": "^0.1.87",
+        "react-syntax-highlighter": "^11.0.2",
         "react-virtualized": "^9.21.1",
         "reduce-reducers": "^1.0.4",
         "redux": "^4.0.4",
