@@ -39,6 +39,13 @@ export function getAlertFields() {
             title: 'Color',
             type: 'color',
             editable: true
+        },
+        {
+            static: true,
+            id: 'instances',
+            title: 'Instances',
+            type: 'instances',
+            editable: true
         }
     ]);
 }

@@ -18,7 +18,7 @@ export function SeveritiesTitle(props) {
 }
 
 SeveritiesTitle.propTypes = {
-    severityIds: PropTypes.string
+    severityIds: PropTypes.array
 };
 
 export default SeveritiesTitle;

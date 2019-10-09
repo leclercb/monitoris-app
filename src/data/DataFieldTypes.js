@@ -1,4 +1,6 @@
+import { getSeverities } from 'data/DataSeverities';
 import { getAlerts } from 'selectors/AlertSelectors';
+import { getInstances } from 'selectors/InstanceSelectors';
 import {
     compareBooleans,
     compareNumbers,
@@ -14,7 +16,6 @@ import {
     toStringObjects,
     toStringPassword
 } from 'utils/StringUtils';
-import { getSeverities } from 'data/DataSeverities';
 
 export function getFieldTypes() {
     return [
@@ -24,6 +25,7 @@ export function getFieldTypes() {
         'date',
         'dateTime',
         'instance',
+        'instances',
         'number',
         'password',
         'select',
@@ -157,6 +159,68 @@ export function getFieldType(type, options) {
                     }
                 ],
                 conditionsFieldType: 'color',
+                options: []
+            };
+
+            break;
+        }
+        case 'instance': {
+            configuration = {
+                title: 'Instance',
+                allowCreation: true,
+                width: 200,
+                alwaysInEdition: false,
+                valuePropName: 'value',
+                compare: (a, b, state) => compareObjects(a, b, getInstances(state)),
+                toString: (value, state) => toStringObjects(value, getInstances(state)),
+                conditions: [
+                    {
+                        type: 'equal',
+                        title: 'Equals',
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue === objectValue;
+                        }
+                    },
+                    {
+                        type: 'notEqual',
+                        title: 'Does not equal',
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue !== objectValue;
+                        }
+                    }
+                ],
+                conditionsFieldType: 'instance',
+                options: []
+            };
+
+            break;
+        }
+        case 'instances': {
+            configuration = {
+                title: 'Instances',
+                allowCreation: true,
+                width: 200,
+                alwaysInEdition: false,
+                valuePropName: 'value',
+                compare: (a, b, state) => compareObjects(a, b, getInstances(state)),
+                toString: (value, state) => toStringObjects(value, getInstances(state)),
+                conditions: [
+                    {
+                        type: 'equal',
+                        title: 'Equals',
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue === objectValue;
+                        }
+                    },
+                    {
+                        type: 'notEqual',
+                        title: 'Does not equal',
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue !== objectValue;
+                        }
+                    }
+                ],
+                conditionsFieldType: 'instances',
                 options: []
             };
 

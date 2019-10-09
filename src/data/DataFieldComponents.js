@@ -8,7 +8,9 @@ import AlertSelect from 'components/alerts/common/AlertSelect';
 import ColorPicker from 'components/common/ColorPicker';
 import StarCheckbox from 'components/common/StarCheckbox';
 import InstanceTitle from 'components/instances/common/InstanceTitle';
+import InstancesTitle from 'components/instances/common/InstancesTitle';
 import InstanceSelect from 'components/instances/common/InstanceSelect';
+import InstancesSelect from 'components/instances/common/InstancesSelect';
 import SeveritiesSelect from 'components/severities/SeveritiesSelect';
 import SeveritiesTitle from 'components/severities/SeveritiesTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
@@ -93,6 +95,21 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <InstanceSelect
+                        onBlur={props.onCommit}
+                        dropdownMatchSelectWidth={false}
+                        {...removeExtraProps(props)} />
+                )
+            };
+
+            break;
+        }
+        case 'instances': {
+            configuration = {
+                render: value => (
+                    <InstancesTitle instanceIds={value} />
+                ),
+                input: props => (
+                    <InstancesSelect
                         onBlur={props.onCommit}
                         dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
