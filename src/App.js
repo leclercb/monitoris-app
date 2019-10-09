@@ -32,24 +32,52 @@ function App() {
                 const message = JSON.parse(event.data);
 
                 switch (message.type) {
-                    case 'instance_connected': {
-                        const instance = instanceApi.instances.find(instance => instance.id === message.data);
+                    case 'proxy_status': {
+                        const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
 
                         if (instance) {
-                            notification.success({
-                                message: `The instance "${instance.title}" is now connected`
-                            });
+                            switch (message.data) {
+                                case 'connected':
+                                    notification.success({
+                                        message: `The proxy "${instance.title}" is now connected`
+                                    });
+                                    break;
+                                case 'disconnected':
+                                    notification.warning({
+                                        message: `The proxy "${instance.title}" is now disconnected`
+                                    });
+                                    break;
+                                default:
+                                    notification.error({
+                                        message: `The proxy "${instance.title}" is now disconnected (${message.data})`
+                                    });
+                                    break;
+                            }
                         }
 
                         break;
                     }
-                    case 'instance_disconnected': {
-                        const instance = instanceApi.instances.find(instance => instance.id === message.data);
+                    case 'redis_status': {
+                        const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
 
                         if (instance) {
-                            notification.warning({
-                                message: `The instance "${instance.title}" is now disconnected`
-                            });
+                            switch (message.data) {
+                                case 'ready':
+                                    notification.success({
+                                        message: `The Redis server "${instance.title}" is now connected`
+                                    });
+                                    break;
+                                case 'disconnected':
+                                    notification.warning({
+                                        message: `The Redis server "${instance.title}" is now disconnected`
+                                    });
+                                    break;
+                                default:
+                                    notification.error({
+                                        message: `The Redis server "${instance.title}" is now disconnected (${message.data})`
+                                    });
+                                    break;
+                            }
                         }
 
                         break;
