@@ -34,13 +34,13 @@ function InstanceEdition(props) {
             <InstanceForm
                 instance={props.instance}
                 updateInstance={props.updateInstance} />
-            <Divider>Status</Divider>
+            <Divider>Proxy Status</Divider>
             {instanceStateApi.status && instanceStateApi.status.connected && (
                 <Alert
                     message="Connected"
                     description={(
                         <div>
-                            The instance is currently connected.
+                            The proxy is currently connected.
                             <br />
                             Refreshed on: {instanceStateApi.status.refreshDate}
                         </div>
@@ -54,7 +54,7 @@ function InstanceEdition(props) {
                     message="Disconnected"
                     description={(
                         <div>
-                            The instance is currently disconnected.
+                            The proxy is currently disconnected.
                             <br />
                             Refreshed on: {instanceStateApi.status.refreshDate}
                         </div>
@@ -66,7 +66,44 @@ function InstanceEdition(props) {
             {!instanceStateApi.status && (
                 <Alert
                     message="Missing Status"
-                    description="The instance status has not been retrieved."
+                    description="The proxy status has not been retrieved."
+                    type="info"
+                    showIcon
+                />
+            )}
+            <Divider>Redis Status</Divider>
+            {instanceStateApi.status && instanceStateApi.status.lastStatus === 'ready' && (
+                <Alert
+                    message="Connected"
+                    description={(
+                        <div>
+                            The Redis server is currently connected.
+                            <br />
+                            Refreshed on: {instanceStateApi.status.refreshDate}
+                        </div>
+                    )}
+                    type="success"
+                    showIcon
+                />
+            )}
+            {instanceStateApi.status && instanceStateApi.status.lastStatus !== 'ready' && (
+                <Alert
+                    message="Disconnected"
+                    description={(
+                        <div>
+                            The Redis server is currently disconnected ({instanceStateApi.status.lastStatus}).
+                            <br />
+                            Refreshed on: {instanceStateApi.status.refreshDate}
+                        </div>
+                    )}
+                    type="warning"
+                    showIcon
+                />
+            )}
+            {(!instanceStateApi.status || (instanceStateApi.status && !instanceStateApi.status.lastStatus)) && (
+                <Alert
+                    message="Missing Status"
+                    description="The Redis server status has not been retrieved."
                     type="info"
                     showIcon
                 />

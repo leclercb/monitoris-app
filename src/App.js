@@ -35,6 +35,8 @@ function App() {
                     case 'proxy_status': {
                         const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
 
+                        instanceApi.getStatus(message.instanceId);
+
                         if (instance) {
                             switch (message.data) {
                                 case 'connected':
@@ -59,6 +61,8 @@ function App() {
                     }
                     case 'redis_status': {
                         const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
+
+                        instanceApi.getStatus(message.instanceId);
 
                         if (instance) {
                             switch (message.data) {
