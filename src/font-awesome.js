@@ -21,6 +21,7 @@ import {
     faHeartbeat,
     faInfoCircle,
     faKey,
+    faLink,
     faList,
     faLock,
     faLockOpen,
@@ -59,6 +60,7 @@ library.add(faFilter);
 library.add(faHeartbeat);
 library.add(faInfoCircle);
 library.add(faKey);
+library.add(faLink);
 library.add(faList);
 library.add(faLock);
 library.add(faLockOpen);

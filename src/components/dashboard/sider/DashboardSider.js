@@ -62,6 +62,9 @@ function DashboardSider() {
                     <Menu.Item key="status">
                         <Icon icon="heartbeat" text="Status" />
                     </Menu.Item>
+                    <Menu.Item key="connections">
+                        <Icon icon="link" text="Connections" />
+                    </Menu.Item>
                 </Menu.SubMenu>
             </Menu >
         </div>

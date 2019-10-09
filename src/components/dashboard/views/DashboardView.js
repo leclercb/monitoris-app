@@ -1,6 +1,7 @@
 import React from 'react';
 import { Empty } from 'antd';
 import SplitPane from 'react-split-pane';
+import ConnectionsDashboard from 'components/dashboard/common/ConnectionsDashboard';
 import StatusDashboard from 'components/dashboard/common/StatusDashboard';
 import DashboardSider from 'components/dashboard/sider/DashboardSider';
 import { useAppApi } from 'hooks/UseAppApi';
@@ -18,6 +19,8 @@ function DashboardView() {
         switch (appApi.selectedDashboardId) {
             case 'status':
                 return (<StatusDashboard />);
+            case 'connections':
+                return (<ConnectionsDashboard />);
             default:
                 return (<Empty />);
         }

@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Alert, Typography } from 'antd';
 import PropTypes from 'prop-types';
+import LeftRight from 'components/common/LeftRight';
+import Icon from 'components/common/Icon';
+import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
 
 function InstanceStatus({ instance }) {
+    const instanceApi = useInstanceApi();
     const instanceStateApi = useInstanceStateApi(instance.id);
+
+    useEffect(() => {
+        if (!instanceStateApi.status) {
+            instanceApi.getStatus(instance.id);
+        }
+    }, [instance.id]);
+
+    const refresh = () => {
+        instanceApi.getStatus(instance.id);
+    };
 
     let proxyAlert;
     let redisAlert;
@@ -27,7 +41,9 @@ function InstanceStatus({ instance }) {
 
     return (
         <div style={{ borderRadius: 5, border: '1px solid #cccccc', padding: 10, margin: 25 }}>
-            <Typography.Title>{instance.title}</Typography.Title>
+            <LeftRight right={(<Icon icon="sync-alt" onClick={refresh} />)}>
+                <Typography.Title>{instance.title}</Typography.Title>
+            </LeftRight>
             {proxyAlert}
             {redisAlert}
         </div>
