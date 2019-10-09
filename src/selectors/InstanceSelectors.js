@@ -3,6 +3,7 @@ import { getSelectedExplorerInstanceId, getSelectedInstanceId } from 'selectors/
 import { compareStrings } from 'utils/CompareUtils';
 
 export const getInstances = state => state.instances;
+export const getInstanceStates = state => state.instanceStates;
 
 export const getSortedInstances = createSelector(
     getInstances,
@@ -32,5 +33,47 @@ export const getSelectedExplorerInstance = createSelector(
     getSelectedExplorerInstanceId,
     (instances, instanceId) => {
         return instances.find(instance => instance.id === instanceId);
+    }
+);
+
+export const getInstanceStatusSelector = () => createSelector(
+    getInstanceStates,
+    (state, id) => id,
+    (instanceStates, id) => {
+        const state = instanceStates[id];
+
+        if (state) {
+            return state.status;
+        }
+
+        return null;
+    }
+);
+
+export const getInstanceInfoSelector = () => createSelector(
+    getInstanceStates,
+    (state, id) => id,
+    (instanceStates, id) => {
+        const state = instanceStates[id];
+
+        if (state) {
+            return state.info;
+        }
+
+        return [];
+    }
+);
+
+export const getInstanceLastInfoSelector = () => createSelector(
+    getInstanceStates,
+    (state, id) => id,
+    (instanceStates, id) => {
+        const state = instanceStates[id];
+
+        if (state && state.info.length > 0) {
+            return state.info[state.info.length - 1];
+        }
+
+        return null;
     }
 );

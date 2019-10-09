@@ -1,29 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Alert, Button, Col, Divider, Form, Row } from 'antd';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
 import InstanceForm from 'components/instances/common/InstanceForm';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
+import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
 import { InstancePropType } from 'proptypes/InstancePropTypes';
 
 function InstanceEdition(props) {
     const appApi = useAppApi();
     const instanceApi = useInstanceApi();
-
-    const [status, setStatus] = useState(null);
-    const [refreshDate, setRefreshDate] = useState('');
+    const instanceStateApi = useInstanceStateApi(props.instance.id);
 
     const getStatus = async () => {
-        try {
-            const status = await instanceApi.getStatus(props.instance.id);
-            setStatus(status);
-            setRefreshDate(moment().toISOString());
-        } catch (e) {
-            setStatus(null);
-            setRefreshDate('');
-        }
+        await instanceApi.getStatus(props.instance.id);
     };
 
     const goToExplorer = () => {
@@ -33,7 +24,9 @@ function InstanceEdition(props) {
     };
 
     useEffect(() => {
-        getStatus();
+        if (!instanceStateApi.status) {
+            getStatus();
+        }
     }, [props.instance.id]);
 
     return (
@@ -42,35 +35,35 @@ function InstanceEdition(props) {
                 instance={props.instance}
                 updateInstance={props.updateInstance} />
             <Divider>Status</Divider>
-            {status && status.connected && (
+            {instanceStateApi.status && instanceStateApi.status.connected && (
                 <Alert
                     message="Connected"
                     description={(
                         <div>
                             The instance is currently connected.
                             <br />
-                            Refreshed on: {refreshDate}
+                            Refreshed on: {instanceStateApi.status.refreshDate}
                         </div>
                     )}
                     type="success"
                     showIcon
                 />
             )}
-            {status && !status.connected && (
+            {instanceStateApi.status && !instanceStateApi.status.connected && (
                 <Alert
                     message="Disconnected"
                     description={(
                         <div>
                             The instance is currently disconnected.
                             <br />
-                            Refreshed on: {refreshDate}
+                            Refreshed on: {instanceStateApi.status.refreshDate}
                         </div>
                     )}
                     type="warning"
                     showIcon
                 />
             )}
-            {!status && (
+            {!instanceStateApi.status && (
                 <Alert
                     message="Missing Status"
                     description="The instance status has not been retrieved."

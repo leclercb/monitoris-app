@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Empty, Input, Table } from 'antd';
+import { Button, Empty, Input, Table } from 'antd';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
-import { parseRedisString } from 'utils/FormatUtils';
+import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
 
-function GetInfoTool() {
+function InfoTool() {
     const instanceApi = useInstanceApi();
-
     const instanceId = instanceApi.selectedExplorerInstanceId;
-    const [info, setInfo] = useState(null);
+    const instanceStateApi = useInstanceStateApi(instanceId);
+
     const [searchValue, setSearchValue] = useState('');
 
     useEffect(() => {
         const getInfo = async () => {
-            if (instanceId) {
-                const info = await instanceApi.getInfo(instanceId);
-                setInfo(parseRedisString(info));
+            if (instanceId && !instanceStateApi.lastInfo) {
+                await instanceApi.getInfo(instanceId);
             }
         };
 
@@ -25,9 +24,13 @@ function GetInfoTool() {
         return (<Empty description="Please select an instance" />);
     }
 
-    if (!info) {
+    if (!instanceStateApi.lastInfo) {
         return (<Empty description="No data to display" />);
     }
+
+    const refresh = async () => {
+        await instanceApi.getInfo(instanceId);
+    };
 
     const columns = [
         {
@@ -43,9 +46,9 @@ function GetInfoTool() {
         }
     ];
 
-    const dataSource = Object.keys(info).sort().filter(key => key.includes(searchValue)).map(key => ({
+    const dataSource = Object.keys(instanceStateApi.lastInfo).sort().filter(key => key.includes(searchValue)).map(key => ({
         key,
-        value: info[key]
+        value: instanceStateApi.lastInfo[key]
     }));
 
     return (
@@ -57,6 +60,11 @@ function GetInfoTool() {
                     width: 400,
                     marginBottom: 20
                 }} />
+            <Button
+                onClick={refresh}
+                style={{ marginLeft: 10 }}>
+                Refresh
+            </Button>
             <Table
                 dataSource={dataSource}
                 columns={columns}
@@ -66,4 +74,4 @@ function GetInfoTool() {
     );
 }
 
-export default GetInfoTool;
+export default InfoTool;
