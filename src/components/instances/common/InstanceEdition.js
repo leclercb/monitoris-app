@@ -86,7 +86,7 @@ function InstanceEdition(props) {
                     showIcon
                 />
             )}
-            {instanceStateApi.status && instanceStateApi.status.lastStatus !== 'ready' && (
+            {instanceStateApi.status && instanceStateApi.status.lastStatus && instanceStateApi.status.lastStatus !== 'ready' && (
                 <Alert
                     message="Disconnected"
                     description={(
