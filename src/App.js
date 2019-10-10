@@ -90,7 +90,7 @@ function App() {
                         break;
                     }
                     case 'alert_notification': {
-                        const data = JSON.parse(message.data);
+                        const data = message.data;
                         const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
                         const alert = alertApi.alerts.find(alert => alert.id === data.alertId);
                         const severity = getSeverity(data.severity);
@@ -100,11 +100,11 @@ function App() {
                                 notification.success({
                                     message: (
                                         <span>
-                                            Alert
-                                            <strong>"{alert.title}"</strong>
-                                            for instance
-                                            <strong>"{instance.title}"</strong>
-                                            back to normal
+                                            Alert "
+                                            <strong>{alert.title}</strong>
+                                            " for instance "
+                                            <strong>{instance.title}</strong>
+                                            " back to normal
                                         </span>
                                     )
                                 });
@@ -112,11 +112,12 @@ function App() {
                                 notification[severity.notificationType]({
                                     message: (
                                         <span>
-                                            <strong>"{severity.title}"</strong>
-                                            alert
-                                            <strong>"{alert.title}"</strong>
-                                            for instance
-                                            <strong>"{instance.title}"</strong>
+                                            <strong>{severity.title}</strong>
+                                            " alert "
+                                            <strong>{alert.title}</strong>
+                                            " for instance "
+                                            <strong>{instance.title}</strong>
+                                            "
                                         </span>
                                     )
                                 });
