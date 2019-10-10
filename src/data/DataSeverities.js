@@ -11,17 +11,20 @@ export function getSeverities() {
         {
             id: 'info',
             title: 'Info',
-            color: '#165ad9'
+            color: '#165ad9',
+            notificationType: 'info'
         },
         {
             id: 'warn',
             title: 'Warning',
-            color: '#ffec45'
+            color: '#ffec45',
+            notificationType: 'warning'
         },
         {
             id: 'crit',
             title: 'Critical',
-            color: '#d2291f'
+            color: '#d2291f',
+            notificationType: 'error'
         }
     ];
 }

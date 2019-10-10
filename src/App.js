@@ -4,6 +4,8 @@ import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import AppLayout from 'components/layout/AppLayout';
 import withJoyride from 'containers/WithJoyride';
+import { getSeverity } from 'data/DataSeverities';
+import { useAlertApi } from 'hooks/UseAlertApi';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useWebSocketApi } from 'hooks/UseWebSocketApi';
@@ -15,6 +17,7 @@ import 'react-virtualized/styles.css';
 import 'components/common/table/VirtualizedTable.css';
 
 function App() {
+    const alertApi = useAlertApi();
     const appApi = useAppApi();
     const instanceApi = useInstanceApi();
     const webSocketApi = useWebSocketApi();
@@ -81,6 +84,42 @@ function App() {
                                         message: `The Redis server "${instance.title}" is now disconnected (${message.data})`
                                     });
                                     break;
+                            }
+                        }
+
+                        break;
+                    }
+                    case 'alert_notification': {
+                        const data = JSON.parse(message.data);
+                        const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
+                        const alert = alertApi.alerts.find(alert => alert.id === data.alertId);
+                        const severity = getSeverity(data.severity);
+
+                        if (instance && alert && severity) {
+                            if (data.backToNormal) {
+                                notification.success({
+                                    message: (
+                                        <span>
+                                            Alert
+                                            <strong>"{alert.title}"</strong>
+                                            for instance
+                                            <strong>"{instance.title}"</strong>
+                                            back to normal
+                                        </span>
+                                    )
+                                });
+                            } else {
+                                notification[severity.notificationType]({
+                                    message: (
+                                        <span>
+                                            <strong>"{severity.title}"</strong>
+                                            alert
+                                            <strong>"{alert.title}"</strong>
+                                            for instance
+                                            <strong>"{instance.title}"</strong>
+                                        </span>
+                                    )
+                                });
                             }
                         }
 
