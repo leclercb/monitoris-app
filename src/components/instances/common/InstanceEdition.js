@@ -1,24 +1,27 @@
 import React, { useEffect } from 'react';
-import { Alert, Button, Col, Divider, Form, Row } from 'antd';
+import { Button, Col, Divider, Form, Row } from 'antd';
 import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
+import AlertStatus from 'components/instances/common/AlertStatus';
 import InstanceForm from 'components/instances/common/InstanceForm';
+import ProxyStatus from 'components/instances/common/ProxyStatus';
+import RedisStatus from 'components/instances/common/RedisStatus';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
 import { InstancePropType } from 'proptypes/InstancePropTypes';
 
-function InstanceEdition(props) {
+function InstanceEdition({ instance, updateInstance }) {
     const appApi = useAppApi();
     const instanceApi = useInstanceApi();
-    const instanceStateApi = useInstanceStateApi(props.instance.id);
+    const instanceStateApi = useInstanceStateApi(instance.id);
 
     const getStatus = async () => {
-        await instanceApi.getStatus(props.instance.id);
+        await instanceApi.getStatus(instance.id);
     };
 
     const goToExplorer = () => {
-        instanceApi.setSelectedExplorerInstanceId(props.instance.id);
+        instanceApi.setSelectedExplorerInstanceId(instance.id);
         appApi.setSelectedExplorerToolId('info');
         appApi.setSelectedView('explorer');
     };
@@ -27,88 +30,14 @@ function InstanceEdition(props) {
         if (!instanceStateApi.status) {
             getStatus();
         }
-    }, [props.instance.id]);
+    }, [instance.id]);
 
     return (
         <React.Fragment>
             <InstanceForm
-                instance={props.instance}
-                updateInstance={props.updateInstance} />
-            <Divider>Proxy Status</Divider>
-            {instanceStateApi.status && instanceStateApi.status.connected && (
-                <Alert
-                    message="Connected"
-                    description={(
-                        <div>
-                            The proxy is currently connected.
-                            <br />
-                            Refreshed on: {instanceStateApi.status.refreshDate}
-                        </div>
-                    )}
-                    type="success"
-                    showIcon
-                />
-            )}
-            {instanceStateApi.status && !instanceStateApi.status.connected && (
-                <Alert
-                    message="Disconnected"
-                    description={(
-                        <div>
-                            The proxy is currently disconnected.
-                            <br />
-                            Refreshed on: {instanceStateApi.status.refreshDate}
-                        </div>
-                    )}
-                    type="warning"
-                    showIcon
-                />
-            )}
-            {!instanceStateApi.status && (
-                <Alert
-                    message="Missing Status"
-                    description="The proxy status has not been retrieved."
-                    type="info"
-                    showIcon
-                />
-            )}
-            <Divider>Redis Status</Divider>
-            {instanceStateApi.status && instanceStateApi.status.lastStatus === 'ready' && (
-                <Alert
-                    message="Connected"
-                    description={(
-                        <div>
-                            The Redis server is currently connected.
-                            <br />
-                            Refreshed on: {instanceStateApi.status.refreshDate}
-                        </div>
-                    )}
-                    type="success"
-                    showIcon
-                />
-            )}
-            {instanceStateApi.status && instanceStateApi.status.lastStatus && instanceStateApi.status.lastStatus !== 'ready' && (
-                <Alert
-                    message="Disconnected"
-                    description={(
-                        <div>
-                            The Redis server is currently disconnected ({instanceStateApi.status.lastStatus}).
-                            <br />
-                            Refreshed on: {instanceStateApi.status.refreshDate}
-                        </div>
-                    )}
-                    type="warning"
-                    showIcon
-                />
-            )}
-            {(!instanceStateApi.status || (instanceStateApi.status && !instanceStateApi.status.lastStatus)) && (
-                <Alert
-                    message="Missing Status"
-                    description="The Redis server status has not been retrieved."
-                    type="info"
-                    showIcon
-                />
-            )}
-            <Divider>Actions</Divider>
+                instance={instance}
+                updateInstance={updateInstance} />
+            <Divider style={{ marginTop: 30 }}>Actions</Divider>
             <Row gutter={20}>
                 <Col span={12}>
                     <Button onClick={() => getStatus()} type="dashed" style={{ height: 50 }} block>
@@ -121,6 +50,18 @@ function InstanceEdition(props) {
                     </Button>
                 </Col>
             </Row>
+            <Row gutter={20}>
+                <Col span={12}>
+                    <Divider style={{ marginTop: 30 }}>Proxy Status</Divider>
+                    <ProxyStatus status={instanceStateApi.status} />
+                </Col>
+                <Col span={12}>
+                    <Divider style={{ marginTop: 30 }}>Redis Status</Divider>
+                    <RedisStatus status={instanceStateApi.status} />
+                </Col>
+            </Row>
+            <Divider style={{ marginTop: 30 }}>Alert Status</Divider>
+            <AlertStatus status={instanceStateApi.status} />
         </React.Fragment>
     );
 }

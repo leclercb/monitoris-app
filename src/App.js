@@ -36,9 +36,9 @@ function App() {
 
                 switch (message.type) {
                     case 'proxy_status': {
-                        const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
-
                         instanceApi.getStatus(message.instanceId);
+
+                        const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
 
                         if (instance) {
                             switch (message.data) {
@@ -63,9 +63,9 @@ function App() {
                         break;
                     }
                     case 'redis_status': {
-                        const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
-
                         instanceApi.getStatus(message.instanceId);
+
+                        const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
 
                         if (instance) {
                             switch (message.data) {
@@ -90,6 +90,8 @@ function App() {
                         break;
                     }
                     case 'alert_notification': {
+                        instanceApi.getStatus(message.instanceId);
+
                         const data = message.data;
                         const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
                         const alert = alertApi.alerts.find(alert => alert.id === data.alertId);
