@@ -66,15 +66,7 @@ function App() {
                         <Descriptions.Item label="Alert">{alert.title}</Descriptions.Item>
                         <Descriptions.Item label="Instance">{instance.title}</Descriptions.Item>
                         <Descriptions.Item label="Severity">
-                            {message.data.backToNormal && (
-                                <React.Fragment>
-                                    <span style={{ marginRight: 10 }}>Back to normal from severity</span>
-                                    <SeverityTitle severityId={message.data.severity} />
-                                </React.Fragment>
-                            )}
-                            {!message.data.backToNormal && (
-                                <SeverityTitle severityId={message.data.severity} />
-                            )}
+                            <SeverityTitle severityId={message.data.backToNormal ? 'norm' : message.data.severity} />
                         </Descriptions.Item>
                     </Descriptions>
                     <Table columns={columns} dataSource={dataSource} pagination={false} size="small" style={{ marginTop: 20 }} />
