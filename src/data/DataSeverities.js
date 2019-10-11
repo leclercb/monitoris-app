@@ -14,8 +14,8 @@ export function getSeverities() {
         {
             id: 'norm',
             title: 'Normal',
-            color: '#cccccc',
-            notificationType: 'info',
+            color: '#14b56a',
+            notificationType: 'success',
             readOnly: true
         },
         {
