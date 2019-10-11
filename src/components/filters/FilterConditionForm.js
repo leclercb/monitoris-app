@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Col, Form, Input, Row } from 'antd';
 import SeverityTitle from 'components/severities/SeverityTitle';
 import { getInputForType, getSelectForType } from 'data/DataFieldComponents';
-import { getConditionsFieldTypeForType, getValuePropNameForType } from 'data/DataFieldTypes';
+import { getConditionsFieldTypeForType, getValuePropNameForType, getConditionsForType } from 'data/DataFieldTypes';
 import { useSeverityApi } from 'hooks/UseSeverityApi';
 import { FieldPropType } from 'proptypes/FieldPropTypes';
 import { onCommitForm } from 'utils/FormUtils';
@@ -27,8 +27,55 @@ function FilterConditionForm(props) {
 
     const field = props.context.fields.find(field => field.id === props.condition.field);
     const conditionFieldType = getConditionsFieldTypeForType(field.type);
+    const fieldConditions = getConditionsForType(field.type);
+    const fieldCondition = fieldConditions.find(condition => condition.type === props.condition.type);
 
     const onCommit = () => onCommitForm(props.form, props.condition, props.onUpdate, { assign: true });
+
+    let valueElement;
+
+    if (fieldCondition.multi) {
+        valueElement = severityApi.severities.map(severity => (
+            <Form.Item key={severity.id}>
+                {getFieldDecorator(`value_${severity.id}`, {
+                    valuePropName: getValuePropNameForType(conditionFieldType),
+                    initialValue: props.condition[`value_${severity.id}`]
+                })(
+                    getInputForType(
+                        conditionFieldType,
+                        {
+                            ...(field.type === conditionFieldType ? field.options : {}),
+                            extended: true
+                        },
+                        {
+                            onCommit
+                        })
+                )}
+                <Spacer />
+                <SeverityTitle severityId={severity.id} />
+            </Form.Item>
+        ));
+    } else {
+        valueElement = (
+            <Form.Item>
+                {getFieldDecorator(`value`, {
+                    valuePropName: getValuePropNameForType(conditionFieldType),
+                    initialValue: props.condition.value
+                })(
+                    getInputForType(
+                        conditionFieldType,
+                        {
+                            ...(field.type === conditionFieldType ? field.options : {}),
+                            extended: true
+                        },
+                        {
+                            onCommit
+                        })
+                )}
+                <Spacer />
+            </Form.Item>
+        );
+    }
 
     return (
         <Form {...formItemLayout}>
@@ -54,26 +101,7 @@ function FilterConditionForm(props) {
                     </Form.Item>
                 </Col>
                 <Col span={10}>
-                    {severityApi.severities.map(severity => (
-                        <Form.Item key={severity.id}>
-                            {getFieldDecorator(`value_${severity.id}`, {
-                                valuePropName: getValuePropNameForType(conditionFieldType),
-                                initialValue: props.condition[`value_${severity.id}`]
-                            })(
-                                getInputForType(
-                                    conditionFieldType,
-                                    {
-                                        ...(field.type === conditionFieldType ? field.options : {}),
-                                        extended: true
-                                    },
-                                    {
-                                        onCommit
-                                    })
-                            )}
-                            <Spacer />
-                            <SeverityTitle severityId={severity.id} />
-                        </Form.Item>
-                    ))}
+                    {valueElement}
                 </Col>
             </Row>
         </Form>

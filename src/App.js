@@ -137,7 +137,7 @@ function App() {
         });
 
         return removeMessageListener;
-    }, [instanceApi.instances]);
+    });
 
     return (
         <DndProvider backend={HTML5Backend}>

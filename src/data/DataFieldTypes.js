@@ -84,6 +84,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'equal',
                         title: 'Equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue === objectValue;
                         }
@@ -91,6 +92,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notEqual',
                         title: 'Does not equal',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue !== objectValue;
                         }
@@ -115,6 +117,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'equal',
                         title: 'Equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return !!conditionValue === !!objectValue;
                         }
@@ -122,6 +125,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notEqual',
                         title: 'Does not equal',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return !!conditionValue !== !!objectValue;
                         }
@@ -146,6 +150,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'equal',
                         title: 'Equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue === objectValue;
                         }
@@ -153,6 +158,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notEqual',
                         title: 'Does not equal',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue !== objectValue;
                         }
@@ -177,6 +183,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'equal',
                         title: 'Equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue === objectValue;
                         }
@@ -184,6 +191,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notEqual',
                         title: 'Does not equal',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue !== objectValue;
                         }
@@ -208,6 +216,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'equal',
                         title: 'Equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue === objectValue;
                         }
@@ -215,6 +224,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notEqual',
                         title: 'Does not equal',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue !== objectValue;
                         }
@@ -239,6 +249,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'equal',
                         title: 'Equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue === objectValue;
                         }
@@ -246,6 +257,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notEqual',
                         title: 'Does not equal',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue !== objectValue;
                         }
@@ -253,6 +265,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'greaterThan',
                         title: 'Greater than',
+                        multi: true,
                         apply: (conditionValue, objectValue) => {
                             if (!conditionValue || !objectValue) {
                                 return false;
@@ -264,6 +277,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'greaterThanOrEqual',
                         title: 'Greater than or equal',
+                        multi: true,
                         apply: (conditionValue, objectValue) => {
                             if (!conditionValue || !objectValue) {
                                 return false;
@@ -275,6 +289,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'lessThan',
                         title: 'Less than',
+                        multi: true,
                         apply: (conditionValue, objectValue) => {
                             if (!conditionValue || !objectValue) {
                                 return false;
@@ -286,6 +301,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'lessThanOrEqual',
                         title: 'Less than or equal',
+                        multi: true,
                         apply: (conditionValue, objectValue) => {
                             if (!conditionValue || !objectValue) {
                                 return false;
@@ -325,6 +341,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'equal',
                         title: 'Equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue === objectValue;
                         }
@@ -332,6 +349,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notEqual',
                         title: 'Does not equal',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue !== objectValue;
                         }
@@ -339,6 +357,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'contain',
                         title: 'Contains',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return (objectValue || '').includes(conditionValue);
                         }
@@ -346,6 +365,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notContain',
                         title: 'Does not contain',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return !(objectValue || '').includes(conditionValue);
                         }
@@ -370,6 +390,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'equal',
                         title: 'Equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue === objectValue;
                         }
@@ -377,6 +398,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notEqual',
                         title: 'Does not equal',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue !== objectValue;
                         }
@@ -401,6 +423,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'equal',
                         title: 'Equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue === objectValue;
                         }
@@ -408,6 +431,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notEqual',
                         title: 'Does not equal',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue !== objectValue;
                         }
@@ -432,6 +456,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'equal',
                         title: 'Equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return !!conditionValue === !!objectValue;
                         }
@@ -439,6 +464,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notEqual',
                         title: 'Does not equal',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return !!conditionValue !== !!objectValue;
                         }
@@ -463,6 +489,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'contain',
                         title: 'Contains',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             const taskTags = objectValue || [];
                             const conditionTags = conditionValue || [];
@@ -473,6 +500,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notContain',
                         title: 'Does not contain',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             const taskTags = objectValue || [];
                             const conditionTags = conditionValue || [];
@@ -500,6 +528,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'equal',
                         title: 'Equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue === objectValue;
                         }
@@ -507,6 +536,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notEqual',
                         title: 'Does not equal',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue !== objectValue;
                         }
@@ -514,6 +544,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'contain',
                         title: 'Contains',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return (objectValue || '').includes(conditionValue);
                         }
@@ -521,6 +552,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notContain',
                         title: 'Does not contain',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return !(objectValue || '').includes(conditionValue);
                         }
@@ -546,6 +578,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'equal',
                         title: 'Equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue === objectValue;
                         }
@@ -553,6 +586,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notEqual',
                         title: 'Does not equal',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue !== objectValue;
                         }
@@ -560,6 +594,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'contain',
                         title: 'Contains',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return (objectValue || '').includes(conditionValue);
                         }
@@ -567,6 +602,7 @@ export function getFieldType(type, options) {
                     {
                         type: 'notContain',
                         title: 'Does not contain',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return !(objectValue || '').includes(conditionValue);
                         }
