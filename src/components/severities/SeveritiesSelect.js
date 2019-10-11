@@ -10,7 +10,7 @@ export const SeveritiesSelect = React.forwardRef(function SeveritiesSelect(props
 
     return (
         <Select ref={ref} allowClear={true} {...props} mode="multiple" value={value}>
-            {severityApi.severities.map(severity => (
+            {severityApi.writableSeverities.map(severity => (
                 <Select.Option key={severity.id} value={severity.id}>
                     <Icon icon="circle" color={severity.color} text={severity.title} />
                 </Select.Option>
