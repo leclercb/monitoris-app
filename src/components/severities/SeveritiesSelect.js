@@ -6,7 +6,7 @@ import { useSeverityApi } from 'hooks/UseSeverityApi';
 
 export const SeveritiesSelect = React.forwardRef(function SeveritiesSelect(props, ref) {
     const severityApi = useSeverityApi();
-    const value = (props.value || []).filter(severityId => !!severityApi.severities.find(severity => severity.id === severityId));
+    const value = (props.value || []).filter(severityId => !!severityApi.writableSeverities.find(severity => severity.id === severityId));
 
     return (
         <Select ref={ref} allowClear={true} {...props} mode="multiple" value={value}>

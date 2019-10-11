@@ -35,7 +35,7 @@ function FilterConditionForm(props) {
     let valueElement;
 
     if (fieldCondition.multi) {
-        valueElement = severityApi.severities.map(severity => (
+        valueElement = severityApi.writableSeverities.map(severity => (
             <Form.Item key={severity.id}>
                 {getFieldDecorator(`value_${severity.id}`, {
                     valuePropName: getValuePropNameForType(conditionFieldType),

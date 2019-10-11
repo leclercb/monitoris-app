@@ -62,7 +62,7 @@ function App() {
             title: 'Alert Details',
             content: (
                 <React.Fragment>
-                    <Descriptions title="Alert" column={1} bordered size="small">
+                    <Descriptions column={1} bordered size="small">
                         <Descriptions.Item label="Alert">{alert.title}</Descriptions.Item>
                         <Descriptions.Item label="Instance">{instance.title}</Descriptions.Item>
                         <Descriptions.Item label="Severity">
