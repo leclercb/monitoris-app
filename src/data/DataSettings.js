@@ -163,12 +163,16 @@ export function getCategories() {
                     options: {
                         values: [
                             {
-                                title: 'Explorer',
-                                value: 'explorer'
-                            },
-                            {
                                 title: 'Alerts',
                                 value: 'alert'
+                            },
+                            {
+                                title: 'Dashboard',
+                                value: 'dashboard'
+                            },
+                            {
+                                title: 'Explorer',
+                                value: 'explorer'
                             },
                             {
                                 title: 'Instances',

@@ -1,3 +1,4 @@
+import { getAlertNotificationTypes } from 'data/DataAlertNotificationTypes';
 import { getSeverities } from 'data/DataSeverities';
 import { getAlerts } from 'selectors/AlertSelectors';
 import { getInstances } from 'selectors/InstanceSelectors';
@@ -9,7 +10,6 @@ import {
 } from 'utils/CompareUtils';
 import {
     toString,
-    toStringArray,
     toStringBoolean,
     toStringNumber,
     toStringObject,
@@ -20,20 +20,16 @@ import {
 export function getFieldTypes() {
     return [
         'alert',
+        'alertNotificationType',
         'boolean',
         'color',
-        'date',
-        'dateTime',
         'instance',
         'instances',
         'number',
         'password',
-        'select',
-        'selectTags',
         'severities',
         'severity',
         'star',
-        'tags',
         'text',
         'textarea'
     ];
@@ -99,6 +95,39 @@ export function getFieldType(type, options) {
                     }
                 ],
                 conditionsFieldType: 'alert',
+                options: []
+            };
+
+            break;
+        }
+        case 'alertNotificationType': {
+            configuration = {
+                title: 'Alert Notification Type',
+                allowCreation: true,
+                width: 200,
+                alwaysInEdition: false,
+                valuePropName: 'value',
+                compare: (a, b) => compareObjects(a, b, getAlertNotificationTypes()),
+                toString: value => toStringObject(value, getAlertNotificationTypes()),
+                conditions: [
+                    {
+                        type: 'equal',
+                        title: 'Equals',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue === objectValue;
+                        }
+                    },
+                    {
+                        type: 'notEqual',
+                        title: 'Does not equal',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue !== objectValue;
+                        }
+                    }
+                ],
+                conditionsFieldType: 'alertNotificationType',
                 options: []
             };
 
@@ -178,7 +207,7 @@ export function getFieldType(type, options) {
                 alwaysInEdition: false,
                 valuePropName: 'value',
                 compare: (a, b, state) => compareObjects(a, b, getInstances(state)),
-                toString: (value, state) => toStringObjects(value, getInstances(state)),
+                toString: (value, state) => toStringObject(value, getInstances(state)),
                 conditions: [
                     {
                         type: 'equal',
@@ -210,23 +239,29 @@ export function getFieldType(type, options) {
                 width: 200,
                 alwaysInEdition: false,
                 valuePropName: 'value',
-                compare: (a, b, state) => compareObjects(a, b, getInstances(state)),
+                compare: () => 0,
                 toString: (value, state) => toStringObjects(value, getInstances(state)),
                 conditions: [
                     {
-                        type: 'equal',
-                        title: 'Equals',
+                        type: 'contain',
+                        title: 'Contains',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            const objectValues = objectValue || [];
+                            const conditionValues = conditionValue || [];
+
+                            return conditionValues.every(item => objectValues.includes(item));
                         }
                     },
                     {
-                        type: 'notEqual',
-                        title: 'Does not equal',
+                        type: 'notContain',
+                        title: 'Does not contain',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            const objectValues = objectValue || [];
+                            const conditionValues = conditionValue || [];
+
+                            return !conditionValues.every(item => objectValues.includes(item));
                         }
                     }
                 ],
@@ -384,23 +419,29 @@ export function getFieldType(type, options) {
                 width: 200,
                 alwaysInEdition: false,
                 valuePropName: 'value',
-                compare: (a, b) => compareObjects(a, b, getSeverities()),
+                compare: () => 0,
                 toString: value => toStringObjects(value, getSeverities()),
                 conditions: [
                     {
-                        type: 'equal',
-                        title: 'Equals',
+                        type: 'contain',
+                        title: 'Contains',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            const objectValues = objectValue || [];
+                            const conditionValues = conditionValue || [];
+
+                            return conditionValues.every(item => objectValues.includes(item));
                         }
                     },
                     {
-                        type: 'notEqual',
-                        title: 'Does not equal',
+                        type: 'notContain',
+                        title: 'Does not contain',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            const objectValues = objectValue || [];
+                            const conditionValues = conditionValue || [];
+
+                            return !conditionValues.every(item => objectValues.includes(item));
                         }
                     }
                 ],
@@ -471,45 +512,6 @@ export function getFieldType(type, options) {
                     }
                 ],
                 conditionsFieldType: 'star',
-                options: []
-            };
-
-            break;
-        }
-        case 'tags': {
-            configuration = {
-                title: 'Tags',
-                allowCreation: true,
-                width: 200,
-                alwaysInEdition: false,
-                valuePropName: 'value',
-                compare: () => 0,
-                toString: value => toStringArray(value),
-                conditions: [
-                    {
-                        type: 'contain',
-                        title: 'Contains',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            const taskTags = objectValue || [];
-                            const conditionTags = conditionValue || [];
-
-                            return conditionTags.every(conditionTag => taskTags.includes(conditionTag));
-                        }
-                    },
-                    {
-                        type: 'notContain',
-                        title: 'Does not contain',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            const taskTags = objectValue || [];
-                            const conditionTags = conditionValue || [];
-
-                            return !conditionTags.every(conditionTag => taskTags.includes(conditionTag));
-                        }
-                    }
-                ],
-                conditionsFieldType: 'tags',
                 options: []
             };
 

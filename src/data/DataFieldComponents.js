@@ -3,6 +3,8 @@
 import React from 'react';
 import { Checkbox, Input, InputNumber, Select } from 'antd';
 import { getFieldType } from 'data/DataFieldTypes';
+import AlertNotificationTypeSelect from 'components/alertnotificationtypes/AlertNotificationTypeSelect';
+import AlertNotificationTypeTitle from 'components/alertnotificationtypes/AlertNotificationTypeTitle';
 import AlertTitle from 'components/alerts/common/AlertTitle';
 import AlertSelect from 'components/alerts/common/AlertSelect';
 import ColorPicker from 'components/common/ColorPicker';
@@ -55,6 +57,21 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <AlertSelect
+                        onBlur={props.onCommit}
+                        dropdownMatchSelectWidth={false}
+                        {...removeExtraProps(props)} />
+                )
+            };
+
+            break;
+        }
+        case 'alertNotificationType': {
+            configuration = {
+                render: value => (
+                    <AlertNotificationTypeTitle alertNotificationTypeId={value} />
+                ),
+                input: props => (
+                    <AlertNotificationTypeSelect
                         onBlur={props.onCommit}
                         dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
@@ -180,7 +197,9 @@ export function getFieldComponents(type, options) {
         }
         case 'star': {
             configuration = {
-                render: value => <StarCheckbox checked={!!value} />,
+                render: value => (
+                    <StarCheckbox checked={!!value} />
+                ),
                 input: props => (
                     <StarCheckbox
                         onChange={props.onCommit}

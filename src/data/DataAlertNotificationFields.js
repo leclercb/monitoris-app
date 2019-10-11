@@ -6,7 +6,7 @@ export function getAlertNotificationFields() {
             static: true,
             id: 'type',
             title: 'Type',
-            type: 'text',
+            type: 'alertNotificationType',
             editable: true
         },
         {
