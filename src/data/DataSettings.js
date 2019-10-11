@@ -149,6 +149,14 @@ export function getCategories() {
             icon: 'desktop',
             settings: [
                 {
+                    id: 'showAlertsInBrowser',
+                    title: 'Show alerts in browser',
+                    type: 'boolean',
+                    value: true,
+                    editable: true,
+                    visible: true
+                },
+                {
                     id: 'selectedView',
                     title: 'Selected view',
                     type: 'select',
