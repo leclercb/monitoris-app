@@ -32,9 +32,9 @@ function FilterConditionForm(props) {
 
     const onCommit = () => onCommitForm(props.form, props.condition, props.onUpdate, { assign: true });
 
-    let valueElement;
+    let valueElement = null;
 
-    if (fieldCondition.multi) {
+    if (fieldCondition && fieldCondition.multi) {
         valueElement = severityApi.writableSeverities.map(severity => (
             <Form.Item key={severity.id}>
                 {getFieldDecorator(`value_${severity.id}`, {
@@ -55,7 +55,9 @@ function FilterConditionForm(props) {
                 <SeverityTitle severityId={severity.id} />
             </Form.Item>
         ));
-    } else {
+    }
+
+    if (fieldCondition && !fieldCondition.multi) {
         valueElement = (
             <Form.Item>
                 {getFieldDecorator('value', {
