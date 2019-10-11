@@ -18,7 +18,7 @@ function StringValue({ redisKey, length }) {
         const getValue = async () => {
             if (instanceId && redisKey) {
                 if (Number.parseInt(length) > 1024) {
-                    setValue("[Value is too big]");
+                    setValue('[Value is too big]');
                     setNewValue(null);
                 } else {
                     const value = await instanceApi.executeCommand(instanceId, 'get', [redisKey]);
@@ -102,6 +102,6 @@ function StringValue({ redisKey, length }) {
 StringValue.propTypes = {
     redisKey: PropTypes.string,
     length: PropTypes.number
-}
+};
 
 export default StringValue;

@@ -5,7 +5,7 @@ const InstanceStates = () => (state = {}, action) => {
 
     const newState = {
         ...state
-    }
+    };
 
     if (action.instanceId in newState) {
         newState[action.instanceId] = {
@@ -15,7 +15,7 @@ const InstanceStates = () => (state = {}, action) => {
         newState[action.instanceId] = {
             status: null,
             info: []
-        }
+        };
     }
 
     switch (action.type) {

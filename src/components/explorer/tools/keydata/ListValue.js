@@ -56,6 +56,6 @@ function ListValue({ redisKey, length }) {
 ListValue.propTypes = {
     redisKey: PropTypes.string,
     length: PropTypes.number
-}
+};
 
 export default ListValue;

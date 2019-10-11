@@ -23,7 +23,7 @@ function ScanTool() {
         const result = await instanceApi.executeCommand(instanceId, 'scan', parameters);
 
         return result;
-    }
+    };
 
     const scan = async value => {
         setSearchValue(value);
@@ -39,7 +39,7 @@ function ScanTool() {
         setSearchType(type);
         setScanResult(null);
         setKeys([]);
-    }
+    };
 
     const continueScanning = async () => {
         if (instanceId && scanResult) {
@@ -50,12 +50,12 @@ function ScanTool() {
                 ...result[1]
             ]);
         }
-    }
+    };
 
     const deleteSelectedKeys = async () => {
         await instanceApi.executeCommand(instanceId, 'del', selectedKeys);
         setKeys(keys.filter(key => !selectedKeys.includes(key)));
-    }
+    };
 
     if (!instanceId) {
         return (<Empty description="Please select an instance" />);
@@ -117,7 +117,7 @@ function ScanTool() {
                         rowSelection={{
                             type: 'checkbox',
                             selectedRowKeys: selectedKeys,
-                            onChange: selectedRowKeys => setSelectedKeys(selectedRowKeys),
+                            onChange: selectedRowKeys => setSelectedKeys(selectedRowKeys)
                         }}
                         footer={() => (
                             <React.Fragment>

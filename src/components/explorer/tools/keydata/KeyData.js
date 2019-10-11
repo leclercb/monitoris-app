@@ -68,6 +68,6 @@ function KeyData(props) {
 
 KeyData.propTypes = {
     redisKey: PropTypes.string
-}
+};
 
 export default KeyData;

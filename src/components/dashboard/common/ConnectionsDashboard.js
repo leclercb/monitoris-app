@@ -9,7 +9,7 @@ function ConnectionsDashboard() {
     return (
         <Row>
             {instanceApi.instances.map(instance => (
-                <Col span={8}>
+                <Col key={instance.id} span={8}>
                     <ConnectionStatus instance={instance} />
                 </Col>
             ))}

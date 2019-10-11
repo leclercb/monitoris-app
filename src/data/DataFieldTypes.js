@@ -63,7 +63,7 @@ export function getConditionsFieldTypeForType(type) {
     return getFieldType(type).conditionsFieldType;
 }
 
-export function getFieldType(type, options) {
+export function getFieldType(type, options) { // eslint-disable-line no-unused-vars
     let configuration = null;
 
     switch (type) {

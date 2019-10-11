@@ -28,7 +28,7 @@ function InstanceStatus({ instance }) {
     } else if (instanceStateApi.status.connected) {
         proxyAlert = <Alert message="The proxy is currently connected" type="success" showIcon style={{ marginBottom: 10 }} />;
     } else {
-        proxyAlert = <Alert message="The proxy is currently disconnected" type="warning" showIcon style={{ marginBottom: 10 }} />
+        proxyAlert = <Alert message="The proxy is currently disconnected" type="warning" showIcon style={{ marginBottom: 10 }} />;
     }
 
     if (!instanceStateApi.status || (instanceStateApi.status && !instanceStateApi.status.lastStatus)) {
@@ -36,7 +36,7 @@ function InstanceStatus({ instance }) {
     } else if (instanceStateApi.status.lastStatus === 'ready') {
         redisAlert = <Alert message="The Redis server is currently connected" type="success" showIcon />;
     } else {
-        redisAlert = <Alert message="The Redis server is currently disconnected" type="warning" showIcon />
+        redisAlert = <Alert message="The Redis server is currently disconnected" type="warning" showIcon />;
     }
 
     return (
@@ -52,6 +52,6 @@ function InstanceStatus({ instance }) {
 
 InstanceStatus.propTypes = {
     instance: PropTypes.object.isRequired
-}
+};
 
 export default InstanceStatus;

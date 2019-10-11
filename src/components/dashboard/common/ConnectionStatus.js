@@ -45,6 +45,6 @@ function ConnectionStatus({ instance }) {
 
 ConnectionStatus.propTypes = {
     instance: PropTypes.object.isRequired
-}
+};
 
 export default ConnectionStatus;

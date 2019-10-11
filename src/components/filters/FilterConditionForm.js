@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Col, Form, Input, Row } from 'antd';
 import SeverityTitle from 'components/severities/SeverityTitle';
 import { getInputForType, getSelectForType } from 'data/DataFieldComponents';
-import { getConditionsFieldTypeForType, getValuePropNameForType, getConditionsForType } from 'data/DataFieldTypes';
+import { getConditionsFieldTypeForType, getConditionsForType, getValuePropNameForType } from 'data/DataFieldTypes';
 import { useSeverityApi } from 'hooks/UseSeverityApi';
 import { FieldPropType } from 'proptypes/FieldPropTypes';
 import { onCommitForm } from 'utils/FormUtils';
@@ -58,7 +58,7 @@ function FilterConditionForm(props) {
     } else {
         valueElement = (
             <Form.Item>
-                {getFieldDecorator(`value`, {
+                {getFieldDecorator('value', {
                     valuePropName: getValuePropNameForType(conditionFieldType),
                     initialValue: props.condition.value
                 })(

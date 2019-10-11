@@ -74,7 +74,7 @@ function App() {
             ),
             width: 800
         });
-    }
+    };
 
     useEffect(() => {
         appApi.loadData();
@@ -162,7 +162,7 @@ function App() {
                     case 'alert_notification': {
                         instanceApi.getStatus(message.instanceId);
 
-                        const data = message.data;
+                        const { data } = message;
                         const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
                         const alert = alertApi.alerts.find(alert => alert.id === data.alertId);
                         const severity = getSeverity(data.severity);
@@ -174,11 +174,11 @@ function App() {
                                     description: (
                                         <React.Fragment>
                                             <div>
-                                                Alert "
+                                                Alert &quot;
                                                 <strong>{alert.title}</strong>
-                                                " for instance "
+                                                &quot; for instance &quot;
                                                 <strong>{instance.title}</strong>
-                                                " back to normal
+                                                &quot; back to normal
                                             </div>
                                             <div style={{ marginTop: 10 }}>
                                                 <Button size="small" onClick={() => showMore(message, instance, alert)}>Show more</Button>
@@ -193,13 +193,13 @@ function App() {
                                     description: (
                                         <React.Fragment>
                                             <div>
-                                                "
+                                                &quot;
                                                 <strong>{severity.title}</strong>
-                                                " alert "
+                                                &quot; alert &quot;
                                                 <strong>{alert.title}</strong>
-                                                " for instance "
+                                                &quot; for instance &quot;
                                                 <strong>{instance.title}</strong>
-                                                "
+                                                &quot;
                                             </div>
                                             <div style={{ marginTop: 10 }}>
                                                 <Button size="small" onClick={() => showMore(message, instance, alert)}>Show more</Button>
