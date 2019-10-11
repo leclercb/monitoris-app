@@ -66,7 +66,7 @@ function App() {
                         <Descriptions.Item label="Alert">{alert.title}</Descriptions.Item>
                         <Descriptions.Item label="Instance">{instance.title}</Descriptions.Item>
                         <Descriptions.Item label="Severity">
-                            <SeverityTitle severityId={message.data.backToNormal ? 'norm' : message.data.severity} />
+                            <SeverityTitle severityId={message.data.currSeverity} />
                         </Descriptions.Item>
                     </Descriptions>
                     <Table columns={columns} dataSource={dataSource} pagination={false} size="small" style={{ marginTop: 20 }} />
@@ -165,50 +165,32 @@ function App() {
                         const { data } = message;
                         const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
                         const alert = alertApi.alerts.find(alert => alert.id === data.alertId);
-                        const severity = getSeverity(data.severity);
+                        const prevSeverity = getSeverity(data.prevSeverity);
+                        const currSeverity = getSeverity(data.currSeverity);
 
-                        if (instance && alert && severity) {
-                            if (data.backToNormal) {
-                                notification.success({
-                                    message: 'Alert',
-                                    description: (
-                                        <React.Fragment>
-                                            <div>
-                                                Alert &quot;
-                                                <strong>{alert.title}</strong>
-                                                &quot; for instance &quot;
-                                                <strong>{instance.title}</strong>
-                                                &quot; back to normal
-                                            </div>
-                                            <div style={{ marginTop: 10 }}>
-                                                <Button size="small" onClick={() => showMore(message, instance, alert)}>Show more</Button>
-                                            </div>
-                                        </React.Fragment>
-                                    ),
-                                    duration: 10
-                                });
-                            } else {
-                                notification[severity.notificationType]({
-                                    message: 'Alert',
-                                    description: (
-                                        <React.Fragment>
-                                            <div>
-                                                &quot;
-                                                <strong>{severity.title}</strong>
-                                                &quot; alert &quot;
-                                                <strong>{alert.title}</strong>
-                                                &quot; for instance &quot;
-                                                <strong>{instance.title}</strong>
-                                                &quot;
-                                            </div>
-                                            <div style={{ marginTop: 10 }}>
-                                                <Button size="small" onClick={() => showMore(message, instance, alert)}>Show more</Button>
-                                            </div>
-                                        </React.Fragment>
-                                    ),
-                                    duration: 10
-                                });
-                            }
+                        if (instance && alert && prevSeverity && currSeverity) {
+                            notification[currSeverity.notificationType]({
+                                message: 'Alert',
+                                description: (
+                                    <React.Fragment>
+                                        <div>
+                                            Alert &quot;
+                                            <strong>{alert.title}</strong>
+                                            &quot; severity for instance &quot;
+                                            <strong>{instance.title}</strong>
+                                            &quot; changed from &quot;
+                                            <strong>{prevSeverity.title}</strong>
+                                            &quot; to &quot;
+                                            <strong>{currSeverity.title}</strong>
+                                            &quot;
+                                        </div>
+                                        <div style={{ marginTop: 10 }}>
+                                            <Button size="small" onClick={() => showMore(message, instance, alert)}>Show more</Button>
+                                        </div>
+                                    </React.Fragment>
+                                ),
+                                duration: 10
+                            });
                         }
 
                         break;
