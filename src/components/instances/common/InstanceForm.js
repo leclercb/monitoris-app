@@ -8,7 +8,7 @@ import { InstancePropType } from 'proptypes/InstancePropTypes';
 import { getDefaultFormItemLayout, onCommitForm } from 'utils/FormUtils';
 
 function InstanceForm(props) {
-    const fields = getInstanceFields();
+    const fields = getInstanceFields(props.instance.type);
 
     const { getFieldDecorator } = props.form;
 

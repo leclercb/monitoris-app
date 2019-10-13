@@ -24,7 +24,7 @@ function RedisStatus({ status }) {
                     message="Disconnected"
                     description={(
                         <div>
-                            The Redis server is currently disconnected ({status.lastStatus}).
+                            The Redis server is currently disconnected.
                             <br />
                             Refreshed on: {status.refreshDate}
                         </div>
