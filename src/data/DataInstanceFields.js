@@ -54,17 +54,6 @@ export function getInstanceFields(type) {
             fields.push(
                 {
                     static: true,
-                    id: 'secret',
-                    title: 'Secret',
-                    type: 'password',
-                    editable: true
-                }
-            );
-            break;
-        case 'proxy':
-            fields.push(
-                {
-                    static: true,
                     id: 'host',
                     title: 'Host',
                     type: 'text',
@@ -81,6 +70,17 @@ export function getInstanceFields(type) {
                     static: true,
                     id: 'password',
                     title: 'Password',
+                    type: 'password',
+                    editable: true
+                }
+            );
+            break;
+        case 'proxy':
+            fields.push(
+                {
+                    static: true,
+                    id: 'secret',
+                    title: 'Secret',
                     type: 'password',
                     editable: true
                 }
