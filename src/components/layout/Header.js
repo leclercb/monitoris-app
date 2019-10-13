@@ -30,7 +30,9 @@ function Header() {
     };
 
     const onAddInstance = async () => {
-        const instance = await instanceApi.addInstance();
+        const instance = await instanceApi.addInstance({
+            type: 'proxy'
+        });
         instanceApi.setSelectedInstanceId(instance.id);
     };
 

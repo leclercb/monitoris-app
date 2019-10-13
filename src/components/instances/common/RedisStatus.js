@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 function RedisStatus({ status }) {
     return (
         <React.Fragment>
-            {status && status.lastStatus === 'ready' && (
+            {status && status.redisConnected && (
                 <Alert
                     message="Connected"
                     description={(
@@ -19,7 +19,7 @@ function RedisStatus({ status }) {
                     showIcon
                 />
             )}
-            {status && status.lastStatus && status.lastStatus !== 'ready' && (
+            {status && !status.redisConnected && (
                 <Alert
                     message="Disconnected"
                     description={(
@@ -33,7 +33,7 @@ function RedisStatus({ status }) {
                     showIcon
                 />
             )}
-            {(!status || (status && !status.lastStatus)) && (
+            {!status && (
                 <Alert
                     message="Missing Status"
                     description="The Redis server status has not been retrieved."

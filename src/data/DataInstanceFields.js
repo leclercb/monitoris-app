@@ -1,7 +1,7 @@
 import { addColorsToArray } from 'utils/ColorUtils';
 
-export function getInstanceFields() {
-    return addColorsToArray([
+export function getInstanceFields(type) {
+    const fields = [
         {
             static: true,
             id: 'id',
@@ -42,10 +42,53 @@ export function getInstanceFields() {
         },
         {
             static: true,
-            id: 'secret',
-            title: 'Secret',
-            type: 'password',
+            id: 'type',
+            title: 'Type',
+            type: 'text',
             editable: true
         }
-    ]);
+    ];
+
+    switch (type) {
+        case 'direct':
+            fields.push(
+                {
+                    static: true,
+                    id: 'secret',
+                    title: 'Secret',
+                    type: 'password',
+                    editable: true
+                }
+            );
+            break;
+        case 'proxy':
+            fields.push(
+                {
+                    static: true,
+                    id: 'host',
+                    title: 'Host',
+                    type: 'text',
+                    editable: true
+                },
+                {
+                    static: true,
+                    id: 'port',
+                    title: 'Port',
+                    type: 'number',
+                    editable: true
+                },
+                {
+                    static: true,
+                    id: 'password',
+                    title: 'Password',
+                    type: 'password',
+                    editable: true
+                }
+            );
+            break;
+        default:
+            break;
+    }
+
+    return addColorsToArray(fields);
 }

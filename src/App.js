@@ -93,67 +93,47 @@ function App() {
                 }
 
                 switch (message.type) {
-                    case 'proxy_status': {
+                    case 'proxy_connected': {
                         instanceApi.getStatus(message.instanceId);
 
                         const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
 
                         if (instance) {
-                            switch (message.data) {
-                                case 'connected':
-                                    notification.success({
-                                        message: 'Proxy Status',
-                                        description: `The proxy "${instance.title}" is now connected`,
-                                        duration: 10
-                                    });
-                                    break;
-                                case 'disconnected':
-                                    notification.warning({
-                                        message: 'Proxy Status',
-                                        description: `The proxy "${instance.title}" is now disconnected`,
-                                        duration: 10
-                                    });
-                                    break;
-                                default:
-                                    notification.error({
-                                        message: 'Proxy Status',
-                                        description: `The proxy "${instance.title}" is now disconnected (${message.data})`,
-                                        duration: 10
-                                    });
-                                    break;
+                            if (message.data) {
+                                notification.success({
+                                    message: 'Proxy Status',
+                                    description: `The proxy "${instance.title}" is now connected`,
+                                    duration: 10
+                                });
+                            } else {
+                                notification.warning({
+                                    message: 'Proxy Status',
+                                    description: `The proxy "${instance.title}" is now disconnected`,
+                                    duration: 10
+                                });
                             }
                         }
 
                         break;
                     }
-                    case 'redis_status': {
+                    case 'redis_connected': {
                         instanceApi.getStatus(message.instanceId);
 
                         const instance = instanceApi.instances.find(instance => instance.id === message.instanceId);
 
                         if (instance) {
-                            switch (message.data) {
-                                case 'ready':
-                                    notification.success({
-                                        message: 'Redis Server Status',
-                                        description: `The Redis server "${instance.title}" is now connected`,
-                                        duration: 10
-                                    });
-                                    break;
-                                case 'disconnected':
-                                    notification.warning({
-                                        message: 'Redis Server Status',
-                                        description: `The Redis server "${instance.title}" is now disconnected`,
-                                        duration: 10
-                                    });
-                                    break;
-                                default:
-                                    notification.error({
-                                        message: 'Redis Server Status',
-                                        description: `The Redis server "${instance.title}" is now disconnected (${message.data})`,
-                                        duration: 10
-                                    });
-                                    break;
+                            if (message.data) {
+                                notification.success({
+                                    message: 'Redis Server Status',
+                                    description: `The Redis server "${instance.title}" is now connected`,
+                                    duration: 10
+                                });
+                            } else {
+                                notification.warning({
+                                    message: 'Redis Server Status',
+                                    description: `The Redis server "${instance.title}" is now disconnected`,
+                                    duration: 10
+                                });
                             }
                         }
 

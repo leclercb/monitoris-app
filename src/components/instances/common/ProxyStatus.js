@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 function ProxyStatus({ status }) {
     return (
         <React.Fragment>
-            {status && status.connected && (
+            {status && status.proxyConnected && (
                 <Alert
                     message="Connected"
                     description={(
@@ -19,7 +19,7 @@ function ProxyStatus({ status }) {
                     showIcon
                 />
             )}
-            {status && !status.connected && (
+            {status && !status.proxyConnected && (
                 <Alert
                     message="Disconnected"
                     description={(
