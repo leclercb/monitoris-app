@@ -7,7 +7,7 @@ function ProxyStatus({ status }) {
         <React.Fragment>
             {status && status.proxyConnected && (
                 <Alert
-                    message="Connected"
+                    message="Proxy Connected"
                     description={(
                         <div>
                             The proxy is currently connected.
@@ -21,7 +21,7 @@ function ProxyStatus({ status }) {
             )}
             {status && !status.proxyConnected && (
                 <Alert
-                    message="Disconnected"
+                    message="Proxy Disconnected"
                     description={(
                         <div>
                             The proxy is currently disconnected.
@@ -35,7 +35,7 @@ function ProxyStatus({ status }) {
             )}
             {!status && (
                 <Alert
-                    message="Missing Status"
+                    message="Proxy Missing Status"
                     description="The proxy status has not been retrieved."
                     type="info"
                     showIcon

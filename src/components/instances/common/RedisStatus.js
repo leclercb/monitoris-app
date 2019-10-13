@@ -7,7 +7,7 @@ function RedisStatus({ status }) {
         <React.Fragment>
             {status && status.redisConnected && (
                 <Alert
-                    message="Connected"
+                    message="Redis Connected"
                     description={(
                         <div>
                             The Redis server is currently connected.
@@ -21,7 +21,7 @@ function RedisStatus({ status }) {
             )}
             {status && !status.redisConnected && (
                 <Alert
-                    message="Disconnected"
+                    message="Redis Disconnected"
                     description={(
                         <div>
                             The Redis server is currently disconnected.
@@ -35,7 +35,7 @@ function RedisStatus({ status }) {
             )}
             {!status && (
                 <Alert
-                    message="Missing Status"
+                    message="Redis Missing Status"
                     description="The Redis server status has not been retrieved."
                     type="info"
                     showIcon

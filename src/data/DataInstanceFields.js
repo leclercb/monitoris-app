@@ -4,14 +4,6 @@ export function getInstanceFields(type) {
     const fields = [
         {
             static: true,
-            id: 'id',
-            title: 'ID',
-            type: 'text',
-            editable: false,
-            visible: true
-        },
-        {
-            static: true,
             id: 'creationDate',
             title: 'Creation date',
             type: 'dateTime',
@@ -28,6 +20,13 @@ export function getInstanceFields(type) {
         },
         {
             static: true,
+            id: 'type',
+            title: 'Type',
+            type: 'text',
+            editable: true
+        },
+        {
+            static: true,
             id: 'title',
             title: 'Title',
             type: 'text',
@@ -39,19 +38,20 @@ export function getInstanceFields(type) {
             title: 'Color',
             type: 'color',
             editable: true
-        },
-        {
-            static: true,
-            id: 'type',
-            title: 'Type',
-            type: 'text',
-            editable: true
         }
     ];
 
     switch (type) {
         case 'direct':
             fields.push(
+                {
+                    static: true,
+                    id: 'id',
+                    title: 'ID',
+                    type: 'text',
+                    editable: false,
+                    visible: false
+                },
                 {
                     static: true,
                     id: 'host',
@@ -77,6 +77,14 @@ export function getInstanceFields(type) {
             break;
         case 'proxy':
             fields.push(
+                {
+                    static: true,
+                    id: 'id',
+                    title: 'ID',
+                    type: 'text',
+                    editable: false,
+                    visible: true
+                },
                 {
                     static: true,
                     id: 'secret',

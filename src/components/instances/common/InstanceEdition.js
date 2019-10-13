@@ -34,29 +34,27 @@ function InstanceEdition({ instance, updateInstance }) {
 
     return (
         <React.Fragment>
-            <InstanceForm
-                instance={instance}
-                updateInstance={updateInstance} />
-            <Divider style={{ marginTop: 30 }}>Actions</Divider>
             <Row gutter={20}>
                 <Col span={12}>
-                    <Button onClick={() => getStatus()} type="dashed" style={{ height: 50 }} block>
+                    <Divider>Instance</Divider>
+                    <InstanceForm
+                        instance={instance}
+                        updateInstance={updateInstance} />
+                </Col>
+                <Col span={12}>
+                    <Divider>Actions</Divider>
+                    <Button onClick={() => getStatus()} type="dashed" block>
                         <Icon icon="sync-alt" text="Refresh status" />
                     </Button>
-                </Col>
-                <Col span={12}>
-                    <Button onClick={() => goToExplorer()} type="dashed" style={{ height: 50 }} block>
+                    <Button onClick={() => goToExplorer()} type="dashed" block style={{ marginTop: 10 }}>
                         <Icon icon="search" text="Go to the explorer" />
                     </Button>
-                </Col>
-            </Row>
-            <Row gutter={20}>
-                <Col span={12}>
-                    <Divider style={{ marginTop: 30 }}>Proxy Status</Divider>
-                    <ProxyStatus status={instanceStateApi.status} />
-                </Col>
-                <Col span={12}>
-                    <Divider style={{ marginTop: 30 }}>Redis Status</Divider>
+                    <Divider style={{ marginTop: 30 }}>Connection Status</Divider>
+                    {instance.type === 'proxy' && (
+                        <div style={{ marginBottom: 10 }}>
+                            <ProxyStatus status={instanceStateApi.status} />
+                        </div>
+                    )}
                     <RedisStatus status={instanceStateApi.status} />
                 </Col>
             </Row>
