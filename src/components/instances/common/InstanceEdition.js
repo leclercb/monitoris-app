@@ -43,12 +43,18 @@ function InstanceEdition({ instance, updateInstance }) {
                 </Col>
                 <Col span={12}>
                     <Divider>Actions</Divider>
-                    <Button onClick={() => getStatus()} type="dashed" block>
-                        <Icon icon="sync-alt" text="Refresh status" />
-                    </Button>
-                    <Button onClick={() => goToExplorer()} type="dashed" block style={{ marginTop: 10 }}>
-                        <Icon icon="search" text="Go to the explorer" />
-                    </Button>
+                    <Row gutter={20}>
+                        <Col span={12}>
+                            <Button onClick={() => getStatus()} type="dashed" block>
+                                <Icon icon="sync-alt" text="Refresh status" />
+                            </Button>
+                        </Col>
+                        <Col span={12}>
+                            <Button onClick={() => goToExplorer()} type="dashed" block>
+                                <Icon icon="search" text="Go to the explorer" />
+                            </Button>
+                        </Col>
+                    </Row>
                     <Divider style={{ marginTop: 30 }}>Connection Status</Divider>
                     {instance.type === 'proxy' && (
                         <div style={{ marginBottom: 10 }}>
