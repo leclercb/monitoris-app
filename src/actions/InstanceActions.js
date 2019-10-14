@@ -139,7 +139,7 @@ export function getInfo(instanceId) {
     };
 }
 
-export function executeCommand(instanceId, command, parameters) {
+export function executeCommand(instanceId, db, command, parameters) {
     return async dispatch => {
         const processId = uuid();
 
@@ -152,6 +152,7 @@ export function executeCommand(instanceId, command, parameters) {
                     method: 'POST',
                     url: `${getConfig().proxyUrl}/api/v1/instances/${instanceId}/execute`,
                     data: {
+                        db,
                         command,
                         parameters
                     },

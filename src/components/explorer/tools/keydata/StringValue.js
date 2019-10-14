@@ -9,6 +9,7 @@ function StringValue({ redisKey, length }) {
     const instanceApi = useInstanceApi();
 
     const instanceId = instanceApi.selectedExplorerInstanceId;
+    const db = instanceApi.selectedExplorerDb;
     const [edit, setEdit] = useState(false);
     const [language, setLanguage] = useState('json');
     const [value, setValue] = useState(null);
@@ -21,7 +22,7 @@ function StringValue({ redisKey, length }) {
                     setValue('[Value is too big]');
                     setNewValue(null);
                 } else {
-                    const value = await instanceApi.executeCommand(instanceId, 'get', [redisKey]);
+                    const value = await instanceApi.executeCommand(instanceId, db, 'get', [redisKey]);
                     setValue(value);
                     setNewValue(value);
                 }
@@ -41,7 +42,7 @@ function StringValue({ redisKey, length }) {
     };
 
     const onSave = async () => {
-        await instanceApi.executeCommand(instanceId, 'set', [redisKey, newValue]);
+        await instanceApi.executeCommand(instanceId, db, 'set', [redisKey, newValue]);
         setValue(newValue);
         setEdit(false);
     };

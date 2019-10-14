@@ -105,6 +105,15 @@ export function setSelectedExplorerInstanceId(instanceId) {
     };
 }
 
+export function setSelectedExplorerDb(db) {
+    return async dispatch => {
+        dispatch({
+            type: 'SET_SELECTED_EXPLORER_DB',
+            db
+        });
+    };
+}
+
 export function setSelectedExplorerToolId(toolId) {
     return async dispatch => {
         dispatch({

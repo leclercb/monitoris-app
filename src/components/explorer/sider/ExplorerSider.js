@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Menu, Tooltip } from 'antd';
+import { InputNumber, Menu, Tooltip } from 'antd';
 import Icon from 'components/common/Icon';
 import LeftRight from 'components/common/LeftRight';
 import { useAppApi } from 'hooks/UseAppApi';
@@ -36,30 +36,25 @@ function ExplorerSider() {
         );
     };
 
-    const onSearch = value => {
-
-    };
-
     return (
         <div
             className="joyride-task-sider"
             style={{ backgroundColor: '#ffffff', height: '100%' }}>
-            <div style={{ width: '100%', padding: 10, textAlign: 'center' }}>
-                <InstanceSelect
-                    value={instanceApi.selectedExplorerInstanceId}
-                    onChange={value => instanceApi.setSelectedExplorerInstanceId(value)}
-                    placeholder="Select an instance..."
-                    style={{ width: '100%' }} />
-            </div>
-            <div style={{ width: '100%', padding: 10, textAlign: 'center' }}>
-                <Tooltip title="Press enter to search" placement="bottom">
-                    <Input.Search
-                        allowClear={true}
-                        size="small"
-                        placeholder="Search for ..."
-                        style={{ width: '100%' }}
-                        onSearch={value => onSearch(value)} />
-                </Tooltip>
+            <div style={{ width: '100%', padding: 10 }}>
+                <LeftRight right={(
+                    <Tooltip title="Selected database" placement="right">
+                        <InputNumber
+                            value={instanceApi.selectedExplorerDb}
+                            onChange={value => instanceApi.setSelectedExplorerDb(value)}
+                            style={{ width: 60, minWidth: 60, marginLeft: 5 }} />
+                    </Tooltip>
+                )}>
+                    <InstanceSelect
+                        value={instanceApi.selectedExplorerInstanceId}
+                        onChange={value => instanceApi.setSelectedExplorerInstanceId(value)}
+                        placeholder="Select an instance..."
+                        style={{ width: '100%' }} />
+                </LeftRight>
             </div>
             <Menu
                 selectedKeys={[appApi.selectedExplorerToolId]}

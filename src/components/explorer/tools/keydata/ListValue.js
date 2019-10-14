@@ -8,12 +8,13 @@ function ListValue({ redisKey, length }) {
     const instanceApi = useInstanceApi();
 
     const instanceId = instanceApi.selectedExplorerInstanceId;
+    const db = instanceApi.selectedExplorerDb;
     const [items, setItems] = useState([]);
     const [endIndex, setEndIndex] = useState(0);
 
     const getItems = async () => {
         if (instanceId && redisKey) {
-            const value = await instanceApi.executeCommand(instanceId, 'lrange', [redisKey, String(endIndex), String(endIndex + batchSize - 1)]);
+            const value = await instanceApi.executeCommand(instanceId, db, 'lrange', [redisKey, String(endIndex), String(endIndex + batchSize - 1)]);
             setItems([
                 ...items,
                 ...value

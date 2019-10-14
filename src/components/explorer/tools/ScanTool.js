@@ -7,6 +7,7 @@ function ScanTool() {
     const instanceApi = useInstanceApi();
 
     const instanceId = instanceApi.selectedExplorerInstanceId;
+    const db = instanceApi.selectedExplorerDb;
     const [keys, setKeys] = useState([]);
     const [scanResult, setScanResult] = useState(null);
     const [searchValue, setSearchValue] = useState('');
@@ -20,7 +21,7 @@ function ScanTool() {
             parameters.push('TYPE', searchType);
         }
 
-        const result = await instanceApi.executeCommand(instanceId, 'scan', parameters);
+        const result = await instanceApi.executeCommand(instanceId, db, 'scan', parameters);
 
         return result;
     };
@@ -53,7 +54,7 @@ function ScanTool() {
     };
 
     const deleteSelectedKeys = async () => {
-        await instanceApi.executeCommand(instanceId, 'del', selectedKeys);
+        await instanceApi.executeCommand(instanceId, db, 'del', selectedKeys);
         setKeys(keys.filter(key => !selectedKeys.includes(key)));
     };
 

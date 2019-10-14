@@ -9,6 +9,7 @@ function KeyData(props) {
     const instanceApi = useInstanceApi();
 
     const instanceId = instanceApi.selectedExplorerInstanceId;
+    const db = instanceApi.selectedExplorerDb;
     const [redisKey, setRedisKey] = useState(null);
     const [type, setType] = useState(null);
     const [length, setLength] = useState(null);
@@ -16,21 +17,21 @@ function KeyData(props) {
     useEffect(() => {
         const getData = async (redisKey) => {
             if (instanceId && redisKey) {
-                const type = await instanceApi.executeCommand(instanceId, 'type', [redisKey]);
+                const type = await instanceApi.executeCommand(instanceId, db, 'type', [redisKey]);
                 setType(type);
 
                 if (type === 'string') {
-                    const length = await instanceApi.executeCommand(instanceId, 'strlen', [redisKey]);
+                    const length = await instanceApi.executeCommand(instanceId, db, 'strlen', [redisKey]);
                     setLength(length);
                 }
 
                 if (type === 'list') {
-                    const length = await instanceApi.executeCommand(instanceId, 'llen', [redisKey]);
+                    const length = await instanceApi.executeCommand(instanceId, db, 'llen', [redisKey]);
                     setLength(length);
                 }
 
                 if (type === 'hash') {
-                    const length = await instanceApi.executeCommand(instanceId, 'hlen', [redisKey]);
+                    const length = await instanceApi.executeCommand(instanceId, db, 'hlen', [redisKey]);
                     setLength(length);
                 }
             }
