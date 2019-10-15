@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Col, Empty, Input, Row, Select, Table } from 'antd';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import KeyData from 'components/explorer/tools/keydata/KeyData';
+import 'components/explorer/tools/ScanTool.css';
 
 function ScanTool() {
     const instanceApi = useInstanceApi();
@@ -56,6 +57,7 @@ function ScanTool() {
     const deleteSelectedKeys = async () => {
         await instanceApi.executeCommand(instanceId, db, 'del', selectedKeys);
         setKeys(keys.filter(key => !selectedKeys.includes(key)));
+        setSelectedKeys([]);
     };
 
     if (!instanceId) {
@@ -115,11 +117,15 @@ function ScanTool() {
                             size: 'small'
                         }}
                         size="small"
+                        rowClassName={() => "scan-table-row"}
                         rowSelection={{
                             type: 'checkbox',
                             selectedRowKeys: selectedKeys,
                             onChange: selectedRowKeys => setSelectedKeys(selectedRowKeys)
                         }}
+                        onRow={record => ({
+                            onClick: () => setSelectedKeys([record.key])
+                        })}
                         footer={() => (
                             <React.Fragment>
                                 <Button

@@ -49,6 +49,17 @@ export function getAlertFields() {
         },
         {
             static: true,
+            id: 'historySize',
+            title: 'History Size',
+            type: 'number',
+            editable: true,
+            options: {
+                min: 10,
+                max: 100
+            }
+        },
+        {
+            static: true,
             id: 'instances',
             title: 'Instances',
             type: 'instances',
