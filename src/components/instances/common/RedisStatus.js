@@ -13,6 +13,8 @@ function RedisStatus({ status }) {
                             The Redis server is currently connected.
                             <br />
                             Refreshed on: {status.refreshDate}
+                            <br />
+                            <span style={{ fontSize: 11, fontStyle: 'italic' }}>It can take up to 1 minute to get the updated status.</span>
                         </div>
                     )}
                     type="success"
@@ -27,6 +29,8 @@ function RedisStatus({ status }) {
                             The Redis server is currently disconnected.
                             <br />
                             Refreshed on: {status.refreshDate}
+                            <br />
+                            <span style={{ fontSize: 11, fontStyle: 'italic' }}>It can take up to 1 minute to get the updated status.</span>
                         </div>
                     )}
                     type="warning"
