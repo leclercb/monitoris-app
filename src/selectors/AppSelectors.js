@@ -12,6 +12,7 @@ export const getSelectedExplorerToolId = state => state.app.selectedExplorerTool
 
 export const getJoyrideOptions = state => state.app.joyride;
 
+export const getAccountManager = state => state.app.accountManager;
 export const getSettingManager = state => state.app.settingManager;
 
 export const isPro = createSelector(

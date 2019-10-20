@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import { Button, Descriptions, Modal, Table, notification } from 'antd';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { StripeProvider } from 'react-stripe-elements';
 import AppLayout from 'components/layout/AppLayout';
 import SeverityTitle from 'components/severities/SeverityTitle';
+import { getConfig } from 'config/Config';
 import withJoyride from 'containers/WithJoyride';
 import { getRedisField } from 'data/DataRedisFields';
 import { getSeverity } from 'data/DataSeverities';
@@ -188,9 +190,11 @@ function App() {
     });
 
     return (
-        <DndProvider backend={HTML5Backend}>
-            <AppLayout />
-        </DndProvider>
+        <StripeProvider apiKey={getConfig().stripePublicKey}>
+            <DndProvider backend={HTML5Backend}>
+                <AppLayout />
+            </DndProvider>
+        </StripeProvider>
     );
 }
 

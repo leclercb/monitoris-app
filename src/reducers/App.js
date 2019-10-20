@@ -13,6 +13,9 @@ const App = () => (state = {
         id: null,
         run: false
     },
+    accountManager: {
+        visible: false
+    },
     settingManager: {
         visible: false
     }
@@ -62,6 +65,13 @@ const App = () => (state = {
                 joyride: {
                     id: 'id' in action ? action.id : state.joyride.id,
                     run: 'run' in action ? action.run : state.joyride.run
+                }
+            };
+        case 'SET_ACCOUNT_MANAGER_OPTIONS':
+            return {
+                ...state,
+                accountManager: {
+                    visible: 'visible' in action ? action.visible : state.accountManager.visible
                 }
             };
         case 'SET_SETTING_MANAGER_OPTIONS':

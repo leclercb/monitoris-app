@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     loadData,
+    setAccountManagerOptions,
     setEditingCell,
     setSelectedDashboardId,
     setSelectedExplorerToolId,
@@ -9,6 +10,7 @@ import {
 } from 'actions/AppActions';
 import { setSelectedView } from 'actions/SettingActions';
 import {
+    getAccountManager,
     getEditingCell,
     getSelectedDashboardId,
     getSelectedExplorerToolId,
@@ -25,6 +27,7 @@ export function useAppApi() {
     const selectedDashboardId = useSelector(getSelectedDashboardId);
     const selectedExplorerToolId = useSelector(getSelectedExplorerToolId);
     const editingCell = useSelector(getEditingCell);
+    const accountManager = useSelector(getAccountManager);
     const settingManager = useSelector(getSettingManager);
 
     const loadDataCallback = useCallback(
@@ -52,6 +55,11 @@ export function useAppApi() {
         [dispatch]
     );
 
+    const setAccountManagerOptionsCallback = useCallback(
+        options => dispatch(setAccountManagerOptions(options)),
+        [dispatch]
+    );
+
     const setSettingManagerOptionsCallback = useCallback(
         options => dispatch(setSettingManagerOptions(options)),
         [dispatch]
@@ -63,12 +71,14 @@ export function useAppApi() {
         selectedDashboardId,
         selectedExplorerToolId,
         editingCell,
+        accountManager,
         settingManager,
         loadData: loadDataCallback,
         setSelectedView: setSelectedViewCallback,
         setSelectedDashboardId: setSelectedDashboardIdCallback,
         setSelectedExplorerToolId: setSelectedExplorerToolIdCallback,
         setEditingCell: setEditingCellCallback,
+        setAccountManagerOptions: setAccountManagerOptionsCallback,
         setSettingManagerOptions: setSettingManagerOptionsCallback
     };
 }

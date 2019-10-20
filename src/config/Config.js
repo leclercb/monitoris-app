@@ -9,6 +9,7 @@ const config = {
         authUrl: 'http://localhost:2300',
         cloudUrl: 'http://localhost:2100/cloud',
         maintenanceUrl: 'http://localhost:2100/maintenance',
+        stripePublicKey: 'pk_test_2s6bAR33dvEhfo6HPxUFp3aC00Oeu6YaC3',
         auth: {
             region: 'eu-west-1',
             userPoolId: process.env.REACT_APP_AUTH_USERPOOLID,
@@ -26,6 +27,7 @@ const config = {
         authUrl: 'https://auth-dev.redismon.app',
         cloudUrl: 'https://www-dev.redismon.app/cloud',
         maintenanceUrl: 'https://www-dev.redismon.app/maintenance',
+        stripePublicKey: 'pk_test_2s6bAR33dvEhfo6HPxUFp3aC00Oeu6YaC3',
         auth: {
             region: 'eu-west-1',
             userPoolId: process.env.REACT_APP_AUTH_USERPOOLID,
@@ -43,6 +45,7 @@ const config = {
         authUrl: 'https://auth.redismon.app',
         cloudUrl: 'https://www.redismon.app/cloud',
         maintenanceUrl: 'https://www.redismon.app/maintenance',
+        stripePublicKey: 'pk_test_2s6bAR33dvEhfo6HPxUFp3aC00Oeu6YaC3',
         auth: {
             region: 'eu-west-1',
             userPoolId: process.env.REACT_APP_AUTH_USERPOOLID,

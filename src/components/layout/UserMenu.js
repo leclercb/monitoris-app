@@ -2,15 +2,15 @@ import React from 'react';
 import { Button, Descriptions, Popover, message } from 'antd';
 import Avatar from 'components/common/Avatar';
 import LeftRight from 'components/common/LeftRight';
-import { getConfig } from 'config/Config';
+import { useAppApi } from 'hooks/UseAppApi';
 import { useSessionApi } from 'hooks/UseSessionApi';
 
 function UserMenu() {
+    const appApi = useAppApi();
     const sessionApi = useSessionApi();
 
-    const onBuyItem = async () => {
-        message.info('Redirecting to Paypal...', 5);
-        await sessionApi.buyItem(getConfig().cloudItemSku, sessionApi.session.user.id, sessionApi.session.user.email);
+    const onShowAccount = async () => {
+        appApi.setAccountManagerOptions({ visible: true });
     };
 
     const content = (
@@ -38,7 +38,7 @@ function UserMenu() {
             ) : null}
             <LeftRight
                 left={(
-                    <Button type="dashed" onClick={onBuyItem}>Extend your &quot;pro&quot; subscription</Button>
+                    <Button type="dashed" onClick={onShowAccount}>Account</Button>
                 )}
                 right={(
                     <Button type="primary" onClick={sessionApi.logout}>Logout</Button>

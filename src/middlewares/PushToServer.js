@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal } from 'antd';
 import { Auth } from 'aws-amplify';
 import uuid from 'uuid/v4';
-import { buyItem } from 'actions/ItemActions';
+import { setAccountManagerOptions } from 'actions/AppActions';
 import { changeId } from 'actions/ObjectActions';
 import { sendRequest } from 'actions/RequestActions';
 import { updateProcess } from 'actions/ThreadActions';
@@ -53,9 +53,9 @@ function pushObjectToServer(property, oldObject, newObject) {
                 Modal.info({
                     icon: null,
                     width: 800,
-                    content: (<CloudMaxObjectsReachedMessage
-                        session={getSession(state)}
-                        buyItem={(itemSku, user, email) => dispatch(buyItem(itemSku, user, email))} />)
+                    content: (
+                        <CloudMaxObjectsReachedMessage setAccountManagerOptions={() => dispatch(setAccountManagerOptions({ visible: true }))} />
+                    )
                 });
             } else {
                 dispatch(updateProcess({

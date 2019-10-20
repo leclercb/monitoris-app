@@ -95,87 +95,98 @@
   dependencies:
     "@antv/gl-matrix" "^2.7.1"
 
-"@aws-amplify/analytics@^1.2.25":
-  version "1.2.25"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/analytics/-/analytics-1.2.25.tgz#d6965fa71274eb7d98620f7c622ee668df04d2b5"
+"@aws-amplify/analytics@^1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/analytics/-/analytics-1.3.2.tgz#f2314975a81a824d34f3f92a603204df762234e0"
+  integrity sha512-RzSBZ0lIHkOnP88pRc0hjh3z6A+kSfHCTyloUSXrpMgiRMi+XvaWNqD+uH0Au5x9X3xKIZb3AOrsPX9pyCTXeA==
   dependencies:
-    "@aws-amplify/cache" "^1.0.34"
-    "@aws-amplify/core" "^1.1.2"
+    "@aws-amplify/cache" "^1.1.2"
+    "@aws-amplify/core" "^1.2.2"
     uuid "^3.2.1"
 
-"@aws-amplify/api@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/api/-/api-1.1.3.tgz#1fae038c7978d0be49fe063ce27c3a74ef159dd6"
+"@aws-amplify/api@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/api/-/api-1.2.2.tgz#e7279f27e8194613443744fe9bf006ba2c98de7e"
+  integrity sha512-jpMf6HQO36oyZ0WVi6wIDK3EtQCjMLDSwHrLKzFGM83mtcDdC8XBIaqElWG6nKgFE8MKOmG8I9YSinTl3HpPqg==
   dependencies:
-    "@aws-amplify/auth" "^1.3.3"
-    "@aws-amplify/cache" "^1.0.34"
-    "@aws-amplify/core" "^1.1.2"
+    "@aws-amplify/auth" "^1.4.2"
+    "@aws-amplify/cache" "^1.1.2"
+    "@aws-amplify/core" "^1.2.2"
     axios "^0.19.0"
     graphql "0.13.0"
     uuid "^3.2.1"
     zen-observable "^0.8.6"
 
-"@aws-amplify/auth@^1.3.3":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/auth/-/auth-1.3.3.tgz#2ea127520ffb5966f708bd36dda8b458c23cbfa1"
+"@aws-amplify/auth@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/auth/-/auth-1.4.2.tgz#099ff67de3c0c4397d0f6f9f30bddb4d5dbdf16e"
+  integrity sha512-X82t3zxAMjRQjwZ8M4xT+96DhRrb6H8FoZZDp1Pxr4p2KSKKMkEkS2AJCenLNQ37g6CUBLlltQ++iGXDLabskw==
   dependencies:
-    "@aws-amplify/cache" "^1.0.34"
-    "@aws-amplify/core" "^1.1.2"
-    amazon-cognito-identity-js "^3.0.15"
+    "@aws-amplify/cache" "^1.1.2"
+    "@aws-amplify/core" "^1.2.2"
+    amazon-cognito-identity-js "^3.1.2"
     crypto-js "^3.1.9-1"
 
-"@aws-amplify/cache@^1.0.34":
-  version "1.0.34"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/cache/-/cache-1.0.34.tgz#84de6b1fc26ac03d5f1c4e6e134b515ada1b0162"
-  dependencies:
-    "@aws-amplify/core" "^1.1.2"
-
-"@aws-amplify/core@^1.1.2":
+"@aws-amplify/cache@^1.1.2":
   version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/core/-/core-1.1.2.tgz#1ee9134d2afaae1910aeb464c002827cd91ab173"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/cache/-/cache-1.1.2.tgz#2316980f851ccd4755515c68a7e5a39cb9c75cb3"
+  integrity sha512-ZK/IANuqQ0rrgI2soN6yR6YhwvftHsnmovMXzeQG+tHdnK2n3RxUciku6+Ey9k4usCD67ZFbXbb+V4KWqBf9Yw==
+  dependencies:
+    "@aws-amplify/core" "^1.2.2"
+
+"@aws-amplify/core@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/core/-/core-1.2.2.tgz#ffb510b79d86b84027705214587415e8f18710e6"
+  integrity sha512-mczpQr+wBP6WxL0EK9yue4p+5mQVm+u8IGiyB9HN5ibMLs1t4hPcbS/D/QzjeWSfZ16oMPvZ3Sej3Z4J9zjv9Q==
   dependencies:
     aws-sdk "2.518.0"
     url "^0.11.0"
 
-"@aws-amplify/interactions@^1.0.37":
-  version "1.0.37"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/interactions/-/interactions-1.0.37.tgz#2d4013886dd3f844a2b97c8e351f08bd9c30e5a0"
+"@aws-amplify/interactions@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/interactions/-/interactions-1.1.2.tgz#e80cd42bbe1c01b81458c4b088a9db049664b103"
+  integrity sha512-07kHROAHk2IF87+3+yWjbagPiQLgDbas3NgqQXg0gxwd/Vt/jsUGHiJop64g4prO7NZ2ut+nx27bf0n3cxPNGA==
   dependencies:
-    "@aws-amplify/core" "^1.1.2"
+    "@aws-amplify/core" "^1.2.2"
 
-"@aws-amplify/predictions@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/predictions/-/predictions-1.0.5.tgz#a85d8ff6118a967c5876f8f09d5c2a1baa69ef79"
+"@aws-amplify/predictions@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/predictions/-/predictions-1.1.2.tgz#e07ad7a28d4f0def8c63543638a3468c624db5d5"
+  integrity sha512-vCWy8U4cWbL47C2BxqkeX2JUfH7i9XyVPgFpVorkDKpR4yH4Rt4zyHXzNXT2rP4iFAZwJCVXa1L5QA/u3AxPJg==
   dependencies:
-    "@aws-amplify/core" "^1.1.2"
-    "@aws-amplify/storage" "^1.1.2"
+    "@aws-amplify/core" "^1.2.2"
+    "@aws-amplify/storage" "^1.2.2"
     "@aws-sdk/eventstream-marshaller" "^0.1.0-preview.2"
     "@aws-sdk/util-utf8-node" "^0.1.0-preview.1"
     uuid "^3.2.1"
 
-"@aws-amplify/pubsub@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/pubsub/-/pubsub-1.1.2.tgz#b8fcc3ba22c887227d63a6cc8ca8ddafef29cb3a"
+"@aws-amplify/pubsub@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/pubsub/-/pubsub-1.2.2.tgz#df696d5363f289abb0fc581d43ee5af5168b3efb"
+  integrity sha512-nyWnf26ppu2VELwtTF6vF8UaDB/SiWau7atwu4MrGBSuLi3GBd5bhvLTPgDWV91YWA8rcc4Q17Cd18LE8guw3Q==
   dependencies:
-    "@aws-amplify/core" "^1.1.2"
+    "@aws-amplify/core" "^1.2.2"
     uuid "^3.2.1"
     zen-observable "^0.8.6"
 
-"@aws-amplify/storage@^1.1.2":
+"@aws-amplify/storage@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/storage/-/storage-1.2.2.tgz#6f7b7d679eb39dfcd6c847a46d22c5c127cf8b5f"
+  integrity sha512-ZZgLRA2yKIfvFfOi2EKBSHE3P2kSsvRu9OX/9uLiHzNfZjF/LNebhpadh3+jMfLvF7obS/AWZYK0wzhZtcgw1Q==
+  dependencies:
+    "@aws-amplify/core" "^1.2.2"
+
+"@aws-amplify/ui@^1.1.2":
   version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/storage/-/storage-1.1.2.tgz#16c3c66e8455df48375036743c2cbfc025af4f10"
-  dependencies:
-    "@aws-amplify/core" "^1.1.2"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/ui/-/ui-1.1.2.tgz#6e2d227280a013cbee5f5f6d418c35cf6d0a655f"
+  integrity sha512-K9wX+yYY0jp+GEDnhT2hVEB5JuLm0a5u134qC+Neg3rD5u71oOUd+jCJq48iuE2hjaNxMMOA0eGwFmsltr7h6w==
 
-"@aws-amplify/ui@^1.0.25":
-  version "1.0.25"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/ui/-/ui-1.0.25.tgz#4d0700a5e10905de158338d40fe3ddd0893b2692"
-
-"@aws-amplify/xr@^0.1.24":
-  version "0.1.24"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/xr/-/xr-0.1.24.tgz#dcf2ab29d244f8a0c680880fa6174f958d6e47c2"
+"@aws-amplify/xr@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/xr/-/xr-0.2.2.tgz#47b6e8c9ffc9d45937e36d833f8d5fff9e875387"
+  integrity sha512-DSyD12o0rcbvWj0DMEss50HRS3X8xja2lNpNrO8MvjdN6Y8zS+a3GBTM9vx+/kCgp2zRRmC4Ei/ZeD/Rt5N5PA==
   dependencies:
-    "@aws-amplify/core" "^1.1.2"
+    "@aws-amplify/core" "^1.2.2"
 
 "@aws-crypto/crc32@^0.1.0-preview.1":
   version "0.1.0-preview.1"
@@ -971,9 +982,10 @@
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.25"
 
-"@fortawesome/react-fontawesome@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.1.5.tgz#8bc3cd5c617749534787a35e29caa7a6cff705c9"
+"@fortawesome/react-fontawesome@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@fortawesome/react-fontawesome/-/react-fontawesome-0.1.7.tgz#c004ca75c15c5a1218101e8f042b8da8dec0c4b5"
+  integrity sha512-AHWSzOsHBe5vqOkrvs+CKw+8eLl+0XZsVixOWhTPpGpOA8WQUbVU6J9cmtAvTaxUU5OIf+rgxxF8ZKc3BVldxg==
   dependencies:
     prop-types "^15.5.10"
 
@@ -1602,9 +1614,10 @@ adjust-sourcemap-loader@2.0.0:
     object-path "0.11.4"
     regex-parser "2.2.10"
 
-airbnb-prop-types@^2.13.2:
+airbnb-prop-types@^2.15.0:
   version "2.15.0"
   resolved "https://registry.yarnpkg.com/airbnb-prop-types/-/airbnb-prop-types-2.15.0.tgz#5287820043af1eb469f5b0af0d6f70da6c52aaef"
+  integrity sha512-jUh2/hfKsRjNFC4XONQrxo/n/3GG4Tn6Hl0WlFQN5PY9OMC9loSCoAYKnZsWaP8wEfd5xcrPloK0Zg6iS1xwVA==
   dependencies:
     array.prototype.find "^2.1.0"
     function.prototype.name "^1.1.1"
@@ -1646,9 +1659,10 @@ alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
 
-amazon-cognito-identity-js@^3.0.15:
-  version "3.0.15"
-  resolved "https://registry.yarnpkg.com/amazon-cognito-identity-js/-/amazon-cognito-identity-js-3.0.15.tgz#2dcd79ca65486d6293b5a166140d68330b718b5f"
+amazon-cognito-identity-js@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/amazon-cognito-identity-js/-/amazon-cognito-identity-js-3.1.2.tgz#12c08178956893ed48c4c15bbce20e44acdd4e13"
+  integrity sha512-NQ/MxGvzYAauHNWjWu/OMB0LtH5w3D/BKeYP9royQwT6+pR4UJifqFaETh2GQUefROKkv0rqEuvkvT/Wx2RA+Q==
   dependencies:
     buffer "4.9.1"
     crypto-js "^3.1.9-1"
@@ -1698,9 +1712,10 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-antd@^3.23.6:
-  version "3.23.6"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-3.23.6.tgz#527733b423a23428d08d8e37a9fca60b6aec1651"
+antd@^3.24.2:
+  version "3.24.2"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-3.24.2.tgz#c8923eaa28f8c25a91e4a3fee7c64d9f3ec31aaf"
+  integrity sha512-Y6hMwWjp7IhstDXr2QNdsGmR/Bl2ySmmsKSkGm2BMB3LRnL711UT7u0bUczqMvgvXr9rwOlfTRqxdkq525f0yg==
   dependencies:
     "@ant-design/create-react-context" "^0.2.4"
     "@ant-design/icons" "~2.1.1"
@@ -1724,30 +1739,30 @@ antd@^3.23.6:
     rc-checkbox "~2.1.6"
     rc-collapse "~1.11.3"
     rc-dialog "~7.5.2"
-    rc-drawer "~2.0.1"
+    rc-drawer "~3.0.0"
     rc-dropdown "~2.4.1"
     rc-editor-mention "^1.1.13"
     rc-form "^2.4.5"
     rc-input-number "~4.5.0"
     rc-mentions "~0.4.0"
-    rc-menu "~7.4.23"
+    rc-menu "~7.5.1"
     rc-notification "~3.3.1"
     rc-pagination "~1.20.5"
     rc-progress "~2.5.0"
     rc-rate "~2.5.0"
     rc-resize-observer "^0.1.0"
     rc-select "~9.2.0"
-    rc-slider "~8.6.11"
+    rc-slider "~8.7.1"
     rc-steps "~3.5.0"
     rc-switch "~1.9.0"
-    rc-table "~6.7.0"
+    rc-table "~6.9.4"
     rc-tabs "~9.6.4"
     rc-time-picker "~3.7.1"
     rc-tooltip "~3.7.3"
     rc-tree "~2.1.0"
     rc-tree-select "~2.9.1"
     rc-trigger "^2.6.2"
-    rc-upload "~2.7.0"
+    rc-upload "~2.8.0"
     rc-util "^4.10.0"
     react-lazy-load "^3.0.13"
     react-lifecycles-compat "^3.0.4"
@@ -1946,21 +1961,22 @@ autoprefixer@^9.6.1:
     postcss "^7.0.17"
     postcss-value-parser "^4.0.0"
 
-aws-amplify@^1.1.40:
-  version "1.1.40"
-  resolved "https://registry.yarnpkg.com/aws-amplify/-/aws-amplify-1.1.40.tgz#2074b57690bafd74d0e7a35d6c7d6ae96e565da7"
+aws-amplify@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/aws-amplify/-/aws-amplify-1.2.2.tgz#d1bb1ca95158cb8c60e8b62a808b2e1931e4d288"
+  integrity sha512-HJ+TRwO/zow+F5OBiNaPo4xgCSgR7S4LFJTn9pMB7SqDRm0l8hKFGnlJ2nU7cBxFUf2ot1ZpdIS4l3d6RBKesw==
   dependencies:
-    "@aws-amplify/analytics" "^1.2.25"
-    "@aws-amplify/api" "^1.1.3"
-    "@aws-amplify/auth" "^1.3.3"
-    "@aws-amplify/cache" "^1.0.34"
-    "@aws-amplify/core" "^1.1.2"
-    "@aws-amplify/interactions" "^1.0.37"
-    "@aws-amplify/predictions" "^1.0.5"
-    "@aws-amplify/pubsub" "^1.1.2"
-    "@aws-amplify/storage" "^1.1.2"
-    "@aws-amplify/ui" "^1.0.25"
-    "@aws-amplify/xr" "^0.1.24"
+    "@aws-amplify/analytics" "^1.3.2"
+    "@aws-amplify/api" "^1.2.2"
+    "@aws-amplify/auth" "^1.4.2"
+    "@aws-amplify/cache" "^1.1.2"
+    "@aws-amplify/core" "^1.2.2"
+    "@aws-amplify/interactions" "^1.1.2"
+    "@aws-amplify/predictions" "^1.1.2"
+    "@aws-amplify/pubsub" "^1.2.2"
+    "@aws-amplify/storage" "^1.2.2"
+    "@aws-amplify/ui" "^1.1.2"
+    "@aws-amplify/xr" "^0.2.2"
 
 aws-sdk@2.518.0:
   version "2.518.0"
@@ -2194,9 +2210,10 @@ bluebird@^3.5.5:
   version "3.5.5"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.5.tgz#a8d0afd73251effbbd5fe384a77d73003c17a71f"
 
-bluebird@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.0.tgz#56a6a886e03f6ae577cffedeb524f8f2450293cf"
+bluebird@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.1.tgz#df70e302b471d7473489acf26a93d63b53f874de"
+  integrity sha512-DdmyoGCleJnkbp3nkbxTLJ18rjDsE4yCggEwKNXkeV123sPNfOCYeDoeuOY+F2FrSjO1YXcTU+dsy96KMy+gcg==
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.8"
@@ -2905,21 +2922,23 @@ cosmiconfig@^5.0.0, cosmiconfig@^5.2.0, cosmiconfig@^5.2.1:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
-craco-antd@^1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/craco-antd/-/craco-antd-1.12.0.tgz#cccf37ed62c3e5f9ccebd14760f41d91379537fc"
+craco-antd@^1.14.1:
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/craco-antd/-/craco-antd-1.14.1.tgz#e24d51dff62424a556304f5150790452889a034a"
+  integrity sha512-+DPKWyho/yZx/iOHn3hQ/A650/5MSP3bwrEkzx2YYUbjMsMLsLVMbLdmmKQ/M8YI34M4MdEwzZli2cR1VB1mdw==
   dependencies:
     babel-plugin-import "^1.12.1"
-    craco-less "^1.12.0"
+    craco-less "^1.14.4"
     less-vars-to-js "^1.3.0"
 
-craco-less@^1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/craco-less/-/craco-less-1.12.0.tgz#6224529012eb0fcd6ba8e2827df9d80e92509838"
+craco-less@^1.14.4:
+  version "1.14.4"
+  resolved "https://registry.yarnpkg.com/craco-less/-/craco-less-1.14.4.tgz#e18444fb851c6df27b202821f2096fef792b7762"
+  integrity sha512-+lXe5gO3bNPIbikgTZhcWPhrMzzZEkxkx+bI2NB3i4ce88Izl58oC95CDiRwXphZERCEMm1T1nWkBNPFepc6pg==
   dependencies:
-    less "3.9.0"
+    less "3.10.3"
     less-loader "^5.0.0"
-    webpack "4.39.1"
+    webpack "4.41.0"
 
 create-ecdh@^4.0.0:
   version "4.0.3"
@@ -3694,35 +3713,47 @@ entities@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/entities/-/entities-2.0.0.tgz#68d6084cab1b079767540d80e56a39b423e4abf4"
 
-enzyme-adapter-react-16@^1.14.0:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.14.0.tgz#204722b769172bcf096cb250d33e6795c1f1858f"
+enzyme-adapter-react-16@^1.15.1:
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.15.1.tgz#8ad55332be7091dc53a25d7d38b3485fc2ba50d5"
+  integrity sha512-yMPxrP3vjJP+4wL/qqfkT6JAIctcwKF+zXO6utlGPgUJT2l4tzrdjMDWGd/Pp1BjHBcljhN24OzNEGRteibJhA==
   dependencies:
-    enzyme-adapter-utils "^1.12.0"
+    enzyme-adapter-utils "^1.12.1"
+    enzyme-shallow-equal "^1.0.0"
     has "^1.0.3"
     object.assign "^4.1.0"
     object.values "^1.1.0"
     prop-types "^15.7.2"
-    react-is "^16.8.6"
+    react-is "^16.10.2"
     react-test-renderer "^16.0.0-0"
     semver "^5.7.0"
 
-enzyme-adapter-utils@^1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.12.0.tgz#96e3730d76b872f593e54ce1c51fa3a451422d93"
+enzyme-adapter-utils@^1.12.1:
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.12.1.tgz#e828e0d038e2b1efa4b9619ce896226f85c9dd88"
+  integrity sha512-KWiHzSjZaLEoDCOxY8Z1RAbUResbqKN5bZvenPbfKtWorJFVETUw754ebkuCQ3JKm0adx1kF8JaiR+PHPiP47g==
   dependencies:
-    airbnb-prop-types "^2.13.2"
-    function.prototype.name "^1.1.0"
+    airbnb-prop-types "^2.15.0"
+    function.prototype.name "^1.1.1"
     object.assign "^4.1.0"
-    object.fromentries "^2.0.0"
+    object.fromentries "^2.0.1"
     prop-types "^15.7.2"
-    semver "^5.6.0"
+    semver "^5.7.0"
 
-enzyme-to-json@^3.4.2:
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/enzyme-to-json/-/enzyme-to-json-3.4.2.tgz#e5e3f3d7f6700be72885e77b0792a2d20846b021"
+enzyme-shallow-equal@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/enzyme-shallow-equal/-/enzyme-shallow-equal-1.0.0.tgz#d8e4603495e6ea279038eef05a4bf4887b55dc69"
+  integrity sha512-VUf+q5o1EIv2ZaloNQQtWCJM9gpeux6vudGVH6vLmfPXFLRuxl5+Aq3U260wof9nn0b0i+P5OEUXm1vnxkRpXQ==
   dependencies:
-    lodash "^4.17.12"
+    has "^1.0.3"
+    object-is "^1.0.1"
+
+enzyme-to-json@^3.4.3:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/enzyme-to-json/-/enzyme-to-json-3.4.3.tgz#ed4386f48768ed29e2d1a2910893542c34e7e0af"
+  integrity sha512-jqNEZlHqLdz7OTpXSzzghArSS3vigj67IU/fWkPyl1c0TCj9P5s6Ze0kRkYZWNEoCqCR79xlQbigYlMx5erh8A==
+  dependencies:
+    lodash "^4.17.15"
 
 enzyme@^3.10.0:
   version "3.10.0"
@@ -3776,6 +3807,22 @@ es-abstract@^1.10.0, es-abstract@^1.11.0, es-abstract@^1.12.0, es-abstract@^1.13
     object-keys "^1.1.1"
     string.prototype.trimleft "^2.0.0"
     string.prototype.trimright "^2.0.0"
+
+es-abstract@^1.15.0:
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.16.0.tgz#d3a26dc9c3283ac9750dca569586e976d9dcc06d"
+  integrity sha512-xdQnfykZ9JMEiasTAJZJdMWCQ1Vm00NBw79/AWi7ELfZuuPCSOMDZbT9mkOfSctVtfhb+sAAzrm+j//GjjLHLg==
+  dependencies:
+    es-to-primitive "^1.2.0"
+    function-bind "^1.1.1"
+    has "^1.0.3"
+    has-symbols "^1.0.0"
+    is-callable "^1.1.4"
+    is-regex "^1.0.4"
+    object-inspect "^1.6.0"
+    object-keys "^1.1.1"
+    string.prototype.trimleft "^2.1.0"
+    string.prototype.trimright "^2.1.0"
 
 es-abstract@^1.5.0:
   version "1.15.0"
@@ -6095,9 +6142,10 @@ jsonify@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
 
-jspdf-autotable@^3.2.4:
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/jspdf-autotable/-/jspdf-autotable-3.2.4.tgz#cf56b4ca191432b25e841fa2d38dc2163fd5b22e"
+jspdf-autotable@^3.2.7:
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/jspdf-autotable/-/jspdf-autotable-3.2.7.tgz#9f80e374b24b60d39c71dc95e1b6c3e76602fda5"
+  integrity sha512-rFxddWBVYstwAJ7yVE3Pvodh8UZo2Adw63Gn98sv6/8AvS1QR2EFfgDkWV5Vo2WrMM9upJ/i/2FzHo8rO34O0g==
 
 jspdf@^1.5.3:
   version "1.5.3"
@@ -6199,9 +6247,10 @@ less-vars-to-js@^1.3.0:
   dependencies:
     strip-json-comments "^2.0.1"
 
-less@3.9.0:
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/less/-/less-3.9.0.tgz#b7511c43f37cf57dc87dffd9883ec121289b1474"
+less@3.10.3:
+  version "3.10.3"
+  resolved "https://registry.yarnpkg.com/less/-/less-3.10.3.tgz#417a0975d5eeecc52cff4bcfa3c09d35781e6792"
+  integrity sha512-vz32vqfgmoxF1h3K4J+yKCtajH0PWmjkIFgbs5d78E/c/e+UQTnI+lWK+1eQRE95PXM2mC3rJlLSSP9VQHnaow==
   dependencies:
     clone "^2.1.2"
   optionalDependencies:
@@ -6998,6 +7047,16 @@ object.fromentries@^2.0.0:
     es-abstract "^1.11.0"
     function-bind "^1.1.1"
     has "^1.0.1"
+
+object.fromentries@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/object.fromentries/-/object.fromentries-2.0.1.tgz#050f077855c7af8ae6649f45c80b16ee2d31e704"
+  integrity sha512-PUQv8Hbg3j2QX0IQYv3iAGCbGcu4yY4KQ92/dhA4sFSixBmSmp13UpDLs6jGK8rBtbmhNNIK99LD2k293jpiGA==
+  dependencies:
+    define-properties "^1.1.3"
+    es-abstract "^1.15.0"
+    function-bind "^1.1.1"
+    has "^1.0.3"
 
 object.getownpropertydescriptors@^2.0.3:
   version "2.0.3"
@@ -8082,7 +8141,7 @@ prop-types-exact@^1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   dependencies:
@@ -8255,6 +8314,19 @@ rc-animate@2.x, rc-animate@^2.3.0, rc-animate@^2.6.0, rc-animate@^2.8.2, rc-anim
     rc-util "^4.8.0"
     react-lifecycles-compat "^3.0.4"
 
+rc-animate@^2.10.1:
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/rc-animate/-/rc-animate-2.10.1.tgz#c0c4faab50e55535e903e66f207e49891ba86d94"
+  integrity sha512-yfP3g5fNf8wB5eh85nim2IGrqNu5u7TKrrSh710+1vlUqZvnI2R5YHK99IBCQNgkLCAWjT0sHtkcYdynjly39w==
+  dependencies:
+    babel-runtime "6.x"
+    classnames "^2.2.6"
+    css-animation "^1.3.2"
+    prop-types "15.x"
+    raf "^3.4.0"
+    rc-util "^4.8.0"
+    react-lifecycles-compat "^3.0.4"
+
 rc-animate@^3.0.0-rc.1:
   version "3.0.0-rc.6"
   resolved "https://registry.yarnpkg.com/rc-animate/-/rc-animate-3.0.0-rc.6.tgz#04288eefa118e0cae214536c8a903ffaac1bc3fb"
@@ -8331,13 +8403,14 @@ rc-dialog@~7.5.2:
     rc-animate "2.x"
     rc-util "^4.8.1"
 
-rc-drawer@~2.0.1:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/rc-drawer/-/rc-drawer-2.0.9.tgz#d1d07b74416b50d22082b5886ec061be2b2b15fc"
+rc-drawer@~3.0.0:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/rc-drawer/-/rc-drawer-3.0.2.tgz#1c42b2b7790040344f8f05f1d132b1ef0e97b783"
+  integrity sha512-oPScGXB/8/ov9gEFLxPH8RBv/9jLTZboZtyF/GgrrnCAvbFwUxXdELH6n6XIowmuDKKvTGIMgZdnao0T46Yv3A==
   dependencies:
-    babel-runtime "6.x"
-    classnames "^2.2.5"
-    rc-util "^4.7.0"
+    babel-runtime "^6.26.0"
+    classnames "^2.2.6"
+    rc-util "^4.11.2"
     react-lifecycles-compat "^3.0.4"
 
 rc-dropdown@~2.4.1:
@@ -8416,7 +8489,7 @@ rc-mentions@~0.4.0:
     rc-util "^4.6.0"
     react-lifecycles-compat "^3.0.4"
 
-rc-menu@^7.3.0, rc-menu@^7.4.22, rc-menu@~7.4.23:
+rc-menu@^7.3.0, rc-menu@^7.4.22:
   version "7.4.28"
   resolved "https://registry.yarnpkg.com/rc-menu/-/rc-menu-7.4.28.tgz#3c806463f464c355809bb380f0dbe01a954b89db"
   dependencies:
@@ -8431,6 +8504,21 @@ rc-menu@^7.3.0, rc-menu@^7.4.22, rc-menu@~7.4.23:
     rc-trigger "^2.3.0"
     rc-util "^4.1.0"
     resize-observer-polyfill "^1.5.0"
+
+rc-menu@~7.5.1:
+  version "7.5.2"
+  resolved "https://registry.yarnpkg.com/rc-menu/-/rc-menu-7.5.2.tgz#458efcadba41d33cfd53127de0f334977bb5cf38"
+  integrity sha512-vIS4kiVk81+W+gtvh+dyPA4ucMLCOH6NdwAFnum5by5hono/1fGNSR+F25mG8cHblRQ/8S9dJbaiVQUQ+tvtTQ==
+  dependencies:
+    classnames "2.x"
+    dom-scroll-into-view "1.x"
+    mini-store "^2.0.0"
+    mutationobserver-shim "^0.3.2"
+    rc-animate "^2.10.1"
+    rc-trigger "^2.3.0"
+    rc-util "^4.13.0"
+    resize-observer-polyfill "^1.5.0"
+    shallowequal "^1.1.0"
 
 rc-notification@~3.3.1:
   version "3.3.1"
@@ -8492,16 +8580,18 @@ rc-select@~9.2.0:
     react-lifecycles-compat "^3.0.2"
     warning "^4.0.2"
 
-rc-slider@~8.6.11:
-  version "8.6.13"
-  resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-8.6.13.tgz#88a8150c2dda6709f3f119135de11fba80af765b"
+rc-slider@~8.7.1:
+  version "8.7.1"
+  resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-8.7.1.tgz#9ed07362dc93489a38e654b21b8122ad70fd3c42"
+  integrity sha512-WMT5mRFUEcrLWwTxsyS8jYmlaMsTVCZIGENLikHsNv+tE8ThU2lCoPfi/xFNUfJFNFSBFP3MwPez9ZsJmNp13g==
   dependencies:
     babel-runtime "6.x"
     classnames "^2.2.5"
     prop-types "^15.5.4"
     rc-tooltip "^3.7.0"
     rc-util "^4.0.4"
-    shallowequal "^1.0.1"
+    react-lifecycles-compat "^3.0.4"
+    shallowequal "^1.1.0"
     warning "^4.0.3"
 
 rc-steps@~3.5.0:
@@ -8521,20 +8611,19 @@ rc-switch@~1.9.0:
     prop-types "^15.5.6"
     react-lifecycles-compat "^3.0.4"
 
-rc-table@~6.7.0:
-  version "6.7.0"
-  resolved "https://registry.yarnpkg.com/rc-table/-/rc-table-6.7.0.tgz#8aca002f84a43a2d51a4fcda0f7a51694154286d"
+rc-table@~6.9.4:
+  version "6.9.4"
+  resolved "https://registry.yarnpkg.com/rc-table/-/rc-table-6.9.4.tgz#7539427fb9fca45f92cfabb1bd35158fa2005916"
+  integrity sha512-33FHos0nfyJMZrK2kO0XrE32D8KVCZdWY2w2qhXXlkTlL2OOztgIzPw5l52iWVHyyFx4bMhyKN/jyE+INbNNNw==
   dependencies:
-    babel-runtime "6.x"
     classnames "^2.2.5"
     component-classes "^1.2.6"
     lodash "^4.17.5"
     mini-store "^2.0.0"
     prop-types "^15.5.8"
-    rc-util "^4.0.4"
+    rc-util "^4.13.0"
     react-lifecycles-compat "^3.0.2"
     shallowequal "^1.0.2"
-    warning "^3.0.0"
 
 rc-tabs@~9.6.4:
   version "9.6.7"
@@ -8646,16 +8735,17 @@ rc-trigger@^3.0.0-rc.2:
     rc-animate "^3.0.0-rc.1"
     rc-util "^4.4.0"
 
-rc-upload@~2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/rc-upload/-/rc-upload-2.7.0.tgz#f279b758655eb5f99ebf82a5a2648d80d88e0ff4"
+rc-upload@~2.8.0:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/rc-upload/-/rc-upload-2.8.1.tgz#8218eb8c4ed9cfb0340311c2c60525fc31060cb6"
+  integrity sha512-FmKZgWsgOyKeZuperDjHrj8Qx5fdQqYuNpmDR50AP7Za87o8QsRvCbIKG2pgQ9MpNkUbiQOV15FqlQBl2WisfQ==
   dependencies:
     babel-runtime "6.x"
     classnames "^2.2.5"
     prop-types "^15.5.7"
     warning "4.x"
 
-rc-util@4.x, rc-util@^4.0.2, rc-util@^4.0.4, rc-util@^4.1.0, rc-util@^4.1.1, rc-util@^4.10.0, rc-util@^4.3.0, rc-util@^4.4.0, rc-util@^4.5.0, rc-util@^4.5.1, rc-util@^4.6.0, rc-util@^4.7.0, rc-util@^4.8.0, rc-util@^4.8.1:
+rc-util@4.x, rc-util@^4.0.2, rc-util@^4.0.4, rc-util@^4.1.0, rc-util@^4.1.1, rc-util@^4.10.0, rc-util@^4.3.0, rc-util@^4.4.0, rc-util@^4.5.0, rc-util@^4.5.1, rc-util@^4.6.0, rc-util@^4.8.0, rc-util@^4.8.1:
   version "4.11.0"
   resolved "https://registry.yarnpkg.com/rc-util/-/rc-util-4.11.0.tgz#cf437dcff74ca08a8565ae14f0368acb3a650796"
   dependencies:
@@ -8668,6 +8758,17 @@ rc-util@4.x, rc-util@^4.0.2, rc-util@^4.0.4, rc-util@^4.1.0, rc-util@^4.1.1, rc-
 rc-util@^4.11.1:
   version "4.11.2"
   resolved "https://registry.yarnpkg.com/rc-util/-/rc-util-4.11.2.tgz#1b442b0ba85289591bbd491cfaea66f7407640db"
+  dependencies:
+    add-dom-event-listener "^1.1.0"
+    babel-runtime "6.x"
+    prop-types "^15.5.10"
+    react-lifecycles-compat "^3.0.4"
+    shallowequal "^0.2.2"
+
+rc-util@^4.11.2, rc-util@^4.13.0:
+  version "4.13.0"
+  resolved "https://registry.yarnpkg.com/rc-util/-/rc-util-4.13.0.tgz#75682e50a934e7d32ada7ee48fc9f5b20fc0143f"
+  integrity sha512-rjfPy+afc2n40APHp6GYScXfgwHuUnYLz/4SCEWRaF8CHXKR8xw598LtPA36J3fEXENuMm6liO/CoKBoSrYCDw==
   dependencies:
     add-dom-event-listener "^1.1.0"
     babel-runtime "6.x"
@@ -8771,6 +8872,11 @@ react-floater@^0.6.5:
     popper.js "^1.15.0"
     react-proptype-conditional-require "^1.0.4"
     tree-changes "^0.4.0"
+
+react-is@^16.10.2:
+  version "16.10.2"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.10.2.tgz#984120fd4d16800e9a738208ab1fba422d23b5ab"
+  integrity sha512-INBT1QEgtcCCgvccr5/86CfD71fw9EPmDxgiJX4I2Ddr6ZsV6iFXsuby+qWJPtmNuMY0zByTsG4468P7nHuNWA==
 
 react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6, react-is@^16.9.0:
   version "16.9.0"
@@ -8897,6 +9003,13 @@ react-split-pane@^0.1.87:
     prop-types "^15.5.10"
     react-lifecycles-compat "^3.0.4"
     react-style-proptype "^3.0.0"
+
+react-stripe-elements@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/react-stripe-elements/-/react-stripe-elements-5.0.1.tgz#9030eb84ca06ecda4009769d09937e1cd65d2ec7"
+  integrity sha512-4fKjN1jXIo1T19lp7TE/Zwad6wolNVRzzQBxwounm6pDcJPdNeYVTr3TS4D1blVo9StGdf1Q8WbVa1nx1E7Yng==
+  dependencies:
+    prop-types "15.7.2"
 
 react-style-proptype@^3.0.0:
   version "3.2.2"
@@ -9596,7 +9709,7 @@ shallowequal@^0.2.2:
   dependencies:
     lodash.keys "^3.1.2"
 
-shallowequal@^1.0.1, shallowequal@^1.0.2, shallowequal@^1.1.0:
+shallowequal@^1.0.2, shallowequal@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/shallowequal/-/shallowequal-1.1.0.tgz#188d521de95b9087404fd4dcb68b13df0ae4e7f8"
 
@@ -10343,9 +10456,10 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^3.6.3:
-  version "3.6.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.3.tgz#fea942fabb20f7e1ca7164ff626f1a9f3f70b4da"
+typescript@^3.6.4:
+  version "3.6.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.4.tgz#b18752bb3792bc1a0281335f7f6ebf1bbfc5b91d"
+  integrity sha512-unoCll1+l+YK4i4F8f22TaNVPRHcD9PA3yCuZ8g5e0qGqlVlJ/8FSateOLLSagn+Yg5+ZwuPkL8LFUc0Jcvksg==
 
 ua-parser-js@^0.7.18:
   version "0.7.20"
@@ -10701,34 +10815,6 @@ webpack-sources@^1.1.0, webpack-sources@^1.4.0, webpack-sources@^1.4.1:
   dependencies:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
-
-webpack@4.39.1:
-  version "4.39.1"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.39.1.tgz#60ed9fb2b72cd60f26ea526c404d2a4cc97a1bd8"
-  dependencies:
-    "@webassemblyjs/ast" "1.8.5"
-    "@webassemblyjs/helper-module-context" "1.8.5"
-    "@webassemblyjs/wasm-edit" "1.8.5"
-    "@webassemblyjs/wasm-parser" "1.8.5"
-    acorn "^6.2.1"
-    ajv "^6.10.2"
-    ajv-keywords "^3.4.1"
-    chrome-trace-event "^1.0.2"
-    enhanced-resolve "^4.1.0"
-    eslint-scope "^4.0.3"
-    json-parse-better-errors "^1.0.2"
-    loader-runner "^2.4.0"
-    loader-utils "^1.2.3"
-    memory-fs "^0.4.1"
-    micromatch "^3.1.10"
-    mkdirp "^0.5.1"
-    neo-async "^2.6.1"
-    node-libs-browser "^2.2.1"
-    schema-utils "^1.0.0"
-    tapable "^1.1.3"
-    terser-webpack-plugin "^1.4.1"
-    watchpack "^1.6.0"
-    webpack-sources "^1.4.1"
 
 webpack@4.41.0:
   version "4.41.0"
