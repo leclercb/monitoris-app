@@ -31,3 +31,33 @@ export function getCurrentCustomer() {
         }
     };
 }
+
+export function processItem(itemSku, user, email) {
+    return async dispatch => {
+        const processId = uuid();
+
+        try {
+            const result = await sendRequest({
+                method: 'POST',
+                url: `${getConfig().apiUrl}/v1/stripe/items/process`,
+                responseType: 'json',
+                data: {
+                    itemSku,
+                    user,
+                    email
+                }
+            });
+
+            return result.data;
+        } catch (error) {
+            dispatch(updateProcess({
+                id: processId,
+                state: 'ERROR',
+                title: 'Process item',
+                error: error.toString()
+            }));
+
+            throw error;
+        }
+    };
+}
