@@ -23,7 +23,7 @@
         "craco-antd": "^1.14.1",
         "inputmask-core": "^2.2.0",
         "jspdf": "^1.5.3",
-        "jspdf-autotable": "^3.2.7",
+        "jspdf-autotable": "^3.2.8",
         "lodash": "^4.17.15",
         "moment": "^2.24.0",
         "mousetrap": "^1.6.3",
