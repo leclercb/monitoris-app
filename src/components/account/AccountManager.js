@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Descriptions, Form, Input, Spin, message } from 'antd';
-import PropTypes from 'prop-types';
-import { CardElement, injectStripe } from 'react-stripe-elements';
+import { Col, List, Row, Spin } from 'antd';
+import { Elements, StripeProvider } from 'react-stripe-elements';
+import AccountCustomer from 'components/account/AccountCustomer';
+import AccountSource from 'components/account/AccountSource';
+import AccountSummary from 'components/account/AccountSummary';
+import Icon from 'components/common/Icon';
+import { getConfig } from 'config/Config';
 import { useStripeApi } from 'hooks/UseStripeApi';
-import { getDefaultFormItemLayout, getDefaultTailFormItemLayout } from 'utils/FormUtils';
+import { Empty } from 'antd';
 
-function AccountManager({ form, stripe }) {
+function AccountManager() {
     const stripeApi = useStripeApi();
 
     const [busy, setBusy] = useState(false);
     const [customer, setCustomer] = useState(null);
+    const [selectedCategoryId, setSelectedCategoryId] = useState('summary');
 
     useEffect(() => {
-        const fetchItem = async () => {
+        const getCustomer = async () => {
             try {
                 setBusy(true);
 
@@ -26,165 +31,72 @@ function AccountManager({ form, stripe }) {
             }
         };
 
-        fetchItem();
+        getCustomer();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const onSubmit = () => {
-        form.validateFields(async (error, values) => {
-            if (error) {
-                //return;
-            }
+    let element;
 
-            try {
-                setBusy(true);
-
-                console.log(values);
-
-                const createTokenResult = await stripe.createToken();
-
-                if (createTokenResult.error) {
-                    message.error(createTokenResult.error.message);
-                    return;
-                }
-
-                console.log(createTokenResult);
-            } finally {
-                setBusy(false);
-            }
-        });
-    };
-
-    const { getFieldDecorator } = form;
-
-    const formItemLayout = getDefaultFormItemLayout();
-    const tailFormItemLayout = getDefaultTailFormItemLayout();
+    switch (selectedCategoryId) {
+        case 'summary':
+            element = (<AccountSummary customer={customer} />);
+            break;
+        case 'customer':
+            element = (<AccountCustomer customer={customer} />);
+            break;
+        case 'source':
+            element = (
+                <StripeProvider apiKey={getConfig().stripe.publicKey}>
+                    <Elements>
+                        <AccountSource customer={customer} />
+                    </Elements>
+                </StripeProvider>
+            );
+            break;
+        default:
+            element = (<Empty />);
+            break;
+    }
 
     return (
-        <Spin spinning={busy}>
-            {!!customer && (
-                <Descriptions title="Customer" column={1} bordered>
-                    <Descriptions.Item label="ID">{customer.id}</Descriptions.Item>
-                    <Descriptions.Item label="Name">{customer.name}</Descriptions.Item>
-                    <Descriptions.Item label="Email">{customer.email}</Descriptions.Item>
-                </Descriptions>
-            )}
-            <Form {...formItemLayout}>
-                <Form.Item label="Name">
-                    {getFieldDecorator('name', {
-                        initialValue: customer ? customer.name : undefined,
-                        rules: [
-                            {
-                                required: true,
-                                message: 'The name is required'
-                            }
-                        ]
-                    })(
-                        <Input />
+        <Row>
+            <Col span={6}>
+                <List
+                    size="small"
+                    bordered={true}
+                    dataSource={[
+                        {
+                            id: 'summary',
+                            title: 'Summary',
+                            icon: 'user'
+                        },
+                        {
+                            id: 'customer',
+                            title: 'Billing',
+                            icon: 'user'
+                        },
+                        {
+                            id: 'source',
+                            title: 'Payment Method',
+                            icon: 'user'
+                        }
+                    ]}
+                    renderItem={item => (
+                        <List.Item
+                            onClick={() => setSelectedCategoryId(item.id)}
+                            className={item.id === selectedCategoryId ? 'selected-list-item' : null}>
+                            <Icon icon={item.icon} text={item.title} />
+                        </List.Item>
                     )}
-                </Form.Item>
-                <Form.Item label="Email">
-                    {getFieldDecorator('email', {
-                        initialValue: customer ? customer.email : undefined,
-                        rules: [
-                            {
-                                required: true,
-                                message: 'Your email is required'
-                            }
-                        ]
-                    })(
-                        <Input />
-                    )}
-                </Form.Item>
-                <Form.Item label="Address">
-                    <div style={{ padding: 20, border: '1px solid #cccccc', borderRadius: 5 }}>
-                        <Form.Item label="Line 1" {...formItemLayout}>
-                            {getFieldDecorator('address.line1', {
-                                initialValue: customer && customer.address ? customer.address.line1 : undefined,
-                                rules: [
-                                    {
-                                        required: true,
-                                        message: 'Line 1 is required'
-                                    }
-                                ]
-                            })(
-                                <Input placeholder="Line 1" />
-                            )}
-                        </Form.Item>
-                        <Form.Item label="Line 2" {...formItemLayout}>
-                            {getFieldDecorator('address.line2', {
-                                initialValue: customer && customer.address ? customer.address.line2 : undefined
-                            })(
-                                <Input />
-                            )}
-                        </Form.Item>
-                        <Form.Item label="State" {...formItemLayout}>
-                            {getFieldDecorator('address.state', {
-                                initialValue: customer && customer.address ? customer.address.state : undefined
-                            })(
-                                <Input />
-                            )}
-                        </Form.Item>
-                        <Form.Item label="City" {...formItemLayout}>
-                            {getFieldDecorator('address.city', {
-                                initialValue: customer && customer.address ? customer.address.city : undefined,
-                                rules: [
-                                    {
-                                        required: true,
-                                        message: 'Your city is required'
-                                    }
-                                ]
-                            })(
-                                <Input />
-                            )}
-                        </Form.Item>
-                        <Form.Item label="Postal Code" {...formItemLayout}>
-                            {getFieldDecorator('address.postal_code', {
-                                initialValue: customer && customer.address ? customer.address.postal_code : undefined,
-                                rules: [
-                                    {
-                                        required: true,
-                                        message: 'Your postal code is required'
-                                    }
-                                ]
-                            })(
-                                <Input />
-                            )}
-                        </Form.Item>
-                        <Form.Item label="Country" {...formItemLayout}>
-                            {getFieldDecorator('address.country', {
-                                initialValue: customer && customer.address ? customer.address.country : undefined,
-                                rules: [
-                                    {
-                                        required: true,
-                                        message: 'Your country is required'
-                                    }
-                                ]
-                            })(
-                                <Input />
-                            )}
-                        </Form.Item>
-                    </div>
-                </Form.Item>
-                <Form.Item label="Credit Card">
-                    <div style={{ padding: 20, border: '1px solid #cccccc', borderRadius: 5 }}>
-                        <CardElement />
-                    </div>
-                </Form.Item>
-                <Form.Item {...tailFormItemLayout}>
-                    <div style={{ width: '100%', textAlign: 'right' }}>
-                        <Button type="primary" onClick={onSubmit}>
-                            Save
-                        </Button>
-                    </div>
-                </Form.Item>
-            </Form>
-        </Spin>
+                />
+            </Col>
+            <Col span={2} />
+            <Col span={16}>
+                <Spin spinning={busy}>
+                    {element}
+                </Spin>
+            </Col>
+        </Row>
     );
 }
 
-AccountManager.propTypes = {
-    form: PropTypes.object.isRequired,
-    stripe: PropTypes.object.isRequired
-};
-
-export default Form.create({ name: 'checkout' })(injectStripe(AccountManager)); 
+export default AccountManager; 
