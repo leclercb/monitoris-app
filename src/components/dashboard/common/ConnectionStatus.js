@@ -14,7 +14,7 @@ function ConnectionStatus({ instance }) {
         if (!instanceStateApi.lastInfo) {
             instanceApi.getInfo(instance.id);
         }
-    }, [instance.id]);
+    }, [instance.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const refresh = () => {
         instanceApi.getInfo(instance.id);

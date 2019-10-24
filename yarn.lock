@@ -95,87 +95,89 @@
   dependencies:
     "@antv/gl-matrix" "^2.7.1"
 
-"@aws-amplify/analytics@^1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/analytics/-/analytics-1.3.2.tgz#f2314975a81a824d34f3f92a603204df762234e0"
+"@aws-amplify/analytics@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/analytics/-/analytics-1.3.3.tgz#edff37a95b4be438cecd3c83cfced39b2a4a4ff8"
   dependencies:
-    "@aws-amplify/cache" "^1.1.2"
-    "@aws-amplify/core" "^1.2.2"
+    "@aws-amplify/cache" "^1.1.3"
+    "@aws-amplify/core" "^1.2.3"
     uuid "^3.2.1"
 
-"@aws-amplify/api@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/api/-/api-1.2.2.tgz#e7279f27e8194613443744fe9bf006ba2c98de7e"
+"@aws-amplify/api@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/api/-/api-1.2.3.tgz#fa06bf0f07c3da3dec4974f12bea4d809ef7c26b"
   dependencies:
-    "@aws-amplify/auth" "^1.4.2"
-    "@aws-amplify/cache" "^1.1.2"
-    "@aws-amplify/core" "^1.2.2"
+    "@aws-amplify/auth" "^1.4.3"
+    "@aws-amplify/cache" "^1.1.3"
+    "@aws-amplify/core" "^1.2.3"
+    "@types/zen-observable" "^0.5.3"
     axios "^0.19.0"
-    graphql "0.13.0"
+    graphql "14.0.0"
     uuid "^3.2.1"
     zen-observable "^0.8.6"
 
-"@aws-amplify/auth@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/auth/-/auth-1.4.2.tgz#099ff67de3c0c4397d0f6f9f30bddb4d5dbdf16e"
+"@aws-amplify/auth@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/auth/-/auth-1.4.3.tgz#2d26c63038c2319b544a8775415b8870ba8d69de"
   dependencies:
-    "@aws-amplify/cache" "^1.1.2"
-    "@aws-amplify/core" "^1.2.2"
-    amazon-cognito-identity-js "^3.1.2"
+    "@aws-amplify/cache" "^1.1.3"
+    "@aws-amplify/core" "^1.2.3"
+    amazon-cognito-identity-js "^3.1.3"
     crypto-js "^3.1.9-1"
 
-"@aws-amplify/cache@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/cache/-/cache-1.1.2.tgz#2316980f851ccd4755515c68a7e5a39cb9c75cb3"
+"@aws-amplify/cache@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/cache/-/cache-1.1.3.tgz#9eabdc993820869c9f0f8d8026fb4f2893aebb76"
   dependencies:
-    "@aws-amplify/core" "^1.2.2"
+    "@aws-amplify/core" "^1.2.3"
 
-"@aws-amplify/core@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/core/-/core-1.2.2.tgz#ffb510b79d86b84027705214587415e8f18710e6"
+"@aws-amplify/core@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/core/-/core-1.2.3.tgz#2bb5dddb5b10302ce53c2a028431ff89fcb59fc6"
   dependencies:
     aws-sdk "2.518.0"
     url "^0.11.0"
 
-"@aws-amplify/interactions@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/interactions/-/interactions-1.1.2.tgz#e80cd42bbe1c01b81458c4b088a9db049664b103"
+"@aws-amplify/interactions@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/interactions/-/interactions-1.1.3.tgz#035b198dd68f92b838a2c315f6420188482f67cd"
   dependencies:
-    "@aws-amplify/core" "^1.2.2"
+    "@aws-amplify/core" "^1.2.3"
 
-"@aws-amplify/predictions@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/predictions/-/predictions-1.1.2.tgz#e07ad7a28d4f0def8c63543638a3468c624db5d5"
+"@aws-amplify/predictions@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/predictions/-/predictions-1.1.3.tgz#1544cf30131f0199d5667748a326afd78d5b7022"
   dependencies:
-    "@aws-amplify/core" "^1.2.2"
-    "@aws-amplify/storage" "^1.2.2"
+    "@aws-amplify/core" "^1.2.3"
+    "@aws-amplify/storage" "^1.2.3"
     "@aws-sdk/eventstream-marshaller" "^0.1.0-preview.2"
     "@aws-sdk/util-utf8-node" "^0.1.0-preview.1"
     uuid "^3.2.1"
 
-"@aws-amplify/pubsub@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/pubsub/-/pubsub-1.2.2.tgz#df696d5363f289abb0fc581d43ee5af5168b3efb"
+"@aws-amplify/pubsub@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/pubsub/-/pubsub-1.2.3.tgz#b1a45315b199ee2d21ab8d714bf32bd48a63c4c8"
   dependencies:
-    "@aws-amplify/core" "^1.2.2"
+    "@aws-amplify/core" "^1.2.3"
+    "@types/zen-observable" "^0.5.3"
     uuid "^3.2.1"
     zen-observable "^0.8.6"
 
-"@aws-amplify/storage@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/storage/-/storage-1.2.2.tgz#6f7b7d679eb39dfcd6c847a46d22c5c127cf8b5f"
+"@aws-amplify/storage@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/storage/-/storage-1.2.3.tgz#ad13e42b3bf579bd0a669fc29a65e1e0ab4790c0"
   dependencies:
-    "@aws-amplify/core" "^1.2.2"
+    "@aws-amplify/core" "^1.2.3"
 
-"@aws-amplify/ui@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/ui/-/ui-1.1.2.tgz#6e2d227280a013cbee5f5f6d418c35cf6d0a655f"
+"@aws-amplify/ui@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/ui/-/ui-1.1.3.tgz#299770cf8340698ca96059a94213784d2319125f"
 
-"@aws-amplify/xr@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@aws-amplify/xr/-/xr-0.2.2.tgz#47b6e8c9ffc9d45937e36d833f8d5fff9e875387"
+"@aws-amplify/xr@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/xr/-/xr-0.2.3.tgz#b9dab2c8fa813c56a9edeeced18a9754b6c36144"
   dependencies:
-    "@aws-amplify/core" "^1.2.2"
+    "@aws-amplify/core" "^1.2.3"
 
 "@aws-crypto/crc32@^0.1.0-preview.1":
   version "0.1.0-preview.1"
@@ -1354,6 +1356,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@types/zen-observable@^0.5.3":
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.5.4.tgz#b863a4191e525206819e008097ebf0fb2e3a1cdc"
+
 "@typescript-eslint/eslint-plugin@^2.2.0":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-2.3.1.tgz#b0b1e6b9b3f84b3e1afbdd338f4194c8ab92db21"
@@ -1646,9 +1652,9 @@ alphanum-sort@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/alphanum-sort/-/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
 
-amazon-cognito-identity-js@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/amazon-cognito-identity-js/-/amazon-cognito-identity-js-3.1.2.tgz#12c08178956893ed48c4c15bbce20e44acdd4e13"
+amazon-cognito-identity-js@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/amazon-cognito-identity-js/-/amazon-cognito-identity-js-3.1.3.tgz#2dc9b26694aad85263372dc982bb7b454674521e"
   dependencies:
     buffer "4.9.1"
     crypto-js "^3.1.9-1"
@@ -1946,21 +1952,21 @@ autoprefixer@^9.6.1:
     postcss "^7.0.17"
     postcss-value-parser "^4.0.0"
 
-aws-amplify@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/aws-amplify/-/aws-amplify-1.2.2.tgz#d1bb1ca95158cb8c60e8b62a808b2e1931e4d288"
+aws-amplify@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/aws-amplify/-/aws-amplify-1.2.3.tgz#76c6050db6061e6e7bba8ded8634aef6f58e37c4"
   dependencies:
-    "@aws-amplify/analytics" "^1.3.2"
-    "@aws-amplify/api" "^1.2.2"
-    "@aws-amplify/auth" "^1.4.2"
-    "@aws-amplify/cache" "^1.1.2"
-    "@aws-amplify/core" "^1.2.2"
-    "@aws-amplify/interactions" "^1.1.2"
-    "@aws-amplify/predictions" "^1.1.2"
-    "@aws-amplify/pubsub" "^1.2.2"
-    "@aws-amplify/storage" "^1.2.2"
-    "@aws-amplify/ui" "^1.1.2"
-    "@aws-amplify/xr" "^0.2.2"
+    "@aws-amplify/analytics" "^1.3.3"
+    "@aws-amplify/api" "^1.2.3"
+    "@aws-amplify/auth" "^1.4.3"
+    "@aws-amplify/cache" "^1.1.3"
+    "@aws-amplify/core" "^1.2.3"
+    "@aws-amplify/interactions" "^1.1.3"
+    "@aws-amplify/predictions" "^1.1.3"
+    "@aws-amplify/pubsub" "^1.2.3"
+    "@aws-amplify/storage" "^1.2.3"
+    "@aws-amplify/ui" "^1.1.3"
+    "@aws-amplify/xr" "^0.2.3"
 
 aws-sdk@2.518.0:
   version "2.518.0"
@@ -3935,9 +3941,9 @@ eslint-plugin-react-hooks@^1.6.1:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-1.7.0.tgz#6210b6d5a37205f0b92858f895a4e827020a7d04"
 
-eslint-plugin-react-hooks@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-2.1.2.tgz#1358d2acb2c5e02b7e90c37e611ac258a488e3a7"
+eslint-plugin-react-hooks@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-2.2.0.tgz#078264e9e388da6929ace09d6abe92c85963aff4"
 
 eslint-plugin-react@7.14.3:
   version "7.14.3"
@@ -4731,11 +4737,11 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.2.tgz#6f0952605d0140c1cfdb138ed005775b92d67b02"
 
-graphql@0.13.0:
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.13.0.tgz#d1b44a282279a9ce0a6ec1037329332f4c1079b6"
+graphql@14.0.0:
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.0.0.tgz#4ee771c5266d08cb75df2d3ac41e8dd51ce3d599"
   dependencies:
-    iterall "1.1.x"
+    iterall "^1.2.2"
 
 growly@^1.3.0:
   version "1.3.0"
@@ -5582,9 +5588,9 @@ istanbul-reports@^2.2.6:
   dependencies:
     handlebars "^4.1.2"
 
-iterall@1.1.x:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.1.4.tgz#0db40d38fdcf53ae14dc8ec674e62ab190d52cfc"
+iterall@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.2.2.tgz#92d70deb8028e0c39ff3164fdbf4d8b088130cd7"
 
 jest-changed-files@^24.9.0:
   version "24.9.0"
@@ -6118,9 +6124,9 @@ jsonify@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
 
-jspdf-autotable@^3.2.8:
-  version "3.2.8"
-  resolved "https://registry.yarnpkg.com/jspdf-autotable/-/jspdf-autotable-3.2.8.tgz#985285e531d2d548eba2b012725f67586f283150"
+jspdf-autotable@^3.2.9:
+  version "3.2.9"
+  resolved "https://registry.yarnpkg.com/jspdf-autotable/-/jspdf-autotable-3.2.9.tgz#225d19f2d1925966bb55cff2a873f658ae9b299d"
 
 jspdf@^1.5.3:
   version "1.5.3"
@@ -8114,7 +8120,7 @@ prop-types-exact@^1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   dependencies:
@@ -8808,14 +8814,14 @@ react-dnd@^9.4.0:
     hoist-non-react-statics "^3.3.0"
     shallowequal "^1.1.0"
 
-react-dom@^16.10.2:
-  version "16.10.2"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.10.2.tgz#4840bce5409176bc3a1f2bd8cb10b92db452fda6"
+react-dom@^16.11.0:
+  version "16.11.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.11.0.tgz#7e7c4a5a85a569d565c2462f5d345da2dd849af5"
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.16.2"
+    scheduler "^0.17.0"
 
 react-draggable@^4.0.3:
   version "4.0.3"
@@ -8969,6 +8975,12 @@ react-split-pane@^0.1.87:
     react-lifecycles-compat "^3.0.4"
     react-style-proptype "^3.0.0"
 
+react-stripe-elements@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/react-stripe-elements/-/react-stripe-elements-5.1.0.tgz#b55a09ccd6ce7a55ca61f1d1de24cdfa8f0f3b04"
+  dependencies:
+    prop-types "15.7.2"
+
 react-style-proptype@^3.0.0:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/react-style-proptype/-/react-style-proptype-3.2.2.tgz#d8e998e62ce79ec35b087252b90f19f1c33968a0"
@@ -8994,14 +9006,14 @@ react-test-renderer@^16.0.0-0:
     react-is "^16.9.0"
     scheduler "^0.15.0"
 
-react-test-renderer@^16.10.2:
-  version "16.10.2"
-  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.10.2.tgz#4d8492f8678c9b43b721a7d79ed0840fdae7c518"
+react-test-renderer@^16.11.0:
+  version "16.11.0"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.11.0.tgz#72574566496462c808ac449b0287a4c0a1a7d8f8"
   dependencies:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     react-is "^16.8.6"
-    scheduler "^0.16.2"
+    scheduler "^0.17.0"
 
 react-virtualized@^9.21.1:
   version "9.21.1"
@@ -9015,9 +9027,9 @@ react-virtualized@^9.21.1:
     prop-types "^15.6.0"
     react-lifecycles-compat "^3.0.4"
 
-react@^16.10.2:
-  version "16.10.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.10.2.tgz#a5ede5cdd5c536f745173c8da47bda64797a4cf0"
+react@^16.11.0:
+  version "16.11.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.11.0.tgz#d294545fe62299ccee83363599bf904e4a07fdbb"
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -9504,9 +9516,9 @@ scheduler@^0.15.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
-scheduler@^0.16.2:
-  version "0.16.2"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.16.2.tgz#f74cd9d33eff6fc554edfb79864868e4819132c1"
+scheduler@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.17.0.tgz#7c9c673e4ec781fac853927916d1c426b6f3ddfe"
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"

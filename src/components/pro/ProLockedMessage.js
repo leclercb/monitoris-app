@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Empty, message } from 'antd';
+import { Button, Empty } from 'antd';
 import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
 import { useAppApi } from 'hooks/UseAppApi';

@@ -31,7 +31,7 @@ function StringValue({ redisKey, length }) {
 
         setValue(null);
         getValue();
-    }, [redisKey]);
+    }, [redisKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
     if (!redisKey) {
         return null;

@@ -17,6 +17,10 @@ const config = {
                 domain: 'localhost',
                 secure: false
             }
+        },
+        stripe: {
+            publicKey: 'pk_test_9v1ka0StPotw9LDKv7U4klpy00XoUX0SMH',
+            productId: 'prod_G2jWzVLWFNIRsz'
         }
     },
     dev: {
@@ -34,6 +38,10 @@ const config = {
                 domain: '.redismon.app',
                 secure: true
             }
+        },
+        stripe: {
+            publicKey: 'pk_test_9v1ka0StPotw9LDKv7U4klpy00XoUX0SMH',
+            productId: 'prod_G2jWzVLWFNIRsz'
         }
     },
     prod: {
@@ -51,6 +59,10 @@ const config = {
                 domain: '.redismon.app',
                 secure: true
             }
+        },
+        stripe: {
+            publicKey: 'pk_live_dDwP9dT6wVZSJ6utoo7mauC700I2IUls6o',
+            productId: ''
         }
     }
 };

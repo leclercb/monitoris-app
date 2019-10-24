@@ -117,7 +117,7 @@ function ScanTool() {
                             size: 'small'
                         }}
                         size="small"
-                        rowClassName={() => "scan-table-row"}
+                        rowClassName={() => 'scan-table-row'}
                         rowSelection={{
                             type: 'checkbox',
                             selectedRowKeys: selectedKeys,

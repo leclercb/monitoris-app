@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Descriptions, Popover, message } from 'antd';
+import { Button, Descriptions, Popover } from 'antd';
 import Avatar from 'components/common/Avatar';
 import LeftRight from 'components/common/LeftRight';
 import { useAppApi } from 'hooks/UseAppApi';

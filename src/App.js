@@ -79,7 +79,7 @@ function App() {
     useEffect(() => {
         appApi.loadData();
         webSocketApi.connectWebSocket();
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         const removeMessageListener = webSocketApi.addMessageListener(event => {

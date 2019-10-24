@@ -41,7 +41,7 @@ function KeyData(props) {
         setType(null);
         setLength(null);
         getData(props.redisKey);
-    }, [props.redisKey]);
+    }, [props.redisKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
     if (!redisKey) {
         return (<Empty description="Please select a key" />);
