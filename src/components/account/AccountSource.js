@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import { useStripeApi } from 'hooks/UseStripeApi';
 
-function AccountSource({ customer, stripe }) {
+function AccountSource({ customer, onCustomerUpdated, stripe }) {
     const stripeApi = useStripeApi();
 
     const [busy, setBusy] = useState(false);
@@ -21,7 +21,11 @@ function AccountSource({ customer, stripe }) {
                 return;
             }
 
-            console.log(createTokenResult);
+            stripeApi.setCurrentCustomerSource({
+                tokenId: createTokenResult.token.id
+            });
+
+            onCustomerUpdated(customer);
         } finally {
             setBusy(false);
         }
@@ -50,6 +54,7 @@ function AccountSource({ customer, stripe }) {
 
 AccountSource.propTypes = {
     customer: PropTypes.object,
+    onCustomerUpdated: PropTypes.func,
     stripe: PropTypes.object.isRequired
 };
 

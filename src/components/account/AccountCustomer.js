@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useStripeApi } from 'hooks/UseStripeApi';
 import { getDefaultFormItemLayout, getDefaultTailFormItemLayout } from 'utils/FormUtils';
 
-function AccountCustomer({ customer, form }) {
+function AccountCustomer({ customer, onCustomerUpdated, form }) {
     const stripeApi = useStripeApi();
 
     const [busy, setBusy] = useState(false);
@@ -17,8 +17,8 @@ function AccountCustomer({ customer, form }) {
 
             try {
                 setBusy(true);
-
-                console.log(values);
+                const customer = await stripeApi.setCurrentCustomer(values);
+                onCustomerUpdated(customer);
             } finally {
                 setBusy(false);
             }
@@ -95,7 +95,7 @@ function AccountCustomer({ customer, form }) {
                             )}
                         </Form.Item>
                         <Form.Item label="Postal Code" {...formItemLayout}>
-                            {getFieldDecorator('address.postal_code', {
+                            {getFieldDecorator('address.postalCode', {
                                 initialValue: customer && customer.address ? customer.address.postal_code : undefined,
                                 rules: [
                                     {
@@ -143,6 +143,7 @@ function AccountCustomer({ customer, form }) {
 
 AccountCustomer.propTypes = {
     customer: PropTypes.object,
+    onCustomerUpdated: PropTypes.func,
     form: PropTypes.object.isRequired
 };
 

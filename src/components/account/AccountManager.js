@@ -3,6 +3,7 @@ import { Col, List, Row, Spin } from 'antd';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import AccountCustomer from 'components/account/AccountCustomer';
 import AccountSource from 'components/account/AccountSource';
+import AccountSubscription from 'components/account/AccountSubscription';
 import AccountSummary from 'components/account/AccountSummary';
 import Icon from 'components/common/Icon';
 import { getConfig } from 'config/Config';
@@ -20,11 +21,8 @@ function AccountManager() {
         const getCustomer = async () => {
             try {
                 setBusy(true);
-
                 const customer = await stripeApi.getCurrentCustomer();
-
                 setCustomer(customer);
-
                 console.log(customer);
             } finally {
                 setBusy(false);
@@ -41,15 +39,26 @@ function AccountManager() {
             element = (<AccountSummary customer={customer} />);
             break;
         case 'customer':
-            element = (<AccountCustomer customer={customer} />);
-            break;
-        case 'source':
             element = (
-                <StripeProvider apiKey={getConfig().stripe.publicKey}>
-                    <Elements>
-                        <AccountSource customer={customer} />
-                    </Elements>
-                </StripeProvider>
+                <React.Fragment>
+                    <AccountCustomer
+                        customer={customer}
+                        onCustomerUpdated={customer => setCustomer(customer)} />
+                    <StripeProvider apiKey={getConfig().stripe.publicKey}>
+                        <Elements>
+                            <AccountSource
+                                customer={customer}
+                                onCustomerUpdated={customer => setCustomer(customer)} />
+                        </Elements>
+                    </StripeProvider>
+                </React.Fragment>
+            );
+            break;
+        case 'subscription':
+            element = (
+                <AccountSubscription
+                    customer={customer}
+                    onCustomerUpdated={customer => setCustomer(customer)} />
             );
             break;
         default:
@@ -75,8 +84,8 @@ function AccountManager() {
                             icon: 'user'
                         },
                         {
-                            id: 'source',
-                            title: 'Payment Method',
+                            id: 'subscription',
+                            title: 'Subscription',
                             icon: 'user'
                         }
                     ]}
