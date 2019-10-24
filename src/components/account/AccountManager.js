@@ -71,7 +71,7 @@ function AccountManager({ form, stripe }) {
             <Form {...formItemLayout}>
                 <Form.Item label="Name">
                     {getFieldDecorator('name', {
-                        initialValue: customer.name,
+                        initialValue: customer ? customer.name : undefined,
                         rules: [
                             {
                                 required: true,
@@ -84,7 +84,7 @@ function AccountManager({ form, stripe }) {
                 </Form.Item>
                 <Form.Item label="Email">
                     {getFieldDecorator('email', {
-                        initialValue: customer.email,
+                        initialValue: customer ? customer.email : undefined,
                         rules: [
                             {
                                 required: true,
@@ -99,7 +99,7 @@ function AccountManager({ form, stripe }) {
                     <div style={{ padding: 20, border: '1px solid #cccccc', borderRadius: 5 }}>
                         <Form.Item label="Line 1" {...formItemLayout}>
                             {getFieldDecorator('address.line1', {
-                                initialValue: customer.address ? customer.address.line1 : undefined,
+                                initialValue: customer && customer.address ? customer.address.line1 : undefined,
                                 rules: [
                                     {
                                         required: true,
@@ -112,21 +112,21 @@ function AccountManager({ form, stripe }) {
                         </Form.Item>
                         <Form.Item label="Line 2" {...formItemLayout}>
                             {getFieldDecorator('address.line2', {
-                                initialValue: customer.address ? customer.address.line2 : undefined
+                                initialValue: customer && customer.address ? customer.address.line2 : undefined
                             })(
                                 <Input />
                             )}
                         </Form.Item>
                         <Form.Item label="State" {...formItemLayout}>
                             {getFieldDecorator('address.state', {
-                                initialValue: customer.address ? customer.address.state : undefined
+                                initialValue: customer && customer.address ? customer.address.state : undefined
                             })(
                                 <Input />
                             )}
                         </Form.Item>
                         <Form.Item label="City" {...formItemLayout}>
                             {getFieldDecorator('address.city', {
-                                initialValue: customer.address ? customer.address.city : undefined,
+                                initialValue: customer && customer.address ? customer.address.city : undefined,
                                 rules: [
                                     {
                                         required: true,
@@ -139,7 +139,7 @@ function AccountManager({ form, stripe }) {
                         </Form.Item>
                         <Form.Item label="Postal Code" {...formItemLayout}>
                             {getFieldDecorator('address.postal_code', {
-                                initialValue: customer.address ? customer.address.postal_code : undefined,
+                                initialValue: customer && customer.address ? customer.address.postal_code : undefined,
                                 rules: [
                                     {
                                         required: true,
@@ -152,7 +152,7 @@ function AccountManager({ form, stripe }) {
                         </Form.Item>
                         <Form.Item label="Country" {...formItemLayout}>
                             {getFieldDecorator('address.country', {
-                                initialValue: customer.address ? customer.address.country : undefined,
+                                initialValue: customer && customer.address ? customer.address.country : undefined,
                                 rules: [
                                     {
                                         required: true,
