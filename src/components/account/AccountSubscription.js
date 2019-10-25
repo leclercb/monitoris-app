@@ -43,9 +43,9 @@ function AccountSubscription({ customer, onCustomerUpdated }) {
                     <React.Fragment>
                         <span>{`You selected the plan "${plan.nickname}" for ${nbInstances} Redis instances.`}</span>
                         <br />
-                        <span>{`The subscription amount is ${amount / 100} ${plan.currency} per ${plan.interval}`}.</span>
+                        <span>{`The subscription amount is ${(amount / 100).toFixed(2)} ${plan.currency} per ${plan.interval}`}.</span>
                         <br />
-                        <span>{`By confirming, you will immediately be charged of the following amount: ${proration.cost / 100}`}.</span>
+                        <span>{`By confirming, the following amount will immediately be charged: ${(proration.cost / 100).toFixed(2)}`} ${plan.currency}.</span>
                     </React.Fragment>
                 ),
                 onOk: async () => {
@@ -128,7 +128,7 @@ function AccountSubscription({ customer, onCustomerUpdated }) {
                                         size="small" />
                                     <span style={{ marginLeft: 10 }}>Redis Instances</span>
                                 </div>
-                                <Typography.Title level={4}>{amount / 100} {plan.currency} per {plan.interval}</Typography.Title>
+                                <Typography.Title level={4}>{(amount / 100).toFixed(2)} {plan.currency} per {plan.interval}</Typography.Title>
                                 <Button
                                     type="primary"
                                     onClick={() => selectPlan(plan, amount)}>
