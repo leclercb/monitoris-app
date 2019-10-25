@@ -4,6 +4,34 @@ import { sendRequest } from 'actions/RequestActions';
 import { updateProcess } from 'actions/ThreadActions';
 import { getConfig } from 'config/Config';
 
+export function getPlans(productId) {
+    return async dispatch => {
+        const processId = uuid();
+
+        try {
+            const result = await sendRequest({
+                headers: {
+                    Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+                },
+                method: 'GET',
+                url: `${getConfig().apiUrl}/v1/stripe/products/${productId}/plans`,
+                responseType: 'json'
+            });
+
+            return result.data;
+        } catch (error) {
+            dispatch(updateProcess({
+                id: processId,
+                state: 'ERROR',
+                title: 'Get plans',
+                error: error.toString()
+            }));
+
+            throw error;
+        }
+    };
+}
+
 export function getCurrentCustomer() {
     return async dispatch => {
         const processId = uuid();
@@ -90,7 +118,7 @@ export function setCurrentCustomerSource(source) {
     };
 }
 
-export function setCurrentSubscriptionPlan(planId) {
+export function setCurrentSubscriptionPlan(planId, quantity) {
     return async dispatch => {
         const processId = uuid();
 
@@ -101,7 +129,10 @@ export function setCurrentSubscriptionPlan(planId) {
                 },
                 method: 'PUT',
                 url: `${getConfig().apiUrl}/v1/stripe/subscriptions/current/plans/${planId}`,
-                responseType: 'json'
+                responseType: 'json',
+                data: {
+                    quantity
+                }
             });
 
             return result.data;
@@ -118,7 +149,7 @@ export function setCurrentSubscriptionPlan(planId) {
     };
 }
 
-export function getCurrentSubscriptionPlanProration(planId) {
+export function getCurrentSubscriptionPlanProration(planId, quantity) {
     return async dispatch => {
         const processId = uuid();
 
@@ -127,9 +158,12 @@ export function getCurrentSubscriptionPlanProration(planId) {
                 headers: {
                     Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
                 },
-                method: 'GET',
+                method: 'POST',
                 url: `${getConfig().apiUrl}/v1/stripe/subscriptions/current/plans/${planId}/proration`,
-                responseType: 'json'
+                responseType: 'json',
+                data: {
+                    quantity
+                }
             });
 
             return result.data;

@@ -37,7 +37,8 @@ import {
     faStar,
     faSyncAlt,
     faTools,
-    faTrashAlt
+    faTrashAlt,
+    faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faBarcode);
@@ -77,3 +78,4 @@ library.add(faStar);
 library.add(faSyncAlt);
 library.add(faTools);
 library.add(faTrashAlt);
+library.add(faUser);

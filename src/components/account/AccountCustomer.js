@@ -53,6 +53,10 @@ function AccountCustomer({ customer, onCustomerUpdated, form }) {
                             {
                                 required: true,
                                 message: 'Your email is required'
+                            },
+                            {
+                                type: 'email',
+                                message: 'The email is invalid'
                             }
                         ]
                     })(

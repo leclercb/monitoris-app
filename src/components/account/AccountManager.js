@@ -40,18 +40,20 @@ function AccountManager() {
             break;
         case 'customer':
             element = (
-                <React.Fragment>
-                    <AccountCustomer
-                        customer={customer}
-                        onCustomerUpdated={customer => setCustomer(customer)} />
-                    <StripeProvider apiKey={getConfig().stripe.publicKey}>
-                        <Elements>
-                            <AccountSource
-                                customer={customer}
-                                onCustomerUpdated={customer => setCustomer(customer)} />
-                        </Elements>
-                    </StripeProvider>
-                </React.Fragment>
+                <AccountCustomer
+                    customer={customer}
+                    onCustomerUpdated={customer => setCustomer(customer)} />
+            );
+            break;
+        case 'source':
+            element = (
+                <StripeProvider apiKey={getConfig().stripe.publicKey}>
+                    <Elements>
+                        <AccountSource
+                            customer={customer}
+                            onCustomerUpdated={customer => setCustomer(customer)} />
+                    </Elements>
+                </StripeProvider>
             );
             break;
         case 'subscription':
@@ -81,6 +83,11 @@ function AccountManager() {
                         {
                             id: 'customer',
                             title: 'Billing',
+                            icon: 'user'
+                        },
+                        {
+                            id: 'source',
+                            title: 'Payment Method',
                             icon: 'user'
                         },
                         {

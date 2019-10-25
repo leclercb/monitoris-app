@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import {
     getCurrentCustomer,
     getCurrentSubscriptionPlanProration,
+    getPlans,
     setCurrentCustomer,
     setCurrentCustomerSource,
     setCurrentSubscriptionPlan
@@ -17,7 +18,12 @@ export function useStripeApi() {
     );
 
     const getCurrentSubscriptionPlanProrationCallback = useCallback(
-        planId => dispatch(getCurrentSubscriptionPlanProration(planId)),
+        (planId, quantity) => dispatch(getCurrentSubscriptionPlanProration(planId, quantity)),
+        [dispatch]
+    );
+
+    const getPlansCallback = useCallback(
+        productId => dispatch(getPlans(productId)),
         [dispatch]
     );
 
@@ -32,13 +38,14 @@ export function useStripeApi() {
     );
 
     const setCurrentSubscriptionPlanCallback = useCallback(
-        planId => dispatch(setCurrentSubscriptionPlan(planId)),
+        (planId, quantity) => dispatch(setCurrentSubscriptionPlan(planId, quantity)),
         [dispatch]
     );
 
     return {
         getCurrentCustomer: getCurrentCustomerCallback,
         getCurrentSubscriptionPlanProration: getCurrentSubscriptionPlanProrationCallback,
+        getPlans: getPlansCallback,
         setCurrentCustomer: setCurrentCustomerCallback,
         setCurrentCustomerSource: setCurrentCustomerSourceCallback,
         setCurrentSubscriptionPlan: setCurrentSubscriptionPlanCallback

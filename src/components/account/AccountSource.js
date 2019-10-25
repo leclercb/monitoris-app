@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Descriptions, Spin, message } from 'antd';
+import { Button, Descriptions, Spin, Empty, message } from 'antd';
 import PropTypes from 'prop-types';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import { useStripeApi } from 'hooks/UseStripeApi';
@@ -31,6 +31,12 @@ function AccountSource({ customer, onCustomerUpdated, stripe }) {
         }
     };
 
+    if (!customer) {
+        return (
+            <Empty description="Please fill in your billing details first." />
+        )
+    }
+
     return (
         <Spin spinning={busy}>
             {!!source && (
@@ -44,7 +50,7 @@ function AccountSource({ customer, onCustomerUpdated, stripe }) {
                 <CardElement />
                 <div style={{ width: '100%', textAlign: 'right', marginTop: 20 }}>
                     <Button type="primary" onClick={onSubmit}>
-                        {source ? 'Save and replace source' : 'Add source'}
+                        {source ? 'Save and replace card' : 'Save card'}
                     </Button>
                 </div>
             </div>
