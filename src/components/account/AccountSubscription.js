@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Descriptions, InputNumber, Row, Slider, Spin, Typography, Button, Modal, Empty } from 'antd';
+import { Button, Col, Descriptions, Empty, InputNumber, Modal, Row, Slider, Spin, Typography } from 'antd';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useStripeApi } from 'hooks/UseStripeApi';
@@ -64,7 +64,7 @@ function AccountSubscription({ customer, onCustomerUpdated }) {
         } finally {
             setBusy(false);
         }
-    }
+    };
 
     const computeAmount = plan => {
         let prevUpTo = 0;
@@ -86,7 +86,7 @@ function AccountSubscription({ customer, onCustomerUpdated }) {
     if (!source) {
         return (
             <Empty description="Please fill in your billing details and your payment method first." />
-        )
+        );
     }
 
     return (

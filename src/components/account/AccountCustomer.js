@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Spin } from 'antd';
+import { Button, Form, Input, Select, Spin } from 'antd';
 import PropTypes from 'prop-types';
 import { useStripeApi } from 'hooks/UseStripeApi';
 import { getDefaultFormItemLayout, getDefaultTailFormItemLayout } from 'utils/FormUtils';
@@ -129,6 +129,30 @@ function AccountCustomer({ customer, onCustomerUpdated, form }) {
                                 ]
                             })(
                                 <Input />
+                            )}
+                        </Form.Item>
+                    </div>
+                </Form.Item>
+                <Form.Item label="Tax ID">
+                    <div style={{ padding: 20, border: '1px solid #cccccc', borderRadius: 5 }}>
+                        <Form.Item label="Type" {...formItemLayout}>
+                            {getFieldDecorator('taxId.type', {
+                                initialValue: customer && customer.taxId ? customer.taxId.type : undefined
+                            })(
+                                <Select placeholder="Type">
+                                    <Select.Option value="eu_vat">European VAT number</Select.Option>
+                                    <Select.Option value="in_gst">Indian GST number</Select.Option>
+                                    <Select.Option value="au_abn">Australian Business Number</Select.Option>
+                                    <Select.Option value="nz_gst">New Zealand GST number</Select.Option>
+                                    <Select.Option value="no_vat">Norwegian VAT number</Select.Option>
+                                </Select>
+                            )}
+                        </Form.Item>
+                        <Form.Item label="Value" {...formItemLayout}>
+                            {getFieldDecorator('taxId.value', {
+                                initialValue: customer && customer.taxId ? customer.taxId.value : undefined
+                            })(
+                                <Input placeholder="Value" />
                             )}
                         </Form.Item>
                     </div>

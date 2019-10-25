@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Descriptions, Spin, Empty, message } from 'antd';
+import { Button, Descriptions, Empty, Spin, message } from 'antd';
 import PropTypes from 'prop-types';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import { useStripeApi } from 'hooks/UseStripeApi';
@@ -34,7 +34,7 @@ function AccountSource({ customer, onCustomerUpdated, stripe }) {
     if (!customer) {
         return (
             <Empty description="Please fill in your billing details first." />
-        )
+        );
     }
 
     return (
