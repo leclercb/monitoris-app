@@ -23,7 +23,7 @@ function AccountManager() {
                 setBusy(true);
                 const customer = await stripeApi.getCurrentCustomer();
                 setCustomer(customer);
-                console.log(customer);
+                console.debug("Customer", customer);
             } finally {
                 setBusy(false);
             }

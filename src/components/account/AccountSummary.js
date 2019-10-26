@@ -18,14 +18,16 @@ function AccountSummary({ customer }) {
                     <Descriptions.Item label="Customer ID">{customer.id}</Descriptions.Item>
                     <Descriptions.Item label="Name">{customer.name}</Descriptions.Item>
                     <Descriptions.Item label="Email">{customer.email}</Descriptions.Item>
-                    <Descriptions.Item label="Address">
-                        {customer.address.line1}<br />
-                        {customer.address.line2}<br />
-                        {customer.address.city}<br />
-                        {customer.address.postal_code}<br />
-                        {customer.address.state}<br />
-                        {customer.address.country}
-                    </Descriptions.Item>
+                    {!!customer.address && (
+                        <Descriptions.Item label="Address">
+                            {customer.address.line1}<br />
+                            {customer.address.line2}<br />
+                            {customer.address.city}<br />
+                            {customer.address.postal_code}<br />
+                            {customer.address.state}<br />
+                            {customer.address.country}
+                        </Descriptions.Item>
+                    )}
                 </Descriptions>
             )}
         </React.Fragment>

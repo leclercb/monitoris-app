@@ -22,7 +22,7 @@ function AccountSubscription({ customer, onCustomerUpdated }) {
                 setBusy(true);
                 const plans = await stripeApi.getPlans(getConfig().stripe.productId);
                 setPlans(plans);
-                console.log(plans);
+                console.debug("Plans", plans);
             } finally {
                 setBusy(false);
             }
@@ -36,7 +36,7 @@ function AccountSubscription({ customer, onCustomerUpdated }) {
             setBusy(true);
 
             const proration = await stripeApi.getCurrentSubscriptionPlanProration(plan.id, nbInstances);
-            console.log(proration);
+            console.debug("Proration", proration);
 
             Modal.confirm({
                 title: 'Confirmation',
