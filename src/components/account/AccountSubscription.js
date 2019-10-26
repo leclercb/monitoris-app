@@ -10,7 +10,7 @@ function AccountSubscription({ customer, onCustomerUpdated }) {
     const stripeApi = useStripeApi();
 
     const [busy, setBusy] = useState(false);
-    const [nbInstances, setNbInstances] = useState(1);
+    const [nbInstances, setNbInstances] = useState(2);
     const [plans, setPlans] = useState([]);
 
     const source = customer && customer.sources.data.length > 0 ? customer.sources.data[0] : null;
@@ -146,12 +146,12 @@ function AccountSubscription({ customer, onCustomerUpdated }) {
                                 <Typography.Title level={3}>{plan.nickname}</Typography.Title>
                                 <div style={{ margin: 20 }}>
                                     <Slider
-                                        min={1}
+                                        min={2}
                                         max={20}
                                         onChange={value => setNbInstances(value)}
                                         value={nbInstances} />
                                     <InputNumber
-                                        min={1}
+                                        min={2}
                                         max={20}
                                         style={{ minWidth: 50, width: 50 }}
                                         value={nbInstances}

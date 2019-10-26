@@ -18,6 +18,6 @@ export const getSettingManager = state => state.app.settingManager;
 export const isPro = createSelector(
     getSession,
     (session) => {
-        return session.user ? session.user.metaData.subscriptionType === 'pro' : false;
+        return session.user ? session.user.metaData.subscriptionInfo.type === 'pro' : false;
     }
 );

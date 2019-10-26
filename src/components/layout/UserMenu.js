@@ -29,7 +29,10 @@ function UserMenu() {
                         {sessionApi.session.user.email}
                     </Descriptions.Item>
                     <Descriptions.Item label="Subscription Type">
-                        {sessionApi.session.user.metaData.subscriptionType}
+                        {sessionApi.session.user.metaData.subscriptionInfo.type}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Redis Instances">
+                        {sessionApi.session.user.metaData.subscriptionInfo.quantity}
                     </Descriptions.Item>
                 </Descriptions>
             ) : null}
