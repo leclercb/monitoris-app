@@ -29,10 +29,7 @@ function UserMenu() {
                         {sessionApi.session.user.email}
                     </Descriptions.Item>
                     <Descriptions.Item label="Subscription Type">
-                        {sessionApi.session.user.metaData.computedSubscriptionType}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Subscription Expiration">
-                        {sessionApi.session.user.metaData.subscriptionExpiration}
+                        {sessionApi.session.user.metaData.subscriptionType}
                     </Descriptions.Item>
                 </Descriptions>
             ) : null}

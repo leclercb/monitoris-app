@@ -118,6 +118,35 @@ export function setCurrentCustomerSource(source) {
     };
 }
 
+export function updateCurrentSubscription(subscription) {
+    return async dispatch => {
+        const processId = uuid();
+
+        try {
+            const result = await sendRequest({
+                headers: {
+                    Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+                },
+                method: 'PUT',
+                url: `${getConfig().apiUrl}/v1/stripe/subscriptions/current`,
+                responseType: 'json',
+                data: subscription
+            });
+
+            return result.data;
+        } catch (error) {
+            dispatch(updateProcess({
+                id: processId,
+                state: 'ERROR',
+                title: 'Update subscription',
+                error: error.toString()
+            }));
+
+            throw error;
+        }
+    };
+}
+
 export function setCurrentSubscriptionPlan(planId, quantity) {
     return async dispatch => {
         const processId = uuid();

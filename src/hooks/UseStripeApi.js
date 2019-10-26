@@ -6,7 +6,8 @@ import {
     getPlans,
     setCurrentCustomer,
     setCurrentCustomerSource,
-    setCurrentSubscriptionPlan
+    setCurrentSubscriptionPlan,
+    updateCurrentSubscription
 } from 'actions/StripeActions';
 
 export function useStripeApi() {
@@ -42,12 +43,18 @@ export function useStripeApi() {
         [dispatch]
     );
 
+    const updateCurrentSubscriptionCallback = useCallback(
+        subscription => dispatch(updateCurrentSubscription(subscription)),
+        [dispatch]
+    );
+
     return {
         getCurrentCustomer: getCurrentCustomerCallback,
         getCurrentSubscriptionPlanProration: getCurrentSubscriptionPlanProrationCallback,
         getPlans: getPlansCallback,
         setCurrentCustomer: setCurrentCustomerCallback,
         setCurrentCustomerSource: setCurrentCustomerSourceCallback,
-        setCurrentSubscriptionPlan: setCurrentSubscriptionPlanCallback
+        setCurrentSubscriptionPlan: setCurrentSubscriptionPlanCallback,
+        updateCurrentSubscription: updateCurrentSubscriptionCallback
     };
 }
