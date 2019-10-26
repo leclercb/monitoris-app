@@ -30,7 +30,9 @@ function Header() {
     };
 
     const onAddInstance = async () => {
-        const instance = await instanceApi.addInstance();
+        const instance = await instanceApi.addInstance({
+            type: 'proxy'
+        });
         instanceApi.setSelectedInstanceId(instance.id);
     };
 
@@ -44,6 +46,10 @@ function Header() {
 
     const onSetSettingsVisible = () => {
         appApi.setSettingManagerOptions({ visible: true });
+    };
+
+    const onShowDashboardContent = () => {
+        appApi.setSelectedView('dashboard');
     };
 
     const onShowExplorerContent = () => {
@@ -82,19 +88,24 @@ function Header() {
         )}>
             <Button.Group style={{ marginRight: 50 }}>
                 <Button
-                    type={appApi.selectedView === 'instance' ? 'dashed' : 'default'}
-                    onClick={onShowInstanceContent}>
-                    <Icon icon="book" text="Instances" />
-                </Button>
-                <Button
-                    type={appApi.selectedView === 'alert' ? 'dashed' : 'default'}
-                    onClick={onShowAlertContent}>
-                    <Icon icon="calendar-alt" text="Alerts" />
+                    type={appApi.selectedView === 'dashboard' ? 'dashed' : 'default'}
+                    onClick={onShowDashboardContent}>
+                    <Icon icon="chart-line" text="Dashboard" />
                 </Button>
                 <Button
                     type={appApi.selectedView === 'explorer' ? 'dashed' : 'default'}
                     onClick={onShowExplorerContent}>
-                    <Icon icon="tasks" text="Explorer" />
+                    <Icon icon="binoculars" text="Explorer" />
+                </Button>
+                <Button
+                    type={appApi.selectedView === 'instance' ? 'dashed' : 'default'}
+                    onClick={onShowInstanceContent}>
+                    <Icon icon="server" text="Instances" />
+                </Button>
+                <Button
+                    type={appApi.selectedView === 'alert' ? 'dashed' : 'default'}
+                    onClick={onShowAlertContent}>
+                    <Icon icon="bell" text="Alerts" />
                 </Button>
             </Button.Group>
             {appApi.selectedView === 'alert' ?

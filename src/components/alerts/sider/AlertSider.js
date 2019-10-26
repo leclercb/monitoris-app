@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Menu, Tooltip } from 'antd';
+import { Menu } from 'antd';
 import Icon from 'components/common/Icon';
 import LeftRight from 'components/common/LeftRight';
 import ObjectMenuItem from 'components/sider/ObjectMenuItem';
@@ -34,24 +34,10 @@ function AlertSider() {
         );
     };
 
-    const onSearch = value => {
-
-    };
-
     return (
         <div
             className="joyride-task-sider"
             style={{ backgroundColor: '#ffffff', height: '100%' }}>
-            <div style={{ width: '100%', padding: 10, textAlign: 'center' }}>
-                <Tooltip title="Press enter to search" placement="bottom">
-                    <Input.Search
-                        allowClear={true}
-                        size="small"
-                        placeholder="Search for ..."
-                        style={{ width: '100%' }}
-                        onSearch={value => onSearch(value)} />
-                </Tooltip>
-            </div>
             <Menu
                 selectedKeys={[alertApi.selectedAlertId]}
                 openKeys={openKeys}
@@ -59,7 +45,7 @@ function AlertSider() {
                 mode="inline">
                 <Menu.SubMenu
                     key="alerts"
-                    title={createCategorySubMenu('Alerts', 'thumbtack', () => onOpenChange('alerts'))}>
+                    title={createCategorySubMenu('Alerts', 'bell', () => onOpenChange('alerts'))}>
                     {alertApi.alerts.map(alert => (
                         <Menu.Item key={alert.id} alert={alert}>
                             <ObjectMenuItem

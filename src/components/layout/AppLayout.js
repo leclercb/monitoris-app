@@ -1,7 +1,9 @@
 import React from 'react';
 import { Layout, Spin } from 'antd';
 import { useSelector } from 'react-redux';
+import ModalAccountManager from 'components/account/ModalAccountManager';
 import AlertView from 'components/alerts/views/AlertView';
+import DashboardView from 'components/dashboard/views/DashboardView';
 import ExplorerView from 'components/explorer/views/ExplorerView';
 import InstanceView from 'components/instances/views/InstanceView';
 import Header from 'components/layout/Header';
@@ -17,6 +19,8 @@ function AppLayout() {
 
     const getView = () => {
         switch (selectedView) {
+            case 'dashboard':
+                return <DashboardView />;
             case 'explorer':
                 return <ExplorerView />;
             case 'alert':
@@ -32,6 +36,7 @@ function AppLayout() {
         <React.Fragment>
             <NotificationManager />
             <ModalThreadManager />
+            <ModalAccountManager />
             <ModalSettingManager />
             <Spin style={{ minHeight: '100%', height: '100%' }} spinning={busy}>
                 <Layout style={{ minHeight: '100%', height: '100%' }}>

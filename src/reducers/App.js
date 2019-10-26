@@ -5,11 +5,16 @@ const App = () => (state = {
     },
     selectedAlertId: null,
     selectedInstanceId: null,
+    selectedDashboardId: null,
     selectedExplorerInstanceId: null,
+    selectedExplorerDb: 0,
     selectedExplorerToolId: null,
     joyride: {
         id: null,
         run: false
+    },
+    accountManager: {
+        visible: false
     },
     settingManager: {
         visible: false
@@ -34,10 +39,20 @@ const App = () => (state = {
                 ...state,
                 selectedInstanceId: action.instanceId
             };
+        case 'SET_SELECTED_DASHBOARD_ID':
+            return {
+                ...state,
+                selectedDashboardId: action.dashboardId
+            };
         case 'SET_SELECTED_EXPLORER_INSTANCE_ID':
             return {
                 ...state,
                 selectedExplorerInstanceId: action.instanceId
+            };
+        case 'SET_SELECTED_EXPLORER_DB':
+            return {
+                ...state,
+                selectedExplorerDb: action.db
             };
         case 'SET_SELECTED_EXPLORER_TOOL_ID':
             return {
@@ -50,6 +65,13 @@ const App = () => (state = {
                 joyride: {
                     id: 'id' in action ? action.id : state.joyride.id,
                     run: 'run' in action ? action.run : state.joyride.run
+                }
+            };
+        case 'SET_ACCOUNT_MANAGER_OPTIONS':
+            return {
+                ...state,
+                accountManager: {
+                    visible: 'visible' in action ? action.visible : state.accountManager.visible
                 }
             };
         case 'SET_SETTING_MANAGER_OPTIONS':

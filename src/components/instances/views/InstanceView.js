@@ -12,7 +12,6 @@ function InstanceView() {
 
     const onInstanceViewSplitPaneSizeChange = size => {
         settingsApi.updateSettings({ instanceViewSplitPaneSize: size });
-        window.dispatchEvent(new Event('app-resize'));
     };
 
     return (
@@ -23,7 +22,7 @@ function InstanceView() {
             onDragFinished={size => onInstanceViewSplitPaneSizeChange(size)}
             paneStyle={{ overflowY: 'auto' }}>
             <InstanceSider />
-            <div style={{ height: '100%', padding: 25 }}>
+            <div style={{ minHeight: '100%', padding: 25 }}>
                 <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
                     {instanceApi.selectedInstance ? (
                         <InstanceEdition key={instanceApi.selectedInstanceId} instance={instanceApi.selectedInstance} updateInstance={instanceApi.updateInstance} />

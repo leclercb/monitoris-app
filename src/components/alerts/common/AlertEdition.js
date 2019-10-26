@@ -33,6 +33,7 @@ function AlertEdition(props) {
                 notifications={props.alert.notifications || []}
                 notificationFields={getAlertNotificationFields()}
                 updateNotifications={onUpdateNotifications}
+                testNotification={props.testNotification}
                 orderSettingPrefix="alertNotificationColumnOrder_"
                 widthSettingPrefix="alertNotificationColumnWidth_" />
         </React.Fragment>
@@ -42,7 +43,8 @@ function AlertEdition(props) {
 AlertEdition.propTypes = {
     form: PropTypes.object.isRequired,
     alert: AlertPropType.isRequired,
-    updateAlert: PropTypes.func.isRequired
+    updateAlert: PropTypes.func.isRequired,
+    testNotification: PropTypes.func.isRequired
 };
 
 export default Form.create({ name: 'alert' })(AlertEdition);

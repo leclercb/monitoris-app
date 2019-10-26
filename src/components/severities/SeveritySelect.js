@@ -6,11 +6,11 @@ import { useSeverityApi } from 'hooks/UseSeverityApi';
 
 export const SeveritySelect = React.forwardRef(function SeveritySelect(props, ref) {
     const severityApi = useSeverityApi();
-    const value = severityApi.severities.find(severity => severity.id === props.value) ? props.value : undefined;
+    const value = severityApi.writableSeverities.find(severity => severity.id === props.value) ? props.value : undefined;
 
     return (
         <Select ref={ref} allowClear={true} {...props} value={value}>
-            {severityApi.severities.map(severity => (
+            {severityApi.writableSeverities.map(severity => (
                 <Select.Option key={severity.id} value={severity.id}>
                     <Icon icon="circle" color={severity.color} text={severity.title} />
                 </Select.Option>

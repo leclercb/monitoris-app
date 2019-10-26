@@ -39,6 +39,31 @@ export function getAlertFields() {
             title: 'Color',
             type: 'color',
             editable: true
+        },
+        {
+            static: true,
+            id: 'defaultSeverity',
+            title: 'Default severity',
+            type: 'severity',
+            editable: true
+        },
+        {
+            static: true,
+            id: 'historySize',
+            title: 'History Size',
+            type: 'number',
+            editable: true,
+            options: {
+                min: 10,
+                max: 100
+            }
+        },
+        {
+            static: true,
+            id: 'instances',
+            title: 'Instances',
+            type: 'instances',
+            editable: true
         }
     ]);
 }

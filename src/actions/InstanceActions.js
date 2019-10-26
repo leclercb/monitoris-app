@@ -1,4 +1,5 @@
 import { Auth } from 'aws-amplify';
+import moment from 'moment';
 import uuid from 'uuid/v4';
 import {
     addObject,
@@ -13,6 +14,7 @@ import { updateProcess } from 'actions/ThreadActions';
 import { getConfig } from 'config/Config';
 import Constants from 'constants/Constants';
 import { getErrorMessages } from 'utils/CloudUtils';
+import { parseRedisString } from 'utils/FormatUtils';
 
 export function loadInstancesFromServer() {
     return loadObjectsFromServer('instances');
@@ -63,6 +65,15 @@ export function getStatus(instanceId) {
                     responseType: 'json'
                 });
 
+            await dispatch({
+                type: 'SET_STATUS',
+                instanceId,
+                status: {
+                    refreshDate: moment().toISOString(),
+                    ...result.data
+                }
+            });
+
             dispatch(updateProcess({
                 id: processId,
                 state: 'COMPLETED'
@@ -102,12 +113,20 @@ export function getInfo(instanceId) {
                     responseType: 'text'
                 });
 
+            const info = parseRedisString(result.data);
+
+            await dispatch({
+                type: 'ADD_INFO',
+                instanceId,
+                info
+            });
+
             dispatch(updateProcess({
                 id: processId,
                 state: 'COMPLETED'
             }));
 
-            return result.data;
+            return info;
         } catch (error) {
             dispatch(updateProcess({
                 id: processId,
@@ -120,15 +139,9 @@ export function getInfo(instanceId) {
     };
 }
 
-export function executeCommand(instanceId, command, parameters) {
+export function executeCommand(instanceId, db, command, parameters) {
     return async dispatch => {
         const processId = uuid();
-
-        dispatch(updateProcess({
-            id: processId,
-            state: 'RUNNING',
-            title: 'Execute command on server'
-        }));
 
         try {
             const result = await sendRequest(
@@ -139,6 +152,7 @@ export function executeCommand(instanceId, command, parameters) {
                     method: 'POST',
                     url: `${getConfig().proxyUrl}/api/v1/instances/${instanceId}/execute`,
                     data: {
+                        db,
                         command,
                         parameters
                     },
@@ -155,6 +169,7 @@ export function executeCommand(instanceId, command, parameters) {
             dispatch(updateProcess({
                 id: processId,
                 state: 'ERROR',
+                title: 'Execute command on server',
                 error: getErrorMessages(error, true)
             }));
 

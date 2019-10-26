@@ -1,115 +1,81 @@
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-    faArchive,
+    faBarcode,
     faBell,
-    faBomb,
-    faBook,
-    faBoxOpen,
-    faBroom,
-    faBullseye,
+    faBinoculars,
     faCalendarAlt,
-    faCaretDown,
+    faChartLine,
     faCheck,
-    faCheckDouble,
-    faChevronCircleRight,
     faCircle,
     faCog,
     faCogs,
     faColumns,
-    faCompass,
     faCopy,
     faCubes,
     faDesktop,
     faEdit,
     faExclamationCircle,
     faExclamationTriangle,
-    faEyeSlash,
     faFilter,
-    faFolder,
-    faFolderOpen,
-    faHome,
+    faHeartbeat,
+    faInfoCircle,
     faKey,
+    faLink,
     faList,
     faLock,
     faLockOpen,
-    faMagic,
     faMinusSquare,
-    faNetworkWired,
-    faPaintRoller,
-    faPause,
-    faPepperHot,
-    faPlay,
     faPlus,
     faPlusSquare,
     faPrint,
     faQuestionCircle,
-    faRetweet,
     faSave,
     faSearch,
+    faServer,
     faSpinner,
     faStar,
     faSyncAlt,
-    faTable,
-    faTag,
-    faTasks,
-    faThumbtack,
-    faTimes,
-    faTrashAlt
+    faTools,
+    faTrashAlt,
+    faUser
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faArchive);
+library.add(faBarcode);
 library.add(faBell);
-library.add(faBomb);
-library.add(faBook);
-library.add(faBoxOpen);
-library.add(faBroom);
-library.add(faBullseye);
+library.add(faBinoculars);
 library.add(faCalendarAlt);
-library.add(faCaretDown);
+library.add(faChartLine);
 library.add(faCheck);
-library.add(faCheckDouble);
-library.add(faChevronCircleRight);
 library.add(faCircle);
 library.add(faCog);
 library.add(faCogs);
 library.add(faColumns);
-library.add(faCompass);
 library.add(faCopy);
 library.add(faCubes);
 library.add(faDesktop);
 library.add(faEdit);
 library.add(faExclamationCircle);
 library.add(faExclamationTriangle);
-library.add(faEyeSlash);
 library.add(faFilter);
-library.add(faFolder);
-library.add(faFolderOpen);
-library.add(faHome);
+library.add(faHeartbeat);
+library.add(faInfoCircle);
 library.add(faKey);
+library.add(faLink);
 library.add(faList);
 library.add(faLock);
 library.add(faLockOpen);
-library.add(faMagic);
 library.add(faMinusSquare);
-library.add(faNetworkWired);
-library.add(faPaintRoller);
-library.add(faPause);
-library.add(faPepperHot);
-library.add(faPlay);
 library.add(faPlus);
 library.add(faPlusSquare);
 library.add(faPrint);
 library.add(faQuestionCircle);
-library.add(faRetweet);
 library.add(faSave);
 library.add(faSearch);
+library.add(faServer);
 library.add(faSpinner);
 library.add(faStar);
 library.add(faSyncAlt);
-library.add(faTable);
-library.add(faTag);
-library.add(faTasks);
-library.add(faThumbtack);
-library.add(faTimes);
+library.add(faTools);
 library.add(faTrashAlt);
+library.add(faUser);

@@ -12,7 +12,6 @@ function AlertView() {
 
     const onAlertViewSplitPaneSizeChange = size => {
         settingsApi.updateSettings({ alertViewSplitPaneSize: size });
-        window.dispatchEvent(new Event('app-resize'));
     };
 
     return (
@@ -23,10 +22,14 @@ function AlertView() {
             onDragFinished={size => onAlertViewSplitPaneSizeChange(size)}
             paneStyle={{ overflowY: 'auto' }}>
             <AlertSider />
-            <div style={{ height: '100%', padding: 25 }}>
+            <div style={{ minHeight: '100%', padding: 25 }}>
                 <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
                     {alertApi.selectedAlert ? (
-                        <AlertEdition key={alertApi.selectedAlertId} alert={alertApi.selectedAlert} updateAlert={alertApi.updateAlert} />
+                        <AlertEdition
+                            key={alertApi.selectedAlertId}
+                            alert={alertApi.selectedAlert}
+                            updateAlert={alertApi.updateAlert}
+                            testNotification={alertApi.testNotification} />
                     ) : <Empty description="Please select an alert" />}
                 </div>
             </div>

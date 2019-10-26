@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedExplorerInstanceId, setSelectedInstanceId } from 'actions/AppActions';
+import { setSelectedExplorerDb, setSelectedExplorerInstanceId, setSelectedInstanceId } from 'actions/AppActions';
 import { addInstance, deleteInstance, duplicateInstance, executeCommand, getInfo, getStatus, updateInstance } from 'actions/InstanceActions';
-import { getSelectedExplorerInstanceId, getSelectedInstanceId } from 'selectors/AppSelectors';
+import { getSelectedExplorerDb, getSelectedExplorerInstanceId, getSelectedInstanceId } from 'selectors/AppSelectors';
 import { getInstances, getSelectedExplorerInstance, getSelectedInstance } from 'selectors/InstanceSelectors';
 
 export function useInstanceApi() {
@@ -11,6 +11,7 @@ export function useInstanceApi() {
 
     const selectedInstanceId = useSelector(getSelectedInstanceId);
     const selectedExplorerInstanceId = useSelector(getSelectedExplorerInstanceId);
+    const selectedExplorerDb = useSelector(getSelectedExplorerDb);
 
     const selectedInstance = useSelector(getSelectedInstance);
     const selectedExplorerInstance = useSelector(getSelectedExplorerInstance);
@@ -45,6 +46,11 @@ export function useInstanceApi() {
         [dispatch]
     );
 
+    const setSelectedExplorerDbCallback = useCallback(
+        db => dispatch(setSelectedExplorerDb(db)),
+        [dispatch]
+    );
+
     const getStatusCallback = useCallback(
         instanceId => dispatch(getStatus(instanceId)),
         [dispatch]
@@ -56,7 +62,7 @@ export function useInstanceApi() {
     );
 
     const executeCommandCallback = useCallback(
-        (instanceId, command, parameters) => dispatch(executeCommand(instanceId, command, parameters)),
+        (instanceId, db, command, parameters) => dispatch(executeCommand(instanceId, db, command, parameters)),
         [dispatch]
     );
 
@@ -64,6 +70,7 @@ export function useInstanceApi() {
         instances,
         selectedInstanceId,
         selectedExplorerInstanceId,
+        selectedExplorerDb,
         selectedInstance,
         selectedExplorerInstance,
         addInstance: addInstanceCallback,
@@ -72,6 +79,7 @@ export function useInstanceApi() {
         deleteInstance: deleteInstanceCallback,
         setSelectedInstanceId: setSelectedInstanceIdCallback,
         setSelectedExplorerInstanceId: setSelectedExplorerInstanceIdCallback,
+        setSelectedExplorerDb: setSelectedExplorerDbCallback,
         getStatus: getStatusCallback,
         getInfo: getInfoCallback,
         executeCommand: executeCommandCallback

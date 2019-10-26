@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'antd';
+import { Form, Icon, Tooltip } from 'antd';
 import { getAlertFields } from 'data/DataAlertFields';
 import { getInputForType } from 'data/DataFieldComponents';
 import { getValuePropNameForType } from 'data/DataFieldTypes';
@@ -29,6 +29,17 @@ function AlertForm(props) {
                                 disabled: !field.editable,
                                 onCommit: () => onCommitForm(props.form, props.alert, props.updateAlert)
                             })
+                    )}
+                    {field.id === 'historySize' && (
+                        <Tooltip title={(
+                            <React.Fragment>
+                                <span>In order to avoid flapping, the severity is only decreased when the last X severities are all lower than the current one.</span>
+                                <br />
+                                <span>As the Redis instance is checked every 10 seconds, it also means that the severity can decrease minimum (X * 10) seconds after an increase.</span>
+                            </React.Fragment>
+                        )}>
+                            <Icon type="info-circle" theme="twoTone" style={{ marginLeft: 10, fontSize: 16 }} />
+                        </Tooltip>
                     )}
                 </Form.Item>
             ))}

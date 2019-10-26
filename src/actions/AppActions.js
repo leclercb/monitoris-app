@@ -87,11 +87,29 @@ export function setSelectedInstanceId(instanceId) {
     };
 }
 
+export function setSelectedDashboardId(dashboardId) {
+    return async dispatch => {
+        dispatch({
+            type: 'SET_SELECTED_DASHBOARD_ID',
+            dashboardId
+        });
+    };
+}
+
 export function setSelectedExplorerInstanceId(instanceId) {
     return async dispatch => {
         dispatch({
             type: 'SET_SELECTED_EXPLORER_INSTANCE_ID',
             instanceId
+        });
+    };
+}
+
+export function setSelectedExplorerDb(db) {
+    return async dispatch => {
+        dispatch({
+            type: 'SET_SELECTED_EXPLORER_DB',
+            db
         });
     };
 }
@@ -109,6 +127,15 @@ export function setJoyrideOptions(options) {
     return async dispatch => {
         dispatch({
             type: 'SET_JOYRIDE_OPTIONS',
+            ...options
+        });
+    };
+}
+
+export function setAccountManagerOptions(options) {
+    return async dispatch => {
+        dispatch({
+            type: 'SET_ACCOUNT_MANAGER_OPTIONS',
             ...options
         });
     };

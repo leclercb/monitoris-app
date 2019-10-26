@@ -3,12 +3,16 @@
 import React from 'react';
 import { Checkbox, Input, InputNumber, Select } from 'antd';
 import { getFieldType } from 'data/DataFieldTypes';
+import AlertNotificationTypeSelect from 'components/alertnotificationtypes/AlertNotificationTypeSelect';
+import AlertNotificationTypeTitle from 'components/alertnotificationtypes/AlertNotificationTypeTitle';
 import AlertTitle from 'components/alerts/common/AlertTitle';
 import AlertSelect from 'components/alerts/common/AlertSelect';
 import ColorPicker from 'components/common/ColorPicker';
 import StarCheckbox from 'components/common/StarCheckbox';
 import InstanceTitle from 'components/instances/common/InstanceTitle';
+import InstancesTitle from 'components/instances/common/InstancesTitle';
 import InstanceSelect from 'components/instances/common/InstanceSelect';
+import InstancesSelect from 'components/instances/common/InstancesSelect';
 import SeveritiesSelect from 'components/severities/SeveritiesSelect';
 import SeveritiesTitle from 'components/severities/SeveritiesTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
@@ -61,6 +65,21 @@ export function getFieldComponents(type, options) {
 
             break;
         }
+        case 'alertNotificationType': {
+            configuration = {
+                render: value => (
+                    <AlertNotificationTypeTitle alertNotificationTypeId={value} />
+                ),
+                input: props => (
+                    <AlertNotificationTypeSelect
+                        onBlur={props.onCommit}
+                        dropdownMatchSelectWidth={false}
+                        {...removeExtraProps(props)} />
+                )
+            };
+
+            break;
+        }
         case 'boolean': {
             configuration = {
                 render: value => <Checkbox checked={!!value} />,
@@ -93,6 +112,21 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <InstanceSelect
+                        onBlur={props.onCommit}
+                        dropdownMatchSelectWidth={false}
+                        {...removeExtraProps(props)} />
+                )
+            };
+
+            break;
+        }
+        case 'instances': {
+            configuration = {
+                render: value => (
+                    <InstancesTitle instanceIds={value} />
+                ),
+                input: props => (
+                    <InstancesSelect
                         onBlur={props.onCommit}
                         dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
@@ -163,7 +197,9 @@ export function getFieldComponents(type, options) {
         }
         case 'star': {
             configuration = {
-                render: value => <StarCheckbox checked={!!value} />,
+                render: value => (
+                    <StarCheckbox checked={!!value} />
+                ),
                 input: props => (
                     <StarCheckbox
                         onChange={props.onCommit}

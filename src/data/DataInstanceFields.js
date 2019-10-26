@@ -1,15 +1,7 @@
 import { addColorsToArray } from 'utils/ColorUtils';
 
-export function getInstanceFields() {
-    return addColorsToArray([
-        {
-            static: true,
-            id: 'id',
-            title: 'ID',
-            type: 'text',
-            editable: false,
-            visible: true
-        },
+export function getInstanceFields(type) {
+    const fields = [
         {
             static: true,
             id: 'creationDate',
@@ -28,6 +20,13 @@ export function getInstanceFields() {
         },
         {
             static: true,
+            id: 'type',
+            title: 'Type',
+            type: 'text',
+            editable: true
+        },
+        {
+            static: true,
             id: 'title',
             title: 'Title',
             type: 'text',
@@ -39,13 +38,65 @@ export function getInstanceFields() {
             title: 'Color',
             type: 'color',
             editable: true
-        },
-        {
-            static: true,
-            id: 'secret',
-            title: 'Secret',
-            type: 'password',
-            editable: true
         }
-    ]);
+    ];
+
+    switch (type) {
+        case 'direct':
+            fields.push(
+                {
+                    static: true,
+                    id: 'id',
+                    title: 'ID',
+                    type: 'text',
+                    editable: false,
+                    visible: false
+                },
+                {
+                    static: true,
+                    id: 'host',
+                    title: 'Host',
+                    type: 'text',
+                    editable: true
+                },
+                {
+                    static: true,
+                    id: 'port',
+                    title: 'Port',
+                    type: 'number',
+                    editable: true
+                },
+                {
+                    static: true,
+                    id: 'password',
+                    title: 'Password',
+                    type: 'password',
+                    editable: true
+                }
+            );
+            break;
+        case 'proxy':
+            fields.push(
+                {
+                    static: true,
+                    id: 'id',
+                    title: 'ID',
+                    type: 'text',
+                    editable: false,
+                    visible: true
+                },
+                {
+                    static: true,
+                    id: 'secret',
+                    title: 'Secret',
+                    type: 'password',
+                    editable: true
+                }
+            );
+            break;
+        default:
+            break;
+    }
+
+    return addColorsToArray(fields);
 }

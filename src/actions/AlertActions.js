@@ -1,3 +1,5 @@
+import { Auth } from 'aws-amplify';
+import uuid from 'uuid/v4';
 import {
     addObject,
     deleteObject,
@@ -6,6 +8,9 @@ import {
     setObjects,
     updateObject
 } from 'actions/ObjectActions';
+import { sendRequest } from 'actions/RequestActions';
+import { updateProcess } from 'actions/ThreadActions';
+import { getConfig } from 'config/Config';
 
 export function loadAlertsFromServer() {
     return loadObjectsFromServer('alerts');
@@ -29,4 +34,39 @@ export function updateAlert(alert, options = {}) {
 
 export function deleteAlert(alertId, options = {}) {
     return deleteObject('alerts', alertId, options);
+}
+
+export function testNotification(type, destination) {
+    return async dispatch => {
+        const processId = uuid();
+
+        try {
+            await sendRequest({
+                headers: {
+                    Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+                },
+                method: 'POST',
+                url: `${getConfig().proxyUrl}/api/v1/notifications/test`,
+                responseType: 'json',
+                data: {
+                    type,
+                    destination
+                }
+            });
+
+            dispatch(updateProcess({
+                id: processId,
+                state: 'COMPLETED'
+            }));
+        } catch (error) {
+            dispatch(updateProcess({
+                id: processId,
+                state: 'ERROR',
+                title: 'Test nofication',
+                error: error.toString()
+            }));
+
+            throw error;
+        }
+    };
 }
