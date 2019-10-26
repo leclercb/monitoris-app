@@ -9,13 +9,11 @@ import { updateProcess } from 'actions/ThreadActions';
 import CloudMaxObjectsReachedMessage from 'components/pro/CloudMaxObjectsReachedMessage';
 import { getConfig } from 'config/Config';
 import { getObjectById } from 'selectors/ObjectSelectors';
-import { getSession } from 'selectors/SessionSelectors';
 import { getErrorMessages } from 'utils/CloudUtils';
 import { diff } from 'utils/ObjectUtils';
 
 function pushObjectToServer(property, oldObject, newObject) {
-    return async (dispatch, getState) => {
-        const state = getState();
+    return async dispatch => {
         const processId = uuid();
 
         const diffObject = oldObject ? diff(newObject, oldObject) : { ...newObject };
@@ -49,7 +47,8 @@ function pushObjectToServer(property, oldObject, newObject) {
                 error.response.status === 403 &&
                 error.response.data &&
                 error.response.data.code === 'max_objects_reached' &&
-                error.response.data.subscriptionType === 'free') {
+                error.response.data.subscriptionInfo &&
+                error.response.data.subscriptionInfo.type === 'free') {
                 Modal.info({
                     icon: null,
                     width: 800,

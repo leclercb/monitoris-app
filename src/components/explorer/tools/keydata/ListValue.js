@@ -27,7 +27,7 @@ function ListValue({ redisKey, length }) {
         setItems([]);
         setEndIndex(0);
         getItems();
-    }, [redisKey]);
+    }, [redisKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
     if (!redisKey) {
         return null;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Descriptions, Popover, message } from 'antd';
+import { Button, Descriptions, Popover } from 'antd';
 import Avatar from 'components/common/Avatar';
 import LeftRight from 'components/common/LeftRight';
 import { useAppApi } from 'hooks/UseAppApi';
@@ -29,10 +29,10 @@ function UserMenu() {
                         {sessionApi.session.user.email}
                     </Descriptions.Item>
                     <Descriptions.Item label="Subscription Type">
-                        {sessionApi.session.user.metaData.computedSubscriptionType}
+                        {sessionApi.session.user.metaData.subscriptionInfo.type}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Subscription Expiration">
-                        {sessionApi.session.user.metaData.subscriptionExpiration}
+                    <Descriptions.Item label="Redis Instances">
+                        {sessionApi.session.user.metaData.subscriptionInfo.quantity}
                     </Descriptions.Item>
                 </Descriptions>
             ) : null}

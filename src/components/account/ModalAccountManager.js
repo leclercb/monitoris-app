@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Modal } from 'antd';
-import { Elements } from 'react-stripe-elements';
 import AccountManager from 'components/account/AccountManager';
 import Icon from 'components/common/Icon';
 import { useAppApi } from 'hooks/UseAppApi';
@@ -25,9 +24,7 @@ function ModalAccountManager() {
                     Close
                 </Button>
             )}>
-            <Elements>
-                <AccountManager />
-            </Elements>
+            <AccountManager />
         </Modal>
     );
 }

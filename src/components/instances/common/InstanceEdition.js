@@ -30,7 +30,7 @@ function InstanceEdition({ instance, updateInstance }) {
         if (!instanceStateApi.status) {
             getStatus();
         }
-    }, [instance.id]);
+    }, [instance.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <React.Fragment>

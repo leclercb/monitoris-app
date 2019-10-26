@@ -14,7 +14,7 @@ function InstanceStatus({ instance }) {
         if (!instanceStateApi.status) {
             instanceApi.getStatus(instance.id);
         }
-    }, [instance.id]);
+    }, [instance.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const refresh = () => {
         instanceApi.getStatus(instance.id);

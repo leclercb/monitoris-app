@@ -18,7 +18,7 @@ function InfoTool() {
         };
 
         getInfo();
-    }, [instanceId]);
+    }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
 
     if (!instanceId) {
         return (<Empty description="Please select an instance" />);
