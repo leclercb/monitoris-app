@@ -185,9 +185,10 @@ function NotificationTable(props) {
             </div>
             {!appApi.pro && (
                 <Alert
-                    message="HTTP and SMS notifications are only sent for &quote;Pro&quote; users."
+                    message="HTTP and SMS notifications are only sent for &quot;Pro&quot; users."
                     type="warning"
                     showIcon
+                    style={{ marginTop: 20 }}
                 />
             )}
         </React.Fragment>
