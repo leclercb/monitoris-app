@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Empty, message } from 'antd';
+import { Alert, Button, Empty, message } from 'antd';
 import sortBy from 'lodash/sortBy';
 import PropTypes from 'prop-types';
 import { Column, Table } from 'react-virtualized';
@@ -10,6 +10,7 @@ import { ResizableAndMovableColumn, moveHandler, resizeHandler } from 'component
 import { multiSelectionHandler } from 'components/common/table/VirtualizedTable';
 import Constants from 'constants/Constants';
 import { getWidthForType, isAlwaysInEditionForType } from 'data/DataFieldTypes';
+import { useAppApi } from 'hooks/UseAppApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { FieldPropType } from 'proptypes/FieldPropTypes';
 import { AlertNotificationPropType } from 'proptypes/AlertNotificationPropTypes';
@@ -17,6 +18,7 @@ import { move } from 'utils/ArrayUtils';
 import { getAlertNotificationBackgroundColor } from 'utils/SettingUtils';
 
 function NotificationTable(props) {
+    const appApi = useAppApi();
     const settingsApi = useSettingsApi();
     const [selectedNotificationIds, setSelectedNotificationIds] = useState([]);
 
@@ -181,6 +183,13 @@ function NotificationTable(props) {
                     Send sample notification
                 </Button>
             </div>
+            {!appApi.pro && (
+                <Alert
+                    message="HTTP and SMS notifications are only sent for &quote;Pro&quote; users."
+                    type="warning"
+                    showIcon
+                />
+            )}
         </React.Fragment>
     );
 }
