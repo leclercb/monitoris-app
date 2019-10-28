@@ -1,38 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Col, Descriptions, Empty, InputNumber, Modal, Row, Slider, Spin, Typography } from 'antd';
+import React, { useState } from 'react';
+import { Button, Descriptions, Empty, Modal, Spin } from 'antd';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { injectStripe } from 'react-stripe-elements';
 import { useStripeApi } from 'hooks/UseStripeApi';
-import { getConfig } from 'config/Config';
+import Plans from 'components/account/Plans';
 import LeftRight from 'components/common/LeftRight';
 
 function AccountSubscription({ customer, onCustomerUpdated, stripe }) {
     const stripeApi = useStripeApi();
 
     const [busy, setBusy] = useState(false);
-    const [nbInstances, setNbInstances] = useState(1);
-    const [plans, setPlans] = useState([]);
 
     const source = customer && customer.sources.data.length > 0 ? customer.sources.data[0] : null;
     const subscription = customer && customer.subscriptions.data.length > 0 ? customer.subscriptions.data[0] : null;
 
-    useEffect(() => {
-        const getPlans = async () => {
-            try {
-                setBusy(true);
-                const plans = await stripeApi.getPlans(getConfig().stripe.productId);
-                setPlans(plans);
-                console.debug('Plans', plans);
-            } finally {
-                setBusy(false);
-            }
-        };
-
-        getPlans();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-    const selectPlan = async (plan, amount) => {
+    const selectPlan = async (plan, amount, nbInstances) => {
         try {
             setBusy(true);
 
@@ -100,23 +83,6 @@ function AccountSubscription({ customer, onCustomerUpdated, stripe }) {
         }
     };
 
-    const computeAmount = plan => {
-        let prevUpTo = 0;
-        let amount = 0;
-
-        for (let tier of plan.tiers) {
-            if (tier.up_to === null || nbInstances <= tier.up_to) {
-                amount += (nbInstances - prevUpTo) * tier.unit_amount;
-                break;
-            }
-
-            amount += (tier.up_to - prevUpTo) * tier.unit_amount;
-            prevUpTo = tier.up_to;
-        }
-
-        return amount;
-    };
-
     if (!source) {
         return (
             <Empty description="Please fill in your billing details and your payment method first." />
@@ -154,40 +120,7 @@ function AccountSubscription({ customer, onCustomerUpdated, stripe }) {
                 </Descriptions.Item>
             </Descriptions>
             <Descriptions title="Change Plan" column={1} size="small" />
-            <Row gutter={20}>
-                {plans.map(plan => {
-                    const amount = computeAmount(plan);
-
-                    return (
-                        <Col key={plan.id} span={8}>
-                            <div style={{ padding: 20, border: '3px solid #cccccc', borderRadius: 10, textAlign: 'center' }}>
-                                <Typography.Title level={3}>{plan.nickname}</Typography.Title>
-                                <div style={{ margin: 20 }}>
-                                    <Slider
-                                        min={1}
-                                        max={20}
-                                        onChange={value => setNbInstances(value)}
-                                        value={nbInstances} />
-                                    <InputNumber
-                                        min={1}
-                                        max={20}
-                                        style={{ minWidth: 50, width: 50 }}
-                                        value={nbInstances}
-                                        onChange={value => setNbInstances(value)}
-                                        size="small" />
-                                    <span style={{ marginLeft: 10 }}>Redis Instances</span>
-                                </div>
-                                <Typography.Title level={4}>{(amount / 100).toFixed(2)} {plan.currency} per {plan.interval}</Typography.Title>
-                                <Button
-                                    type="primary"
-                                    onClick={() => selectPlan(plan, amount)}>
-                                    Select this plan
-                                </Button>
-                            </div>
-                        </Col>
-                    );
-                })}
-            </Row>
+            <Plans onSelectPlan={selectPlan} />
         </Spin>
     );
 }
