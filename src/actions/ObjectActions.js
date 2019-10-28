@@ -81,8 +81,7 @@ export function addObject(
                 error.response.status === 403 &&
                 error.response.data &&
                 error.response.data.code === 'max_objects_reached' &&
-                error.response.data.subscriptionInfo &&
-                error.response.data.subscriptionInfo.type === 'free') {
+                error.response.data.subscriptionInfo) {
                 await dispatch({
                     type: 'DELETE_OBJECT',
                     property,
