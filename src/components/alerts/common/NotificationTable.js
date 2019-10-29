@@ -44,14 +44,18 @@ function NotificationTable(props) {
         props.updateNotifications(notifications);
     };
 
-    const onTestNotifications = async notificationIds => {
-        const notifications = props.notifications.filter(notification => notificationIds.includes(notification.id));
+    const onTestNotification = async notificationId => {
+        const notification = props.notifications.find(notification => notification.id === notificationId);
 
-        for (let notification of notifications) {
+        if (notification) {
+            if (!appApi.pro && (notification.type === 'http' || notification.type === 'sms')) {
+                message.error('HTTP and SMS notifications are only sent for &quot;Pro&quot; users');
+                return;
+            }
+
             await props.testNotification(notification.type, notification.destination);
+            message.success('The sample notification has been successfully sent');
         }
-
-        message.success('The sample notification has been successfully sent');
     };
 
     const onDropNotification = (dragData, dropData) => {
@@ -178,7 +182,7 @@ function NotificationTable(props) {
                 </Button>
                 <Spacer />
                 <Button
-                    onClick={() => onTestNotifications(selectedNotificationIds)}
+                    onClick={() => onTestNotification(selectedNotificationIds[0])}
                     disabled={selectedNotificationIds.length !== 1}>
                     Send sample notification
                 </Button>
