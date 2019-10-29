@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Descriptions, Modal, Spin } from 'antd';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -11,9 +11,40 @@ function AccountSubscription({ customer, onCustomerUpdated, stripe }) {
     const stripeApi = useStripeApi();
 
     const [busy, setBusy] = useState(false);
+    const [scaRequired, setSCARequired] = useState(false);
 
     const source = customer && customer.sources.data.length > 0 ? customer.sources.data[0] : null;
     const subscription = customer && customer.subscriptions.data.length > 0 ? customer.subscriptions.data[0] : null;
+
+    useEffect(() => {
+        const checkSCA = async subscription => {
+            if (!subscription || subscription.status !== 'incomplete') {
+                setSCARequired(false);
+                return;
+            }
+
+            const invoice = await stripeApi.getCurrentSubscriptionLatestInvoice();
+            console.debug('Invoice', invoice);
+
+            setSCARequired(invoice.payment_intent.status === 'requires_action');
+        };
+
+        checkSCA();
+    }, [subscription]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const handleSCA = async subscription => {
+        if (!subscription || subscription.status !== 'incomplete') {
+            return;
+        }
+
+        const invoice = await stripeApi.getCurrentSubscriptionLatestInvoice();
+        console.debug('Invoice', invoice);
+
+        if (invoice.payment_intent.status === 'requires_action') {
+            const cardPaymentResult = await stripe.handleCardPayment(invoice.payment_intent.client_secret);
+            console.debug('Handle Card Payment', cardPaymentResult);
+        }
+    };
 
     const selectPlan = async (plan, amount, nbInstances) => {
         if (!source) {
@@ -54,16 +85,7 @@ function AccountSubscription({ customer, onCustomerUpdated, stripe }) {
                         setBusy(true);
 
                         const subscription = await stripeApi.setCurrentSubscriptionPlan(plan.id, nbInstances);
-
-                        if (subscription.status === 'incomplete') {
-                            const invoice = await stripeApi.getCurrentSubscriptionLatestInvoice();
-                            console.debug('Invoice', invoice);
-
-                            if (invoice.payment_intent.status === 'requires_action') {
-                                const cardPaymentResult = await stripe.handleCardPayment(invoice.payment_intent.client_secret);
-                                console.debug('Handle Card Payment', cardPaymentResult);
-                            }
-                        }
+                        await handleSCA(subscription);
 
                         const customer = await stripeApi.getCurrentCustomer();
                         onCustomerUpdated(customer);
@@ -111,6 +133,17 @@ function AccountSubscription({ customer, onCustomerUpdated, stripe }) {
                 </Descriptions.Item>
                 <Descriptions.Item label="Redis Instances">
                     {subscription ? subscription.quantity : 1}
+                </Descriptions.Item>
+                <Descriptions.Item label="Subscription Status">
+                    <LeftRight right={(
+                        <React.Fragment>
+                            {subscription && scaRequired && (
+                                <Button onClick={() => handleSCA(handleSCA)} type="danger" size="small">Retry customer strong authentication</Button>
+                            )}
+                        </React.Fragment>
+                    )}>
+                        {subscription ? subscription.status : ''}
+                    </LeftRight>
                 </Descriptions.Item>
                 <Descriptions.Item label="Subscription End Date">
                     {subscription && subscription.cancel_at ? moment(subscription.cancel_at * 1000).toISOString() : 'Never'}
