@@ -69,7 +69,7 @@ function ScanTool() {
             title: 'Key',
             dataIndex: 'key',
             key: 'key',
-            render: key => <strong>{key}</strong>
+            render: key => <strong>{key}</strong> // eslint-disable-line react/display-name
         }
     ];
 

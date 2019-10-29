@@ -32,7 +32,7 @@ function App() {
                 title: 'Field',
                 dataIndex: 'field',
                 key: 'field',
-                render: value => <strong>{value}</strong>
+                render: value => <strong>{value}</strong> // eslint-disable-line react/display-name
             },
             {
                 title: 'Value',
@@ -43,7 +43,7 @@ function App() {
                 title: 'Severity',
                 dataIndex: 'severity',
                 key: 'severity',
-                render: value => <SeverityTitle severityId={value} />
+                render: value => <SeverityTitle severityId={value} /> // eslint-disable-line react/display-name
             }
         ];
 
