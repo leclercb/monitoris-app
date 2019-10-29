@@ -14,6 +14,7 @@ export function connectWebSocket() {
         url.searchParams.set('token_type', 'bearer');
         url.searchParams.set('access_token', (await Auth.currentSession()).getAccessToken().getJwtToken());
 
+        // eslint-disable-next-line require-atomic-updates
         webSocket = new WebSocket(url.href);
 
         webSocket.onmessage = event => {

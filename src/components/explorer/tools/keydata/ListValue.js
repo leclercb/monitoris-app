@@ -3,7 +3,7 @@ import { Button, List } from 'antd';
 import PropTypes from 'prop-types';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 
-function ListValue({ redisKey, length }) {
+function ListValue({ redisKey }) {
     const batchSize = 100;
     const instanceApi = useInstanceApi();
 
