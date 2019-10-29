@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Empty, message } from 'antd';
+import { Alert, Button, Empty, message } from 'antd';
 import sortBy from 'lodash/sortBy';
 import PropTypes from 'prop-types';
 import { Column, Table } from 'react-virtualized';
@@ -10,6 +10,7 @@ import { ResizableAndMovableColumn, moveHandler, resizeHandler } from 'component
 import { multiSelectionHandler } from 'components/common/table/VirtualizedTable';
 import Constants from 'constants/Constants';
 import { getWidthForType, isAlwaysInEditionForType } from 'data/DataFieldTypes';
+import { useAppApi } from 'hooks/UseAppApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { FieldPropType } from 'proptypes/FieldPropTypes';
 import { AlertNotificationPropType } from 'proptypes/AlertNotificationPropTypes';
@@ -17,6 +18,7 @@ import { move } from 'utils/ArrayUtils';
 import { getAlertNotificationBackgroundColor } from 'utils/SettingUtils';
 
 function NotificationTable(props) {
+    const appApi = useAppApi();
     const settingsApi = useSettingsApi();
     const [selectedNotificationIds, setSelectedNotificationIds] = useState([]);
 
@@ -42,14 +44,18 @@ function NotificationTable(props) {
         props.updateNotifications(notifications);
     };
 
-    const onTestNotifications = async notificationIds => {
-        const notifications = props.notifications.filter(notification => notificationIds.includes(notification.id));
+    const onTestNotification = async notificationId => {
+        const notification = props.notifications.find(notification => notification.id === notificationId);
 
-        for (let notification of notifications) {
+        if (notification) {
+            if (!appApi.pro && (notification.type === 'http' || notification.type === 'sms')) {
+                message.error('HTTP and SMS notifications are only sent for &quot;Pro&quot; users');
+                return;
+            }
+
             await props.testNotification(notification.type, notification.destination);
+            message.success('The sample notification has been successfully sent');
         }
-
-        message.success('The sample notification has been successfully sent');
     };
 
     const onDropNotification = (dragData, dropData) => {
@@ -176,11 +182,19 @@ function NotificationTable(props) {
                 </Button>
                 <Spacer />
                 <Button
-                    onClick={() => onTestNotifications(selectedNotificationIds)}
+                    onClick={() => onTestNotification(selectedNotificationIds[0])}
                     disabled={selectedNotificationIds.length !== 1}>
                     Send sample notification
                 </Button>
             </div>
+            {!appApi.pro && (
+                <Alert
+                    message="HTTP and SMS notifications are only sent for &quot;Pro&quot; users."
+                    type="warning"
+                    showIcon
+                    style={{ marginTop: 20 }}
+                />
+            )}
         </React.Fragment>
     );
 }

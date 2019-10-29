@@ -34,6 +34,13 @@ export function getInstanceFields(type) {
         },
         {
             static: true,
+            id: 'enabled',
+            title: 'Enabled',
+            type: 'boolean',
+            editable: true
+        },
+        {
+            static: true,
             id: 'color',
             title: 'Color',
             type: 'color',
