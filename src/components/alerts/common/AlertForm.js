@@ -7,6 +7,8 @@ import { getValuePropNameForType } from 'data/DataFieldTypes';
 import { AlertPropType } from 'proptypes/AlertPropTypes';
 import { getDefaultFormItemLayout, onCommitForm } from 'utils/FormUtils';
 
+const QUEUE_DELAY = 60;
+
 function AlertForm(props) {
     const fields = getAlertFields();
 
@@ -35,7 +37,7 @@ function AlertForm(props) {
                             <React.Fragment>
                                 <span>In order to avoid flapping, the severity is only decreased when the last X severities are all lower than the current one.</span>
                                 <br />
-                                <span>As the Redis instance is checked every 10 seconds, it also means that the severity can decrease minimum (X * 10) seconds after an increase.</span>
+                                <span>As the Redis instance is checked every {QUEUE_DELAY} seconds, it also means that the severity can decrease minimum (X * {QUEUE_DELAY}) seconds after an increase.</span>
                             </React.Fragment>
                         )}>
                             <Icon type="info-circle" theme="twoTone" style={{ marginLeft: 10, fontSize: 16 }} />
