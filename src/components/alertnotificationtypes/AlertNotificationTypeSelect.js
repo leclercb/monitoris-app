@@ -12,7 +12,7 @@ export const AlertNotificationTypeSelect = React.forwardRef(function AlertNotifi
         <Select ref={ref} allowClear={true} {...props} value={value}>
             {alertNotificationTypeApi.alertnotificationtypes.map(alertNotificationType => (
                 <Select.Option key={alertNotificationType.id} value={alertNotificationType.id}>
-                    <Icon icon="circle" color={alertNotificationType.color} text={alertNotificationType.title} />
+                    <Icon icon={alertNotificationType.icon} color={alertNotificationType.color} text={alertNotificationType.title} />
                 </Select.Option>
             ))}
         </Select>

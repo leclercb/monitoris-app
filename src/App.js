@@ -32,7 +32,7 @@ function App() {
                 title: 'Field',
                 dataIndex: 'field',
                 key: 'field',
-                render: value => <strong>{value}</strong> // eslint-disable-line react/display-name
+                render: value => (<strong>{value}</strong>) // eslint-disable-line react/display-name
             },
             {
                 title: 'Value',
@@ -43,7 +43,7 @@ function App() {
                 title: 'Severity',
                 dataIndex: 'severity',
                 key: 'severity',
-                render: value => <SeverityTitle severityId={value} /> // eslint-disable-line react/display-name
+                render: value => (<SeverityTitle severityId={value} />) // eslint-disable-line react/display-name
             }
         ];
 
@@ -159,9 +159,9 @@ function App() {
                                             &quot; severity for instance &quot;
                                             <strong>{instance.title}</strong>
                                             &quot; changed from &quot;
-                                            <strong>{prevSeverity.title}</strong>
+                                            <SeverityTitle severityId={prevSeverity.id} />
                                             &quot; to &quot;
-                                            <strong>{currSeverity.title}</strong>
+                                            <SeverityTitle severityId={currSeverity.id} />
                                             &quot;
                                         </div>
                                         <div style={{ marginTop: 10 }}>

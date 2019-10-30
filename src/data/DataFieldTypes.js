@@ -1,4 +1,5 @@
 import { getAlertNotificationTypes } from 'data/DataAlertNotificationTypes';
+import { getInstanceTypes } from 'data/DataInstanceTypes';
 import { getSeverities } from 'data/DataSeverities';
 import { getAlerts } from 'selectors/AlertSelectors';
 import { getInstances } from 'selectors/InstanceSelectors';
@@ -25,6 +26,7 @@ export function getFieldTypes() {
         'color',
         'instance',
         'instances',
+        'instanceType',
         'number',
         'password',
         'severities',
@@ -266,6 +268,39 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     }
                 ],
                 conditionsFieldType: 'instances',
+                options: []
+            };
+
+            break;
+        }
+        case 'instanceType': {
+            configuration = {
+                title: 'Instance Type',
+                allowCreation: true,
+                width: 200,
+                alwaysInEdition: false,
+                valuePropName: 'value',
+                compare: (a, b, state) => compareObjects(a, b, getInstanceTypes(state)),
+                toString: (value, state) => toStringObject(value, getInstanceTypes(state)),
+                conditions: [
+                    {
+                        type: 'equal',
+                        title: 'Equals',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue === objectValue;
+                        }
+                    },
+                    {
+                        type: 'notEqual',
+                        title: 'Does not equal',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue !== objectValue;
+                        }
+                    }
+                ],
+                conditionsFieldType: 'instanceType',
                 options: []
             };
 

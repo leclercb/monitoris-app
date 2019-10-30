@@ -8,7 +8,7 @@ export function SeverityTitle(props) {
 
     const severity = severityApi.severities.find(severity => severity.id === props.severityId);
 
-    return severity ? <Icon icon="circle" color={severity.color} text={severity.title} /> : <span>&nbsp;</span>;
+    return severity ? <Icon icon={severity.icon} color={severity.color} text={severity.title} /> : <span>&nbsp;</span>;
 }
 
 SeverityTitle.propTypes = {

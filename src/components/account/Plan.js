@@ -10,25 +10,25 @@ function Plan({ plan, onSelectPlan }) {
             case 'Free':
                 return [
                     (<strong key={0}>Free forever</strong>),
-                    (<strong key={1}>{`${nbInstances} Redis instance${nbInstances > 1 ? 's' : ''}`}</strong>),
-                    (<strong key={2}>{`${nbInstances * 5} alert configurations`}</strong>),
-                    'Email notifications'
+                    (<strong key={1}>{`${nbInstances} Redis Instance${nbInstances > 1 ? 's' : ''}`}</strong>),
+                    (<strong key={2}>{`${nbInstances * 5} Alert Configurations`}</strong>),
+                    'Email Notifications'
                 ];
             case 'Monthly':
                 return [
-                    (<strong key={1}>{`${nbInstances} Redis instance${nbInstances > 1 ? 's' : ''}`}</strong>),
-                    (<strong key={2}>{`${nbInstances * 5} alert configurations`}</strong>),
-                    'Email notifications',
-                    'SMS notififications',
-                    'HTTP notifications'
+                    (<strong key={1}>{`${nbInstances} Redis Instance${nbInstances > 1 ? 's' : ''}`}</strong>),
+                    (<strong key={2}>{`${nbInstances * 5} Alert Configurations`}</strong>),
+                    'Email Notifications',
+                    'SMS Notififications',
+                    'HTTP Notifications'
                 ];
             case 'Yearly':
                 return [
-                    (<strong key={1}>{`${nbInstances} Redis instance${nbInstances > 1 ? 's' : ''}`}</strong>),
-                    (<strong key={2}>{`${nbInstances * 5} alert configurations`}</strong>),
-                    'Email notifications',
-                    'SMS notififications',
-                    'HTTP notifications'
+                    (<strong key={1}>{`${nbInstances} Redis Instance${nbInstances > 1 ? 's' : ''}`}</strong>),
+                    (<strong key={2}>{`${nbInstances * 5} Alert Configurations`}</strong>),
+                    'Email Notifications',
+                    'SMS Notififications',
+                    'HTTP Notifications'
                 ];
             default:
                 return [];

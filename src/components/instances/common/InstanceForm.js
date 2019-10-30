@@ -1,38 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'antd';
+import { Alert, Form } from 'antd';
 import { getInstanceFields } from 'data/DataInstanceFields';
 import { getInputForType } from 'data/DataFieldComponents';
 import { getValuePropNameForType } from 'data/DataFieldTypes';
 import { InstancePropType } from 'proptypes/InstancePropTypes';
 import { getDefaultFormItemLayout, onCommitForm } from 'utils/FormUtils';
 
-function InstanceForm(props) {
-    const fields = getInstanceFields(props.instance.type);
+function InstanceForm({ instance, updateInstance, form }) {
+    const fields = getInstanceFields(instance.type);
 
-    const { getFieldDecorator } = props.form;
+    const { getFieldDecorator } = form;
 
     const formItemLayout = getDefaultFormItemLayout();
 
     return (
-        <Form {...formItemLayout}>
-            {fields.filter(field => field.visible !== false).map(field => (
-                <Form.Item key={field.id} label={field.title}>
-                    {getFieldDecorator(field.id, {
-                        valuePropName: getValuePropNameForType(field.type),
-                        initialValue: props.instance[field.id]
-                    })(
-                        getInputForType(
-                            field.type,
-                            field.options,
-                            {
-                                readOnly: !field.editable,
-                                onCommit: () => onCommitForm(props.form, props.instance, props.updateInstance)
-                            })
-                    )}
-                </Form.Item>
-            ))}
-        </Form>
+        <React.Fragment>
+            {instance.type === 'direct' && (
+                <Alert
+                    message="Direct connection is only intended for development or testing servers. Do not use it for production !"
+                    type="warning"
+                    showIcon
+                    style={{ marginBottom: 20 }}
+                />
+            )}
+            <Form {...formItemLayout}>
+                {fields.filter(field => field.visible !== false).map(field => (
+                    <Form.Item key={field.id} label={field.title}>
+                        {getFieldDecorator(field.id, {
+                            valuePropName: getValuePropNameForType(field.type),
+                            initialValue: instance[field.id]
+                        })(
+                            getInputForType(
+                                field.type,
+                                field.options,
+                                {
+                                    readOnly: !field.editable,
+                                    onCommit: () => onCommitForm(form, instance, updateInstance)
+                                })
+                        )}
+                    </Form.Item>
+                ))}
+            </Form>
+        </React.Fragment>
     );
 }
 

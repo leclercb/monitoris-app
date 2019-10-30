@@ -71,10 +71,6 @@ const addObject = (state, action) => {
         updateDate: action.creationDate
     };
 
-    if (action.options.keepRefIds !== true) {
-        newObject.refIds = {};
-    }
-
     removePrivateKeys(newObject);
 
     newState.push(newObject);
