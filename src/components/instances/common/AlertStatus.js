@@ -17,13 +17,7 @@ function AlertStatus({ status }) {
             title: 'Severity',
             dataIndex: 'severity',
             key: 'severity',
-            render: value => { // eslint-disable-line react/display-name
-                if (!value) {
-                    return (<strong>Normal</strong>);
-                }
-
-                return (<SeverityTitle severityId={value} />);
-            }
+            render: value => (<SeverityTitle severityId={value} />) // eslint-disable-line react/display-name
         }
     ];
 

@@ -22,7 +22,7 @@ export function getInstanceFields(type) {
             static: true,
             id: 'type',
             title: 'Type',
-            type: 'text',
+            type: 'instanceType',
             editable: true
         },
         {

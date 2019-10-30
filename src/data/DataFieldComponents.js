@@ -9,10 +9,12 @@ import AlertTitle from 'components/alerts/common/AlertTitle';
 import AlertSelect from 'components/alerts/common/AlertSelect';
 import ColorPicker from 'components/common/ColorPicker';
 import StarCheckbox from 'components/common/StarCheckbox';
-import InstanceTitle from 'components/instances/common/InstanceTitle';
-import InstancesTitle from 'components/instances/common/InstancesTitle';
 import InstanceSelect from 'components/instances/common/InstanceSelect';
 import InstancesSelect from 'components/instances/common/InstancesSelect';
+import InstanceTitle from 'components/instances/common/InstanceTitle';
+import InstancesTitle from 'components/instances/common/InstancesTitle';
+import InstanceTypeSelect from 'components/instancetypes/InstanceTypeSelect';
+import InstanceTypeTitle from 'components/instancetypes/InstanceTypeTitle';
 import SeveritiesSelect from 'components/severities/SeveritiesSelect';
 import SeveritiesTitle from 'components/severities/SeveritiesTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
@@ -127,6 +129,21 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <InstancesSelect
+                        onBlur={props.onCommit}
+                        dropdownMatchSelectWidth={false}
+                        {...removeExtraProps(props)} />
+                )
+            };
+
+            break;
+        }
+        case 'instanceType': {
+            configuration = {
+                render: value => (
+                    <InstanceTypeTitle typeId={value} />
+                ),
+                input: props => (
+                    <InstanceTypeSelect
                         onBlur={props.onCommit}
                         dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { Button, Col, Empty, Input, Row, Select, Table } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Empty, Input, Row, Table } from 'antd';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import KeyData from 'components/explorer/tools/keydata/KeyData';
 import 'components/explorer/tools/ScanTool.css';
+
+const BATCH_SIZE = 1000;
 
 function ScanTool() {
     const instanceApi = useInstanceApi();
@@ -11,19 +13,18 @@ function ScanTool() {
     const db = instanceApi.selectedExplorerDb;
     const [keys, setKeys] = useState([]);
     const [scanResult, setScanResult] = useState(null);
-    const [searchValue, setSearchValue] = useState('');
-    const [searchType, setSearchType] = useState(null);
+    const [searchValue, setSearchValue] = useState('*');
     const [selectedKeys, setSelectedKeys] = useState([]);
 
+    useEffect(() => {
+        setKeys([]);
+        setScanResult(null);
+        setSelectedKeys([]);
+    }, [instanceId, db]);
+
     const executeScan = async value => {
-        const parameters = [scanResult ? scanResult[0] : '0', 'MATCH', value, 'COUNT', '1000'];
-
-        if (searchType) {
-            parameters.push('TYPE', searchType);
-        }
-
+        const parameters = [scanResult ? scanResult[0] : '0', 'MATCH', value, 'COUNT', BATCH_SIZE];
         const result = await instanceApi.executeCommand(instanceId, db, 'scan', parameters);
-
         return result;
     };
 
@@ -35,12 +36,6 @@ function ScanTool() {
             setScanResult(result);
             setKeys(result[1]);
         }
-    };
-
-    const changeSearchType = type => {
-        setSearchType(type);
-        setScanResult(null);
-        setKeys([]);
     };
 
     const continueScanning = async () => {
@@ -80,27 +75,12 @@ function ScanTool() {
             <Input.Search
                 placeholder="Key"
                 allowClear={true}
+                defaultValue={searchValue}
                 onSearch={value => scan(value)}
                 style={{
                     width: 400,
                     marginBottom: 20
                 }} />
-            <Select
-                placeholder="Type"
-                allowClear={true}
-                onChange={type => changeSearchType(type)}
-                style={{
-                    width: 120,
-                    marginBottom: 20,
-                    marginLeft: 10
-                }}>
-                <Select.Option value="string">string</Select.Option>
-                <Select.Option value="list">list</Select.Option>
-                <Select.Option value="set">set</Select.Option>
-                <Select.Option value="zset">zset</Select.Option>
-                <Select.Option value="hash">hash</Select.Option>
-                <Select.Option value="stream">stream</Select.Option>
-            </Select>
             <Button
                 onClick={continueScanning}
                 disabled={!scanResult || scanResult[0] === '0'}
@@ -108,7 +88,7 @@ function ScanTool() {
                 Continue Scanning
             </Button>
             <Row gutter={20}>
-                <Col span={10}>
+                <Col span={24} xxl={10}>
                     <Table
                         dataSource={dataSource}
                         columns={columns}
@@ -137,7 +117,7 @@ function ScanTool() {
                         )} />
                 </Col>
                 {selectedKeys.length === 1 && (
-                    <Col span={14}>
+                    <Col span={24} xxl={14}>
                         <KeyData redisKey={selectedKeys[0]} />
                     </Col>
                 )}

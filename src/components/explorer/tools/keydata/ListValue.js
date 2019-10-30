@@ -3,8 +3,9 @@ import { Button, List } from 'antd';
 import PropTypes from 'prop-types';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 
+const BATCH_SIZE = 100;
+
 function ListValue({ redisKey }) {
-    const batchSize = 100;
     const instanceApi = useInstanceApi();
 
     const instanceId = instanceApi.selectedExplorerInstanceId;
@@ -14,13 +15,17 @@ function ListValue({ redisKey }) {
 
     const getItems = async () => {
         if (instanceId && redisKey) {
-            const value = await instanceApi.executeCommand(instanceId, db, 'lrange', [redisKey, String(endIndex), String(endIndex + batchSize - 1)]);
+            const value = await instanceApi.executeCommand(instanceId, db, 'lrange', [redisKey, String(endIndex), String(endIndex + BATCH_SIZE - 1)]);
             setItems([
                 ...items,
                 ...value
             ]);
-            setEndIndex(endIndex + batchSize - 1);
+            setEndIndex(endIndex + BATCH_SIZE);
         }
+    };
+
+    const fetchNextItems = async () => {
+        await getItems();
     };
 
     useEffect(() => {
@@ -33,10 +38,6 @@ function ListValue({ redisKey }) {
         return null;
     }
 
-    const fetchNextItems = async () => {
-        await getItems();
-    };
-
     return (
         <React.Fragment>
             <List
@@ -48,7 +49,7 @@ function ListValue({ redisKey }) {
                 onClick={fetchNextItems}
                 disabled={items.length < endIndex}
                 style={{ marginTop: 10 }}>
-                Fetch next 5 items
+                Fetch next {BATCH_SIZE} items
             </Button>
         </React.Fragment>
     );

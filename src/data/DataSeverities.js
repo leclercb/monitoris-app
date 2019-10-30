@@ -15,6 +15,7 @@ export function getSeverities() {
             id: 'norm',
             title: 'Normal',
             color: '#14b56a',
+            icon: 'sun',
             notificationType: 'success',
             readOnly: true
         },
@@ -22,6 +23,7 @@ export function getSeverities() {
             id: 'info',
             title: 'Info',
             color: '#165ad9',
+            icon: 'cloud-sun',
             notificationType: 'info',
             readOnly: false
         },
@@ -29,6 +31,7 @@ export function getSeverities() {
             id: 'warn',
             title: 'Warning',
             color: '#ebc634',
+            icon: 'cloud-sun-rain',
             notificationType: 'warning',
             readOnly: false
         },
@@ -36,6 +39,7 @@ export function getSeverities() {
             id: 'crit',
             title: 'Critical',
             color: '#d2291f',
+            icon: 'cloud-showers-heavy',
             notificationType: 'error',
             readOnly: false
         }

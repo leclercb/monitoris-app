@@ -10,7 +10,7 @@ export function SeveritiesTitle(props) {
     return severities.map(severity => (
         <Icon
             key={severity.id}
-            icon="circle"
+            icon={severity.icon}
             color={severity.color}
             text={severity.title}
             globalStyle={{ marginRight: 10 }} />

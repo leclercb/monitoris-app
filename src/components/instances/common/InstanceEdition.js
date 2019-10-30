@@ -35,13 +35,13 @@ function InstanceEdition({ instance, updateInstance }) {
     return (
         <React.Fragment>
             <Row gutter={20}>
-                <Col span={12}>
+                <Col span={24} xl={12}>
                     <Divider>Instance</Divider>
                     <InstanceForm
                         instance={instance}
                         updateInstance={updateInstance} />
                 </Col>
-                <Col span={12}>
+                <Col span={24} xl={12}>
                     <Divider>Actions</Divider>
                     <Row gutter={20}>
                         <Col span={12}>

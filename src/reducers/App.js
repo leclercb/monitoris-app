@@ -8,7 +8,7 @@ const App = () => (state = {
     selectedDashboardId: null,
     selectedExplorerInstanceId: null,
     selectedExplorerDb: 0,
-    selectedExplorerToolId: null,
+    selectedExplorerToolId: 'scan',
     joyride: {
         id: null,
         run: false

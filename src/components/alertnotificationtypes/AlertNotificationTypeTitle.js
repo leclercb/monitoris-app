@@ -8,7 +8,7 @@ export function AlertNotificationTypeTitle(props) {
 
     const alertNotificationType = alertNotificationTypeApi.alertnotificationtypes.find(alertNotificationType => alertNotificationType.id === props.alertNotificationTypeId);
 
-    return alertNotificationType ? <Icon icon="circle" color={alertNotificationType.color} text={alertNotificationType.title} /> : <span>&nbsp;</span>;
+    return alertNotificationType ? <Icon icon={alertNotificationType.icon} color={alertNotificationType.color} text={alertNotificationType.title} /> : <span>&nbsp;</span>;
 }
 
 AlertNotificationTypeTitle.propTypes = {
