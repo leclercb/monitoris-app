@@ -4,6 +4,7 @@ import sortBy from 'lodash/sortBy';
 import PropTypes from 'prop-types';
 import { Column, Table } from 'react-virtualized';
 import uuid from 'uuid/v4';
+import PromiseButton from 'components/common/PromiseButton';
 import Spacer from 'components/common/Spacer';
 import CellRenderer from 'components/common/table/CellRenderer';
 import { ResizableAndMovableColumn, moveHandler, resizeHandler } from 'components/common/table/ResizableAndMovableColumn';
@@ -22,8 +23,8 @@ function NotificationTable(props) {
     const settingsApi = useSettingsApi();
     const [selectedNotificationIds, setSelectedNotificationIds] = useState([]);
 
-    const onAddNotification = () => {
-        props.updateNotifications([
+    const onAddNotification = async () => {
+        await props.updateNotifications([
             ...props.notifications,
             {
                 id: uuid(),
@@ -32,16 +33,16 @@ function NotificationTable(props) {
         ]);
     };
 
-    const onUpdateNotification = notification => {
+    const onUpdateNotification = async notification => {
         const index = props.notifications.findIndex(item => item.id === notification.id);
         const notifications = [...props.notifications];
         notifications[index] = notification;
-        props.updateNotifications(notifications);
+        await props.updateNotifications(notifications);
     };
 
-    const onDeleteNotifications = notificationIds => {
+    const onDeleteNotifications = async notificationIds => {
         const notifications = props.notifications.filter(notification => !notificationIds.includes(notification.id));
-        props.updateNotifications(notifications);
+        await props.updateNotifications(notifications);
     };
 
     const onTestNotification = async notificationId => {
@@ -58,10 +59,10 @@ function NotificationTable(props) {
         }
     };
 
-    const onDropNotification = (dragData, dropData) => {
+    const onDropNotification = async (dragData, dropData) => {
         const notifications = [...props.notifications];
         move(notifications, dragData.rowIndex, dropData.rowIndex);
-        props.updateNotifications(notifications);
+        await props.updateNotifications(notifications);
     };
 
     let tableWidth = 0;
@@ -170,22 +171,22 @@ function NotificationTable(props) {
                 </Table>
             )}
             <div style={{ marginTop: 10 }}>
-                <Button
+                <PromiseButton
                     onClick={() => onAddNotification()}>
                     Add
-                </Button>
+                </PromiseButton>
                 <Spacer />
-                <Button
+                <PromiseButton
                     onClick={() => onDeleteNotifications(selectedNotificationIds)}
                     disabled={selectedNotificationIds.length === 0}>
                     Delete
-                </Button>
+                </PromiseButton>
                 <Spacer />
-                <Button
+                <PromiseButton
                     onClick={() => onTestNotification(selectedNotificationIds[0])}
                     disabled={selectedNotificationIds.length !== 1}>
                     Send sample notification
-                </Button>
+                </PromiseButton>
             </div>
             {!appApi.pro && (
                 <Alert

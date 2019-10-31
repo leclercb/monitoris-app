@@ -3,6 +3,7 @@ import { Button, Tooltip } from 'antd';
 import Icon from 'components/common/Icon';
 import LeftRight from 'components/common/LeftRight';
 import Logo from 'components/common/Logo';
+import PromiseButton from 'components/common/PromiseButton';
 import Spacer from 'components/common/Spacer';
 import UserMenu from 'components/layout/UserMenu';
 import { useAlertApi } from 'hooks/UseAlertApi';
@@ -18,59 +19,59 @@ function Header() {
 
     const onAddAlert = async () => {
         const alert = await alertApi.addAlert();
-        alertApi.setSelectedAlertId(alert.id);
+        await alertApi.setSelectedAlertId(alert.id);
     };
 
-    const onRemoveAlert = () => {
-        alertApi.deleteAlert(alertApi.selectedAlertId);
+    const onRemoveAlert = async () => {
+        await alertApi.deleteAlert(alertApi.selectedAlertId);
     };
 
-    const onPrintAlerts = () => {
-        printApi.printAlerts(alertApi.alerts);
+    const onPrintAlerts = async () => {
+        await printApi.printAlerts(alertApi.alerts);
     };
 
     const onAddInstance = async () => {
         const instance = await instanceApi.addInstance({
             type: 'proxy'
         });
-        instanceApi.setSelectedInstanceId(instance.id);
+        await instanceApi.setSelectedInstanceId(instance.id);
     };
 
-    const onRemoveInstance = () => {
-        instanceApi.deleteInstance(instanceApi.selectedInstanceId);
+    const onRemoveInstance = async () => {
+        await instanceApi.deleteInstance(instanceApi.selectedInstanceId);
     };
 
-    const onPrintInstances = () => {
-        printApi.printInstances(instanceApi.instances);
+    const onPrintInstances = async () => {
+        await printApi.printInstances(instanceApi.instances);
     };
 
-    const onSetSettingsVisible = () => {
-        appApi.setSettingManagerOptions({ visible: true });
+    const onSetSettingsVisible = async () => {
+        await appApi.setSettingManagerOptions({ visible: true });
     };
 
-    const onShowDashboardContent = () => {
-        appApi.setSelectedView('dashboard');
+    const onShowDashboardContent = async () => {
+        await appApi.setSelectedView('dashboard');
     };
 
-    const onShowExplorerContent = () => {
-        appApi.setSelectedView('explorer');
+    const onShowExplorerContent = async () => {
+        await appApi.setSelectedView('explorer');
     };
 
-    const onShowAlertContent = () => {
-        appApi.setSelectedView('alert');
+    const onShowAlertContent = async () => {
+        await appApi.setSelectedView('alert');
     };
 
-    const onShowInstanceContent = () => {
-        appApi.setSelectedView('instance');
+    const onShowInstanceContent = async () => {
+        await appApi.setSelectedView('instance');
     };
 
     const createButton = (icon, text, onClick, disabled = false) => {
         return (
             <React.Fragment>
                 <Tooltip placement="bottom" title={text}>
-                    <Button onClick={onClick} disabled={disabled}>
+                    <PromiseButton onClick={onClick} disabled={disabled}>
                         <Icon icon={icon} />
-                    </Button>
+                    </PromiseButton>
                 </Tooltip>
                 <Spacer />
             </React.Fragment>
@@ -87,26 +88,26 @@ function Header() {
             </React.Fragment>
         )}>
             <Button.Group style={{ marginRight: 50 }}>
-                <Button
+                <PromiseButton
                     type={appApi.selectedView === 'dashboard' ? 'dashed' : 'default'}
                     onClick={onShowDashboardContent}>
                     <Icon icon="chart-line" text="Dashboard" />
-                </Button>
-                <Button
+                </PromiseButton>
+                <PromiseButton
                     type={appApi.selectedView === 'explorer' ? 'dashed' : 'default'}
                     onClick={onShowExplorerContent}>
                     <Icon icon="binoculars" text="Explorer" />
-                </Button>
-                <Button
+                </PromiseButton>
+                <PromiseButton
                     type={appApi.selectedView === 'instance' ? 'dashed' : 'default'}
                     onClick={onShowInstanceContent}>
                     <Icon icon="server" text="Instances" />
-                </Button>
-                <Button
+                </PromiseButton>
+                <PromiseButton
                     type={appApi.selectedView === 'alert' ? 'dashed' : 'default'}
                     onClick={onShowAlertContent}>
                     <Icon icon="bell" text="Alerts" />
-                </Button>
+                </PromiseButton>
             </Button.Group>
             {appApi.selectedView === 'alert' ?
                 createButton('plus', 'Add Alert', onAddAlert)

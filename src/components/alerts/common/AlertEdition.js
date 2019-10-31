@@ -9,8 +9,8 @@ import { AlertPropType } from 'proptypes/AlertPropTypes';
 import { getRedisFields } from 'data/DataRedisFields';
 
 function AlertEdition(props) {
-    const onUpdateNotifications = notifications => {
-        props.updateAlert({
+    const onUpdateNotifications = async notifications => {
+        await props.updateAlert({
             ...props.alert,
             notifications
         });
