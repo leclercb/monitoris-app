@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, Table } from 'antd';
+import { Button, Input } from 'antd';
 import PropTypes from 'prop-types';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import LeftRight from 'components/common/LeftRight';
+import ValueTable from 'components/explorer/keydata/ValueTable';
 
 const BATCH_SIZE = 100;
 
@@ -32,7 +33,7 @@ function HashValue({ redisKey }) {
 
             for (let i = 0; i < result[1].length; i += 2) {
                 resultItems.push({
-                    field: result[1][i],
+                    id: result[1][i],
                     value: result[1][i + 1]
                 });
             }
@@ -50,7 +51,7 @@ function HashValue({ redisKey }) {
 
             for (let i = 0; i < result[1].length; i += 2) {
                 resultItems.push({
-                    field: result[1][i],
+                    id: result[1][i],
                     value: result[1][i + 1]
                 });
             }
@@ -60,6 +61,10 @@ function HashValue({ redisKey }) {
                 ...resultItems
             ]);
         }
+    };
+
+    const updateItem = (item, rowIndex) => {
+        console.log(item, rowIndex);
     };
 
     useEffect(() => {
@@ -72,32 +77,31 @@ function HashValue({ redisKey }) {
         return null;
     }
 
-    const columns = [
+    const fields = [
         {
+            static: true,
+            id: 'id',
             title: 'Field',
-            dataIndex: 'field',
-            key: 'field',
-            render: key => <strong>{key}</strong> // eslint-disable-line react/display-name
+            type: 'text',
+            editable: true
         },
         {
+            static: true,
+            id: 'value',
             title: 'Value',
-            dataIndex: 'value',
-            key: 'value'
+            type: 'text',
+            editable: true
         }
     ];
 
     return (
         <React.Fragment>
-            <Table
-                rowKey="field"
-                dataSource={items}
-                columns={columns}
-                pagination={{
-                    pageSize: 10,
-                    size: 'small'
-                }}
-                size="small"
-                style={{ marginBottom: 10 }} />
+            <ValueTable
+                fields={fields}
+                items={items}
+                updateItem={updateItem}
+                orderSettingPrefix="hashValueColumnOrder_"
+                widthSettingPrefix="hashValueColumnWidth_" />
             <LeftRight right={(
                 <Button
                     onClick={continueScanning}

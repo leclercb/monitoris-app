@@ -1,4 +1,45 @@
-.explorer-table-row {
+.explorer-sider {
     background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.explorer-sider-element {
+    width: 100%;
+    padding: 10px;
+}
+
+.explorer-sider-element-grow {
+    width: 100%;
+    padding: 10px;
+    flex: 1;
+}
+
+.explorer-list {
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    padding: 10px;
+    outline: none;
+}
+
+.explorer-list-row {
     cursor: pointer;
+    border-radius: 5px;
+    padding: 0px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.explorer-list-row.selected {
+    background-color: #d2291f;
+    color: #ffffff;
+}
+
+.explorer-list-row span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

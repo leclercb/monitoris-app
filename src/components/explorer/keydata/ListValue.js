@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Button, List } from 'antd';
+import { Button } from 'antd';
 import PropTypes from 'prop-types';
+import ValueTable from 'components/explorer/keydata/ValueTable';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 
 const BATCH_SIZE = 100;
@@ -19,13 +20,19 @@ function ListValue({ redisKey }) {
             setItems([
                 ...items,
                 ...value
-            ]);
+            ].map(item => ({
+                id: item
+            })));
             setEndIndex(endIndex + BATCH_SIZE);
         }
     };
 
     const fetchNextItems = async () => {
         await getItems();
+    };
+
+    const updateItem = (item, rowIndex) => {
+        console.log(item, rowIndex);
     };
 
     useEffect(() => {
@@ -38,13 +45,24 @@ function ListValue({ redisKey }) {
         return null;
     }
 
+    const fields = [
+        {
+            static: true,
+            id: 'id',
+            title: 'Value',
+            type: 'text',
+            editable: true
+        }
+    ];
+
     return (
         <React.Fragment>
-            <List
-                dataSource={items}
-                renderItem={item => (<List.Item>{item}</List.Item>)}
-                size="small"
-                bordered />
+            <ValueTable
+                fields={fields}
+                items={items}
+                updateItem={updateItem}
+                orderSettingPrefix="listValueColumnOrder_"
+                widthSettingPrefix="listValueColumnWidth_" />
             <Button
                 onClick={fetchNextItems}
                 disabled={items.length < endIndex}

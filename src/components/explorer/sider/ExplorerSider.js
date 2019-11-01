@@ -37,7 +37,7 @@ function ExplorerSider({ selectedKeys, setSelectedKeys }) {
         if (instanceId) {
             const result = await executeScan(value);
             setScanResult(result);
-            setKeys(result[1]);
+            setKeys(result[1].sort());
         }
     };
 
@@ -48,7 +48,7 @@ function ExplorerSider({ selectedKeys, setSelectedKeys }) {
             setKeys([
                 ...keys,
                 ...result[1]
-            ]);
+            ].sort());
         }
     };
 
@@ -59,13 +59,8 @@ function ExplorerSider({ selectedKeys, setSelectedKeys }) {
     };
 
     return (
-        <div style={{
-            backgroundColor: '#ffffff',
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%'
-        }}>
-            <div style={{ width: '100%', padding: 10 }}>
+        <div className="explorer-sider">
+            <div className="explorer-sider-element">
                 <LeftRight right={(
                     <Tooltip title="Selected database" placement="right">
                         <InputNumber
@@ -85,7 +80,7 @@ function ExplorerSider({ selectedKeys, setSelectedKeys }) {
                 <Empty description="Please select an instance" />
             )}
             {!!instanceId && (
-                <div style={{ width: '100%', padding: 10 }}>
+                <div className="explorer-sider-element">
                     <LeftRight right={(
                         <Tooltip title="Continue Scanning" placement="right">
                             <Button
@@ -106,14 +101,15 @@ function ExplorerSider({ selectedKeys, setSelectedKeys }) {
                 </div>
             )}
             {!!instanceId && (
-                <div style={{ flex: 1, width: '100%', padding: 10 }}>
+                <div className="explorer-sider-element-grow">
                     <AutoSizer>
                         {({ width, height }) => (
                             <List
+                                className="explorer-list"
                                 width={width}
                                 height={height}
-                                rowCount={keys.length}
                                 rowHeight={30}
+                                rowCount={keys.length}
                                 rowRenderer={({ index, key, style }) => {
                                     const value = keys[index];
                                     const selected = selectedKeys.includes(value);
@@ -122,33 +118,12 @@ function ExplorerSider({ selectedKeys, setSelectedKeys }) {
                                         <div
                                             key={key}
                                             onClick={() => setSelectedKeys([value])}
-                                            style={{
-                                                ...style,
-                                                cursor: 'pointer',
-                                                borderRadius: 5,
-                                                backgroundColor: selected ? '#d2291f' : 'initial',
-                                                color: selected ? '#ffffff' : 'initial',
-                                                display: 'flex',
-                                                padding: '0px 10px',
-                                                justifyContent: 'center',
-                                                alignContent: 'center',
-                                                flexDirection: 'column'
-                                            }}>
-                                            <span style={{
-                                                whiteSpace: 'nowrap',
-                                                overflow: 'hidden',
-                                                textOverflow: 'ellipsis'
-                                            }}>{value}</span>
+                                            className={`explorer-list-row ${selected ? 'selected' : ''}`}
+                                            style={style}>
+                                            <span>{value}</span>
                                         </div>
                                     );
-                                }}
-                                style={{
-                                    border: '1px solid #cccccc',
-                                    borderRadius: 5,
-                                    padding: 10,
-                                    outline: 'none'
-                                }}
-                            />
+                                }} />
                         )}
                     </AutoSizer>
                 </div>

@@ -71,7 +71,7 @@ function ToolboxSider() {
                         <Icon icon="terminal" text="Terminal" />
                     </Menu.Item>
                 </Menu.SubMenu>
-            </Menu >
+            </Menu>
         </div>
     );
 }

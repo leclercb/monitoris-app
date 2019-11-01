@@ -8,6 +8,6 @@ export function formatDate(date, settings, showTime = true) {
     return moment(date).format(`${settings.dateFormat} ${settings.timeFormat}`);
 }
 
-export function getAlertNotificationBackgroundColor(notification, index, settings) {
+export function getRowBackgroundColor(index, settings) {
     return index % 2 === 0 ? settings.evenColor : settings.oddColor;
 }

@@ -16,7 +16,7 @@ import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { FieldPropType } from 'proptypes/FieldPropTypes';
 import { AlertNotificationPropType } from 'proptypes/AlertNotificationPropTypes';
 import { move } from 'utils/ArrayUtils';
-import { getAlertNotificationBackgroundColor } from 'utils/SettingUtils';
+import { getRowBackgroundColor } from 'utils/SettingUtils';
 
 function NotificationTable(props) {
     const appApi = useAppApi();
@@ -150,7 +150,7 @@ function NotificationTable(props) {
                         }
 
                         let foregroundColor = 'initial';
-                        let backgroundColor = getAlertNotificationBackgroundColor(notification, index, settingsApi.settings);
+                        let backgroundColor = getRowBackgroundColor(index, settingsApi.settings);
 
                         if (selectedNotificationIds.includes(notification.id)) {
                             foregroundColor = Constants.selectionForegroundColor;
@@ -166,7 +166,7 @@ function NotificationTable(props) {
                         rowData => rowData.id,
                         props.notifications,
                         selectedNotificationIds,
-                        setSelectedNotificationIds)} >
+                        setSelectedNotificationIds)}>
                     {columns}
                 </Table>
             )}

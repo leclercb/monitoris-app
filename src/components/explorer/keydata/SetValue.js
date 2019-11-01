@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, List } from 'antd';
+import { Button, Input } from 'antd';
 import PropTypes from 'prop-types';
-import { useInstanceApi } from 'hooks/UseInstanceApi';
 import LeftRight from 'components/common/LeftRight';
+import ValueTable from 'components/explorer/keydata/ValueTable';
+import { useInstanceApi } from 'hooks/UseInstanceApi';
 
 const BATCH_SIZE = 100;
 
@@ -42,6 +43,10 @@ function SetValue({ redisKey }) {
         }
     };
 
+    const updateItem = (item, rowIndex) => {
+        console.log(item, rowIndex);
+    };
+
     useEffect(() => {
         setItems([]);
         setScanResult(null);
@@ -52,14 +57,24 @@ function SetValue({ redisKey }) {
         return null;
     }
 
+    const fields = [
+        {
+            static: true,
+            id: 'id',
+            title: 'Value',
+            type: 'text',
+            editable: true
+        }
+    ];
+
     return (
         <React.Fragment>
-            <List
-                dataSource={items}
-                renderItem={item => (<List.Item>{item}</List.Item>)}
-                size="small"
-                bordered
-                style={{ marginBottom: 10 }} />
+            <ValueTable
+                fields={fields}
+                items={items}
+                updateItem={updateItem}
+                orderSettingPrefix="setValueColumnOrder_"
+                widthSettingPrefix="setValueColumnWidth_" />
             <LeftRight right={(
                 <Button
                     onClick={continueScanning}
