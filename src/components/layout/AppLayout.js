@@ -10,6 +10,7 @@ import Header from 'components/layout/Header';
 import ModalSettingManager from 'components/settings/ModalSettingManager';
 import NotificationManager from 'components/thread/NotificationManager';
 import ModalThreadManager from 'components/thread/ModalThreadManager';
+import ToolboxView from 'components/toolbox/views/ToolboxView';
 import { getSelectedView } from 'selectors/SettingSelectors';
 import { isBusy } from 'selectors/ThreadSelectors';
 
@@ -23,6 +24,8 @@ function AppLayout() {
                 return <DashboardView />;
             case 'explorer':
                 return <ExplorerView />;
+            case 'toolbox':
+                return <ToolboxView />;
             case 'alert':
                 return <AlertView />;
             case 'instance':

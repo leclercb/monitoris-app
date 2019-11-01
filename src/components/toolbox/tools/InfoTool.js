@@ -5,7 +5,7 @@ import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
 
 function InfoTool() {
     const instanceApi = useInstanceApi();
-    const instanceId = instanceApi.selectedExplorerInstanceId;
+    const instanceId = instanceApi.selectedInstanceId;
     const instanceStateApi = useInstanceStateApi(instanceId);
 
     const [searchValue, setSearchValue] = useState('');

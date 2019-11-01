@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, List } from 'antd';
+import { Button, Input, Table } from 'antd';
 import PropTypes from 'prop-types';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import LeftRight from 'components/common/LeftRight';
 
 const BATCH_SIZE = 100;
 
-function SetValue({ redisKey }) {
+function HashValue({ redisKey }) {
     const instanceApi = useInstanceApi();
 
-    const instanceId = instanceApi.selectedExplorerInstanceId;
-    const db = instanceApi.selectedExplorerDb;
+    const instanceId = instanceApi.selectedInstanceId;
+    const db = instanceApi.selectedDb;
     const [items, setItems] = useState([]);
     const [scanResult, setScanResult] = useState(null);
     const [searchValue, setSearchValue] = useState('*');
 
     const executeScan = async value => {
         const parameters = [redisKey, scanResult ? scanResult[0] : '0', 'MATCH', value, 'COUNT', BATCH_SIZE];
-        const result = await instanceApi.executeCommand(instanceId, db, 'sscan', parameters);
+        const result = await instanceApi.executeCommand(instanceId, db, 'hscan', parameters);
         return result;
     };
 
@@ -27,7 +27,17 @@ function SetValue({ redisKey }) {
         if (instanceId) {
             const result = await executeScan(value);
             setScanResult(result);
-            setItems(result[1]);
+
+            const resultItems = [];
+
+            for (let i = 0; i < result[1].length; i += 2) {
+                resultItems.push({
+                    field: result[1][i],
+                    value: result[1][i + 1]
+                });
+            }
+
+            setItems(resultItems);
         }
     };
 
@@ -35,9 +45,19 @@ function SetValue({ redisKey }) {
         if (instanceId && scanResult) {
             const result = await executeScan(searchValue);
             setScanResult(result);
+
+            const resultItems = [];
+
+            for (let i = 0; i < result[1].length; i += 2) {
+                resultItems.push({
+                    field: result[1][i],
+                    value: result[1][i + 1]
+                });
+            }
+
             setItems([
                 ...items,
-                ...result[1]
+                ...resultItems
             ]);
         }
     };
@@ -52,13 +72,31 @@ function SetValue({ redisKey }) {
         return null;
     }
 
+    const columns = [
+        {
+            title: 'Field',
+            dataIndex: 'field',
+            key: 'field',
+            render: key => <strong>{key}</strong> // eslint-disable-line react/display-name
+        },
+        {
+            title: 'Value',
+            dataIndex: 'value',
+            key: 'value'
+        }
+    ];
+
     return (
         <React.Fragment>
-            <List
+            <Table
+                rowKey="field"
                 dataSource={items}
-                renderItem={item => (<List.Item>{item}</List.Item>)}
+                columns={columns}
+                pagination={{
+                    pageSize: 10,
+                    size: 'small'
+                }}
                 size="small"
-                bordered
                 style={{ marginBottom: 10 }} />
             <LeftRight right={(
                 <Button
@@ -78,9 +116,9 @@ function SetValue({ redisKey }) {
     );
 }
 
-SetValue.propTypes = {
+HashValue.propTypes = {
     redisKey: PropTypes.string,
     length: PropTypes.number
 };
 
-export default SetValue;
+export default HashValue;

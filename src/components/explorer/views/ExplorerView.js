@@ -1,45 +1,34 @@
-import React from 'react';
-import { Empty } from 'antd';
+import React, { useState } from 'react';
 import SplitPane from 'react-split-pane';
-import InfoTool from 'components/explorer/tools/InfoTool';
-import ScanTool from 'components/explorer/tools/ScanTool';
+import KeyData from 'components/explorer/keydata/KeyData';
 import ExplorerSider from 'components/explorer/sider/ExplorerSider';
-import { useAppApi } from 'hooks/UseAppApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 
 function ExplorerView() {
-    const appApi = useAppApi();
     const settingsApi = useSettingsApi();
+
+    const [selectedKeys, setSelectedKeys] = useState([]);
 
     const onExplorerViewSplitPaneSizeChange = size => {
         settingsApi.updateSettings({ explorerViewSplitPaneSize: size });
     };
 
-    const getToolFromId = () => {
-        switch (appApi.selectedExplorerToolId) {
-            case 'info':
-                return (<InfoTool />);
-            case 'scan':
-                return (<ScanTool />);
-            default:
-                return (<Empty />);
-        }
-    };
-
     return (
-        <SplitPane
-            split="vertical"
-            minSize={200}
-            defaultSize={settingsApi.settings.explorerViewSplitPaneSize}
-            onDragFinished={size => onExplorerViewSplitPaneSizeChange(size)}
-            paneStyle={{ overflowY: 'auto' }}>
-            <ExplorerSider />
-            <div style={{ minHeight: '100%', padding: 25 }}>
-                <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
-                    {getToolFromId()}
+        <React.Fragment>
+            <SplitPane
+                split="vertical"
+                minSize={200}
+                defaultSize={settingsApi.settings.explorerViewSplitPaneSize}
+                onDragFinished={size => onExplorerViewSplitPaneSizeChange(size)}
+                paneStyle={{ overflowY: 'auto' }}>
+                <ExplorerSider selectedKeys={selectedKeys} setSelectedKeys={setSelectedKeys} />
+                <div style={{ minHeight: '100%', padding: 25 }}>
+                    <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
+                        <KeyData redisKey={selectedKeys.length === 1 ? selectedKeys[0] : null} />
+                    </div>
                 </div>
-            </div>
-        </SplitPane>
+            </SplitPane>
+        </React.Fragment>
     );
 }
 

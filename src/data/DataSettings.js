@@ -177,6 +177,10 @@ export function getCategories() {
                             {
                                 title: 'Instances',
                                 value: 'instance'
+                            },
+                            {
+                                title: 'Toolbox',
+                                value: 'toolbox'
                             }
                         ]
                     },
@@ -211,6 +215,14 @@ export function getCategories() {
                 {
                     id: 'instanceViewSplitPaneSize',
                     title: 'Instance view split pane size',
+                    type: 'number',
+                    value: 300,
+                    editable: false,
+                    visible: false
+                },
+                {
+                    id: 'toolboxViewSplitPaneSize',
+                    title: 'Toolbox view split pane size',
                     type: 'number',
                     value: 300,
                     editable: false,

@@ -57,6 +57,10 @@ function Header() {
         await appApi.setSelectedView('explorer');
     };
 
+    const onShowToolboxContent = async () => {
+        await appApi.setSelectedView('toolbox');
+    };
+
     const onShowAlertContent = async () => {
         await appApi.setSelectedView('alert');
     };
@@ -97,6 +101,11 @@ function Header() {
                     type={appApi.selectedView === 'explorer' ? 'dashed' : 'default'}
                     onClick={onShowExplorerContent}>
                     <Icon icon="binoculars" text="Explorer" />
+                </PromiseButton>
+                <PromiseButton
+                    type={appApi.selectedView === 'toolbox' ? 'dashed' : 'default'}
+                    onClick={onShowToolboxContent}>
+                    <Icon icon="tools" text="Toolbox" />
                 </PromiseButton>
                 <PromiseButton
                     type={appApi.selectedView === 'instance' ? 'dashed' : 'default'}

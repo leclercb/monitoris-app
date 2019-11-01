@@ -8,8 +8,8 @@ const BATCH_SIZE = 100;
 function ListValue({ redisKey }) {
     const instanceApi = useInstanceApi();
 
-    const instanceId = instanceApi.selectedExplorerInstanceId;
-    const db = instanceApi.selectedExplorerDb;
+    const instanceId = instanceApi.selectedInstanceId;
+    const db = instanceApi.selectedDb;
     const [items, setItems] = useState([]);
     const [endIndex, setEndIndex] = useState(0);
 

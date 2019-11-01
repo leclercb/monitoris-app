@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'antd';
 
 function PromiseButton(props) {
@@ -15,5 +16,9 @@ function PromiseButton(props) {
 
     return (<Button {...props} loading={loading} onClick={onClick} />);
 }
+
+PromiseButton.propTypes = {
+    onClick: PropTypes.func.isRequired
+};
 
 export default PromiseButton;

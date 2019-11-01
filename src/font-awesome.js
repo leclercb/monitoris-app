@@ -36,6 +36,7 @@ import {
     faMinusSquare,
     faNetworkWired,
     faPaperPlane,
+    faPlay,
     faPlus,
     faPlusSquare,
     faPrint,
@@ -48,6 +49,7 @@ import {
     faStar,
     faSun,
     faSyncAlt,
+    faTerminal,
     faTools,
     faTrashAlt,
     faUser
@@ -88,6 +90,7 @@ library.add(faLockOpen);
 library.add(faMinusSquare);
 library.add(faNetworkWired);
 library.add(faPaperPlane);
+library.add(faPlay);
 library.add(faPlus);
 library.add(faPlusSquare);
 library.add(faPrint);
@@ -100,6 +103,7 @@ library.add(faSpinner);
 library.add(faStar);
 library.add(faSun);
 library.add(faSyncAlt);
+library.add(faTerminal);
 library.add(faTools);
 library.add(faTrashAlt);
 library.add(faUser);

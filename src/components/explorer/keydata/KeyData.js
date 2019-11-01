@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Descriptions, Empty } from 'antd';
+import { Descriptions, Divider, Empty } from 'antd';
 import PropTypes from 'prop-types';
-import HashValue from 'components/explorer/tools/keydata/HashValue';
-import ListValue from 'components/explorer/tools/keydata/ListValue';
-import SetValue from 'components/explorer/tools/keydata/SetValue';
-import StringValue from 'components/explorer/tools/keydata/StringValue';
+import HashValue from 'components/explorer/keydata/HashValue';
+import ListValue from 'components/explorer/keydata/ListValue';
+import SetValue from 'components/explorer/keydata/SetValue';
+import StringValue from 'components/explorer/keydata/StringValue';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import RedisTypeTitle from 'components/redistype/RedisTypeTitle';
 
 function KeyData(props) {
     const instanceApi = useInstanceApi();
 
-    const instanceId = instanceApi.selectedExplorerInstanceId;
-    const db = instanceApi.selectedExplorerDb;
+    const instanceId = instanceApi.selectedInstanceId;
+    const db = instanceApi.selectedDb;
     const [redisKey, setRedisKey] = useState(null);
     const [type, setType] = useState(null);
     const [length, setLength] = useState(0);
@@ -73,8 +73,9 @@ function KeyData(props) {
                 <Descriptions.Item label={(<strong>Key</strong>)}>{redisKey}</Descriptions.Item>
                 <Descriptions.Item label={(<strong>Type</strong>)}><RedisTypeTitle typeId={type} /></Descriptions.Item>
                 <Descriptions.Item label={(<strong>Length</strong>)}>{length}</Descriptions.Item>
-                {valueElement && (<Descriptions.Item label={(<strong>Value</strong>)}>{valueElement}</Descriptions.Item>)}
             </Descriptions>
+            <Divider>Value</Divider>
+            {valueElement}
         </React.Fragment>
     );
 }

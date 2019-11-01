@@ -8,8 +8,8 @@ import { useInstanceApi } from 'hooks/UseInstanceApi';
 function StringValue({ redisKey, length }) {
     const instanceApi = useInstanceApi();
 
-    const instanceId = instanceApi.selectedExplorerInstanceId;
-    const db = instanceApi.selectedExplorerDb;
+    const instanceId = instanceApi.selectedInstanceId;
+    const db = instanceApi.selectedDb;
     const [edit, setEdit] = useState(false);
     const [language, setLanguage] = useState('json');
     const [value, setValue] = useState(null);

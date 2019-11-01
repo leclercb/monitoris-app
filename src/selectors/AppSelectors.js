@@ -3,12 +3,11 @@ import { getSession } from 'selectors/SessionSelectors';
 
 export const getEditingCell = state => state.app.editingCell;
 
+export const getSelectedDb = state => state.app.selectedDb;
 export const getSelectedAlertId = state => state.app.selectedAlertId;
 export const getSelectedInstanceId = state => state.app.selectedInstanceId;
 export const getSelectedDashboardId = state => state.app.selectedDashboardId;
-export const getSelectedExplorerInstanceId = state => state.app.selectedExplorerInstanceId;
-export const getSelectedExplorerDb = state => state.app.selectedExplorerDb;
-export const getSelectedExplorerToolId = state => state.app.selectedExplorerToolId;
+export const getSelectedToolId = state => state.app.selectedToolId;
 
 export const getJoyrideOptions = state => state.app.joyride;
 

@@ -3,12 +3,11 @@ const App = () => (state = {
         objectId: null,
         fieldId: null
     },
+    selectedDb: 0,
     selectedAlertId: null,
     selectedInstanceId: null,
     selectedDashboardId: null,
-    selectedExplorerInstanceId: null,
-    selectedExplorerDb: 0,
-    selectedExplorerToolId: 'scan',
+    selectedToolId: 'scan',
     joyride: {
         id: null,
         run: false
@@ -29,6 +28,11 @@ const App = () => (state = {
                     fieldId: action.fieldId
                 }
             };
+        case 'SET_SELECTED_DB':
+            return {
+                ...state,
+                selectedDb: action.db
+            };
         case 'SET_SELECTED_ALERT_ID':
             return {
                 ...state,
@@ -44,20 +48,10 @@ const App = () => (state = {
                 ...state,
                 selectedDashboardId: action.dashboardId
             };
-        case 'SET_SELECTED_EXPLORER_INSTANCE_ID':
+        case 'SET_SELECTED_TOOL_ID':
             return {
                 ...state,
-                selectedExplorerInstanceId: action.instanceId
-            };
-        case 'SET_SELECTED_EXPLORER_DB':
-            return {
-                ...state,
-                selectedExplorerDb: action.db
-            };
-        case 'SET_SELECTED_EXPLORER_TOOL_ID':
-            return {
-                ...state,
-                selectedExplorerToolId: action.toolId
+                selectedToolId: action.toolId
             };
         case 'SET_JOYRIDE_OPTIONS':
             return {

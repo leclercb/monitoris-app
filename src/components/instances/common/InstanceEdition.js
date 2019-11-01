@@ -21,8 +21,8 @@ function InstanceEdition({ instance, updateInstance }) {
     };
 
     const goToExplorer = () => {
-        instanceApi.setSelectedExplorerInstanceId(instance.id);
-        appApi.setSelectedExplorerToolId('info');
+        instanceApi.setSelectedInstanceId(instance.id);
+        appApi.setSelectedToolId('info');
         appApi.setSelectedView('explorer');
     };
 
