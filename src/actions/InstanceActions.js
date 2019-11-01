@@ -139,7 +139,7 @@ export function getInfo(instanceId) {
     };
 }
 
-export function executeCommand(instanceId, db, command, parameters) {
+export function executeCommand(instanceId, db, command, parameters, silent = false) {
     return async dispatch => {
         const processId = uuid();
 
@@ -159,19 +159,16 @@ export function executeCommand(instanceId, db, command, parameters) {
                     responseType: 'text'
                 });
 
-            dispatch(updateProcess({
-                id: processId,
-                state: 'COMPLETED'
-            }));
-
             return result.data;
         } catch (error) {
-            dispatch(updateProcess({
-                id: processId,
-                state: 'ERROR',
-                title: 'Execute command on server',
-                error: getErrorMessages(error, true)
-            }));
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    title: 'Execute command on server',
+                    error: getErrorMessages(error, true)
+                }));
+            }
 
             throw error;
         }

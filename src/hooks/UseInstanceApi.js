@@ -55,7 +55,7 @@ export function useInstanceApi() {
     );
 
     const executeCommandCallback = useCallback(
-        (instanceId, db, command, parameters) => dispatch(executeCommand(instanceId, db, command, parameters)),
+        (instanceId, db, command, parameters, silent) => dispatch(executeCommand(instanceId, db, command, parameters, silent)),
         [dispatch]
     );
 

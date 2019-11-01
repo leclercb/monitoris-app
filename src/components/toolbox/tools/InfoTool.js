@@ -20,12 +20,14 @@ function InfoTool() {
         getInfo();
     }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    if (!instanceId) {
-        return (<Empty description="Please select an instance" />);
-    }
-
     if (!instanceStateApi.lastInfo) {
-        return (<Empty description="No data to display" />);
+        return (
+            <div style={{ minHeight: '100%', padding: 25 }}>
+                <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
+                    <Empty description="No data to display" />
+                </div>
+            </div>
+        );
     }
 
     const refresh = async () => {
@@ -52,25 +54,27 @@ function InfoTool() {
     }));
 
     return (
-        <React.Fragment>
-            <Input.Search
-                allowClear={true}
-                onSearch={value => setSearchValue(value)}
-                style={{
-                    width: 400,
-                    marginBottom: 20
-                }} />
-            <Button
-                onClick={refresh}
-                style={{ marginLeft: 10 }}>
-                Refresh
+        <div style={{ minHeight: '100%', padding: 25 }}>
+            <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
+                <Input.Search
+                    allowClear={true}
+                    onSearch={value => setSearchValue(value)}
+                    style={{
+                        width: 400,
+                        marginBottom: 20
+                    }} />
+                <Button
+                    onClick={refresh}
+                    style={{ marginLeft: 10 }}>
+                    Refresh
             </Button>
-            <Table
-                dataSource={dataSource}
-                columns={columns}
-                pagination={false}
-                size="small" />
-        </React.Fragment>
+                <Table
+                    dataSource={dataSource}
+                    columns={columns}
+                    pagination={false}
+                    size="small" />
+            </div>
+        </div>
     );
 }
 
