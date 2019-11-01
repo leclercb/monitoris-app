@@ -34,6 +34,7 @@ function HashValue({ redisKey }) {
             for (let i = 0; i < result[1].length; i += 2) {
                 resultItems.push({
                     id: result[1][i],
+                    field: result[1][i],
                     value: result[1][i + 1]
                 });
             }
@@ -52,6 +53,7 @@ function HashValue({ redisKey }) {
             for (let i = 0; i < result[1].length; i += 2) {
                 resultItems.push({
                     id: result[1][i],
+                    field: result[1][i],
                     value: result[1][i + 1]
                 });
             }
@@ -63,8 +65,28 @@ function HashValue({ redisKey }) {
         }
     };
 
-    const updateItem = (item, rowIndex) => {
-        console.log(item, rowIndex);
+    const updateItem = async (item, rowIndex) => {
+        let fieldChanged = false;
+
+        if (item.id !== item.field) {
+            fieldChanged = true;
+            await instanceApi.executeCommand(instanceId, db, 'hdel', [redisKey, item.id]);
+        }
+
+        await instanceApi.executeCommand(instanceId, db, 'hset', [redisKey, item.field, item.value]);
+
+        item.id = item.field;
+
+        const newItems = [...items];
+
+        if (fieldChanged && items.find(i => i.id === item.id)) {
+            newItems.splice(rowIndex, 1);
+            items.find(i => i.id === item.id).value = item.value;
+        } else {
+            newItems[rowIndex] = item;
+        }
+
+        setItems(newItems);
     };
 
     useEffect(() => {
@@ -80,7 +102,7 @@ function HashValue({ redisKey }) {
     const fields = [
         {
             static: true,
-            id: 'id',
+            id: 'field',
             title: 'Field',
             type: 'text',
             editable: true

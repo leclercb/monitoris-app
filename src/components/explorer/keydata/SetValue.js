@@ -28,7 +28,10 @@ function SetValue({ redisKey }) {
         if (instanceId) {
             const result = await executeScan(value);
             setScanResult(result);
-            setItems(result[1]);
+            setItems(result[1].map(item => ({
+                id: item,
+                value: item
+            })));
         }
     };
 
@@ -39,12 +42,28 @@ function SetValue({ redisKey }) {
             setItems([
                 ...items,
                 ...result[1]
-            ]);
+            ].map(item => ({
+                id: item,
+                value: item
+            })));
         }
     };
 
-    const updateItem = (item, rowIndex) => {
-        console.log(item, rowIndex);
+    const updateItem = async (item, rowIndex) => {
+        await instanceApi.executeCommand(instanceId, db, 'srem', [redisKey, item.id]);
+        await instanceApi.executeCommand(instanceId, db, 'sadd', [redisKey, item.value]);
+
+        item.id = item.value;
+
+        const newItems = [...items];
+
+        if (items.find(i => i.id === item.id)) {
+            newItems.splice(rowIndex, 1);
+        } else {
+            newItems[rowIndex] = item;
+        }
+
+        setItems(newItems);
     };
 
     useEffect(() => {
@@ -60,7 +79,7 @@ function SetValue({ redisKey }) {
     const fields = [
         {
             static: true,
-            id: 'id',
+            id: 'value',
             title: 'Value',
             type: 'text',
             editable: true

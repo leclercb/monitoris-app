@@ -16,12 +16,13 @@ function ListValue({ redisKey }) {
 
     const getItems = async () => {
         if (instanceId && redisKey) {
-            const value = await instanceApi.executeCommand(instanceId, db, 'lrange', [redisKey, String(endIndex), String(endIndex + BATCH_SIZE - 1)]);
+            const result = await instanceApi.executeCommand(instanceId, db, 'lrange', [redisKey, String(endIndex), String(endIndex + BATCH_SIZE - 1)]);
             setItems([
                 ...items,
-                ...value
+                ...result
             ].map(item => ({
-                id: item
+                id: item,
+                value: item
             })));
             setEndIndex(endIndex + BATCH_SIZE);
         }
@@ -31,8 +32,14 @@ function ListValue({ redisKey }) {
         await getItems();
     };
 
-    const updateItem = (item, rowIndex) => {
-        console.log(item, rowIndex);
+    const updateItem = async (item, rowIndex) => {
+        await instanceApi.executeCommand(instanceId, db, 'lset', [redisKey, rowIndex, item.value]);
+
+        item.id = item.value;
+
+        const newItems = [...items];
+        newItems[rowIndex] = item;
+        setItems(newItems);
     };
 
     useEffect(() => {
@@ -48,7 +55,7 @@ function ListValue({ redisKey }) {
     const fields = [
         {
             static: true,
-            id: 'id',
+            id: 'value',
             title: 'Value',
             type: 'text',
             editable: true
