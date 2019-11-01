@@ -10,12 +10,11 @@ import 'components/explorer/sider/ExplorerSider.css';
 
 const BATCH_SIZE = 1000;
 
-function ExplorerSider({ selectedKeys, setSelectedKeys }) {
+function ExplorerSider({ keys, setKeys, selectedKeys, setSelectedKeys }) {
     const instanceApi = useInstanceApi();
 
     const instanceId = instanceApi.selectedInstanceId;
     const db = instanceApi.selectedDb;
-    const [keys, setKeys] = useState([]);
     const [scanResult, setScanResult] = useState(null);
     const [searchValue, setSearchValue] = useState('*');
 
@@ -50,12 +49,6 @@ function ExplorerSider({ selectedKeys, setSelectedKeys }) {
                 ...result[1]
             ].sort());
         }
-    };
-
-    const deleteSelectedKeys = async () => {
-        await instanceApi.executeCommand(instanceId, db, 'del', selectedKeys);
-        setKeys(keys.filter(key => !selectedKeys.includes(key)));
-        setSelectedKeys([]);
     };
 
     return (
@@ -133,6 +126,8 @@ function ExplorerSider({ selectedKeys, setSelectedKeys }) {
 }
 
 ExplorerSider.propTypes = {
+    keys: PropTypes.array.isRequired,
+    setKeys: PropTypes.func.isRequired,
     selectedKeys: PropTypes.array.isRequired,
     setSelectedKeys: PropTypes.func.isRequired
 };

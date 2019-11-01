@@ -7,10 +7,16 @@ import { useSettingsApi } from 'hooks/UseSettingsApi';
 function ExplorerView() {
     const settingsApi = useSettingsApi();
 
+    const [keys, setKeys] = useState([]);
     const [selectedKeys, setSelectedKeys] = useState([]);
 
     const onExplorerViewSplitPaneSizeChange = size => {
         settingsApi.updateSettings({ explorerViewSplitPaneSize: size });
+    };
+
+    const onKeyDeleted = async redisKey => {
+        setKeys(keys.filter(key => redisKey !== key));
+        setSelectedKeys([]);
     };
 
     return (
@@ -21,12 +27,14 @@ function ExplorerView() {
                 defaultSize={settingsApi.settings.explorerViewSplitPaneSize}
                 onDragFinished={size => onExplorerViewSplitPaneSizeChange(size)}
                 paneStyle={{ overflowY: 'auto' }}>
-                <ExplorerSider selectedKeys={selectedKeys} setSelectedKeys={setSelectedKeys} />
-                <div style={{ minHeight: '100%', padding: 25 }}>
-                    <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
-                        <KeyData redisKey={selectedKeys.length === 1 ? selectedKeys[0] : null} />
-                    </div>
-                </div>
+                <ExplorerSider
+                    keys={keys}
+                    setKeys={setKeys}
+                    selectedKeys={selectedKeys}
+                    setSelectedKeys={setSelectedKeys} />
+                <KeyData
+                    redisKey={selectedKeys.length === 1 ? selectedKeys[0] : null}
+                    onKeyDeleted={onKeyDeleted} />
             </SplitPane>
         </React.Fragment>
     );
