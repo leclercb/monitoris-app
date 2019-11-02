@@ -5,7 +5,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 
-function StringValue({ redisKey, length }) {
+function StringValue({ redisKey, length, setLength }) {
     const instanceApi = useInstanceApi();
 
     const instanceId = instanceApi.selectedInstanceId;
@@ -37,17 +37,10 @@ function StringValue({ redisKey, length }) {
         return null;
     }
 
-    const onEdit = () => {
-        setEdit(true);
-    };
-
-    const onSave = async () => {
+    const onEdit = async () => {
         await instanceApi.executeCommand(instanceId, db, 'set', [redisKey, newValue]);
         setValue(newValue);
-        setEdit(false);
-    };
-
-    const onCancel = async () => {
+        setLength(newValue.length);
         setEdit(false);
     };
 
@@ -56,12 +49,12 @@ function StringValue({ redisKey, length }) {
             <React.Fragment>
                 <Input.TextArea defaultValue={newValue} onChange={event => setNewValue(event.target.value)} />
                 <Button
-                    onClick={onSave}
+                    onClick={onEdit}
                     style={{ marginTop: 10 }}>
                     Save
                 </Button>
                 <Button
-                    onClick={onCancel}
+                    onClick={() => setEdit(false)}
                     style={{ marginTop: 10, marginLeft: 10 }}>
                     Cancel
                 </Button>
@@ -81,7 +74,7 @@ function StringValue({ redisKey, length }) {
                 {value || ''}
             </SyntaxHighlighter>
             <Button
-                onClick={onEdit}
+                onClick={() => setEdit(true)}
                 style={{ marginTop: 10 }}>
                 Edit
             </Button>
@@ -101,8 +94,9 @@ function StringValue({ redisKey, length }) {
 }
 
 StringValue.propTypes = {
-    redisKey: PropTypes.string,
-    length: PropTypes.number
+    redisKey: PropTypes.string.isRequired,
+    length: PropTypes.number,
+    setLength: PropTypes.func.isRequired
 };
 
 export default StringValue;

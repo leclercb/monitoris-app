@@ -1,5 +1,6 @@
 import { getAlertNotificationTypes } from 'data/DataAlertNotificationTypes';
 import { getInstanceTypes } from 'data/DataInstanceTypes';
+import { getRedisTypes } from 'data/DataRedisTypes';
 import { getSeverities } from 'data/DataSeverities';
 import { getAlerts } from 'selectors/AlertSelectors';
 import { getInstances } from 'selectors/InstanceSelectors';
@@ -29,6 +30,7 @@ export function getFieldTypes() {
         'instanceType',
         'number',
         'password',
+        'redisType',
         'severities',
         'severity',
         'star',
@@ -442,6 +444,39 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     }
                 ],
                 conditionsFieldType: 'password',
+                options: []
+            };
+
+            break;
+        }
+        case 'redisType': {
+            configuration = {
+                title: 'Redis Type',
+                allowCreation: true,
+                width: 200,
+                alwaysInEdition: false,
+                valuePropName: 'value',
+                compare: (a, b) => compareObjects(a, b, getRedisTypes()),
+                toString: value => toStringObject(value, getRedisTypes()),
+                conditions: [
+                    {
+                        type: 'equal',
+                        title: 'Equals',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue === objectValue;
+                        }
+                    },
+                    {
+                        type: 'notEqual',
+                        title: 'Does not equal',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue !== objectValue;
+                        }
+                    }
+                ],
+                conditionsFieldType: 'redisType',
                 options: []
             };
 

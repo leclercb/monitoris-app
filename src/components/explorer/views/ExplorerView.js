@@ -8,7 +8,7 @@ function ExplorerView() {
     const settingsApi = useSettingsApi();
 
     const [keys, setKeys] = useState([]);
-    const [selectedKeys, setSelectedKeys] = useState([]);
+    const [selectedObject, setSelectedObject] = useState(null);
 
     const onExplorerViewSplitPaneSizeChange = size => {
         settingsApi.updateSettings({ explorerViewSplitPaneSize: size });
@@ -16,7 +16,7 @@ function ExplorerView() {
 
     const onKeyDeleted = async redisKey => {
         setKeys(keys.filter(key => redisKey !== key));
-        setSelectedKeys([]);
+        setSelectedObject(null);
     };
 
     return (
@@ -30,10 +30,10 @@ function ExplorerView() {
                 <ExplorerSider
                     keys={keys}
                     setKeys={setKeys}
-                    selectedKeys={selectedKeys}
-                    setSelectedKeys={setSelectedKeys} />
+                    selectedObject={selectedObject}
+                    setSelectedObject={setSelectedObject} />
                 <KeyData
-                    redisKey={selectedKeys.length === 1 ? selectedKeys[0] : null}
+                    object={selectedObject}
                     onKeyDeleted={onKeyDeleted} />
             </SplitPane>
         </React.Fragment>

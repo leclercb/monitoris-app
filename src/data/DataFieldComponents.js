@@ -15,6 +15,8 @@ import InstanceTitle from 'components/instances/common/InstanceTitle';
 import InstancesTitle from 'components/instances/common/InstancesTitle';
 import InstanceTypeSelect from 'components/instancetypes/InstanceTypeSelect';
 import InstanceTypeTitle from 'components/instancetypes/InstanceTypeTitle';
+import RedisTypeSelect from 'components/redistype/RedisTypeSelect';
+import RedisTypeTitle from 'components/redistype/RedisTypeTitle';
 import SeveritiesSelect from 'components/severities/SeveritiesSelect';
 import SeveritiesTitle from 'components/severities/SeveritiesTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
@@ -176,6 +178,21 @@ export function getFieldComponents(type, options) {
                     <Input.Password
                         onBlur={props.onCommit}
                         onPressEnter={props.onCommit}
+                        {...removeExtraProps(props)} />
+                )
+            };
+
+            break;
+        }
+        case 'redisType': {
+            configuration = {
+                render: value => (
+                    <RedisTypeTitle typeId={value} />
+                ),
+                input: props => (
+                    <RedisTypeSelect
+                        onBlur={props.onCommit}
+                        dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
                 )
             };

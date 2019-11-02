@@ -9,21 +9,22 @@ import StringValue from 'components/explorer/keydata/StringValue';
 import RedisTypeTitle from 'components/redistype/RedisTypeTitle';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 
-function KeyData(props) {
+function KeyData({ object, onKeyDeleted }) {
     const instanceApi = useInstanceApi();
 
     const instanceId = instanceApi.selectedInstanceId;
     const db = instanceApi.selectedDb;
+
     const [redisKey, setRedisKey] = useState(null);
     const [type, setType] = useState(null);
     const [length, setLength] = useState(0);
 
     useEffect(() => {
-        const getData = async (redisKey) => {
-            if (instanceId && redisKey) {
-                const type = await instanceApi.executeCommand(instanceId, db, 'type', [redisKey]);
-                setType(type);
+        const getData = async object => {
+            const redisKey = object ? object.key : null;
 
+            if (instanceId && redisKey) {
+                let type = await instanceApi.executeCommand(instanceId, db, 'type', [redisKey]);
                 let length;
 
                 switch (type) {
@@ -39,26 +40,29 @@ function KeyData(props) {
                     case 'hash':
                         length = await instanceApi.executeCommand(instanceId, db, 'hlen', [redisKey]);
                         break;
+                    case 'none':
                     default:
                         length = 0;
+                        type = object ? object.type : null;
                         break;
                 }
 
+                setType(type);
                 setLength(length);
             }
         };
 
-        setRedisKey(props.redisKey);
+        setRedisKey(object ? object.key : null);
         setType(null);
-        setLength(null);
-        getData(props.redisKey);
-    }, [props.redisKey]); // eslint-disable-line react-hooks/exhaustive-deps
+        setLength(0);
+        getData(object);
+    }, [object]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const deleteKey = async () => {
         await instanceApi.executeCommand(instanceId, db, 'del', [redisKey]);
 
-        if (props.onKeyDeleted) {
-            props.onKeyDeleted(redisKey);
+        if (onKeyDeleted) {
+            onKeyDeleted(redisKey);
         }
     };
 
@@ -75,10 +79,10 @@ function KeyData(props) {
     let valueElement;
 
     switch (type) {
-        case 'string': valueElement = (<StringValue redisKey={redisKey} length={length} />); break;
-        case 'list': valueElement = (<ListValue redisKey={redisKey} length={length} />); break;
-        case 'set': valueElement = (<SetValue redisKey={redisKey} length={length} />); break;
-        case 'hash': valueElement = (<HashValue redisKey={redisKey} length={length} />); break;
+        case 'string': valueElement = (<StringValue redisKey={redisKey} length={length} setLength={setLength} />); break;
+        case 'list': valueElement = (<ListValue redisKey={redisKey} length={length} setLength={setLength} />); break;
+        case 'set': valueElement = (<SetValue redisKey={redisKey} length={length} setLength={setLength} />); break;
+        case 'hash': valueElement = (<HashValue redisKey={redisKey} length={length} setLength={setLength} />); break;
         default: valueElement = null; break;
     }
 
@@ -113,7 +117,7 @@ function KeyData(props) {
 }
 
 KeyData.propTypes = {
-    redisKey: PropTypes.string,
+    object: PropTypes.object,
     onKeyDeleted: PropTypes.func
 };
 
