@@ -21,10 +21,17 @@ function Connections({ instanceId }) {
         connectedClients: Number.parseInt(info.connected_clients)
     }));
 
+    const cols = {
+        seconds: {
+            max: 0
+        },
+        connectedClients: {}
+    };
+
     return (
         <Panel.Sub>
-            <Typography.Title>Clients</Typography.Title>
-            <Chart height={400} data={data} forceFit>
+            <Typography.Title>Connections</Typography.Title>
+            <Chart height={400} data={data} scale={cols} forceFit>
                 <Legend />
                 <Axis
                     name="seconds"
@@ -40,14 +47,12 @@ function Connections({ instanceId }) {
                 <Geom
                     type="line"
                     position="seconds*connectedClients"
-                    size={2}
-                    color={'city'} />
+                    size={2} />
                 <Geom
                     type="point"
                     position="seconds*connectedClients"
                     size={4}
                     shape={'circle'}
-                    color={'city'}
                     style={{
                         stroke: '#fff',
                         lineWidth: 1
