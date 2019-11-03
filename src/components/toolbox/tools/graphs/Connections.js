@@ -22,12 +22,14 @@ function Connections({ instanceId }) {
 
     const data = instanceStateApi.allInfo.map(info => ({
         timestamp: moment(info.timestamp).unix(),
-        connectedClients: Number.parseInt(info.connected_clients)
+        connectedClients: Number.parseInt(info.connected_clients),
+        blockedClients: Number.parseInt(info.blocked_clients)
     }));
 
     const cols = {
         timestamp: {},
-        connectedClients: {}
+        connectedClients: {},
+        blockedClients: {}
     };
 
     return (
@@ -48,6 +50,8 @@ function Connections({ instanceId }) {
                     }} />
                 <Axis
                     name="connectedClients" />
+                <Axis
+                    name="blockedClients" />
                 <Tooltip
                     crosshairs={{
                         type: 'y'
@@ -55,10 +59,25 @@ function Connections({ instanceId }) {
                 <Geom
                     type="line"
                     position="timestamp*connectedClients"
-                    size={2} />
+                    size={2}
+                    color="#44a2fc" />
+                <Geom
+                    type="line"
+                    position="timestamp*blockedClients"
+                    size={2}
+                    color="#fad34b" />
                 <Geom
                     type="point"
                     position="timestamp*connectedClients"
+                    size={4}
+                    shape={'circle'}
+                    style={{
+                        stroke: '#fff',
+                        lineWidth: 1
+                    }} />
+                <Geom
+                    type="point"
+                    position="timestamp*blockedClients"
                     size={4}
                     shape={'circle'}
                     style={{
