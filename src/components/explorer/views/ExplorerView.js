@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import SplitPane from 'react-split-pane';
+import Panel from 'components/common/Panel';
 import KeyData from 'components/explorer/keydata/KeyData';
 import ExplorerSider from 'components/explorer/sider/ExplorerSider';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
@@ -32,9 +33,11 @@ function ExplorerView() {
                     setKeys={setKeys}
                     selectedObject={selectedObject}
                     setSelectedObject={setSelectedObject} />
-                <KeyData
-                    object={selectedObject}
-                    onKeyDeleted={onKeyDeleted} />
+                <Panel.Main>
+                    <KeyData
+                        object={selectedObject}
+                        onKeyDeleted={onKeyDeleted} />
+                </Panel.Main>
             </SplitPane>
         </React.Fragment>
     );

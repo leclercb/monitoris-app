@@ -1,6 +1,7 @@
 import React from 'react';
 import { Empty } from 'antd';
 import SplitPane from 'react-split-pane';
+import Panel from 'components/common/Panel';
 import InstanceEdition from 'components/instances/common/InstanceEdition';
 import InstanceSider from 'components/instances/sider/InstanceSider';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
@@ -22,13 +23,13 @@ function InstanceView() {
             onDragFinished={size => onInstanceViewSplitPaneSizeChange(size)}
             paneStyle={{ overflowY: 'auto' }}>
             <InstanceSider />
-            <div style={{ minHeight: '100%', padding: 25 }}>
-                <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
+            <Panel.Main>
+                <Panel.Sub>
                     {instanceApi.selectedInstance ? (
                         <InstanceEdition key={instanceApi.selectedInstanceId} instance={instanceApi.selectedInstance} updateInstance={instanceApi.updateInstance} />
                     ) : <Empty description="Please select an alert" />}
-                </div>
-            </div>
+                </Panel.Sub>
+            </Panel.Main>
         </SplitPane>
     );
 }

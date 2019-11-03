@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Descriptions, Divider, Empty, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
+import Panel from 'components/common/Panel';
 import HashValue from 'components/explorer/keydata/HashValue';
 import ListValue from 'components/explorer/keydata/ListValue';
 import SetValue from 'components/explorer/keydata/SetValue';
@@ -68,11 +69,9 @@ function KeyData({ object, onKeyDeleted }) {
 
     if (!redisKey) {
         return (
-            <div style={{ minHeight: '100%', padding: 25 }}>
-                <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
-                    <Empty description="Please select a key" />
-                </div>
-            </div>
+            <Panel.Sub>
+                <Empty description="Please select a key" />
+            </Panel.Sub>
         );
     }
 
@@ -88,30 +87,26 @@ function KeyData({ object, onKeyDeleted }) {
 
     return (
         <React.Fragment>
-            <div style={{ padding: 25 }}>
-                <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
-                    <Descriptions size="small" column={1} bordered>
-                        <Descriptions.Item label={(<strong>Key</strong>)}>{redisKey}</Descriptions.Item>
-                        <Descriptions.Item label={(<strong>Type</strong>)}><RedisTypeTitle typeId={type} /></Descriptions.Item>
-                        <Descriptions.Item label={(<strong>Length</strong>)}>{length}</Descriptions.Item>
-                    </Descriptions>
-                    <Divider>Value</Divider>
-                    {valueElement}
-                </div>
-            </div>
-            <div style={{ padding: '0px 25px 25px 25px' }}>
-                <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
-                    <Popconfirm
-                        title={`Do you really want to delete the key "${redisKey}" ?`}
-                        onConfirm={deleteKey}
-                        okText="Yes"
-                        cancelText="No">
-                        <Button>
-                            <Icon icon="trash-alt" text="Delete key" />
-                        </Button>
-                    </Popconfirm>
-                </div>
-            </div>
+            <Panel.Sub>
+                <Descriptions size="small" column={1} bordered>
+                    <Descriptions.Item label={(<strong>Key</strong>)}>{redisKey}</Descriptions.Item>
+                    <Descriptions.Item label={(<strong>Type</strong>)}><RedisTypeTitle typeId={type} /></Descriptions.Item>
+                    <Descriptions.Item label={(<strong>Length</strong>)}>{length}</Descriptions.Item>
+                </Descriptions>
+                <Divider>Value</Divider>
+                {valueElement}
+            </Panel.Sub>
+            <Panel.Sub>
+                <Popconfirm
+                    title={`Do you really want to delete the key "${redisKey}" ?`}
+                    onConfirm={deleteKey}
+                    okText="Yes"
+                    cancelText="No">
+                    <Button>
+                        <Icon icon="trash-alt" text="Delete key" />
+                    </Button>
+                </Popconfirm>
+            </Panel.Sub>
         </React.Fragment>
     );
 }

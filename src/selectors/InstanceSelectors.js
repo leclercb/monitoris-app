@@ -42,14 +42,14 @@ export const getInstanceStatusSelector = () => createSelector(
     }
 );
 
-export const getInstanceInfoSelector = () => createSelector(
+export const getInstanceAllInfoSelector = () => createSelector(
     getInstanceStates,
     (state, id) => id,
     (instanceStates, id) => {
         const state = instanceStates[id];
 
         if (state) {
-            return state.info;
+            return state.allInfo;
         }
 
         return [];
@@ -62,8 +62,8 @@ export const getInstanceLastInfoSelector = () => createSelector(
     (instanceStates, id) => {
         const state = instanceStates[id];
 
-        if (state && state.info.length > 0) {
-            return state.info[state.info.length - 1];
+        if (state && state.allInfo.length > 0) {
+            return state.allInfo[state.allInfo.length - 1];
         }
 
         return null;

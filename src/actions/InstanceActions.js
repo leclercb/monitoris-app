@@ -118,6 +118,7 @@ export function getInfo(instanceId) {
             await dispatch({
                 type: 'ADD_INFO',
                 instanceId,
+                timestamp: moment().toISOString(),
                 info
             });
 

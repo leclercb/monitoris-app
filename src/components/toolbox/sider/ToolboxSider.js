@@ -10,7 +10,7 @@ function ToolboxSider() {
     const appApi = useAppApi();
     const instanceApi = useInstanceApi();
 
-    const [openKeys, setOpenKeys] = useState(['tools']);
+    const [openKeys, setOpenKeys] = useState(['tools', 'graphs']);
 
     const onSelect = event => {
         appApi.setSelectedToolId(event.key);
@@ -70,6 +70,13 @@ function ToolboxSider() {
                     <Menu.Item key="terminal">
                         <Icon icon="terminal" text="Terminal" />
                     </Menu.Item>
+                    <Menu.SubMenu
+                        key="graphs"
+                        title={createCategorySubMenu('Graphs', 'chart-line', () => onOpenChange('graphs'))}>
+                        <Menu.Item key="graphs:connections">
+                            <Icon icon="chart-line" text="Connections" />
+                        </Menu.Item>
+                    </Menu.SubMenu>
                 </Menu.SubMenu>
             </Menu>
         </div>

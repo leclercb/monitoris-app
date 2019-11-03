@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Empty, Input, Table } from 'antd';
+import Panel from 'components/common/Panel';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
 
@@ -22,11 +23,9 @@ function InfoTool() {
 
     if (!instanceStateApi.lastInfo) {
         return (
-            <div style={{ minHeight: '100%', padding: 25 }}>
-                <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
-                    <Empty description="No data to display" />
-                </div>
-            </div>
+            <Panel.Sub>
+                <Empty description="No data to display" />
+            </Panel.Sub>
         );
     }
 
@@ -54,27 +53,25 @@ function InfoTool() {
     }));
 
     return (
-        <div style={{ minHeight: '100%', padding: 25 }}>
-            <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
-                <Input.Search
-                    allowClear={true}
-                    onSearch={value => setSearchValue(value)}
-                    style={{
-                        width: 400,
-                        marginBottom: 20
-                    }} />
-                <Button
-                    onClick={refresh}
-                    style={{ marginLeft: 10 }}>
-                    Refresh
+        <Panel.Sub>
+            <Input.Search
+                allowClear={true}
+                onSearch={value => setSearchValue(value)}
+                style={{
+                    width: 400,
+                    marginBottom: 20
+                }} />
+            <Button
+                onClick={refresh}
+                style={{ marginLeft: 10 }}>
+                Refresh
             </Button>
-                <Table
-                    dataSource={dataSource}
-                    columns={columns}
-                    pagination={false}
-                    size="small" />
-            </div>
-        </div>
+            <Table
+                dataSource={dataSource}
+                columns={columns}
+                pagination={false}
+                size="small" />
+        </Panel.Sub>
     );
 }
 

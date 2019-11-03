@@ -1,8 +1,10 @@
 import React from 'react';
 import { Empty } from 'antd';
 import SplitPane from 'react-split-pane';
+import Panel from 'components/common/Panel';
 import InfoTool from 'components/toolbox/tools/InfoTool';
 import TerminalTool from 'components/toolbox/tools/TerminalTool';
+import Connections from 'components/toolbox/tools/graphs/Connections';
 import ToolboxSider from 'components/toolbox/sider/ToolboxSider';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
@@ -22,11 +24,9 @@ function ToolboxView() {
     const getToolFromId = () => {
         if (!instanceId) {
             return (
-                <div style={{ minHeight: '100%', padding: 25 }}>
-                    <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
-                        <Empty description="Please select an instance" />
-                    </div>
-                </div>
+                <Panel.Sub>
+                    <Empty description="Please select an instance" />
+                </Panel.Sub>
             );
         }
 
@@ -35,8 +35,14 @@ function ToolboxView() {
                 return (<InfoTool />);
             case 'terminal':
                 return (<TerminalTool />);
+            case 'graphs:connections':
+                return (<Connections instanceId={instanceId} />);
             default:
-                return (<Empty />);
+                return (
+                    <Panel.Sub>
+                        <Empty description="Please select a tool" />
+                    </Panel.Sub>
+                );
         }
     };
 
@@ -48,8 +54,10 @@ function ToolboxView() {
             onDragFinished={size => onToolboxViewSplitPaneSizeChange(size)}
             paneStyle={{ overflowY: 'auto' }}>
             <ToolboxSider />
-            {getToolFromId()}
-        </SplitPane >
+            <Panel.Main>
+                {getToolFromId()}
+            </Panel.Main>
+        </SplitPane>
     );
 }
 

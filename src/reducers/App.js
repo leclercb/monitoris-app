@@ -7,7 +7,7 @@ const App = () => (state = {
     selectedAlertId: null,
     selectedInstanceId: null,
     selectedDashboardId: null,
-    selectedToolId: 'scan',
+    selectedToolId: 'info',
     joyride: {
         id: null,
         run: false
