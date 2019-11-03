@@ -2,6 +2,7 @@ import React from 'react';
 import { Empty } from 'antd';
 import SplitPane from 'react-split-pane';
 import Panel from 'components/common/Panel';
+import ClientTool from 'components/toolbox/tools/ClientTool';
 import InfoTool from 'components/toolbox/tools/InfoTool';
 import TerminalTool from 'components/toolbox/tools/TerminalTool';
 import Connections from 'components/toolbox/tools/graphs/Connections';
@@ -33,6 +34,8 @@ function ToolboxView() {
         switch (appApi.selectedToolId) {
             case 'info':
                 return (<InfoTool />);
+            case 'clients':
+                return (<ClientTool />);
             case 'terminal':
                 return (<TerminalTool />);
             case 'graphs:connections':

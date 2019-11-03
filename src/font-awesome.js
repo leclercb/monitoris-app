@@ -52,7 +52,8 @@ import {
     faTerminal,
     faTools,
     faTrashAlt,
-    faUser
+    faUser,
+    faUsers
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faAt);
@@ -107,3 +108,4 @@ library.add(faTerminal);
 library.add(faTools);
 library.add(faTrashAlt);
 library.add(faUser);
+library.add(faUsers);

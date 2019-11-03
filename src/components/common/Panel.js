@@ -26,7 +26,9 @@ export function Sub({ children, backgroundColor, grow }) {
         backgroundColor: backgroundColor || '#ffffff',
         borderRadius: 5,
         padding: 25,
-        marginBottom: 25
+        marginBottom: 25,
+        maxWidth: '100%',
+        overflow: 'auto'
     };
 
     if (grow) {

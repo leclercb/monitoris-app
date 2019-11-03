@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography } from 'antd';
 import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
 import moment from 'moment';
@@ -12,19 +12,21 @@ function Connections({ instanceId }) {
     const instanceApi = useInstanceApi();
     const instanceStateApi = useInstanceStateApi(instanceId);
 
+    useEffect(() => {
+        instanceApi.getInfo(instanceId);
+    }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
+
     useInterval(() => {
         instanceApi.getInfo(instanceId);
     }, 10000);
 
     const data = instanceStateApi.allInfo.map(info => ({
-        seconds: moment(info.timestamp).diff(moment(), 'seconds'),
+        timestamp: moment(info.timestamp).unix(),
         connectedClients: Number.parseInt(info.connected_clients)
     }));
 
     const cols = {
-        seconds: {
-            max: 0
-        },
+        timestamp: {},
         connectedClients: {}
     };
 
@@ -34,9 +36,15 @@ function Connections({ instanceId }) {
             <Chart height={400} data={data} scale={cols} forceFit>
                 <Legend />
                 <Axis
-                    name="seconds"
+                    name="timestamp"
                     label={{
-                        formatter: val => `${val * -1} sec. ago`
+                        formatter: value => {
+                            if (/^[0-9]+$/.test(value)) {
+                                return `${moment(value * 1000).format('HH:mm:ss')}`;
+                            }
+
+                            return '';
+                        }
                     }} />
                 <Axis
                     name="connectedClients" />
@@ -46,11 +54,11 @@ function Connections({ instanceId }) {
                     }} />
                 <Geom
                     type="line"
-                    position="seconds*connectedClients"
+                    position="timestamp*connectedClients"
                     size={2} />
                 <Geom
                     type="point"
-                    position="seconds*connectedClients"
+                    position="timestamp*connectedClients"
                     size={4}
                     shape={'circle'}
                     style={{

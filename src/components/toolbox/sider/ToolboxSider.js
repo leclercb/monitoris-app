@@ -67,6 +67,9 @@ function ToolboxSider() {
                     <Menu.Item key="info">
                         <Icon icon="info-circle" text="Show Info" />
                     </Menu.Item>
+                    <Menu.Item key="clients">
+                        <Icon icon="users" text="Clients" />
+                    </Menu.Item>
                     <Menu.Item key="terminal">
                         <Icon icon="terminal" text="Terminal" />
                     </Menu.Item>

@@ -14,7 +14,7 @@ import { updateProcess } from 'actions/ThreadActions';
 import { getConfig } from 'config/Config';
 import Constants from 'constants/Constants';
 import { getErrorMessages } from 'utils/CloudUtils';
-import { parseRedisString } from 'utils/FormatUtils';
+import { parseRedisInfo } from 'utils/FormatUtils';
 
 export function loadInstancesFromServer() {
     return loadObjectsFromServer('instances');
@@ -113,7 +113,7 @@ export function getInfo(instanceId) {
                     responseType: 'text'
                 });
 
-            const info = parseRedisString(result.data);
+            const info = parseRedisInfo(result.data);
 
             await dispatch({
                 type: 'ADD_INFO',
