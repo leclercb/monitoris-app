@@ -68,6 +68,9 @@ function GraphConnections({ instanceId }) {
                         <Tooltip
                             crosshairs={{
                                 type: 'y'
+                            }}
+                            g2-tooltip={{
+                                width: '200px'
                             }} />
                         <Geom
                             type="line"

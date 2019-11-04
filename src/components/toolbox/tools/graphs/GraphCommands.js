@@ -8,7 +8,7 @@ import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
 import { parseRedisSubString } from 'utils/FormatUtils';
 
-function GraphConnections({ instanceId }) {
+function GraphCommands({ instanceId }) {
     const instanceApi = useInstanceApi();
     const instanceStateApi = useInstanceStateApi(instanceId);
 
@@ -41,6 +41,9 @@ function GraphConnections({ instanceId }) {
         },
         calls: {
             alias: 'Calls'
+        },
+        usecPerCall: {
+            alias: 'Usec Per Call'
         }
     };
 
@@ -57,17 +60,33 @@ function GraphConnections({ instanceId }) {
                             }} />
                         <Axis
                             name="calls"
+                            position="left"
+                            title={{
+                                autoRotate: true
+                            }} />
+                        <Axis
+                            name="usecPerCall"
+                            position="right"
                             title={{
                                 autoRotate: true
                             }} />
                         <Tooltip
                             crosshairs={{
                                 type: 'y'
+                            }}
+                            g2-tooltip={{
+                                width: '200px'
                             }} />
                         <Geom
                             type="interval"
                             position="command*calls"
-                            color="command" />
+                            color="#44a2fc" />
+                        <Geom
+                            type="interval"
+                            position="command*usecPerCall"
+                            color="#fad34b"
+                            opacity={1}
+                            size={5} />
                     </Chart>
                 )}
             </AutoSizer>
@@ -75,8 +94,8 @@ function GraphConnections({ instanceId }) {
     );
 }
 
-GraphConnections.propTypes = {
+GraphCommands.propTypes = {
     instanceId: PropTypes.string.isRequired
 };
 
-export default GraphConnections;
+export default GraphCommands;
