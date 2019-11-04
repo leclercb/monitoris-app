@@ -96,12 +96,6 @@ export function getInfo(instanceId) {
     return async dispatch => {
         const processId = uuid();
 
-        dispatch(updateProcess({
-            id: processId,
-            state: 'RUNNING',
-            title: 'Get info from server'
-        }));
-
         try {
             const result = await sendRequest(
                 {
@@ -121,11 +115,6 @@ export function getInfo(instanceId) {
                 timestamp: moment().toISOString(),
                 info
             });
-
-            dispatch(updateProcess({
-                id: processId,
-                state: 'COMPLETED'
-            }));
 
             return info;
         } catch (error) {

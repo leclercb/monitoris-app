@@ -2,6 +2,7 @@ import React from 'react';
 import { Empty } from 'antd';
 import SplitPane from 'react-split-pane';
 import Panel from 'components/common/Panel';
+import EmptyInstance from 'components/common/empty/EmptyInstance';
 import ClientTool from 'components/toolbox/tools/ClientTool';
 import InfoTool from 'components/toolbox/tools/InfoTool';
 import TerminalTool from 'components/toolbox/tools/TerminalTool';
@@ -26,7 +27,7 @@ function ToolboxView() {
         if (!instanceId) {
             return (
                 <Panel.Sub>
-                    <Empty description="Please select an instance" />
+                    <EmptyInstance />
                 </Panel.Sub>
             );
         }

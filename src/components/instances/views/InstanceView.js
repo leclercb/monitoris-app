@@ -1,7 +1,7 @@
 import React from 'react';
-import { Empty } from 'antd';
 import SplitPane from 'react-split-pane';
 import Panel from 'components/common/Panel';
+import EmptyInstance from 'components/common/empty/EmptyInstance';
 import InstanceEdition from 'components/instances/common/InstanceEdition';
 import InstanceSider from 'components/instances/sider/InstanceSider';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
@@ -26,8 +26,11 @@ function InstanceView() {
             <Panel.Main>
                 <Panel.Sub>
                     {instanceApi.selectedInstance ? (
-                        <InstanceEdition key={instanceApi.selectedInstanceId} instance={instanceApi.selectedInstance} updateInstance={instanceApi.updateInstance} />
-                    ) : <Empty description="Please select an alert" />}
+                        <InstanceEdition
+                            key={instanceApi.selectedInstanceId}
+                            instance={instanceApi.selectedInstance}
+                            updateInstance={instanceApi.updateInstance} />
+                    ) : (<EmptyInstance />)}
                 </Panel.Sub>
             </Panel.Main>
         </SplitPane>

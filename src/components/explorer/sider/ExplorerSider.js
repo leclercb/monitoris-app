@@ -104,9 +104,6 @@ function ExplorerSider({ keys, setKeys, selectedObject, setSelectedObject }) {
                             style={{ width: '100%' }} />
                     </LeftRight>
                 </div>
-                {!instanceId && (
-                    <Empty description="Please select an instance" />
-                )}
                 {!!instanceId && (
                     <div className="explorer-sider-element">
                         <LeftRight right={(

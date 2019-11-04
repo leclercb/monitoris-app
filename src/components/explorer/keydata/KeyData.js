@@ -3,6 +3,8 @@ import { Button, Descriptions, Divider, Empty, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
+import EmptyInstance from 'components/common/empty/EmptyInstance';
+import EmptyKey from 'components/common/empty/EmptyKey';
 import HashValue from 'components/explorer/keydata/HashValue';
 import ListValue from 'components/explorer/keydata/ListValue';
 import SetValue from 'components/explorer/keydata/SetValue';
@@ -67,10 +69,18 @@ function KeyData({ object, onKeyDeleted }) {
         }
     };
 
+    if (!instanceId) {
+        return (
+            <Panel.Sub>
+                <EmptyInstance />
+            </Panel.Sub>
+        );
+    }
+
     if (!redisKey) {
         return (
             <Panel.Sub>
-                <Empty description="Please select a key" />
+                <EmptyKey />
             </Panel.Sub>
         );
     }

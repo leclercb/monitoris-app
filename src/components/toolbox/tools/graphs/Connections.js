@@ -27,9 +27,15 @@ function Connections({ instanceId }) {
     }));
 
     const cols = {
-        timestamp: {},
-        connectedClients: {},
-        blockedClients: {}
+        timestamp: {
+            alias: 'Timestamp'
+        },
+        connectedClients: {
+            alias: 'Connected Clients'
+        },
+        blockedClients: {
+            alias: 'Blocked Clients'
+        }
     };
 
     return (
@@ -70,6 +76,7 @@ function Connections({ instanceId }) {
                     type="point"
                     position="timestamp*connectedClients"
                     size={4}
+                    color="#44a2fc"
                     shape={'circle'}
                     style={{
                         stroke: '#fff',
@@ -79,6 +86,7 @@ function Connections({ instanceId }) {
                     type="point"
                     position="timestamp*blockedClients"
                     size={4}
+                    color="#fad34b"
                     shape={'circle'}
                     style={{
                         stroke: '#fff',
