@@ -20,7 +20,7 @@ function SetValue({ redisKey, length, setLength }) {
     const [modalFieldFormVisible, setModalFieldFormVisible] = useState(false);
 
     const executeScan = async value => {
-        const parameters = [redisKey, scanResult ? scanResult[0] : '0', 'MATCH', value, 'COUNT', BATCH_SIZE];
+        const parameters = [redisKey, scanResult ? scanResult[0] : 0, 'MATCH', value, 'COUNT', BATCH_SIZE];
         const result = await instanceApi.executeCommand(instanceId, db, 'sscan', parameters);
         return result;
     };

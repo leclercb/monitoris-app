@@ -28,7 +28,7 @@ function ExplorerSider({ keys, setKeys, selectedObject, setSelectedObject }) {
     }, [instanceId, db]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const executeScan = async value => {
-        const parameters = [scanResult ? scanResult[0] : '0', 'MATCH', value, 'COUNT', BATCH_SIZE];
+        const parameters = [scanResult ? scanResult[0] : 0, 'MATCH', value, 'COUNT', BATCH_SIZE];
         const result = await instanceApi.executeCommand(instanceId, db, 'scan', parameters);
         return result;
     };

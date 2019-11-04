@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 import CellRenderer from 'components/common/table/CellRenderer';
 import { ResizableAndMovableColumn, moveHandler, resizeHandler } from 'components/common/table/ResizableAndMovableColumn';
+import { multiSelectionHandler } from 'components/common/table/VirtualizedTable';
+import Constants from 'constants/Constants';
 import { getWidthForType } from 'data/DataFieldTypes';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { getRowBackgroundColor } from 'utils/SettingUtils';
 
-function ClientTable({ clients, orderSettingPrefix, widthSettingPrefix }) {
+function ClientTable({ clients, selectedClientIds, setSelectedClientIds, orderSettingPrefix, widthSettingPrefix }) {
     const settingsApi = useSettingsApi();
 
     const fields = [
@@ -136,14 +138,24 @@ function ClientTable({ clients, orderSettingPrefix, widthSettingPrefix }) {
                             return {};
                         }
 
-                        const foregroundColor = 'initial';
-                        const backgroundColor = getRowBackgroundColor(index, settingsApi.settings);
+                        let foregroundColor = 'initial';
+                        let backgroundColor = getRowBackgroundColor(index, settingsApi.settings);
+
+                        if (selectedClientIds.includes(client.id)) {
+                            foregroundColor = Constants.selectionForegroundColor;
+                            backgroundColor = Constants.selectionBackgroundColor;
+                        }
 
                         return {
                             color: foregroundColor,
                             backgroundColor
                         };
-                    }}>
+                    }}
+                    onRowClick={multiSelectionHandler(
+                        rowData => rowData.id,
+                        clients,
+                        selectedClientIds,
+                        setSelectedClientIds)}>
                     {columns}
                 </Table>
             )}
@@ -153,6 +165,8 @@ function ClientTable({ clients, orderSettingPrefix, widthSettingPrefix }) {
 
 ClientTable.propTypes = {
     clients: PropTypes.array.isRequired,
+    selectedClientIds: PropTypes.array.isRequired,
+    setSelectedClientIds: PropTypes.func.isRequired,
     orderSettingPrefix: PropTypes.string.isRequired,
     widthSettingPrefix: PropTypes.string.isRequired
 };

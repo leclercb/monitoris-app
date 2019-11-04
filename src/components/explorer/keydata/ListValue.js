@@ -19,7 +19,7 @@ function ListValue({ redisKey, length, setLength }) {
 
     const getItems = async () => {
         if (instanceId && redisKey) {
-            const result = await instanceApi.executeCommand(instanceId, db, 'lrange', [redisKey, String(endIndex), String(endIndex + BATCH_SIZE - 1)]);
+            const result = await instanceApi.executeCommand(instanceId, db, 'lrange', [redisKey, endIndex, endIndex + BATCH_SIZE - 1]);
             setItems([
                 ...items,
                 ...result
