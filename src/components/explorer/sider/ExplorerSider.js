@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Empty, Input, InputNumber, Tooltip } from 'antd';
+import { Button, Input, InputNumber, Tooltip } from 'antd';
 import PropTypes from 'prop-types';
 import { AutoSizer, List } from 'react-virtualized';
 import Icon from 'components/common/Icon';
@@ -173,7 +173,7 @@ function ExplorerSider({ keys, setKeys, selectedObject, setSelectedObject }) {
 ExplorerSider.propTypes = {
     keys: PropTypes.array.isRequired,
     setKeys: PropTypes.func.isRequired,
-    selectedObject: PropTypes.object.isRequired,
+    selectedObject: PropTypes.object,
     setSelectedObject: PropTypes.func.isRequired
 };
 

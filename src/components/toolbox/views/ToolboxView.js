@@ -6,7 +6,8 @@ import EmptyInstance from 'components/common/empty/EmptyInstance';
 import ClientTool from 'components/toolbox/tools/ClientTool';
 import InfoTool from 'components/toolbox/tools/InfoTool';
 import TerminalTool from 'components/toolbox/tools/TerminalTool';
-import Connections from 'components/toolbox/tools/graphs/Connections';
+import GraphConnections from 'components/toolbox/tools/graphs/GraphConnections';
+import GraphCommands from 'components/toolbox/tools/graphs/GraphCommands';
 import ToolboxSider from 'components/toolbox/sider/ToolboxSider';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
@@ -40,7 +41,9 @@ function ToolboxView() {
             case 'terminal':
                 return (<TerminalTool />);
             case 'graphs:connections':
-                return (<Connections instanceId={instanceId} />);
+                return (<GraphConnections instanceId={instanceId} />);
+            case 'graphs:commands':
+                return (<GraphCommands instanceId={instanceId} />);
             default:
                 return (
                     <Panel.Sub>

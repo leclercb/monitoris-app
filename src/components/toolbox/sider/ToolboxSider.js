@@ -79,6 +79,9 @@ function ToolboxSider() {
                         <Menu.Item key="graphs:connections">
                             <Icon icon="chart-line" text="Connections" />
                         </Menu.Item>
+                        <Menu.Item key="graphs:commands">
+                            <Icon icon="chart-line" text="Commands" />
+                        </Menu.Item>
                     </Menu.SubMenu>
                 </Menu.SubMenu>
             </Menu>

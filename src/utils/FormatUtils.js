@@ -50,3 +50,21 @@ export function parseRedisString(value) {
 
     return result;
 }
+
+export function parseRedisSubString(value) {
+    const tokens = value.split(',');
+    const result = {};
+
+    tokens.forEach(token => {
+        if (!token.includes('=')) {
+            return;
+        }
+
+        const key = token.substring(0, token.indexOf('='));
+        const value = token.substring(token.indexOf('=') + 1);
+
+        result[key] = value;
+    });
+
+    return result;
+}

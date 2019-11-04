@@ -3,11 +3,7 @@ import { Empty } from 'antd';
 
 function EmptyInstance() {
     return (
-        <Empty description={(
-            <div>
-                <p>Please select a key</p>
-            </div>
-        )} />
+        <Empty description="Please select a key" />
     );
 }
 

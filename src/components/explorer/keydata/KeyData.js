@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Descriptions, Divider, Empty, Popconfirm } from 'antd';
+import { Button, Descriptions, Divider, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';

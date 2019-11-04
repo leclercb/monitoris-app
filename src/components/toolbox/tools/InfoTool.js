@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Empty, Input, Table } from 'antd';
+import LeftRight from 'components/common/LeftRight';
 import Panel from 'components/common/Panel';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
@@ -53,25 +54,32 @@ function InfoTool() {
     }));
 
     return (
-        <Panel.Sub>
-            <Input.Search
-                allowClear={true}
-                onSearch={value => setSearchValue(value)}
-                style={{
-                    width: 400,
-                    marginBottom: 20
-                }} />
-            <Button
-                onClick={refresh}
-                style={{ marginLeft: 10 }}>
-                Refresh
+        <React.Fragment>
+            <Panel.Sub>
+                <LeftRight right={(
+                    <span>{`Refreshed on: ${instanceStateApi.lastInfo.timestamp}`}</span>
+                )}>
+                    <Input.Search
+                        allowClear={true}
+                        onSearch={value => setSearchValue(value)}
+                        style={{
+                            width: 400
+                        }} />
+                    <Button
+                        onClick={refresh}
+                        style={{ margin: '0px 10px' }}>
+                        Refresh
             </Button>
-            <Table
-                dataSource={dataSource}
-                columns={columns}
-                pagination={false}
-                size="small" />
-        </Panel.Sub>
+                </LeftRight>
+            </Panel.Sub>
+            <Panel.Sub>
+                <Table
+                    dataSource={dataSource}
+                    columns={columns}
+                    pagination={false}
+                    size="small" />
+            </Panel.Sub>
+        </React.Fragment>
     );
 }
 
