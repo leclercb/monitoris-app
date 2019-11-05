@@ -64,7 +64,7 @@ function StringValue({ redisKey, refresh, length }) {
     }
 
     return (
-        <Panel.Flex>
+        <React.Fragment>
             <Panel.Grow>
                 <SyntaxHighlighter
                     language={language}
@@ -95,7 +95,7 @@ function StringValue({ redisKey, refresh, length }) {
                     <Select.Option value="xml">XML</Select.Option>
                 </Select>
             </Panel.Standard>
-        </Panel.Flex>
+        </React.Fragment>
     );
 }
 

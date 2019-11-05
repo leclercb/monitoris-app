@@ -24,7 +24,7 @@ function InstanceView() {
             paneStyle={{ overflowY: 'auto' }}>
             <InstanceSider />
             <Panel.Main>
-                <Panel.Sub>
+                <Panel.Sub grow>
                     {instanceApi.selectedInstance ? (
                         <InstanceEdition
                             key={instanceApi.selectedInstanceId}

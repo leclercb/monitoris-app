@@ -124,7 +124,7 @@ function HashValue({ redisKey, refresh }) {
     ];
 
     return (
-        <Panel.Flex>
+        <React.Fragment>
             <ModalFieldForm
                 fields={fields}
                 title={(<Icon icon="key" text="Add Item" />)}
@@ -177,7 +177,7 @@ function HashValue({ redisKey, refresh }) {
                     </LeftRight>
                 </div>
             </Panel.Standard>
-        </Panel.Flex>
+        </React.Fragment>
     );
 }
 

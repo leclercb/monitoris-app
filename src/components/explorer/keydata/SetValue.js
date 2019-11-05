@@ -97,7 +97,7 @@ function SetValue({ redisKey, refresh }) {
     ];
 
     return (
-        <Panel.Flex>
+        <React.Fragment>
             <ModalFieldForm
                 fields={fields}
                 title={(<Icon icon="key" text="Add Member" />)}
@@ -150,7 +150,7 @@ function SetValue({ redisKey, refresh }) {
                     </LeftRight>
                 </div>
             </Panel.Standard>
-        </Panel.Flex>
+        </React.Fragment>
     );
 }
 

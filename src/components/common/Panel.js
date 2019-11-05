@@ -23,6 +23,8 @@ Main.propTypes = {
 
 export function Sub({ children, backgroundColor, grow }) {
     const style = {
+        display: 'flex',
+        flexDirection: 'column',
         backgroundColor: backgroundColor || '#ffffff',
         borderRadius: 5,
         padding: 25,
@@ -47,24 +49,6 @@ Sub.propTypes = {
     children: PropTypes.node,
     backgroundColor: PropTypes.string,
     grow: PropTypes.bool
-};
-
-export function Flex({ children }) {
-    const style = {
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100%'
-    };
-
-    return (
-        <div style={style}>
-            {children}
-        </div>
-    );
-}
-
-Flex.propTypes = {
-    children: PropTypes.node
 };
 
 export function Grow({ children }) {
@@ -106,7 +90,6 @@ Standard.propTypes = {
 export default {
     Main,
     Sub,
-    Flex,
     Grow,
     Standard
 };

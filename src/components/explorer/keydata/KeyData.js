@@ -112,15 +112,17 @@ function KeyData({ object, onKeyDeleted }) {
                 {valueElement}
             </Panel.Sub>
             <Panel.Sub>
-                <Popconfirm
-                    title={`Do you really want to delete the key "${redisKey}" ?`}
-                    onConfirm={deleteKey}
-                    okText="Yes"
-                    cancelText="No">
-                    <Button>
-                        <Icon icon="trash-alt" text="Delete key" />
-                    </Button>
-                </Popconfirm>
+                <Panel.Standard>
+                    <Popconfirm
+                        title={`Do you really want to delete the key "${redisKey}" ?`}
+                        onConfirm={deleteKey}
+                        okText="Yes"
+                        cancelText="No">
+                        <Button>
+                            <Icon icon="trash-alt" text="Delete key" />
+                        </Button>
+                    </Popconfirm>
+                </Panel.Standard>
             </Panel.Sub>
         </React.Fragment>
     );

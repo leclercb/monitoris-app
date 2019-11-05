@@ -83,7 +83,7 @@ function ListValue({ redisKey, refresh }) {
     ];
 
     return (
-        <Panel.Flex>
+        <React.Fragment>
             <ModalFieldForm
                 fields={fields}
                 title={(<Icon icon="key" text="Add Element" />)}
@@ -124,7 +124,7 @@ function ListValue({ redisKey, refresh }) {
             </Button>
                 </div>
             </Panel.Standard>
-        </Panel.Flex>
+        </React.Fragment>
     );
 }
 

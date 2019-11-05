@@ -57,7 +57,7 @@ function ClientTool() {
                         onClick={refresh}
                         style={{ marginLeft: 10 }}>
                         Refresh
-                </PromiseButton>
+                        </PromiseButton>
                 </LeftRight>
             </Panel.Sub>
             <Panel.Sub grow>
@@ -69,29 +69,31 @@ function ClientTool() {
                     widthSettingPrefix="clientColumnWidth_" />
             </Panel.Sub>
             <Panel.Sub>
-                <Popconfirm
-                    title={`Do you really want to unblock the client ${selectedClientIds[0]} ?`}
-                    onConfirm={() => onUnblock(selectedClientIds[0])}
-                    okText="Yes"
-                    cancelText="No"
-                    disabled={selectedClientIds.length === 0}>
-                    <Button
+                <Panel.Standard>
+                    <Popconfirm
+                        title={`Do you really want to unblock the client ${selectedClientIds[0]} ?`}
+                        onConfirm={() => onUnblock(selectedClientIds[0])}
+                        okText="Yes"
+                        cancelText="No"
                         disabled={selectedClientIds.length === 0}>
-                        <Icon icon="trash-alt" text="Unblock" />
-                    </Button>
-                </Popconfirm>
-                <Spacer />
-                <Popconfirm
-                    title={`Do you really want to kill the client ${selectedClientIds[0]} ?`}
-                    onConfirm={() => onKill(selectedClientIds[0])}
-                    okText="Yes"
-                    cancelText="No"
-                    disabled={selectedClientIds.length === 0}>
-                    <Button
+                        <Button
+                            disabled={selectedClientIds.length === 0}>
+                            <Icon icon="trash-alt" text="Unblock" />
+                        </Button>
+                    </Popconfirm>
+                    <Spacer />
+                    <Popconfirm
+                        title={`Do you really want to kill the client ${selectedClientIds[0]} ?`}
+                        onConfirm={() => onKill(selectedClientIds[0])}
+                        okText="Yes"
+                        cancelText="No"
                         disabled={selectedClientIds.length === 0}>
-                        <Icon icon="trash-alt" text="Kill" />
-                    </Button>
-                </Popconfirm>
+                        <Button
+                            disabled={selectedClientIds.length === 0}>
+                            <Icon icon="trash-alt" text="Kill" />
+                        </Button>
+                    </Popconfirm>
+                </Panel.Standard>
             </Panel.Sub>
         </React.Fragment>
     );
