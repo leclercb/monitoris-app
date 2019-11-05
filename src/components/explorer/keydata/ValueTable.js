@@ -1,14 +1,16 @@
 import React from 'react';
 import sortBy from 'lodash/sortBy';
 import PropTypes from 'prop-types';
-import { Column, Table } from 'react-virtualized';
+import { AutoSizer, Column, Table } from 'react-virtualized';
+import { multiSelectionHandler } from 'components/common/table/VirtualizedTable';
 import CellRenderer from 'components/common/table/CellRenderer';
 import { ResizableAndMovableColumn, moveHandler, resizeHandler } from 'components/common/table/ResizableAndMovableColumn';
+import Constants from 'constants/Constants';
 import { getWidthForType } from 'data/DataFieldTypes';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { getRowBackgroundColor } from 'utils/SettingUtils';
 
-function ValueTable({ fields, items, updateItem, orderSettingPrefix, widthSettingPrefix }) {
+function ValueTable({ fields, items, updateItem, selectedItemIds, setSelectedItemIds, orderSettingPrefix, widthSettingPrefix }) {
     const settingsApi = useSettingsApi();
 
     let tableWidth = 0;
@@ -57,30 +59,44 @@ function ValueTable({ fields, items, updateItem, orderSettingPrefix, widthSettin
     });
 
     return (
-        <Table
-            width={tableWidth}
-            height={150}
-            rowHeight={32}
-            headerHeight={20}
-            rowCount={items.length}
-            rowGetter={({ index }) => items[index]}
-            rowStyle={({ index }) => {
-                const item = items[index];
+        <AutoSizer>
+            {({ height }) => (
+                <Table
+                    width={tableWidth}
+                    height={height}
+                    rowHeight={32}
+                    headerHeight={20}
+                    rowCount={items.length}
+                    rowGetter={({ index }) => items[index]}
+                    rowStyle={({ index }) => {
+                        const item = items[index];
 
-                if (!item) {
-                    return {};
-                }
+                        if (!item) {
+                            return {};
+                        }
 
-                const foregroundColor = 'initial';
-                const backgroundColor = getRowBackgroundColor(index, settingsApi.settings);
+                        let foregroundColor = 'initial';
+                        let backgroundColor = getRowBackgroundColor(index, settingsApi.settings);
 
-                return {
-                    color: foregroundColor,
-                    backgroundColor
-                };
-            }}>
-            {columns}
-        </Table>
+                        if (selectedItemIds.includes(item.id)) {
+                            foregroundColor = Constants.selectionForegroundColor;
+                            backgroundColor = Constants.selectionBackgroundColor;
+                        }
+
+                        return {
+                            color: foregroundColor,
+                            backgroundColor
+                        };
+                    }}
+                    onRowClick={multiSelectionHandler(
+                        rowData => rowData.id,
+                        items,
+                        selectedItemIds,
+                        setSelectedItemIds)}>
+                    {columns}
+                </Table>
+            )}
+        </AutoSizer>
     );
 }
 
@@ -88,6 +104,8 @@ ValueTable.propTypes = {
     fields: PropTypes.array.isRequired,
     items: PropTypes.array.isRequired,
     updateItem: PropTypes.func.isRequired,
+    selectedItemIds: PropTypes.array.isRequired,
+    setSelectedItemIds: PropTypes.func.isRequired,
     orderSettingPrefix: PropTypes.string.isRequired,
     widthSettingPrefix: PropTypes.string.isRequired
 };

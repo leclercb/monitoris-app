@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input } from 'antd';
+import { Button, Input, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
 import LeftRight from 'components/common/LeftRight';
+import Panel from 'components/common/Panel';
+import Spacer from 'components/common/Spacer';
 import ModalFieldForm from 'components/explorer/common/ModalFieldForm';
 import ValueTable from 'components/explorer/keydata/ValueTable';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 
 const BATCH_SIZE = 100;
 
-function SetValue({ redisKey, length, setLength }) {
+function SetValue({ redisKey, refresh }) {
     const instanceApi = useInstanceApi();
 
     const instanceId = instanceApi.selectedInstanceId;
     const db = instanceApi.selectedDb;
     const [items, setItems] = useState([]);
+    const [selectedItemIds, setSelectedItemIds] = useState([]);
     const [scanResult, setScanResult] = useState(null);
     const [searchValue, setSearchValue] = useState('*');
     const [modalFieldFormVisible, setModalFieldFormVisible] = useState(false);
 
-    const executeScan = async value => {
+    const executeScan = async (value, scanResult) => {
         const parameters = [redisKey, scanResult ? scanResult[0] : 0, 'MATCH', value, 'COUNT', BATCH_SIZE];
         const result = await instanceApi.executeCommand(instanceId, db, 'sscan', parameters);
         return result;
@@ -29,7 +32,7 @@ function SetValue({ redisKey, length, setLength }) {
         setSearchValue(value);
 
         if (instanceId) {
-            const result = await executeScan(value);
+            const result = await executeScan(value, null);
             setScanResult(result);
             setItems(result[1].map(item => ({
                 id: item,
@@ -40,53 +43,37 @@ function SetValue({ redisKey, length, setLength }) {
 
     const continueScanning = async () => {
         if (instanceId && scanResult) {
-            const result = await executeScan(searchValue);
+            const result = await executeScan(searchValue, scanResult);
             setScanResult(result);
             setItems([
                 ...items,
-                ...result[1]
-            ].map(item => ({
-                id: item,
-                value: item
-            })));
+                ...result[1].map(item => ({
+                    id: item,
+                    value: item
+                }))
+            ]);
         }
     };
 
-    const addItem = async (item) => {
+    const addItem = async item => {
         await instanceApi.executeCommand(instanceId, db, 'sadd', [redisKey, item.value]);
-
-        item.id = item.value;
-
-        const newItems = [...items];
-
-        if (items.find(i => i.id === item.id)) {
-            // Skip
-        } else {
-            newItems.push(item);
-            setLength(length + 1);
-        }
-
-        setItems(newItems);
-
+        await refresh();
+        await scan(searchValue);
         setModalFieldFormVisible(false);
     };
 
-    const updateItem = async (item, rowIndex) => {
+    const updateItem = async item => {
         await instanceApi.executeCommand(instanceId, db, 'srem', [redisKey, item.id]);
         await instanceApi.executeCommand(instanceId, db, 'sadd', [redisKey, item.value]);
+        await refresh();
+        await scan(searchValue);
+    };
 
-        item.id = item.value;
-
-        const newItems = [...items];
-
-        if (items.find(i => i.id === item.id)) {
-            newItems.splice(rowIndex, 1);
-            setLength(length - 1);
-        } else {
-            newItems[rowIndex] = item;
-        }
-
-        setItems(newItems);
+    const deleteItems = async () => {
+        const promises = selectedItemIds.map(id => instanceApi.executeCommand(instanceId, db, 'srem', [redisKey, id]));
+        await Promise.all(promises);
+        await refresh();
+        await scan(searchValue);
     };
 
     useEffect(() => {
@@ -110,49 +97,66 @@ function SetValue({ redisKey, length, setLength }) {
     ];
 
     return (
-        <React.Fragment>
+        <Panel.Flex>
             <ModalFieldForm
                 fields={fields}
-                title={(<Icon icon="key" text="Add Item" />)}
+                title={(<Icon icon="key" text="Add Member" />)}
                 visible={modalFieldFormVisible}
                 onOk={addItem}
                 onCancel={() => setModalFieldFormVisible(false)} />
-            <ValueTable
-                fields={fields}
-                items={items}
-                updateItem={updateItem}
-                orderSettingPrefix="setValueColumnOrder_"
-                widthSettingPrefix="setValueColumnWidth_" />
-            <div style={{ marginTop: 10 }}>
-                <Button
-                    onClick={() => setModalFieldFormVisible(true)}>
-                    <Icon icon="plus" text="Add Item" />
-                </Button>
-            </div>
-            <div style={{ marginTop: 10 }}>
-                <LeftRight right={(
+            <Panel.Grow>
+                <ValueTable
+                    fields={fields}
+                    items={items}
+                    updateItem={updateItem}
+                    selectedItemIds={selectedItemIds}
+                    setSelectedItemIds={setSelectedItemIds}
+                    orderSettingPrefix="setValueColumnOrder_"
+                    widthSettingPrefix="setValueColumnWidth_" />
+            </Panel.Grow>
+            <Panel.Standard>
+                <div style={{ marginTop: 10 }}>
                     <Button
-                        onClick={continueScanning}
-                        disabled={!scanResult || scanResult[0] === '0'}
-                        style={{ marginLeft: 10 }}>
-                        Continue Scanning
+                        onClick={() => setModalFieldFormVisible(true)}>
+                        <Icon icon="plus" text="Add Item" />
                     </Button>
-                )}>
-                    <Input.Search
-                        placeholder="Pattern"
-                        allowClear={true}
-                        defaultValue={searchValue}
-                        onSearch={value => scan(value)} />
-                </LeftRight>
-            </div>
-        </React.Fragment>
+                    <Spacer />
+                    <Popconfirm
+                        title={`Do you really want to delete the selected members ?`}
+                        onConfirm={deleteItems}
+                        okText="Yes"
+                        cancelText="No">
+                        <Button>
+                            <Icon icon="trash-alt" text="Remove Selected Member(s)" />
+                        </Button>
+                    </Popconfirm>
+                </div>
+            </Panel.Standard>
+            <Panel.Standard>
+                <div style={{ marginTop: 10 }}>
+                    <LeftRight right={(
+                        <Button
+                            onClick={continueScanning}
+                            disabled={!scanResult || scanResult[0] === '0'}
+                            style={{ marginLeft: 10 }}>
+                            Continue Scanning
+                    </Button>
+                    )}>
+                        <Input.Search
+                            placeholder="Pattern"
+                            allowClear={true}
+                            defaultValue={searchValue}
+                            onSearch={value => scan(value)} />
+                    </LeftRight>
+                </div>
+            </Panel.Standard>
+        </Panel.Flex>
     );
 }
 
 SetValue.propTypes = {
     redisKey: PropTypes.string.isRequired,
-    length: PropTypes.number,
-    setLength: PropTypes.func.isRequired
+    refresh: PropTypes.func.isRequired
 };
 
 export default SetValue;

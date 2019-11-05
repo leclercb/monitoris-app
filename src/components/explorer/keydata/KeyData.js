@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Descriptions, Divider, Popconfirm } from 'antd';
+import { Button, Descriptions, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
@@ -22,44 +22,48 @@ function KeyData({ object, onKeyDeleted }) {
     const [type, setType] = useState(null);
     const [length, setLength] = useState(0);
 
-    useEffect(() => {
-        const getData = async object => {
-            const redisKey = object ? object.key : null;
+    const getData = async object => {
+        const redisKey = object ? object.key : null;
 
-            if (instanceId && redisKey) {
-                let type = await instanceApi.executeCommand(instanceId, db, 'type', [redisKey]);
-                let length;
+        if (instanceId && redisKey) {
+            let type = await instanceApi.executeCommand(instanceId, db, 'type', [redisKey]);
+            let length;
 
-                switch (type) {
-                    case 'string':
-                        length = await instanceApi.executeCommand(instanceId, db, 'strlen', [redisKey]);
-                        break;
-                    case 'list':
-                        length = await instanceApi.executeCommand(instanceId, db, 'llen', [redisKey]);
-                        break;
-                    case 'set':
-                        length = await instanceApi.executeCommand(instanceId, db, 'scard', [redisKey]);
-                        break;
-                    case 'hash':
-                        length = await instanceApi.executeCommand(instanceId, db, 'hlen', [redisKey]);
-                        break;
-                    case 'none':
-                    default:
-                        length = 0;
-                        type = object ? object.type : null;
-                        break;
-                }
-
-                setType(type);
-                setLength(length);
+            switch (type) {
+                case 'string':
+                    length = await instanceApi.executeCommand(instanceId, db, 'strlen', [redisKey]);
+                    break;
+                case 'list':
+                    length = await instanceApi.executeCommand(instanceId, db, 'llen', [redisKey]);
+                    break;
+                case 'set':
+                    length = await instanceApi.executeCommand(instanceId, db, 'scard', [redisKey]);
+                    break;
+                case 'hash':
+                    length = await instanceApi.executeCommand(instanceId, db, 'hlen', [redisKey]);
+                    break;
+                case 'none':
+                default:
+                    length = 0;
+                    type = object ? object.type : null;
+                    break;
             }
-        };
 
+            setType(type);
+            setLength(length);
+        }
+    };
+
+    useEffect(() => {
         setRedisKey(object ? object.key : null);
         setType(null);
         setLength(0);
         getData(object);
     }, [object]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const refreshData = async () => {
+        await getData(object);
+    }
 
     const deleteKey = async () => {
         await instanceApi.executeCommand(instanceId, db, 'del', [redisKey]);
@@ -88,10 +92,10 @@ function KeyData({ object, onKeyDeleted }) {
     let valueElement;
 
     switch (type) {
-        case 'string': valueElement = (<StringValue redisKey={redisKey} length={length} setLength={setLength} />); break;
-        case 'list': valueElement = (<ListValue redisKey={redisKey} length={length} setLength={setLength} />); break;
-        case 'set': valueElement = (<SetValue redisKey={redisKey} length={length} setLength={setLength} />); break;
-        case 'hash': valueElement = (<HashValue redisKey={redisKey} length={length} setLength={setLength} />); break;
+        case 'string': valueElement = (<StringValue redisKey={redisKey} refresh={refreshData} length={length} />); break;
+        case 'list': valueElement = (<ListValue redisKey={redisKey} refresh={refreshData} />); break;
+        case 'set': valueElement = (<SetValue redisKey={redisKey} refresh={refreshData} />); break;
+        case 'hash': valueElement = (<HashValue redisKey={redisKey} refresh={refreshData} />); break;
         default: valueElement = null; break;
     }
 
@@ -103,7 +107,8 @@ function KeyData({ object, onKeyDeleted }) {
                     <Descriptions.Item label={(<strong>Type</strong>)}><RedisTypeTitle typeId={type} /></Descriptions.Item>
                     <Descriptions.Item label={(<strong>Length</strong>)}>{length}</Descriptions.Item>
                 </Descriptions>
-                <Divider>Value</Divider>
+            </Panel.Sub>
+            <Panel.Sub grow>
                 {valueElement}
             </Panel.Sub>
             <Panel.Sub>

@@ -3,9 +3,10 @@ import { Button, Input, Select } from 'antd';
 import PropTypes from 'prop-types';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import Panel from 'components/common/Panel';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 
-function StringValue({ redisKey, length, setLength }) {
+function StringValue({ redisKey, refresh, length }) {
     const instanceApi = useInstanceApi();
 
     const instanceId = instanceApi.selectedInstanceId;
@@ -15,20 +16,27 @@ function StringValue({ redisKey, length, setLength }) {
     const [value, setValue] = useState(null);
     const [newValue, setNewValue] = useState(null);
 
-    useEffect(() => {
-        const getValue = async () => {
-            if (instanceId && redisKey) {
-                if (Number.parseInt(length) > 1024) {
-                    setValue('[Value is too big]');
-                    setNewValue(null);
-                } else {
-                    const value = await instanceApi.executeCommand(instanceId, db, 'get', [redisKey]);
-                    setValue(value);
-                    setNewValue(value);
-                }
+    const getValue = async () => {
+        if (instanceId && redisKey) {
+            if (Number.parseInt(length) > 1024) {
+                setValue('[Value is too big]');
+                setNewValue(null);
+            } else {
+                const value = await instanceApi.executeCommand(instanceId, db, 'get', [redisKey]);
+                setValue(value);
+                setNewValue(value);
             }
-        };
+        }
+    };
 
+    const onEdit = async () => {
+        await instanceApi.executeCommand(instanceId, db, 'set', [redisKey, newValue]);
+        await refresh();
+        setValue(newValue);
+        setEdit(false);
+    };
+
+    useEffect(() => {
         setValue(null);
         getValue();
     }, [redisKey]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -36,13 +44,6 @@ function StringValue({ redisKey, length, setLength }) {
     if (!redisKey) {
         return null;
     }
-
-    const onEdit = async () => {
-        await instanceApi.executeCommand(instanceId, db, 'set', [redisKey, newValue]);
-        setValue(newValue);
-        setLength(newValue.length);
-        setEdit(false);
-    };
 
     if (edit) {
         return (
@@ -63,40 +64,45 @@ function StringValue({ redisKey, length, setLength }) {
     }
 
     return (
-        <React.Fragment>
-            <SyntaxHighlighter
-                language={language}
-                style={atomOneLight}
-                customStyle={{
-                    wordBreak: 'break-all',
-                    whiteSpace: 'pre-wrap'
-                }}>
-                {value || ''}
-            </SyntaxHighlighter>
-            <Button
-                onClick={() => setEdit(true)}
-                style={{ marginTop: 10 }}>
-                Edit
-            </Button>
-            <Select
-                placeholder="Language"
-                value={language}
-                onChange={language => setLanguage(language)}
-                style={{
-                    width: 80,
-                    marginLeft: 10
-                }}>
-                <Select.Option value="json">JSON</Select.Option>
-                <Select.Option value="xml">XML</Select.Option>
-            </Select>
-        </React.Fragment>
+        <Panel.Flex>
+            <Panel.Grow>
+                <SyntaxHighlighter
+                    language={language}
+                    style={atomOneLight}
+                    customStyle={{
+                        wordBreak: 'break-all',
+                        whiteSpace: 'pre-wrap',
+                        flex: 1
+                    }}>
+                    {value || ''}
+                </SyntaxHighlighter>
+            </Panel.Grow>
+            <Panel.Standard>
+                <Button
+                    onClick={() => setEdit(true)}
+                    style={{ marginTop: 10 }}>
+                    Edit
+                </Button>
+                <Select
+                    placeholder="Language"
+                    value={language}
+                    onChange={language => setLanguage(language)}
+                    style={{
+                        width: 80,
+                        marginLeft: 10
+                    }}>
+                    <Select.Option value="json">JSON</Select.Option>
+                    <Select.Option value="xml">XML</Select.Option>
+                </Select>
+            </Panel.Standard>
+        </Panel.Flex>
     );
 }
 
 StringValue.propTypes = {
     redisKey: PropTypes.string.isRequired,
-    length: PropTypes.number,
-    setLength: PropTypes.func.isRequired
+    refresh: PropTypes.func.isRequired,
+    length: PropTypes.number
 };
 
 export default StringValue;

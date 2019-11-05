@@ -1,64 +1,71 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'antd';
+import { Button, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
+import uuid from 'uuid/v4';
 import Icon from 'components/common/Icon';
+import Panel from 'components/common/Panel';
+import Spacer from 'components/common/Spacer';
 import ModalFieldForm from 'components/explorer/common/ModalFieldForm';
 import ValueTable from 'components/explorer/keydata/ValueTable';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 
 const BATCH_SIZE = 100;
 
-function ListValue({ redisKey, length, setLength }) {
+function ListValue({ redisKey, refresh }) {
     const instanceApi = useInstanceApi();
 
     const instanceId = instanceApi.selectedInstanceId;
     const db = instanceApi.selectedDb;
     const [items, setItems] = useState([]);
+    const [selectedItemIds, setSelectedItemIds] = useState([]);
     const [endIndex, setEndIndex] = useState(0);
     const [modalFieldFormVisible, setModalFieldFormVisible] = useState(false);
 
-    const getItems = async () => {
+    const getItems = async (items, endIndex) => {
         if (instanceId && redisKey) {
             const result = await instanceApi.executeCommand(instanceId, db, 'lrange', [redisKey, endIndex, endIndex + BATCH_SIZE - 1]);
             setItems([
                 ...items,
-                ...result
-            ].map(item => ({
-                id: item,
-                value: item
-            })));
+                ...result.map(item => ({
+                    id: uuid(),
+                    value: item
+                }))
+            ]);
             setEndIndex(endIndex + BATCH_SIZE);
         }
     };
 
     const fetchNextItems = async () => {
-        await getItems();
+        await getItems(items, endIndex);
     };
 
-    const addItem = async (item) => {
+    const addItem = async item => {
         await instanceApi.executeCommand(instanceId, db, 'rpush', [redisKey, item.value]);
-
-        item.id = item.value;
-
-        setItems([...items, item]);
-        setLength(length + 1);
+        await refresh();
+        await getItems([], 0);
         setModalFieldFormVisible(false);
     };
 
     const updateItem = async (item, rowIndex) => {
         await instanceApi.executeCommand(instanceId, db, 'lset', [redisKey, rowIndex, item.value]);
+        await refresh();
+        await getItems([], 0);
+    };
 
-        item.id = item.value;
-
-        const newItems = [...items];
-        newItems[rowIndex] = item;
-        setItems(newItems);
+    const deleteItems = async () => {
+        const promises = selectedItemIds.map(id => {
+            const item = items.find(item => item.id === id);
+            return instanceApi.executeCommand(instanceId, db, 'lrem', [redisKey, 0, item.value]);
+        });
+        await Promise.all(promises);
+        await refresh();
+        await getItems([], 0);
     };
 
     useEffect(() => {
         setItems([]);
         setEndIndex(0);
-        getItems();
+        getItems([], 0);
     }, [redisKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
     if (!redisKey) {
@@ -76,39 +83,54 @@ function ListValue({ redisKey, length, setLength }) {
     ];
 
     return (
-        <React.Fragment>
+        <Panel.Flex>
             <ModalFieldForm
                 fields={fields}
-                title={(<Icon icon="key" text="Add Item" />)}
+                title={(<Icon icon="key" text="Add Element" />)}
                 visible={modalFieldFormVisible}
                 onOk={addItem}
                 onCancel={() => setModalFieldFormVisible(false)} />
-            <ValueTable
-                fields={fields}
-                items={items}
-                updateItem={updateItem}
-                orderSettingPrefix="listValueColumnOrder_"
-                widthSettingPrefix="listValueColumnWidth_" />
-            <div style={{ marginTop: 10 }}>
-                <Button
-                    onClick={() => setModalFieldFormVisible(true)}>
-                    <Icon icon="plus" text="Add Item" />
-                </Button>
-                <Button
-                    onClick={fetchNextItems}
-                    disabled={items.length < endIndex}
-                    style={{ marginLeft: 5 }}>
-                    Fetch next {BATCH_SIZE} items
+            <Panel.Grow>
+                <ValueTable
+                    fields={fields}
+                    items={items}
+                    updateItem={updateItem}
+                    selectedItemIds={selectedItemIds}
+                    setSelectedItemIds={setSelectedItemIds}
+                    orderSettingPrefix="listValueColumnOrder_"
+                    widthSettingPrefix="listValueColumnWidth_" />
+            </Panel.Grow>
+            <Panel.Standard>
+                <div style={{ marginTop: 10 }}>
+                    <Button
+                        onClick={() => setModalFieldFormVisible(true)}>
+                        <Icon icon="plus" text="Add Element" />
+                    </Button>
+                    <Spacer />
+                    <Popconfirm
+                        title={`Do you really want to delete ALL the elements containing the same values as the selected ones ?`}
+                        onConfirm={deleteItems}
+                        okText="Yes"
+                        cancelText="No">
+                        <Button>
+                            <Icon icon="trash-alt" text="Remove Element(s)" />
+                        </Button>
+                    </Popconfirm>
+                    <Button
+                        onClick={fetchNextItems}
+                        disabled={items.length < endIndex}
+                        style={{ marginLeft: 5 }}>
+                        Fetch next {BATCH_SIZE} items
             </Button>
-            </div>
-        </React.Fragment>
+                </div>
+            </Panel.Standard>
+        </Panel.Flex>
     );
 }
 
 ListValue.propTypes = {
     redisKey: PropTypes.string.isRequired,
-    length: PropTypes.number,
-    setLength: PropTypes.func.isRequired
+    refresh: PropTypes.func.isRequired
 };
 
 export default ListValue;
