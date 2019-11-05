@@ -45,12 +45,12 @@ export function useInstanceApi() {
     );
 
     const getStatusCallback = useCallback(
-        instanceId => dispatch(getStatus(instanceId)),
+        (instanceId, silent) => dispatch(getStatus(instanceId, silent)),
         [dispatch]
     );
 
     const getInfoCallback = useCallback(
-        instanceId => dispatch(getInfo(instanceId)),
+        (instanceId, silent) => dispatch(getInfo(instanceId, silent)),
         [dispatch]
     );
 

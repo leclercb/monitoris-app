@@ -44,15 +44,9 @@ export function deleteInstance(instanceId, options = {}) {
     return deleteObject('instances', instanceId, options);
 }
 
-export function getStatus(instanceId) {
+export function getStatus(instanceId, silent = false) {
     return async dispatch => {
         const processId = uuid();
-
-        dispatch(updateProcess({
-            id: processId,
-            state: 'RUNNING',
-            title: 'Get status from server'
-        }));
 
         try {
             const result = await sendRequest(
@@ -74,25 +68,23 @@ export function getStatus(instanceId) {
                 }
             });
 
-            dispatch(updateProcess({
-                id: processId,
-                state: 'COMPLETED'
-            }));
-
             return result.data;
         } catch (error) {
-            dispatch(updateProcess({
-                id: processId,
-                state: 'ERROR',
-                error: getErrorMessages(error, true)
-            }));
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    title: 'Get status',
+                    error: getErrorMessages(error, true)
+                }));
+            }
 
             throw error;
         }
     };
 }
 
-export function getInfo(instanceId) {
+export function getInfo(instanceId, silent = false) {
     return async dispatch => {
         const processId = uuid();
 
@@ -118,11 +110,14 @@ export function getInfo(instanceId) {
 
             return info;
         } catch (error) {
-            dispatch(updateProcess({
-                id: processId,
-                state: 'ERROR',
-                error: getErrorMessages(error, true)
-            }));
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    title: 'Get info',
+                    error: getErrorMessages(error, true)
+                }));
+            }
 
             throw error;
         }
@@ -155,7 +150,7 @@ export function executeCommand(instanceId, db, command, parameters, silent = fal
                 dispatch(updateProcess({
                     id: processId,
                     state: 'ERROR',
-                    title: 'Execute command on server',
+                    title: 'Execute command',
                     error: getErrorMessages(error, true)
                 }));
             }

@@ -23,7 +23,7 @@ function DashboardView() {
             case 'connections':
                 return (<ConnectionsDashboard />);
             default:
-                return (<Empty />);
+                return (<Empty description="Please select a dashboard" />);
         }
     };
 
@@ -36,9 +36,7 @@ function DashboardView() {
             paneStyle={{ overflowY: 'auto' }}>
             <DashboardSider />
             <Panel.Main>
-                <Panel.Sub>
-                    {getDashboardFromId()}
-                </Panel.Sub>
+                {getDashboardFromId()}
             </Panel.Main>
         </SplitPane>
     );
