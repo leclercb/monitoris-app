@@ -122,7 +122,7 @@ function SetValue({ redisKey, refresh }) {
                     </Button>
                     <Spacer />
                     <Popconfirm
-                        title={`Do you really want to delete the selected members ?`}
+                        title={'Do you really want to delete the selected members ?'}
                         onConfirm={deleteItems}
                         okText="Yes"
                         cancelText="No">

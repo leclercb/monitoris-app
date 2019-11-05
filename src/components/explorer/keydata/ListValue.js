@@ -108,7 +108,7 @@ function ListValue({ redisKey, refresh }) {
                     </Button>
                     <Spacer />
                     <Popconfirm
-                        title={`Do you really want to delete ALL the elements containing the same values as the selected ones ?`}
+                        title={'Do you really want to delete ALL the elements containing the same values as the selected ones ?'}
                         onConfirm={deleteItems}
                         okText="Yes"
                         cancelText="No">

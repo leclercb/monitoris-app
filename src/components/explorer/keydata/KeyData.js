@@ -63,7 +63,7 @@ function KeyData({ object, onKeyDeleted }) {
 
     const refreshData = async () => {
         await getData(object);
-    }
+    };
 
     const deleteKey = async () => {
         await instanceApi.executeCommand(instanceId, db, 'del', [redisKey]);

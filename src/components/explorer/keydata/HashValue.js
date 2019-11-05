@@ -149,7 +149,7 @@ function HashValue({ redisKey, refresh }) {
                     </Button>
                     <Spacer />
                     <Popconfirm
-                        title={`Do you really want to delete the selected items ?`}
+                        title={'Do you really want to delete the selected items ?'}
                         onConfirm={deleteItems}
                         okText="Yes"
                         cancelText="No">
