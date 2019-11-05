@@ -8,10 +8,13 @@ import PromiseButton from 'components/common/PromiseButton';
 import Spacer from 'components/common/Spacer';
 import ClientTable from 'components/toolbox/tools/ClientTable';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
+import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { parseRedisString } from 'utils/FormatUtils';
+import { formatDate } from 'utils/SettingUtils';
 
 function ClientTool() {
     const instanceApi = useInstanceApi();
+    const settingsApi = useSettingsApi();
 
     const instanceId = instanceApi.selectedInstanceId;
     const db = instanceApi.selectedDb;
@@ -48,7 +51,7 @@ function ClientTool() {
         <React.Fragment>
             <Panel.Sub>
                 <LeftRight right={(
-                    <span>{`Refreshed on: ${refreshDate ? refreshDate : 'never'}`}</span>
+                    <span>{`Refreshed on: ${refreshDate ? formatDate(refreshDate, settingsApi.settings, true) : 'never'}`}</span>
                 )}>
                     <PromiseButton
                         onClick={refresh}

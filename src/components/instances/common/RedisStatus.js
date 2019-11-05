@@ -1,8 +1,12 @@
 import React from 'react';
 import { Alert } from 'antd';
 import PropTypes from 'prop-types';
+import { useSettingsApi } from 'hooks/UseSettingsApi';
+import { formatDate } from 'utils/SettingUtils';
 
 function RedisStatus({ status }) {
+    const settingsApi = useSettingsApi();
+
     return (
         <React.Fragment>
             {status && status.redisConnected && (
@@ -12,7 +16,7 @@ function RedisStatus({ status }) {
                         <div>
                             The Redis server is currently connected.
                             <br />
-                            Refreshed on: {status.refreshDate}
+                            Refreshed on: {formatDate(status.refreshDate, settingsApi.settings, true)}
                             <br />
                             <span style={{ fontSize: 11, fontStyle: 'italic' }}>It can take up to 1 minute to get the updated status.</span>
                         </div>
@@ -28,7 +32,7 @@ function RedisStatus({ status }) {
                         <div>
                             The Redis server is currently disconnected.
                             <br />
-                            Refreshed on: {status.refreshDate}
+                            Refreshed on: {formatDate(status.refreshDate, settingsApi.settings, true)}
                             <br />
                             <span style={{ fontSize: 11, fontStyle: 'italic' }}>It can take up to 1 minute to get the updated status.</span>
                         </div>

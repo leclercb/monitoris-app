@@ -9,10 +9,10 @@ import PromiseButton from 'components/common/PromiseButton';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
-import { parseRedisSubString } from 'utils/FormatUtils';
+import { getHumanFileSize } from 'utils/FileUtils';
 import { formatDate } from 'utils/SettingUtils';
 
-function GraphCommands({ instanceId }) {
+function GraphMemory({ instanceId }) {
     const instanceApi = useInstanceApi();
     const instanceStateApi = useInstanceStateApi(instanceId);
     const settingsApi = useSettingsApi();
@@ -33,26 +33,39 @@ function GraphCommands({ instanceId }) {
         await instanceApi.getInfo(instanceId);
     };
 
-    const data = Object.keys(instanceStateApi.lastInfo).filter(key => key.startsWith('cmdstat_')).map(key => {
-        const cmdStat = parseRedisSubString(instanceStateApi.lastInfo[key]);
-
-        return {
-            command: key.substr('cmdstat_'.length),
-            calls: Number.parseInt(cmdStat.calls),
-            usec: Number.parseInt(cmdStat.usec),
-            usecPerCall: Number.parseFloat(cmdStat.usec_per_call)
-        };
-    });
+    const data = [
+        { key: 'total_system_memory', value: Number.parseInt(instanceStateApi.lastInfo.total_system_memory) },
+        { key: 'used_memory', value: Number.parseInt(instanceStateApi.lastInfo.used_memory) },
+        { key: 'used_memory_dataset', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_dataset) },
+        { key: 'used_memory_lua', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_lua) },
+        { key: 'used_memory_overhead', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_overhead) },
+        { key: 'used_memory_peak', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_peak) },
+        { key: 'used_memory_rss', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_rss) },
+        { key: 'used_memory_scripts', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_scripts) },
+        { key: 'used_memory_startup', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_startup) }
+    ];
 
     const cols = {
-        command: {
-            alias: 'Command'
+        key: {
+            alias: 'Category',
+            formatter: value => {
+                switch (value) {
+                    case 'total_system_memory': return 'Total System Memory';
+                    case 'used_memory': return 'Used Memory';
+                    case 'used_memory_dataset': return 'Dataset';
+                    case 'used_memory_lua': return 'LUA';
+                    case 'used_memory_overhead': return 'Overhead';
+                    case 'used_memory_peak': return 'Peak';
+                    case 'used_memory_rss': return 'RSS';
+                    case 'used_memory_scripts': return 'Scripts';
+                    case 'used_memory_startup': return 'Startup';
+                    default: return null;
+                }
+            }
         },
-        calls: {
-            alias: 'Calls'
-        },
-        usecPerCall: {
-            alias: 'Microseconds Per Call'
+        value: {
+            alias: 'Memory',
+            formatter: value => getHumanFileSize(value)
         }
     };
 
@@ -71,19 +84,13 @@ function GraphCommands({ instanceId }) {
                         <Chart width={width} height={height} data={data} scale={cols} padding="auto" forceFit>
                             <Legend />
                             <Axis
-                                name="command"
+                                name="key"
                                 title={{
                                     autoRotate: true
                                 }} />
                             <Axis
-                                name="calls"
+                                name="value"
                                 position="left"
-                                title={{
-                                    autoRotate: true
-                                }} />
-                            <Axis
-                                name="usecPerCall"
-                                position="right"
                                 title={{
                                     autoRotate: true
                                 }} />
@@ -96,14 +103,8 @@ function GraphCommands({ instanceId }) {
                                 }} />
                             <Geom
                                 type="interval"
-                                position="command*calls"
+                                position="key*value"
                                 color="#44a2fc" />
-                            <Geom
-                                type="interval"
-                                position="command*usecPerCall"
-                                color="#fad34b"
-                                opacity={1}
-                                size={5} />
                         </Chart>
                     )}
                 </AutoSizer>
@@ -112,8 +113,8 @@ function GraphCommands({ instanceId }) {
     );
 }
 
-GraphCommands.propTypes = {
+GraphMemory.propTypes = {
     instanceId: PropTypes.string.isRequired
 };
 
-export default GraphCommands;
+export default GraphMemory;

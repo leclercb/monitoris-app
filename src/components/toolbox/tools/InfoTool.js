@@ -4,11 +4,14 @@ import LeftRight from 'components/common/LeftRight';
 import Panel from 'components/common/Panel';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
+import { useSettingsApi } from 'hooks/UseSettingsApi';
+import { formatDate } from 'utils/SettingUtils';
 
 function InfoTool() {
     const instanceApi = useInstanceApi();
     const instanceId = instanceApi.selectedInstanceId;
     const instanceStateApi = useInstanceStateApi(instanceId);
+    const settingsApi = useSettingsApi();
 
     const [searchValue, setSearchValue] = useState('');
 
@@ -57,7 +60,7 @@ function InfoTool() {
         <React.Fragment>
             <Panel.Sub>
                 <LeftRight right={(
-                    <span>{`Refreshed on: ${instanceStateApi.lastInfo.timestamp}`}</span>
+                    <span>{`Refreshed on: ${formatDate(instanceStateApi.lastInfo.timestamp, settingsApi.settings, true)}`}</span>
                 )}>
                     <Input.Search
                         allowClear={true}
@@ -69,7 +72,7 @@ function InfoTool() {
                         onClick={refresh}
                         style={{ margin: '0px 10px' }}>
                         Refresh
-            </Button>
+                    </Button>
                 </LeftRight>
             </Panel.Sub>
             <Panel.Sub>

@@ -82,6 +82,9 @@ function ToolboxSider() {
                         <Menu.Item key="graphs:commands">
                             <Icon icon="chart-line" text="Commands" />
                         </Menu.Item>
+                        <Menu.Item key="graphs:memory">
+                            <Icon icon="chart-line" text="Memory" />
+                        </Menu.Item>
                     </Menu.SubMenu>
                 </Menu.SubMenu>
             </Menu>

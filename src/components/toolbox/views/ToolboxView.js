@@ -8,6 +8,7 @@ import InfoTool from 'components/toolbox/tools/InfoTool';
 import TerminalTool from 'components/toolbox/tools/TerminalTool';
 import GraphConnections from 'components/toolbox/tools/graphs/GraphConnections';
 import GraphCommands from 'components/toolbox/tools/graphs/GraphCommands';
+import GraphMemory from 'components/toolbox/tools/graphs/GraphMemory';
 import ToolboxSider from 'components/toolbox/sider/ToolboxSider';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
@@ -44,6 +45,8 @@ function ToolboxView() {
                 return (<GraphConnections instanceId={instanceId} />);
             case 'graphs:commands':
                 return (<GraphCommands instanceId={instanceId} />);
+            case 'graphs:memory':
+                return (<GraphMemory instanceId={instanceId} />);
             default:
                 return (
                     <Panel.Sub>
