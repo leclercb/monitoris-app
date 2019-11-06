@@ -9,7 +9,7 @@ import PromiseButton from 'components/common/PromiseButton';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
-import { compareStrings, compareNumbers } from 'utils/CompareUtils';
+import { compareNumbers, compareStrings } from 'utils/CompareUtils';
 import { parseRedisSubString } from 'utils/FormatUtils';
 import { formatDate } from 'utils/SettingUtils';
 
