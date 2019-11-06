@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Empty, Input, Table } from 'antd';
-import LeftRight from 'components/common/LeftRight';
+import { Empty, Input, Table } from 'antd';
+import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
+import PromiseButton from 'components/common/PromiseButton';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
@@ -59,21 +60,19 @@ function InfoTool() {
     return (
         <React.Fragment>
             <Panel.Sub>
-                <LeftRight right={(
-                    <span>{`Refreshed on: ${formatDate(instanceStateApi.lastInfo.timestamp, settingsApi.settings, true)}`}</span>
-                )}>
+                <Panel.Standard>
                     <Input.Search
                         allowClear={true}
+                        onChange={event => setSearchValue(event.target.value)}
                         onSearch={value => setSearchValue(value)}
                         style={{
-                            width: 400
+                            width: 400,
+                            marginRight: 10
                         }} />
-                    <Button
-                        onClick={refresh}
-                        style={{ margin: '0px 10px' }}>
-                        Refresh
-                    </Button>
-                </LeftRight>
+                    <PromiseButton onClick={refresh}>
+                        <Icon icon="sync-alt" text={`Refresh (${formatDate(instanceStateApi.lastInfo.timestamp, settingsApi.settings, true)})`} />
+                    </PromiseButton>
+                </Panel.Standard>
             </Panel.Sub>
             <Panel.Sub>
                 <Table

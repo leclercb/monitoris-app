@@ -35,6 +35,7 @@ import {
     faLockOpen,
     faMinusSquare,
     faNetworkWired,
+    faPaintRoller,
     faPaperPlane,
     faPlay,
     faPlus,
@@ -90,6 +91,7 @@ library.add(faLock);
 library.add(faLockOpen);
 library.add(faMinusSquare);
 library.add(faNetworkWired);
+library.add(faPaintRoller);
 library.add(faPaperPlane);
 library.add(faPlay);
 library.add(faPlus);

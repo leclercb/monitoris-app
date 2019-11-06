@@ -63,7 +63,7 @@ function ToolboxSider() {
                 mode="inline">
                 <Menu.SubMenu
                     key="tools"
-                    title={createCategorySubMenu('Tools', 'tools', () => onOpenChange('tools'))}>
+                    title={createCategorySubMenu('Toolbox', 'tools', () => onOpenChange('tools'))}>
                     <Menu.Item key="info">
                         <Icon icon="info-circle" text="Show Info" />
                     </Menu.Item>

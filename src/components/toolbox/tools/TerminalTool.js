@@ -7,13 +7,24 @@ function TerminalTool() {
     const instanceApi = useInstanceApi();
     const instanceApiRef = useRef(null);
 
+    const terminalRef = useRef();
+
     useEffect(() => {
         instanceApiRef.current = instanceApi;
     });
 
+    useEffect(() => {
+        if (terminalRef.current) {
+            terminalRef.current.echo();
+            terminalRef.current.echo(`[[;#cccccc;]Selected DB: ${instanceApi.selectedDb}]`);
+            terminalRef.current.echo();
+        }
+    }, [instanceApi.selectedDb]);
+
     return (
         <Panel.Sub backgroundColor="#000000" grow>
             <Terminal
+                terminalRef={terminalRef}
                 greetings="Redis Terminal - This is a limited terminal to enter simple redis commands. Blocking commands are not supported."
                 interpreter={async (command, term) => {
                     try {

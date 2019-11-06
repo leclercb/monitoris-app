@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { Checkbox, Input, InputNumber, Select } from 'antd';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { getFieldType } from 'data/DataFieldTypes';
 import AlertNotificationTypeSelect from 'components/alertnotificationtypes/AlertNotificationTypeSelect';
 import AlertNotificationTypeTitle from 'components/alertnotificationtypes/AlertNotificationTypeTitle';
@@ -199,6 +201,37 @@ export function getFieldComponents(type, options) {
 
             break;
         }
+        case 'select': {
+            let values = options && options.values ? options.values : [];
+            values = Array.isArray(values) ? values : [values];
+
+            configuration = {
+                render: value => (
+                    value ? value : <span>&nbsp;</span>
+                ),
+                input: props => (
+                    <Select
+                        onBlur={props.onCommit}
+                        dropdownMatchSelectWidth={false}
+                        {...removeExtraProps(props)}>
+                        {values.map(value => {
+                            value = typeof value === 'object' ? value : {
+                                title: value,
+                                value
+                            };
+
+                            return (
+                                <Select.Option key={value.value} value={value.value}>
+                                    {value.title}
+                                </Select.Option>
+                            );
+                        })}
+                    </Select>
+                )
+            };
+
+            break;
+        }
         case 'severities': {
             configuration = {
                 render: value => (
@@ -237,6 +270,31 @@ export function getFieldComponents(type, options) {
                 input: props => (
                     <StarCheckbox
                         onChange={props.onCommit}
+                        {...removeExtraProps(props)} />
+                )
+            };
+
+            break;
+        }
+        case 'syntax': {
+            const language = options && options.language ? options.language : 'json';
+
+            configuration = {
+                render: value => (
+                    <SyntaxHighlighter
+                        language={language}
+                        style={atomOneLight}
+                        customStyle={{
+                            wordBreak: 'break-all',
+                            whiteSpace: 'pre-wrap'
+                        }}>
+                        {value || ''}
+                    </SyntaxHighlighter>
+                ),
+                input: props => (
+                    <Input
+                        onBlur={props.onCommit}
+                        onPressEnter={props.onCommit}
                         {...removeExtraProps(props)} />
                 )
             };

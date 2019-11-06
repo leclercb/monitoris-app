@@ -4,20 +4,28 @@ import PropTypes from 'prop-types';
 import 'jquery.terminal';
 import 'components/common/Terminal.css';
 
-function Terminal({ interpreter, ...options }) {
-    const terminalRef = useRef();
+function Terminal({ terminalRef, interpreter, ...options }) {
+    const divRef = useRef();
 
     useEffect(() => {
-        const terminal = $(terminalRef.current).terminal(interpreter, options);
-        return () => terminal.destroy();
+        if (divRef.current) {
+            const terminal = $(divRef.current).terminal(interpreter, options);
+            terminalRef.current = terminal;
+
+            return () => {
+                terminalRef.current = null;
+                terminal.destroy();
+            };
+        }
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <div ref={terminalRef} style={{ minHeight: '100%', maxHeight: '100%' }} />
+        <div ref={divRef} style={{ minHeight: '100%', maxHeight: '100%' }} />
     );
 }
 
 Terminal.propTypes = {
+    terminalRef: PropTypes.object.isRequired,
     interpreter: PropTypes.func.isRequired
 };
 

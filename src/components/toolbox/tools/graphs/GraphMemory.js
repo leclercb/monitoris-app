@@ -3,6 +3,7 @@ import { Empty } from 'antd';
 import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
 import PropTypes from 'prop-types';
 import { AutoSizer } from 'react-virtualized';
+import Icon from 'components/common/Icon';
 import LeftRight from 'components/common/LeftRight';
 import Panel from 'components/common/Panel';
 import PromiseButton from 'components/common/PromiseButton';
@@ -18,7 +19,9 @@ function GraphMemory({ instanceId }) {
     const settingsApi = useSettingsApi();
 
     useEffect(() => {
-        instanceApi.getInfo(instanceId);
+        if (!instanceStateApi.lastInfo) {
+            instanceApi.getInfo(instanceId);
+        }
     }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
 
     if (!instanceStateApi.lastInfo) {
@@ -34,7 +37,6 @@ function GraphMemory({ instanceId }) {
     };
 
     const data = [
-        { key: 'total_system_memory', value: Number.parseInt(instanceStateApi.lastInfo.total_system_memory) },
         { key: 'used_memory', value: Number.parseInt(instanceStateApi.lastInfo.used_memory) },
         { key: 'used_memory_dataset', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_dataset) },
         { key: 'used_memory_lua', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_lua) },
@@ -50,13 +52,12 @@ function GraphMemory({ instanceId }) {
             alias: 'Category',
             formatter: value => {
                 switch (value) {
-                    case 'total_system_memory': return 'Total System Memory';
                     case 'used_memory': return 'Used Memory';
                     case 'used_memory_dataset': return 'Dataset';
                     case 'used_memory_lua': return 'LUA';
                     case 'used_memory_overhead': return 'Overhead';
                     case 'used_memory_peak': return 'Peak';
-                    case 'used_memory_rss': return 'RSS';
+                    case 'used_memory_rss': return 'Resident Set Size';
                     case 'used_memory_scripts': return 'Scripts';
                     case 'used_memory_startup': return 'Startup';
                     default: return null;
@@ -73,9 +74,13 @@ function GraphMemory({ instanceId }) {
         <React.Fragment>
             <Panel.Sub>
                 <LeftRight right={(
-                    <span>{`Refreshed on: ${formatDate(instanceStateApi.lastInfo.timestamp, settingsApi.settings, true)}`}</span>
+                    <span style={{ fontWeight: 'bold', marginLeft: 20 }}>
+                        {`Total System Memory: ${getHumanFileSize(Number.parseInt(instanceStateApi.lastInfo.total_system_memory))}`}
+                    </span>
                 )}>
-                    <PromiseButton onClick={refresh}>Refresh</PromiseButton>
+                    <PromiseButton onClick={refresh}>
+                        <Icon icon="sync-alt" text={`Refresh (${formatDate(instanceStateApi.lastInfo.timestamp, settingsApi.settings, true)})`} />
+                    </PromiseButton>
                 </LeftRight>
             </Panel.Sub>
             <Panel.Sub grow>
@@ -86,13 +91,21 @@ function GraphMemory({ instanceId }) {
                             <Axis
                                 name="key"
                                 title={{
-                                    autoRotate: true
+                                    autoRotate: true,
+                                    textStyle: {
+                                        fill: 'black',
+                                        fontWeight: 'bold'
+                                    }
                                 }} />
                             <Axis
                                 name="value"
                                 position="left"
                                 title={{
-                                    autoRotate: true
+                                    autoRotate: true,
+                                    textStyle: {
+                                        fill: 'black',
+                                        fontWeight: 'bold'
+                                    }
                                 }} />
                             <Tooltip
                                 crosshairs={{

@@ -129,16 +129,49 @@ export function getCategories() {
                     options: {
                         values: [
                             {
-                                title: 'HH:mm',
-                                value: 'HH:mm'
+                                title: 'HH:mm:ss',
+                                value: 'HH:mm:ss'
                             },
                             {
-                                title: 'hh:mm a',
-                                value: 'hh:mm a'
+                                title: 'hh:mm:ss a',
+                                value: 'hh:mm:ss a'
                             }
                         ]
                     },
-                    value: 'HH:mm',
+                    value: 'HH:mm:ss',
+                    editable: true
+                }
+            ]
+        },
+        {
+            id: 'theme',
+            title: 'Theme & Colors',
+            icon: 'paint-roller',
+            settings: [
+                {
+                    id: 'resetDefaultColors',
+                    title: 'Reset default colors',
+                    type: 'button',
+                    value: (settings, updateSettings) => {
+                        updateSettings({
+                            evenColor: '#ffffff',
+                            oddColor: '#fff3f0'
+                        });
+                    },
+                    editable: true
+                },
+                {
+                    id: 'evenColor',
+                    title: 'Even color',
+                    type: 'color',
+                    value: '#ffffff',
+                    editable: true
+                },
+                {
+                    id: 'oddColor',
+                    title: 'Odd color',
+                    type: 'color',
+                    value: '#fff3f0',
                     editable: true
                 }
             ]

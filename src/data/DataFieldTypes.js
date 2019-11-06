@@ -31,9 +31,11 @@ export function getFieldTypes() {
         'number',
         'password',
         'redisType',
+        'select',
         'severities',
         'severity',
         'star',
+        'syntax',
         'text',
         'textarea'
     ];
@@ -482,6 +484,43 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
 
             break;
         }
+        case 'select': {
+            configuration = {
+                title: 'Select',
+                allowCreation: true,
+                width: 200,
+                alwaysInEdition: false,
+                valuePropName: 'value',
+                compare: (a, b) => compareStrings(a, b),
+                toString: value => toString(value),
+                conditions: [
+                    {
+                        type: 'equal',
+                        title: 'Equals',
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue === objectValue;
+                        }
+                    },
+                    {
+                        type: 'notEqual',
+                        title: 'Does not equal',
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue !== objectValue;
+                        }
+                    }
+                ],
+                conditionsFieldType: 'select',
+                options: [
+                    {
+                        id: 'values',
+                        title: 'Values',
+                        type: 'selectTags'
+                    }
+                ]
+            };
+
+            break;
+        }
         case 'severities': {
             configuration = {
                 title: 'Severities',
@@ -582,6 +621,55 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     }
                 ],
                 conditionsFieldType: 'star',
+                options: []
+            };
+
+            break;
+        }
+        case 'syntax': {
+            configuration = {
+                title: 'Syntax',
+                allowCreation: true,
+                width: 250,
+                alwaysInEdition: false,
+                valuePropName: 'value',
+                compare: (a, b) => compareStrings(a, b),
+                toString: value => toString(value),
+                conditions: [
+                    {
+                        type: 'equal',
+                        title: 'Equals',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue === objectValue;
+                        }
+                    },
+                    {
+                        type: 'notEqual',
+                        title: 'Does not equal',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue !== objectValue;
+                        }
+                    },
+                    {
+                        type: 'contain',
+                        title: 'Contains',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return (objectValue || '').includes(conditionValue);
+                        }
+                    },
+                    {
+                        type: 'notContain',
+                        title: 'Does not contain',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return !(objectValue || '').includes(conditionValue);
+                        }
+                    }
+                ],
+                conditionsFieldType: 'syntax',
                 options: []
             };
 

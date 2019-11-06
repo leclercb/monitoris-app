@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Button, Popconfirm } from 'antd';
 import moment from 'moment';
 import Icon from 'components/common/Icon';
-import LeftRight from 'components/common/LeftRight';
 import Panel from 'components/common/Panel';
 import PromiseButton from 'components/common/PromiseButton';
 import Spacer from 'components/common/Spacer';
@@ -50,15 +49,11 @@ function ClientTool() {
     return (
         <React.Fragment>
             <Panel.Sub>
-                <LeftRight right={(
-                    <span>{`Refreshed on: ${refreshDate ? formatDate(refreshDate, settingsApi.settings, true) : 'never'}`}</span>
-                )}>
-                    <PromiseButton
-                        onClick={refresh}
-                        style={{ marginLeft: 10 }}>
-                        Refresh
-                        </PromiseButton>
-                </LeftRight>
+                <Panel.Standard>
+                    <PromiseButton onClick={refresh}>
+                        <Icon icon="sync-alt" text={`Refresh (${refreshDate ? formatDate(refreshDate, settingsApi.settings, true) : 'never'})`} />
+                    </PromiseButton>
+                </Panel.Standard>
             </Panel.Sub>
             <Panel.Sub grow>
                 <ClientTable

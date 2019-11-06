@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
-import { Empty } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Empty, Select } from 'antd';
 import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
 import PropTypes from 'prop-types';
 import { AutoSizer } from 'react-virtualized';
-import LeftRight from 'components/common/LeftRight';
+import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
 import PromiseButton from 'components/common/PromiseButton';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
+import { compareStrings, compareNumbers } from 'utils/CompareUtils';
 import { parseRedisSubString } from 'utils/FormatUtils';
 import { formatDate } from 'utils/SettingUtils';
 
@@ -17,8 +18,12 @@ function GraphCommands({ instanceId }) {
     const instanceStateApi = useInstanceStateApi(instanceId);
     const settingsApi = useSettingsApi();
 
+    const [sortBy, setSortBy] = useState('command');
+
     useEffect(() => {
-        instanceApi.getInfo(instanceId);
+        if (!instanceStateApi.lastInfo) {
+            instanceApi.getInfo(instanceId);
+        }
     }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
 
     if (!instanceStateApi.lastInfo) {
@@ -39,9 +44,15 @@ function GraphCommands({ instanceId }) {
         return {
             command: key.substr('cmdstat_'.length),
             calls: Number.parseInt(cmdStat.calls),
-            usec: Number.parseInt(cmdStat.usec),
             usecPerCall: Number.parseFloat(cmdStat.usec_per_call)
         };
+    }).sort((a, b) => {
+        switch (sortBy) {
+            case 'name': return compareStrings(a.command, b.command);
+            case 'calls': return compareNumbers(a.calls, b.calls);
+            case 'usecPerCall': return compareNumbers(a.usecPerCall, b.usecPerCall);
+            default: return compareStrings(a.command, b.command);
+        }
     });
 
     const cols = {
@@ -59,11 +70,19 @@ function GraphCommands({ instanceId }) {
     return (
         <React.Fragment>
             <Panel.Sub>
-                <LeftRight right={(
-                    <span>{`Refreshed on: ${formatDate(instanceStateApi.lastInfo.timestamp, settingsApi.settings, true)}`}</span>
-                )}>
-                    <PromiseButton onClick={refresh}>Refresh</PromiseButton>
-                </LeftRight>
+                <Panel.Standard>
+                    <PromiseButton onClick={refresh}>
+                        <Icon icon="sync-alt" text={`Refresh (${formatDate(instanceStateApi.lastInfo.timestamp, settingsApi.settings, true)})`} />
+                    </PromiseButton>
+                    <Select
+                        value={sortBy}
+                        onChange={value => setSortBy(value)}
+                        style={{ width: 300, marginLeft: 20 }}>
+                        <Select.Option value="command">Sort by command name</Select.Option>
+                        <Select.Option value="calls">Sort by number of calls</Select.Option>
+                        <Select.Option value="usecPerCall">Sort by number of microseconds per call</Select.Option>
+                    </Select>
+                </Panel.Standard>
             </Panel.Sub>
             <Panel.Sub grow>
                 <AutoSizer>
@@ -73,19 +92,31 @@ function GraphCommands({ instanceId }) {
                             <Axis
                                 name="command"
                                 title={{
-                                    autoRotate: true
+                                    autoRotate: true,
+                                    textStyle: {
+                                        fill: 'black',
+                                        fontWeight: 'bold'
+                                    }
                                 }} />
                             <Axis
                                 name="calls"
                                 position="left"
                                 title={{
-                                    autoRotate: true
+                                    autoRotate: true,
+                                    textStyle: {
+                                        fill: 'black',
+                                        fontWeight: 'bold'
+                                    }
                                 }} />
                             <Axis
                                 name="usecPerCall"
                                 position="right"
                                 title={{
-                                    autoRotate: true
+                                    autoRotate: true,
+                                    textStyle: {
+                                        fill: 'black',
+                                        fontWeight: 'bold'
+                                    }
                                 }} />
                             <Tooltip
                                 crosshairs={{

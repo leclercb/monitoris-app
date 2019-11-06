@@ -4,8 +4,9 @@ import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { AutoSizer } from 'react-virtualized';
-import LeftRight from 'components/common/LeftRight';
+import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
+import PromiseButton from 'components/common/PromiseButton';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
 import { useInterval } from 'hooks/UseInterval';
@@ -35,6 +36,10 @@ function GraphConnections({ instanceId }) {
         );
     }
 
+    const refresh = async () => {
+        await instanceApi.getInfo(instanceId);
+    };
+
     const data = instanceStateApi.allInfo.map(info => ({
         timestamp: moment(info.timestamp).unix(),
         connectedClients: Number.parseInt(info.connected_clients),
@@ -63,24 +68,24 @@ function GraphConnections({ instanceId }) {
     return (
         <React.Fragment>
             <Panel.Sub>
-                <LeftRight right={(
-                    <span>{`Refreshed on: ${formatDate(instanceStateApi.lastInfo.timestamp, settingsApi.settings, true)}`}</span>
-                )}>
-                    <span>Refresh rate:</span>
+                <Panel.Standard>
+                    <PromiseButton onClick={refresh}>
+                        <Icon icon="sync-alt" text={`Refresh (${formatDate(instanceStateApi.lastInfo.timestamp, settingsApi.settings, true)})`} />
+                    </PromiseButton>
                     <Select
                         value={refreshRate}
                         onChange={value => setRefreshRate(value)}
-                        style={{ marginLeft: 10 }}>
-                        <Select.Option value={10}>10 seconds</Select.Option>
-                        <Select.Option value={20}>20 seconds</Select.Option>
-                        <Select.Option value={30}>30 seconds</Select.Option>
-                        <Select.Option value={60}>1 minute</Select.Option>
-                        <Select.Option value={120}>2 minutes</Select.Option>
-                        <Select.Option value={300}>5 minutes</Select.Option>
-                        <Select.Option value={600}>10 minutes</Select.Option>
-                        <Select.Option value={900}>15 minutes</Select.Option>
+                        style={{ width: 200, marginLeft: 20 }}>
+                        <Select.Option value={10}>Refresh every 10 seconds</Select.Option>
+                        <Select.Option value={20}>Refresh every 20 seconds</Select.Option>
+                        <Select.Option value={30}>Refresh every 30 seconds</Select.Option>
+                        <Select.Option value={60}>Refresh every 1 minute</Select.Option>
+                        <Select.Option value={120}>Refresh every 2 minutes</Select.Option>
+                        <Select.Option value={300}>Refresh every 5 minutes</Select.Option>
+                        <Select.Option value={600}>Refresh every 10 minutes</Select.Option>
+                        <Select.Option value={900}>Refresh every 15 minutes</Select.Option>
                     </Select>
-                </LeftRight>
+                </Panel.Standard>
             </Panel.Sub>
             <Panel.Sub grow>
                 <AutoSizer>
@@ -90,17 +95,29 @@ function GraphConnections({ instanceId }) {
                             <Axis
                                 name="timestamp"
                                 title={{
-                                    autoRotate: true
+                                    autoRotate: true,
+                                    textStyle: {
+                                        fill: 'black',
+                                        fontWeight: 'bold'
+                                    }
                                 }} />
                             <Axis
                                 name="connectedClients"
                                 title={{
-                                    autoRotate: true
+                                    autoRotate: true,
+                                    textStyle: {
+                                        fill: 'black',
+                                        fontWeight: 'bold'
+                                    }
                                 }} />
                             <Axis
                                 name="blockedClients"
                                 title={{
-                                    autoRotate: true
+                                    autoRotate: true,
+                                    textStyle: {
+                                        fill: 'black',
+                                        fontWeight: 'bold'
+                                    }
                                 }} />
                             <Tooltip
                                 crosshairs={{

@@ -2,7 +2,7 @@ export default {
     color: '#d2291f',
     selectionForegroundColor: '#ffffff',
     selectionBackgroundColor: '#d2291f',
-    fadeIconColor: '#f2e3e3',
+    fadeIconColor: '#fff3f0',
     lightIconColor: '#e6bebe',
     disabledColor: '#cccccc',
     defaultObjectColor: '#ffffff',
