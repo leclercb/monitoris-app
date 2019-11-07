@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import LeftRight from 'components/common/LeftRight';
 import Icon from 'components/common/Icon';
 import DashboardItem from 'components/dashboard/common/DashboardItem';
+import DisabledStatus from 'components/instances/common/DisabledStatus';
 import ProxyStatus from 'components/instances/common/ProxyStatus';
 import RedisStatus from 'components/instances/common/RedisStatus';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
@@ -28,12 +29,17 @@ function InstanceStatus({ instance }) {
             <LeftRight right={(<Icon icon="sync-alt" onClick={refresh} />)}>
                 <Typography.Title level={3}>{instance.title}</Typography.Title>
             </LeftRight>
-            {instance.type === 'proxy' && (
+            {!instance.enabled && (
+                <DisabledStatus />
+            )}
+            {instance.enabled && instance.type === 'proxy' && (
                 <div style={{ marginBottom: 10 }}>
                     <ProxyStatus status={instanceStateApi.status} />
                 </div>
             )}
-            <RedisStatus status={instanceStateApi.status} />
+            {instance.enabled && (
+                <RedisStatus status={instanceStateApi.status} />
+            )}
         </DashboardItem>
     );
 }

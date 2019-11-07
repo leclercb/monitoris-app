@@ -22,8 +22,7 @@ function RedisStatus({ status }) {
                         </div>
                     )}
                     type="success"
-                    showIcon
-                />
+                    showIcon />
             )}
             {status && !status.redisConnected && (
                 <Alert
@@ -38,16 +37,14 @@ function RedisStatus({ status }) {
                         </div>
                     )}
                     type="warning"
-                    showIcon
-                />
+                    showIcon />
             )}
             {!status && (
                 <Alert
                     message="Redis Missing Status"
                     description="The Redis server status has not been retrieved."
                     type="info"
-                    showIcon
-                />
+                    showIcon />
             )}
         </React.Fragment>
     );

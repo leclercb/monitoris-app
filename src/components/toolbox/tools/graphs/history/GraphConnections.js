@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Empty } from 'antd';
+import { DatePicker, Empty } from 'antd';
 import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -7,27 +7,35 @@ import { AutoSizer } from 'react-virtualized';
 import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
 import PromiseButton from 'components/common/PromiseButton';
+import withProCheck from 'containers/WithProCheck';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
-import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
-import { formatDate } from 'utils/SettingUtils';
+import { getDateTimeFormat } from 'utils/SettingUtils';
 
 function GraphConnections({ instanceId }) {
     const instanceApi = useInstanceApi();
-    const instanceStateApi = useInstanceStateApi(instanceId);
     const settingsApi = useSettingsApi();
 
-    const [infos, setInfos] = useState([]);
+    const [range, setRange] = useState([moment().subtract(1, 'day'), moment()]);
+    const [reports, setReports] = useState([]);
 
     const refresh = async () => {
+        if (range && range[0] && range[1]) {
+            const reports = await instanceApi.getReports(
+                instanceId,
+                range[0].toISOString(),
+                range[1].toISOString(),
+                ['connected_clients', 'blocked_clients']);
 
+            setReports(reports);
+        }
     };
 
     useEffect(() => {
         refresh();
     }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    if (infos.length === 0) {
+    if (reports.length === 0) {
         return (
             <Panel.Sub>
                 <Empty description="No data to display" />
@@ -35,10 +43,10 @@ function GraphConnections({ instanceId }) {
         );
     }
 
-    const data = infos.map(info => ({
-        timestamp: moment(info.timestamp).unix(),
-        connectedClients: Number.parseInt(info.connected_clients),
-        blockedClients: Number.parseInt(info.blocked_clients)
+    const data = reports.map(report => ({
+        timestamp: moment(report.creationDate).unix(),
+        connectedClients: Number.parseInt(report.info.connected_clients),
+        blockedClients: Number.parseInt(report.info.blocked_clients)
     }));
 
     const cols = {
@@ -53,10 +61,12 @@ function GraphConnections({ instanceId }) {
             }
         },
         connectedClients: {
-            alias: 'Connected Clients'
+            alias: 'Connected Clients',
+            min: 0
         },
         blockedClients: {
-            alias: 'Blocked Clients'
+            alias: 'Blocked Clients',
+            min: 0
         }
     };
 
@@ -64,8 +74,22 @@ function GraphConnections({ instanceId }) {
         <React.Fragment>
             <Panel.Sub>
                 <Panel.Standard>
-                    <PromiseButton onClick={refresh}>
-                        <Icon icon="sync-alt" text={`Refresh (${formatDate(instanceStateApi.info.timestamp, settingsApi.settings, true)})`} />
+                    <DatePicker.RangePicker
+                        value={range}
+                        onChange={setRange}
+                        allowClear={false}
+                        disabledDate={current => {
+                            return current && (
+                                current.isBefore(moment().subtract(5, 'day')) ||
+                                current.isAfter(moment()));
+                        }}
+                        showTime={{
+                            hideDisabledOptions: true,
+                            defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('11:59:59', 'HH:mm:ss')]
+                        }}
+                        format={getDateTimeFormat(settingsApi.settings)} />
+                    <PromiseButton onClick={refresh} style={{ marginLeft: 10 }}>
+                        <Icon icon="sync-alt" text="Query" />
                     </PromiseButton>
                 </Panel.Standard>
             </Panel.Sub>
@@ -152,4 +176,4 @@ GraphConnections.propTypes = {
     instanceId: PropTypes.string.isRequired
 };
 
-export default GraphConnections;
+export default withProCheck(GraphConnections);

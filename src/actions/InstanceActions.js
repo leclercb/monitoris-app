@@ -231,6 +231,13 @@ export function clearReports(instanceId, silent = false) {
     return async dispatch => {
         const processId = uuid();
 
+        dispatch(updateProcess({
+            id: processId,
+            state: 'RUNNING',
+            title: 'Clear info history',
+            notify: true
+        }));
+
         try {
             const result = await sendRequest(
                 {
@@ -242,13 +249,17 @@ export function clearReports(instanceId, silent = false) {
                     responseType: 'json'
                 });
 
+            dispatch(updateProcess({
+                id: processId,
+                state: 'COMPLETED'
+            }));
+
             return result.data;
         } catch (error) {
             if (!silent) {
                 dispatch(updateProcess({
                     id: processId,
                     state: 'ERROR',
-                    title: 'Clear reports',
                     error: getErrorMessages(error, true)
                 }));
             }

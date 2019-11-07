@@ -9,6 +9,7 @@ import TerminalTool from 'components/toolbox/tools/TerminalTool';
 import GraphCurrentConnections from 'components/toolbox/tools/graphs/current/GraphConnections';
 import GraphCurrentCommands from 'components/toolbox/tools/graphs/current/GraphCommands';
 import GraphCurrentMemory from 'components/toolbox/tools/graphs/current/GraphMemory';
+import GraphHistoryConnections from 'components/toolbox/tools/graphs/history/GraphConnections';
 import ToolboxSider from 'components/toolbox/sider/ToolboxSider';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
@@ -47,6 +48,8 @@ function ToolboxView() {
                 return (<GraphCurrentCommands instanceId={instanceId} />);
             case 'graphs:current:memory':
                 return (<GraphCurrentMemory instanceId={instanceId} />);
+            case 'graphs:history:connections':
+                return (<GraphHistoryConnections instanceId={instanceId} />);
             default:
                 return (
                     <Panel.Sub>

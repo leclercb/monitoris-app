@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { Button, Col, Divider, Form, Row } from 'antd';
+import { Button, Col, Divider, Form, Popconfirm, Row } from 'antd';
 import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
 import AlertStatus from 'components/instances/common/AlertStatus';
+import DisabledStatus from 'components/instances/common/DisabledStatus';
 import InstanceForm from 'components/instances/common/InstanceForm';
 import ProxyStatus from 'components/instances/common/ProxyStatus';
 import RedisStatus from 'components/instances/common/RedisStatus';
@@ -24,6 +25,10 @@ function InstanceEdition({ instance, updateInstance }) {
         instanceApi.setSelectedInstanceId(instance.id);
         appApi.setSelectedToolId('info');
         appApi.setSelectedView('explorer');
+    };
+
+    const clearReports = async () => {
+        await instanceApi.clearReports(instance.id);
     };
 
     useEffect(() => {
@@ -55,13 +60,32 @@ function InstanceEdition({ instance, updateInstance }) {
                             </Button>
                         </Col>
                     </Row>
+                    <Row gutter={20} style={{ marginTop: 20 }}>
+                        <Col span={12} />
+                        <Col span={12}>
+                            <Popconfirm
+                                title={'Do you really want to delete the info history of this instance ?'}
+                                onConfirm={clearReports}
+                                okText="Yes"
+                                cancelText="No">
+                                <Button block>
+                                    <Icon icon="trash-alt" text="Clear info history" />
+                                </Button>
+                            </Popconfirm>
+                        </Col>
+                    </Row>
                     <Divider style={{ marginTop: 30 }}>Connection Status</Divider>
-                    {instance.type === 'proxy' && (
+                    {!instance.enabled && (
+                        <DisabledStatus />
+                    )}
+                    {instance.enabled && instance.type === 'proxy' && (
                         <div style={{ marginBottom: 10 }}>
                             <ProxyStatus status={instanceStateApi.status} />
                         </div>
                     )}
-                    <RedisStatus status={instanceStateApi.status} />
+                    {instance.enabled && (
+                        <RedisStatus status={instanceStateApi.status} />
+                    )}
                 </Col>
             </Row>
             <Divider style={{ marginTop: 30 }}>Alert Status</Divider>

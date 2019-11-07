@@ -18,6 +18,8 @@ function Plan({ plan, onSelectPlan }) {
                 return [
                     (<strong key={1}>{`${nbInstances} Redis Instance${nbInstances > 1 ? 's' : ''}`}</strong>),
                     (<strong key={2}>{`${nbInstances * 5} Alert Configurations`}</strong>),
+                    (<strong key={3}>7 Days Info History</strong>),
+                    'History Graphs',
                     'Email Notifications',
                     'SMS Notififications',
                     'HTTP Notifications'
@@ -26,6 +28,8 @@ function Plan({ plan, onSelectPlan }) {
                 return [
                     (<strong key={1}>{`${nbInstances} Redis Instance${nbInstances > 1 ? 's' : ''}`}</strong>),
                     (<strong key={2}>{`${nbInstances * 5} Alert Configurations`}</strong>),
+                    (<strong key={3}>7 Days Info History</strong>),
+                    'History Graphs',
                     'Email Notifications',
                     'SMS Notififications',
                     'HTTP Notifications'

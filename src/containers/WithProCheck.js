@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Panel from 'components/common/Panel';
 import ProLockedMessage from 'components/pro/ProLockedMessage';
 import { isPro } from 'selectors/AppSelectors';
 
@@ -9,7 +10,9 @@ function withProCheck(Component) {
 
         if (!pro) {
             return (
-                <ProLockedMessage />
+                <Panel.Sub>
+                    <ProLockedMessage />
+                </Panel.Sub>
             );
         }
 
