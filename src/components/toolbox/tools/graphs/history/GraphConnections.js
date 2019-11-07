@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DataSet from '@antv/data-set';
 import { DatePicker, Empty } from 'antd';
-import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
+import { Axis, Chart, Geom, Guide, Legend, Tooltip } from 'bizcharts';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { AutoSizer } from 'react-virtualized';
@@ -138,6 +138,16 @@ function GraphConnections({ instanceId }) {
                                 size={2}
                                 color="type"
                                 shape={'smooth'} />
+                            <Guide>
+                                <Guide.Line
+                                    start={[1573154141, 'min']}
+                                    end={[1573154141, 'max']}
+                                    lineStyle={{
+                                        stroke: '#ff0000',
+                                        lineDash: [0, 2, 2],
+                                        lineWidth: 2
+                                    }} />
+                            </Guide>
                         </Chart>
                     )}
                 </AutoSizer>
