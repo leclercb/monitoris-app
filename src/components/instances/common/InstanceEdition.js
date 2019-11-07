@@ -27,7 +27,8 @@ function InstanceEdition({ instance, updateInstance }) {
         appApi.setSelectedView('explorer');
     };
 
-    const clearReports = async () => {
+    const clearHistory = async () => {
+        await instanceApi.clearAlerts(instance.id);
         await instanceApi.clearReports(instance.id);
     };
 
@@ -64,12 +65,12 @@ function InstanceEdition({ instance, updateInstance }) {
                         <Col span={12} />
                         <Col span={12}>
                             <Popconfirm
-                                title={'Do you really want to delete the info history of this instance ?'}
-                                onConfirm={clearReports}
+                                title={'Do you really want to delete the alert and info history of this instance ?'}
+                                onConfirm={clearHistory}
                                 okText="Yes"
                                 cancelText="No">
                                 <Button block>
-                                    <Icon icon="trash-alt" text="Clear info history" />
+                                    <Icon icon="trash-alt" text="Clear alert and info history" />
                                 </Button>
                             </Popconfirm>
                         </Col>

@@ -61,7 +61,7 @@ function GraphCommands({ instanceId }) {
 
     const data = reports.map(report => {
         const item = {
-            timestamp: moment(report.creationDate).unix()
+            timestamp: moment(report.id).unix()
         };
 
         Object.keys(report.info).forEach(key => {

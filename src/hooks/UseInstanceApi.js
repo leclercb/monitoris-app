@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedDb, setSelectedInstanceId } from 'actions/AppActions';
 import {
     addInstance,
+    clearAlerts,
     clearReports,
     deleteInstance,
     duplicateInstance,
     executeCommand,
     getInfo,
+    getAlerts,
     getReport,
     getReports,
     getStatus,
@@ -70,6 +72,16 @@ export function useInstanceApi() {
         [dispatch]
     );
 
+    const getAlertsCallback = useCallback(
+        (instanceId, start, end, silent) => dispatch(getAlerts(instanceId, start, end, silent)),
+        [dispatch]
+    );
+
+    const clearAlertsCallback = useCallback(
+        (instanceId, silent) => dispatch(clearAlerts(instanceId, silent)),
+        [dispatch]
+    );
+
     const getReportCallback = useCallback(
         (instanceId, reportId, silent) => dispatch(getReport(instanceId, reportId, silent)),
         [dispatch]
@@ -99,6 +111,8 @@ export function useInstanceApi() {
         getStatus: getStatusCallback,
         getInfo: getInfoCallback,
         executeCommand: executeCommandCallback,
+        getAlerts: getAlertsCallback,
+        clearAlerts: clearAlertsCallback,
         getReport: getReportCallback,
         getReports: getReportsCallback,
         clearReports: clearReportsCallback

@@ -65,7 +65,7 @@ function GraphMemory({ instanceId }) {
     }
 
     const data = reports.map(report => ({
-        timestamp: moment(report.creationDate).unix(),
+        timestamp: moment(report.id).unix(),
         used_memory: Number.parseInt(report.info.used_memory),
         used_memory_dataset: Number.parseInt(report.info.used_memory_dataset),
         used_memory_lua: Number.parseInt(report.info.used_memory_lua),

@@ -45,7 +45,7 @@ function GraphConnections({ instanceId }) {
     }
 
     const data = reports.map(report => ({
-        timestamp: moment(report.creationDate).unix(),
+        timestamp: moment(report.id).unix(),
         connected_clients: Number.parseInt(report.info.connected_clients),
         blocked_clients: Number.parseInt(report.info.blocked_clients)
     }));

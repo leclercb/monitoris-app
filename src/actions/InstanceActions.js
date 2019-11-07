@@ -160,6 +160,83 @@ export function executeCommand(instanceId, db, command, parameters, silent = fal
     };
 }
 
+export function getAlerts(instanceId, start, end, silent = false) {
+    return async dispatch => {
+        const processId = uuid();
+
+        try {
+            const result = await sendRequest(
+                {
+                    headers: {
+                        Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+                    },
+                    method: 'GET',
+                    url: `${getConfig().proxyUrl}/api/v1/instances/${instanceId}/alerts`,
+                    params: {
+                        start,
+                        end
+                    },
+                    responseType: 'json'
+                });
+
+            return result.data;
+        } catch (error) {
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    title: 'Get instance alerts',
+                    error: getErrorMessages(error, true)
+                }));
+            }
+
+            throw error;
+        }
+    };
+}
+
+export function clearAlerts(instanceId, silent = false) {
+    return async dispatch => {
+        const processId = uuid();
+
+        dispatch(updateProcess({
+            id: processId,
+            state: 'RUNNING',
+            title: 'Clear alert history',
+            notify: true
+        }));
+
+        try {
+            const result = await sendRequest(
+                {
+                    headers: {
+                        Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+                    },
+                    method: 'POST',
+                    url: `${getConfig().proxyUrl}/api/v1/instances/${instanceId}/alerts/clear`,
+                    responseType: 'json'
+                });
+
+            dispatch(updateProcess({
+                id: processId,
+                state: 'COMPLETED'
+            }));
+
+            return result.data;
+        } catch (error) {
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    error: getErrorMessages(error, true)
+                }));
+            }
+
+            throw error;
+        }
+    };
+}
+
 export function getReport(instanceId, reportId, silent = false) {
     return async dispatch => {
         const processId = uuid();
@@ -181,7 +258,7 @@ export function getReport(instanceId, reportId, silent = false) {
                 dispatch(updateProcess({
                     id: processId,
                     state: 'ERROR',
-                    title: 'Get report',
+                    title: 'Get instance report',
                     error: getErrorMessages(error, true)
                 }));
             }
@@ -217,7 +294,7 @@ export function getReports(instanceId, start, end, attributeNames, silent = fals
                 dispatch(updateProcess({
                     id: processId,
                     state: 'ERROR',
-                    title: 'Get reports',
+                    title: 'Get instance reports',
                     error: getErrorMessages(error, true)
                 }));
             }

@@ -44,7 +44,7 @@ function GraphOperations({ instanceId }) {
     }
 
     const data = reports.map(report => ({
-        timestamp: moment(report.creationDate).unix(),
+        timestamp: moment(report.id).unix(),
         instantaneous_ops_per_sec: Number.parseInt(report.info.instantaneous_ops_per_sec)
     }));
 
