@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DataSet from '@antv/data-set';
-import { DatePicker, Empty } from 'antd';
+import { DatePicker, Empty, Select } from 'antd';
 import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -11,14 +11,25 @@ import PromiseButton from 'components/common/PromiseButton';
 import withProCheck from 'containers/WithProCheck';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
+import { getHumanFileSize } from 'utils/FileUtils';
 import { getDateTimeFormat } from 'utils/SettingUtils';
 
-function GraphConnections({ instanceId }) {
+function GraphMemory({ instanceId }) {
     const instanceApi = useInstanceApi();
     const settingsApi = useSettingsApi();
 
     const [range, setRange] = useState([moment().subtract(1, 'day'), moment()]);
     const [reports, setReports] = useState([]);
+    const [selectedFields, setSelectedFields] = useState([
+        'used_memory',
+        'used_memory_dataset',
+        'used_memory_lua',
+        'used_memory_overhead',
+        'used_memory_peak',
+        'used_memory_rss',
+        'used_memory_scripts',
+        'used_memory_startup'
+    ]);
 
     const refresh = async () => {
         if (range && range[0] && range[1]) {
@@ -26,7 +37,16 @@ function GraphConnections({ instanceId }) {
                 instanceId,
                 range[0].toISOString(),
                 range[1].toISOString(),
-                ['connected_clients', 'blocked_clients']);
+                [
+                    'used_memory',
+                    'used_memory_dataset',
+                    'used_memory_lua',
+                    'used_memory_overhead',
+                    'used_memory_peak',
+                    'used_memory_rss',
+                    'used_memory_scripts',
+                    'used_memory_startup'
+                ]);
 
             setReports(reports);
         }
@@ -46,8 +66,14 @@ function GraphConnections({ instanceId }) {
 
     const data = reports.map(report => ({
         timestamp: moment(report.creationDate).unix(),
-        connected_clients: Number.parseInt(report.info.connected_clients),
-        blocked_clients: Number.parseInt(report.info.blocked_clients)
+        used_memory: Number.parseInt(report.info.used_memory),
+        used_memory_dataset: Number.parseInt(report.info.used_memory_dataset),
+        used_memory_lua: Number.parseInt(report.info.used_memory_lua),
+        used_memory_overhead: Number.parseInt(report.info.used_memory_overhead),
+        used_memory_peak: Number.parseInt(report.info.used_memory_peak),
+        used_memory_rss: Number.parseInt(report.info.used_memory_rss),
+        used_memory_scripts: Number.parseInt(report.info.used_memory_scripts),
+        used_memory_startup: Number.parseInt(report.info.used_memory_startup)
     }));
 
     const dv = new DataSet.DataView();
@@ -56,10 +82,7 @@ function GraphConnections({ instanceId }) {
         type: 'fold',
         key: 'type',
         value: 'value',
-        fields: [
-            'connected_clients',
-            'blocked_clients'
-        ]
+        fields: selectedFields
     });
 
     const scale = {
@@ -74,7 +97,8 @@ function GraphConnections({ instanceId }) {
             }
         },
         value: {
-            alias: 'Clients',
+            alias: 'Memory',
+            formatter: value => getHumanFileSize(value),
             min: 0
         }
     };
@@ -100,6 +124,21 @@ function GraphConnections({ instanceId }) {
                     <PromiseButton onClick={refresh} style={{ marginLeft: 10 }}>
                         <Icon icon="sync-alt" text="Query" />
                     </PromiseButton>
+                    <Select
+                        mode="multiple"
+                        value={selectedFields}
+                        placeholder="Categories"
+                        onChange={value => setSelectedFields(value)}
+                        style={{ minWidth: 300, marginLeft: 20 }}>
+                        <Select.Option value="used_memory">Used</Select.Option>
+                        <Select.Option value="used_memory_dataset">Dataset</Select.Option>
+                        <Select.Option value="used_memory_lua">LUA</Select.Option>
+                        <Select.Option value="used_memory_overhead">Overhead</Select.Option>
+                        <Select.Option value="used_memory_peak">Peak</Select.Option>
+                        <Select.Option value="used_memory_rss">RSS</Select.Option>
+                        <Select.Option value="used_memory_scripts">Scripts</Select.Option>
+                        <Select.Option value="used_memory_startup">Startup</Select.Option>
+                    </Select>
                 </Panel.Standard>
             </Panel.Sub>
             <Panel.Sub grow>
@@ -130,7 +169,7 @@ function GraphConnections({ instanceId }) {
                                     type: 'y'
                                 }}
                                 g2-tooltip={{
-                                    width: '200px'
+                                    width: '300px'
                                 }} />
                             <Geom
                                 type="line"
@@ -146,8 +185,8 @@ function GraphConnections({ instanceId }) {
     );
 }
 
-GraphConnections.propTypes = {
+GraphMemory.propTypes = {
     instanceId: PropTypes.string.isRequired
 };
 
-export default withProCheck(GraphConnections);
+export default withProCheck(GraphMemory);

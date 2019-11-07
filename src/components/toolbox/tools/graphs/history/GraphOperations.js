@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import DataSet from '@antv/data-set';
 import { DatePicker, Empty } from 'antd';
 import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
 import moment from 'moment';
@@ -13,7 +12,7 @@ import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { getDateTimeFormat } from 'utils/SettingUtils';
 
-function GraphConnections({ instanceId }) {
+function GraphOperations({ instanceId }) {
     const instanceApi = useInstanceApi();
     const settingsApi = useSettingsApi();
 
@@ -26,7 +25,7 @@ function GraphConnections({ instanceId }) {
                 instanceId,
                 range[0].toISOString(),
                 range[1].toISOString(),
-                ['connected_clients', 'blocked_clients']);
+                ['instantaneous_ops_per_sec']);
 
             setReports(reports);
         }
@@ -46,21 +45,8 @@ function GraphConnections({ instanceId }) {
 
     const data = reports.map(report => ({
         timestamp: moment(report.creationDate).unix(),
-        connected_clients: Number.parseInt(report.info.connected_clients),
-        blocked_clients: Number.parseInt(report.info.blocked_clients)
+        instantaneous_ops_per_sec: Number.parseInt(report.info.instantaneous_ops_per_sec)
     }));
-
-    const dv = new DataSet.DataView();
-
-    dv.source(data).transform({
-        type: 'fold',
-        key: 'type',
-        value: 'value',
-        fields: [
-            'connected_clients',
-            'blocked_clients'
-        ]
-    });
 
     const scale = {
         timestamp: {
@@ -73,8 +59,8 @@ function GraphConnections({ instanceId }) {
                 return '';
             }
         },
-        value: {
-            alias: 'Clients',
+        instantaneous_ops_per_sec: {
+            alias: 'Operations Per Sec',
             min: 0
         }
     };
@@ -105,7 +91,7 @@ function GraphConnections({ instanceId }) {
             <Panel.Sub grow>
                 <AutoSizer>
                     {({ width, height }) => (
-                        <Chart width={width} height={height} data={dv} scale={scale} padding="auto" forceFit>
+                        <Chart width={width} height={height} data={data} scale={scale} padding="auto" forceFit>
                             <Legend />
                             <Axis
                                 name="timestamp"
@@ -117,7 +103,7 @@ function GraphConnections({ instanceId }) {
                                     }
                                 }} />
                             <Axis
-                                name="value"
+                                name="instantaneous_ops_per_sec"
                                 title={{
                                     autoRotate: true,
                                     textStyle: {
@@ -134,9 +120,9 @@ function GraphConnections({ instanceId }) {
                                 }} />
                             <Geom
                                 type="line"
-                                position="timestamp*value"
+                                position="timestamp*instantaneous_ops_per_sec"
                                 size={2}
-                                color="type"
+                                color="#44a2fc"
                                 shape={'smooth'} />
                         </Chart>
                     )}
@@ -146,8 +132,8 @@ function GraphConnections({ instanceId }) {
     );
 }
 
-GraphConnections.propTypes = {
+GraphOperations.propTypes = {
     instanceId: PropTypes.string.isRequired
 };
 
-export default withProCheck(GraphConnections);
+export default withProCheck(GraphOperations);

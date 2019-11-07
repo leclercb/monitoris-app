@@ -44,25 +44,25 @@ function GraphCommands({ instanceId }) {
         return {
             command: key.substr('cmdstat_'.length),
             calls: Number.parseInt(cmdStat.calls),
-            usecPerCall: Number.parseFloat(cmdStat.usec_per_call)
+            usec_per_call: Number.parseFloat(cmdStat.usec_per_call)
         };
     }).sort((a, b) => {
         switch (sortBy) {
             case 'name': return compareStrings(a.command, b.command);
             case 'calls': return compareNumbers(a.calls, b.calls);
-            case 'usecPerCall': return compareNumbers(a.usecPerCall, b.usecPerCall);
+            case 'usec_per_call': return compareNumbers(a.usec_per_call, b.usec_per_call);
             default: return compareStrings(a.command, b.command);
         }
     });
 
-    const cols = {
+    const scale = {
         command: {
             alias: 'Command'
         },
         calls: {
             alias: 'Calls'
         },
-        usecPerCall: {
+        usec_per_call: {
             alias: 'Microseconds Per Call'
         }
     };
@@ -80,14 +80,14 @@ function GraphCommands({ instanceId }) {
                         style={{ width: 300, marginLeft: 20 }}>
                         <Select.Option value="command">Sort by command name</Select.Option>
                         <Select.Option value="calls">Sort by number of calls</Select.Option>
-                        <Select.Option value="usecPerCall">Sort by number of microseconds per call</Select.Option>
+                        <Select.Option value="usec_per_call">Sort by number of microseconds per call</Select.Option>
                     </Select>
                 </Panel.Standard>
             </Panel.Sub>
             <Panel.Sub grow>
                 <AutoSizer>
                     {({ width, height }) => (
-                        <Chart width={width} height={height} data={data} scale={cols} padding="auto" forceFit>
+                        <Chart width={width} height={height} data={data} scale={scale} padding="auto" forceFit>
                             <Legend />
                             <Axis
                                 name="command"
@@ -109,7 +109,7 @@ function GraphCommands({ instanceId }) {
                                     }
                                 }} />
                             <Axis
-                                name="usecPerCall"
+                                name="usec_per_call"
                                 position="right"
                                 title={{
                                     autoRotate: true,
@@ -131,7 +131,7 @@ function GraphCommands({ instanceId }) {
                                 color="#44a2fc" />
                             <Geom
                                 type="interval"
-                                position="command*usecPerCall"
+                                position="command*usec_per_call"
                                 color="#fad34b"
                                 opacity={1}
                                 size={5} />

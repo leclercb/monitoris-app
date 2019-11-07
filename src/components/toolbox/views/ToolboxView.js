@@ -6,10 +6,12 @@ import EmptyInstance from 'components/common/empty/EmptyInstance';
 import ClientTool from 'components/toolbox/tools/ClientTool';
 import InfoTool from 'components/toolbox/tools/InfoTool';
 import TerminalTool from 'components/toolbox/tools/TerminalTool';
-import GraphCurrentConnections from 'components/toolbox/tools/graphs/current/GraphConnections';
 import GraphCurrentCommands from 'components/toolbox/tools/graphs/current/GraphCommands';
 import GraphCurrentMemory from 'components/toolbox/tools/graphs/current/GraphMemory';
+import GraphHistoryCommands from 'components/toolbox/tools/graphs/history/GraphCommands';
 import GraphHistoryConnections from 'components/toolbox/tools/graphs/history/GraphConnections';
+import GraphHistoryMemory from 'components/toolbox/tools/graphs/history/GraphMemory';
+import GraphHistoryOperations from 'components/toolbox/tools/graphs/history/GraphOperations';
 import ToolboxSider from 'components/toolbox/sider/ToolboxSider';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
@@ -42,14 +44,18 @@ function ToolboxView() {
                 return (<ClientTool />);
             case 'terminal':
                 return (<TerminalTool />);
-            case 'graphs:current:connections':
-                return (<GraphCurrentConnections instanceId={instanceId} />);
             case 'graphs:current:commands':
                 return (<GraphCurrentCommands instanceId={instanceId} />);
             case 'graphs:current:memory':
                 return (<GraphCurrentMemory instanceId={instanceId} />);
+            case 'graphs:history:commands':
+                return (<GraphHistoryCommands instanceId={instanceId} />);
             case 'graphs:history:connections':
                 return (<GraphHistoryConnections instanceId={instanceId} />);
+            case 'graphs:history:memory':
+                return (<GraphHistoryMemory instanceId={instanceId} />);
+            case 'graphs:history:operations':
+                return (<GraphHistoryOperations instanceId={instanceId} />);
             default:
                 return (
                     <Panel.Sub>

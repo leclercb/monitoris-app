@@ -6,6 +6,7 @@ import {
     faBell,
     faBinoculars,
     faCalendarAlt,
+    faChartBar,
     faChartLine,
     faCheck,
     faCircle,
@@ -62,6 +63,7 @@ library.add(faBarcode);
 library.add(faBell);
 library.add(faBinoculars);
 library.add(faCalendarAlt);
+library.add(faChartBar);
 library.add(faChartLine);
 library.add(faCheck);
 library.add(faCircle);

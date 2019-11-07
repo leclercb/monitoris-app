@@ -79,27 +79,27 @@ function ToolboxSider() {
                         <Menu.SubMenu
                             key="graphs:current"
                             title={createCategorySubMenu('Current', 'chart-line', () => onOpenChange('graphs:current'))}>
-                            <Menu.Item key="graphs:current:connections">
-                                <Icon icon="chart-line" text="Connections" />
-                            </Menu.Item>
                             <Menu.Item key="graphs:current:commands">
-                                <Icon icon="chart-line" text="Commands" />
+                                <Icon icon="chart-bar" text="Commands" />
                             </Menu.Item>
                             <Menu.Item key="graphs:current:memory">
-                                <Icon icon="chart-line" text="Memory" />
+                                <Icon icon="chart-bar" text="Memory" />
                             </Menu.Item>
                         </Menu.SubMenu>
                         <Menu.SubMenu
                             key="graphs:history"
                             title={createCategorySubMenu('History', 'chart-line', () => onOpenChange('graphs:history'))}>
-                            <Menu.Item key="graphs:history:connections">
-                                <Icon icon="chart-line" text="Connections" />
-                            </Menu.Item>
                             <Menu.Item key="graphs:history:commands">
                                 <Icon icon="chart-line" text="Commands" />
                             </Menu.Item>
+                            <Menu.Item key="graphs:history:connections">
+                                <Icon icon="chart-line" text="Connections" />
+                            </Menu.Item>
                             <Menu.Item key="graphs:history:memory">
                                 <Icon icon="chart-line" text="Memory" />
+                            </Menu.Item>
+                            <Menu.Item key="graphs:history:operations">
+                                <Icon icon="chart-line" text="Operations" />
                             </Menu.Item>
                         </Menu.SubMenu>
                     </Menu.SubMenu>

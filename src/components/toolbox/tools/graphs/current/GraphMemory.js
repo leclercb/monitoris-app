@@ -47,12 +47,12 @@ function GraphMemory({ instanceId }) {
         { key: 'used_memory_startup', value: Number.parseInt(instanceStateApi.info.used_memory_startup) }
     ];
 
-    const cols = {
+    const scale = {
         key: {
             alias: 'Category',
             formatter: value => {
                 switch (value) {
-                    case 'used_memory': return 'Used Memory';
+                    case 'used_memory': return 'Used';
                     case 'used_memory_dataset': return 'Dataset';
                     case 'used_memory_lua': return 'LUA';
                     case 'used_memory_overhead': return 'Overhead';
@@ -86,7 +86,7 @@ function GraphMemory({ instanceId }) {
             <Panel.Sub grow>
                 <AutoSizer>
                     {({ width, height }) => (
-                        <Chart width={width} height={height} data={data} scale={cols} padding="auto" forceFit>
+                        <Chart width={width} height={height} data={data} scale={scale} padding="auto" forceFit>
                             <Legend />
                             <Axis
                                 name="key"
