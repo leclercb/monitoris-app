@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Empty, Select } from 'antd';
+import { Empty } from 'antd';
 import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -9,7 +9,6 @@ import Panel from 'components/common/Panel';
 import PromiseButton from 'components/common/PromiseButton';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
-import { useInterval } from 'hooks/UseInterval';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { formatDate } from 'utils/SettingUtils';
 
@@ -18,17 +17,17 @@ function GraphConnections({ instanceId }) {
     const instanceStateApi = useInstanceStateApi(instanceId);
     const settingsApi = useSettingsApi();
 
-    const [refreshRate, setRefreshRate] = useState(30);
+    const [infos, setInfos] = useState([]);
+
+    const refresh = async () => {
+
+    };
 
     useEffect(() => {
-        instanceApi.getInfo(instanceId);
+        refresh();
     }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    useInterval(() => {
-        instanceApi.getInfo(instanceId);
-    }, refreshRate * 1000);
-
-    if (!instanceStateApi.lastInfo) {
+    if (infos.length === 0) {
         return (
             <Panel.Sub>
                 <Empty description="No data to display" />
@@ -36,11 +35,7 @@ function GraphConnections({ instanceId }) {
         );
     }
 
-    const refresh = async () => {
-        await instanceApi.getInfo(instanceId);
-    };
-
-    const data = instanceStateApi.allInfo.map(info => ({
+    const data = infos.map(info => ({
         timestamp: moment(info.timestamp).unix(),
         connectedClients: Number.parseInt(info.connected_clients),
         blockedClients: Number.parseInt(info.blocked_clients)
@@ -70,21 +65,8 @@ function GraphConnections({ instanceId }) {
             <Panel.Sub>
                 <Panel.Standard>
                     <PromiseButton onClick={refresh}>
-                        <Icon icon="sync-alt" text={`Refresh (${formatDate(instanceStateApi.lastInfo.timestamp, settingsApi.settings, true)})`} />
+                        <Icon icon="sync-alt" text={`Refresh (${formatDate(instanceStateApi.info.timestamp, settingsApi.settings, true)})`} />
                     </PromiseButton>
-                    <Select
-                        value={refreshRate}
-                        onChange={value => setRefreshRate(value)}
-                        style={{ width: 200, marginLeft: 20 }}>
-                        <Select.Option value={10}>Refresh every 10 seconds</Select.Option>
-                        <Select.Option value={20}>Refresh every 20 seconds</Select.Option>
-                        <Select.Option value={30}>Refresh every 30 seconds</Select.Option>
-                        <Select.Option value={60}>Refresh every 1 minute</Select.Option>
-                        <Select.Option value={120}>Refresh every 2 minutes</Select.Option>
-                        <Select.Option value={300}>Refresh every 5 minutes</Select.Option>
-                        <Select.Option value={600}>Refresh every 10 minutes</Select.Option>
-                        <Select.Option value={900}>Refresh every 15 minutes</Select.Option>
-                    </Select>
                 </Panel.Standard>
             </Panel.Sub>
             <Panel.Sub grow>

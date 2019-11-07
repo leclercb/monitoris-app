@@ -18,7 +18,7 @@ function InfoTool() {
 
     useEffect(() => {
         const getInfo = async () => {
-            if (instanceId && !instanceStateApi.lastInfo) {
+            if (instanceId && !instanceStateApi.info) {
                 await instanceApi.getInfo(instanceId);
             }
         };
@@ -26,7 +26,7 @@ function InfoTool() {
         getInfo();
     }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    if (!instanceStateApi.lastInfo) {
+    if (!instanceStateApi.info) {
         return (
             <Panel.Sub>
                 <Empty description="No data to display" />
@@ -52,9 +52,9 @@ function InfoTool() {
         }
     ];
 
-    const dataSource = Object.keys(instanceStateApi.lastInfo).sort().filter(key => key.includes(searchValue)).map(key => ({
+    const dataSource = Object.keys(instanceStateApi.info).sort().filter(key => key.includes(searchValue)).map(key => ({
         key,
-        value: instanceStateApi.lastInfo[key]
+        value: instanceStateApi.info[key]
     }));
 
     return (
@@ -70,7 +70,7 @@ function InfoTool() {
                             marginRight: 10
                         }} />
                     <PromiseButton onClick={refresh}>
-                        <Icon icon="sync-alt" text={`Refresh (${formatDate(instanceStateApi.lastInfo.timestamp, settingsApi.settings, true)})`} />
+                        <Icon icon="sync-alt" text={`Refresh (${formatDate(instanceStateApi.info.timestamp, settingsApi.settings, true)})`} />
                     </PromiseButton>
                 </Panel.Standard>
             </Panel.Sub>

@@ -1,7 +1,18 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedDb, setSelectedInstanceId } from 'actions/AppActions';
-import { addInstance, deleteInstance, duplicateInstance, executeCommand, getInfo, getStatus, updateInstance } from 'actions/InstanceActions';
+import {
+    addInstance,
+    clearReports,
+    deleteInstance,
+    duplicateInstance,
+    executeCommand,
+    getInfo,
+    getReport,
+    getReports,
+    getStatus,
+    updateInstance
+} from 'actions/InstanceActions';
 import { getSelectedDb, getSelectedInstanceId } from 'selectors/AppSelectors';
 import { getInstances, getSelectedInstance } from 'selectors/InstanceSelectors';
 
@@ -59,6 +70,21 @@ export function useInstanceApi() {
         [dispatch]
     );
 
+    const getReportCallback = useCallback(
+        (instanceId, reportId, silent) => dispatch(getReport(instanceId, reportId, silent)),
+        [dispatch]
+    );
+
+    const getReportsCallback = useCallback(
+        (instanceId, start, end, attributeNames, silent) => dispatch(getReports(instanceId, start, end, attributeNames, silent)),
+        [dispatch]
+    );
+
+    const clearReportsCallback = useCallback(
+        (instanceId, silent) => dispatch(clearReports(instanceId, silent)),
+        [dispatch]
+    );
+
     return {
         instances,
         selectedDb,
@@ -72,6 +98,9 @@ export function useInstanceApi() {
         setSelectedInstanceId: setSelectedInstanceIdCallback,
         getStatus: getStatusCallback,
         getInfo: getInfoCallback,
-        executeCommand: executeCommandCallback
+        executeCommand: executeCommandCallback,
+        getReport: getReportCallback,
+        getReports: getReportsCallback,
+        clearReports: clearReportsCallback
     };
 }

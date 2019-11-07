@@ -21,12 +21,12 @@ function GraphCommands({ instanceId }) {
     const [sortBy, setSortBy] = useState('command');
 
     useEffect(() => {
-        if (!instanceStateApi.lastInfo) {
+        if (!instanceStateApi.info) {
             instanceApi.getInfo(instanceId);
         }
     }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    if (!instanceStateApi.lastInfo) {
+    if (!instanceStateApi.info) {
         return (
             <Panel.Sub>
                 <Empty description="No data to display" />
@@ -38,8 +38,8 @@ function GraphCommands({ instanceId }) {
         await instanceApi.getInfo(instanceId);
     };
 
-    const data = Object.keys(instanceStateApi.lastInfo).filter(key => key.startsWith('cmdstat_')).map(key => {
-        const cmdStat = parseRedisSubString(instanceStateApi.lastInfo[key]);
+    const data = Object.keys(instanceStateApi.info).filter(key => key.startsWith('cmdstat_')).map(key => {
+        const cmdStat = parseRedisSubString(instanceStateApi.info[key]);
 
         return {
             command: key.substr('cmdstat_'.length),
@@ -72,7 +72,7 @@ function GraphCommands({ instanceId }) {
             <Panel.Sub>
                 <Panel.Standard>
                     <PromiseButton onClick={refresh}>
-                        <Icon icon="sync-alt" text={`Refresh (${formatDate(instanceStateApi.lastInfo.timestamp, settingsApi.settings, true)})`} />
+                        <Icon icon="sync-alt" text={`Refresh (${formatDate(instanceStateApi.info.timestamp, settingsApi.settings, true)})`} />
                     </PromiseButton>
                     <Select
                         value={sortBy}

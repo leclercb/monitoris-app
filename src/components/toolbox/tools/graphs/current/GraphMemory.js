@@ -19,12 +19,12 @@ function GraphMemory({ instanceId }) {
     const settingsApi = useSettingsApi();
 
     useEffect(() => {
-        if (!instanceStateApi.lastInfo) {
+        if (!instanceStateApi.info) {
             instanceApi.getInfo(instanceId);
         }
     }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    if (!instanceStateApi.lastInfo) {
+    if (!instanceStateApi.info) {
         return (
             <Panel.Sub>
                 <Empty description="No data to display" />
@@ -37,14 +37,14 @@ function GraphMemory({ instanceId }) {
     };
 
     const data = [
-        { key: 'used_memory', value: Number.parseInt(instanceStateApi.lastInfo.used_memory) },
-        { key: 'used_memory_dataset', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_dataset) },
-        { key: 'used_memory_lua', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_lua) },
-        { key: 'used_memory_overhead', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_overhead) },
-        { key: 'used_memory_peak', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_peak) },
-        { key: 'used_memory_rss', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_rss) },
-        { key: 'used_memory_scripts', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_scripts) },
-        { key: 'used_memory_startup', value: Number.parseInt(instanceStateApi.lastInfo.used_memory_startup) }
+        { key: 'used_memory', value: Number.parseInt(instanceStateApi.info.used_memory) },
+        { key: 'used_memory_dataset', value: Number.parseInt(instanceStateApi.info.used_memory_dataset) },
+        { key: 'used_memory_lua', value: Number.parseInt(instanceStateApi.info.used_memory_lua) },
+        { key: 'used_memory_overhead', value: Number.parseInt(instanceStateApi.info.used_memory_overhead) },
+        { key: 'used_memory_peak', value: Number.parseInt(instanceStateApi.info.used_memory_peak) },
+        { key: 'used_memory_rss', value: Number.parseInt(instanceStateApi.info.used_memory_rss) },
+        { key: 'used_memory_scripts', value: Number.parseInt(instanceStateApi.info.used_memory_scripts) },
+        { key: 'used_memory_startup', value: Number.parseInt(instanceStateApi.info.used_memory_startup) }
     ];
 
     const cols = {
@@ -75,11 +75,11 @@ function GraphMemory({ instanceId }) {
             <Panel.Sub>
                 <LeftRight right={(
                     <span style={{ fontWeight: 'bold', marginLeft: 20 }}>
-                        {`Total System Memory: ${getHumanFileSize(Number.parseInt(instanceStateApi.lastInfo.total_system_memory))}`}
+                        {`Total System Memory: ${getHumanFileSize(Number.parseInt(instanceStateApi.info.total_system_memory))}`}
                     </span>
                 )}>
                     <PromiseButton onClick={refresh}>
-                        <Icon icon="sync-alt" text={`Refresh (${formatDate(instanceStateApi.lastInfo.timestamp, settingsApi.settings, true)})`} />
+                        <Icon icon="sync-alt" text={`Refresh (${formatDate(instanceStateApi.info.timestamp, settingsApi.settings, true)})`} />
                     </PromiseButton>
                 </LeftRight>
             </Panel.Sub>

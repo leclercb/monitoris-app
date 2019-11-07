@@ -10,7 +10,7 @@ function ToolboxSider() {
     const appApi = useAppApi();
     const instanceApi = useInstanceApi();
 
-    const [openKeys, setOpenKeys] = useState(['tools', 'graphs']);
+    const [openKeys, setOpenKeys] = useState(['tools', 'graphs', 'graphs:current', 'graphs:history']);
 
     const onSelect = event => {
         appApi.setSelectedToolId(event.key);
@@ -76,15 +76,32 @@ function ToolboxSider() {
                     <Menu.SubMenu
                         key="graphs"
                         title={createCategorySubMenu('Graphs', 'chart-line', () => onOpenChange('graphs'))}>
-                        <Menu.Item key="graphs:connections">
-                            <Icon icon="chart-line" text="Connections" />
-                        </Menu.Item>
-                        <Menu.Item key="graphs:commands">
-                            <Icon icon="chart-line" text="Commands" />
-                        </Menu.Item>
-                        <Menu.Item key="graphs:memory">
-                            <Icon icon="chart-line" text="Memory" />
-                        </Menu.Item>
+                        <Menu.SubMenu
+                            key="graphs:current"
+                            title={createCategorySubMenu('Current', 'chart-line', () => onOpenChange('graphs:current'))}>
+                            <Menu.Item key="graphs:current:connections">
+                                <Icon icon="chart-line" text="Connections" />
+                            </Menu.Item>
+                            <Menu.Item key="graphs:current:commands">
+                                <Icon icon="chart-line" text="Commands" />
+                            </Menu.Item>
+                            <Menu.Item key="graphs:current:memory">
+                                <Icon icon="chart-line" text="Memory" />
+                            </Menu.Item>
+                        </Menu.SubMenu>
+                        <Menu.SubMenu
+                            key="graphs:history"
+                            title={createCategorySubMenu('History', 'chart-line', () => onOpenChange('graphs:history'))}>
+                            <Menu.Item key="graphs:history:connections">
+                                <Icon icon="chart-line" text="Connections" />
+                            </Menu.Item>
+                            <Menu.Item key="graphs:history:commands">
+                                <Icon icon="chart-line" text="Commands" />
+                            </Menu.Item>
+                            <Menu.Item key="graphs:history:memory">
+                                <Icon icon="chart-line" text="Memory" />
+                            </Menu.Item>
+                        </Menu.SubMenu>
                     </Menu.SubMenu>
                 </Menu.SubMenu>
             </Menu>

@@ -6,9 +6,9 @@ import EmptyInstance from 'components/common/empty/EmptyInstance';
 import ClientTool from 'components/toolbox/tools/ClientTool';
 import InfoTool from 'components/toolbox/tools/InfoTool';
 import TerminalTool from 'components/toolbox/tools/TerminalTool';
-import GraphConnections from 'components/toolbox/tools/graphs/GraphConnections';
-import GraphCommands from 'components/toolbox/tools/graphs/GraphCommands';
-import GraphMemory from 'components/toolbox/tools/graphs/GraphMemory';
+import GraphCurrentConnections from 'components/toolbox/tools/graphs/current/GraphConnections';
+import GraphCurrentCommands from 'components/toolbox/tools/graphs/current/GraphCommands';
+import GraphCurrentMemory from 'components/toolbox/tools/graphs/current/GraphMemory';
 import ToolboxSider from 'components/toolbox/sider/ToolboxSider';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
@@ -41,12 +41,12 @@ function ToolboxView() {
                 return (<ClientTool />);
             case 'terminal':
                 return (<TerminalTool />);
-            case 'graphs:connections':
-                return (<GraphConnections instanceId={instanceId} />);
-            case 'graphs:commands':
-                return (<GraphCommands instanceId={instanceId} />);
-            case 'graphs:memory':
-                return (<GraphMemory instanceId={instanceId} />);
+            case 'graphs:current:connections':
+                return (<GraphCurrentConnections instanceId={instanceId} />);
+            case 'graphs:current:commands':
+                return (<GraphCurrentCommands instanceId={instanceId} />);
+            case 'graphs:current:memory':
+                return (<GraphCurrentMemory instanceId={instanceId} />);
             default:
                 return (
                     <Panel.Sub>

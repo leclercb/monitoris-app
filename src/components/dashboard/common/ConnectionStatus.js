@@ -12,7 +12,7 @@ function ConnectionStatus({ instance }) {
     const instanceStateApi = useInstanceStateApi(instance.id);
 
     useEffect(() => {
-        if (!instanceStateApi.lastInfo) {
+        if (!instanceStateApi.info) {
             instanceApi.getInfo(instance.id, true);
         }
     }, [instance.id]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -26,22 +26,22 @@ function ConnectionStatus({ instance }) {
             <LeftRight right={(<Icon icon="sync-alt" onClick={refresh} />)}>
                 <Typography.Title level={3}>{instance.title}</Typography.Title>
             </LeftRight>
-            {!instanceStateApi.lastInfo && (
+            {!instanceStateApi.info && (
                 <Empty description="Data not available" />
             )}
-            {!!instanceStateApi.lastInfo && (
+            {!!instanceStateApi.info && (
                 <Row>
                     <Col span={12}>
-                        <Statistic title="Connected Clients" value={instanceStateApi.lastInfo ? instanceStateApi.lastInfo.connected_clients : '?'} />
+                        <Statistic title="Connected Clients" value={instanceStateApi.info ? instanceStateApi.info.connected_clients : '?'} />
                     </Col>
                     <Col span={12}>
-                        <Statistic title="Connected Slaves" value={instanceStateApi.lastInfo ? instanceStateApi.lastInfo.connected_slaves : '?'} />
+                        <Statistic title="Connected Slaves" value={instanceStateApi.info ? instanceStateApi.info.connected_slaves : '?'} />
                     </Col>
                     <Col span={12}>
-                        <Statistic title="Reject Connections" value={instanceStateApi.lastInfo ? instanceStateApi.lastInfo.rejected_connections : '?'} />
+                        <Statistic title="Reject Connections" value={instanceStateApi.info ? instanceStateApi.info.rejected_connections : '?'} />
                     </Col>
                     <Col span={12}>
-                        <Statistic title="Total Connections Received" value={instanceStateApi.lastInfo ? instanceStateApi.lastInfo.total_connections_received : '?'} />
+                        <Statistic title="Total Connections Received" value={instanceStateApi.info ? instanceStateApi.info.total_connections_received : '?'} />
                     </Col>
                 </Row>
             )}
