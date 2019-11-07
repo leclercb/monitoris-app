@@ -21,12 +21,14 @@ function KeyData({ object, onKeyDeleted }) {
     const [redisKey, setRedisKey] = useState(null);
     const [type, setType] = useState(null);
     const [length, setLength] = useState(0);
+    const [ttl, setTtl] = useState(0);
 
     const getData = async object => {
         const redisKey = object ? object.key : null;
 
         if (instanceId && redisKey) {
             let type = await instanceApi.executeCommand(instanceId, db, 'type', [redisKey]);
+            let ttl = await instanceApi.executeCommand(instanceId, db, 'ttl', [redisKey]);
             let length;
 
             switch (type) {
@@ -51,6 +53,7 @@ function KeyData({ object, onKeyDeleted }) {
 
             setType(type);
             setLength(length);
+            setTtl(ttl);
         }
     };
 
@@ -106,6 +109,7 @@ function KeyData({ object, onKeyDeleted }) {
                     <Descriptions.Item label={(<strong>Key</strong>)}>{redisKey}</Descriptions.Item>
                     <Descriptions.Item label={(<strong>Type</strong>)}><RedisTypeTitle typeId={type} /></Descriptions.Item>
                     <Descriptions.Item label={(<strong>Length</strong>)}>{length}</Descriptions.Item>
+                    <Descriptions.Item label={(<strong>TTL</strong>)}>{ttl === -1 ? 'None' : ttl}</Descriptions.Item>
                 </Descriptions>
             </Panel.Sub>
             <Panel.Sub grow>
