@@ -84,6 +84,37 @@ export function getStatus(instanceId, silent = false) {
     };
 }
 
+export function getMonitoring(instanceId, silent = false) {
+    return async dispatch => {
+        const processId = uuid();
+
+        try {
+            const result = await sendRequest(
+                {
+                    headers: {
+                        Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+                    },
+                    method: 'GET',
+                    url: `${getConfig().proxyUrl}/api/v1/instances/${instanceId}/monitoring`,
+                    responseType: 'json'
+                });
+
+            return result.data;
+        } catch (error) {
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    title: 'Get monitoring',
+                    error: getErrorMessages(error, true)
+                }));
+            }
+
+            throw error;
+        }
+    };
+}
+
 export function getInfo(instanceId, silent = false) {
     return async dispatch => {
         const processId = uuid();

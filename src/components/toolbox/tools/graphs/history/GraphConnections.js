@@ -38,21 +38,7 @@ function GraphConnections({ instanceId }) {
                 range[1].toISOString(),
                 ['connected_clients', 'blocked_clients']);
 
-            setAlerts([
-                {
-                    "alert": "1b02cd83-65e8-48d8-9261-2fee7e5dbbf6",
-                    "currSeverity": "crit",
-                    "fields": {
-                        "connected_clients": {
-                            "severity": "crit",
-                            "value": "8"
-                        }
-                    },
-                    "id": "2019-11-07T19:28:41.670Z",
-                    "instance": "97e9389c-f82a-44dc-a946-c59a7df69bdc",
-                    "prevSeverity": "norm"
-                }
-            ]);
+            setAlerts(alerts);
             setReports(reports);
         }
     };
@@ -61,7 +47,7 @@ function GraphConnections({ instanceId }) {
         const handler = event => {
             const alert = alerts.find(alert => alert.id === event.detail.alertId);
             showGraphAlert(alert, alertApi.alerts, instanceApi.instances, settingsApi.settings);
-        }
+        };
 
         window.addEventListener('graph-alert', handler);
 
@@ -173,7 +159,7 @@ function GraphConnections({ instanceId }) {
                                     const html = `<span class="graph-alert" onClick="window.dispatchEvent(new CustomEvent('graph-alert', { detail: { alertId: '${alert.id}' } }));">Alert 1</span>`;
 
                                     return (
-                                        <React.Fragment>
+                                        <React.Fragment key={alert.id}>
                                             <Guide.Line
                                                 start={[moment(alert.id).unix(), 'min']}
                                                 end={[moment(alert.id).unix(), 'max']}

@@ -8,8 +8,9 @@ import {
     deleteInstance,
     duplicateInstance,
     executeCommand,
-    getInfo,
     getAlerts,
+    getInfo,
+    getMonitoring,
     getReport,
     getReports,
     getStatus,
@@ -62,6 +63,11 @@ export function useInstanceApi() {
         [dispatch]
     );
 
+    const getMonitoringCallback = useCallback(
+        (instanceId, silent) => dispatch(getMonitoring(instanceId, silent)),
+        [dispatch]
+    );
+
     const getInfoCallback = useCallback(
         (instanceId, silent) => dispatch(getInfo(instanceId, silent)),
         [dispatch]
@@ -109,6 +115,7 @@ export function useInstanceApi() {
         setSelectedDb: setSelectedDbCallback,
         setSelectedInstanceId: setSelectedInstanceIdCallback,
         getStatus: getStatusCallback,
+        getMonitoring: getMonitoringCallback,
         getInfo: getInfoCallback,
         executeCommand: executeCommandCallback,
         getAlerts: getAlertsCallback,

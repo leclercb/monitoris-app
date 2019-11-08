@@ -19,7 +19,7 @@ function ModalPasswordField(props) {
         }
 
         setVisible(false);
-    }
+    };
 
     return (
         <React.Fragment>

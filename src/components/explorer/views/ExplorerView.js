@@ -33,7 +33,7 @@ function ExplorerView() {
                     setKeys={setKeys}
                     selectedObject={selectedObject}
                     setSelectedObject={setSelectedObject} />
-                <Panel.Main>
+                <Panel.Main showMonitor>
                     <KeyData
                         object={selectedObject}
                         onKeyDeleted={onKeyDeleted} />

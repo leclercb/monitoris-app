@@ -1,24 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Monitor from 'components/monitor/Monitor';
 
-export function Main({ children }) {
+export function Main({ children, showMonitor }) {
     const style = {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100%',
-        padding: 25,
+        paddingLeft: 25,
+        paddingRight: 25,
+        paddingBottom: 25,
         spaceBetween: 25
     };
 
+    if (!showMonitor) {
+        style.paddingTop = 25;
+    }
+
     return (
         <div style={style}>
+            {showMonitor && (
+                <Monitor />
+            )}
             {children}
         </div>
     );
 }
 
 Main.propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
+    showMonitor: PropTypes.bool
 };
 
 export function Sub({ children, backgroundColor, grow }) {

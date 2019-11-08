@@ -10,6 +10,7 @@ import {
     faChartLine,
     faCheck,
     faCircle,
+    faClock,
     faCloudShowersHeavy,
     faCloudSun,
     faCloudSunRain,
@@ -34,6 +35,7 @@ import {
     faListUl,
     faLock,
     faLockOpen,
+    faMemory,
     faMinusSquare,
     faNetworkWired,
     faPaintRoller,
@@ -51,6 +53,7 @@ import {
     faStar,
     faSun,
     faSyncAlt,
+    faTasks,
     faTerminal,
     faTools,
     faTrashAlt,
@@ -67,6 +70,7 @@ library.add(faChartBar);
 library.add(faChartLine);
 library.add(faCheck);
 library.add(faCircle);
+library.add(faClock);
 library.add(faCloudShowersHeavy);
 library.add(faCloudSun);
 library.add(faCloudSunRain);
@@ -91,6 +95,7 @@ library.add(faListOl);
 library.add(faListUl);
 library.add(faLock);
 library.add(faLockOpen);
+library.add(faMemory);
 library.add(faMinusSquare);
 library.add(faNetworkWired);
 library.add(faPaintRoller);
@@ -108,6 +113,7 @@ library.add(faSpinner);
 library.add(faStar);
 library.add(faSun);
 library.add(faSyncAlt);
+library.add(faTasks);
 library.add(faTerminal);
 library.add(faTools);
 library.add(faTrashAlt);

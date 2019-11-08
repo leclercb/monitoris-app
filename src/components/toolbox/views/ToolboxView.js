@@ -73,7 +73,7 @@ function ToolboxView() {
             onDragFinished={size => onToolboxViewSplitPaneSizeChange(size)}
             paneStyle={{ overflowY: 'auto' }}>
             <ToolboxSider />
-            <Panel.Main>
+            <Panel.Main showMonitor>
                 {getToolFromId()}
             </Panel.Main>
         </SplitPane>

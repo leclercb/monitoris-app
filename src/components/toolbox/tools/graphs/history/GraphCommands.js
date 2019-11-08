@@ -81,21 +81,7 @@ function GraphCommands({ instanceId }) {
                 range[1].toISOString(),
                 [`cmdstat_${selectedField}`]);
 
-            setAlerts([
-                {
-                    "alert": "1b02cd83-65e8-48d8-9261-2fee7e5dbbf6",
-                    "currSeverity": "crit",
-                    "fields": {
-                        "connected_clients": {
-                            "severity": "crit",
-                            "value": "8"
-                        }
-                    },
-                    "id": "2019-11-07T19:28:41.670Z",
-                    "instance": "97e9389c-f82a-44dc-a946-c59a7df69bdc",
-                    "prevSeverity": "norm"
-                }
-            ]);
+            setAlerts(alerts);
             setReports(reports);
         }
     };
@@ -104,7 +90,7 @@ function GraphCommands({ instanceId }) {
         const handler = event => {
             const alert = alerts.find(alert => alert.id === event.detail.alertId);
             showGraphAlert(alert, alertApi.alerts, instanceApi.instances, settingsApi.settings);
-        }
+        };
 
         window.addEventListener('graph-alert', handler);
 
