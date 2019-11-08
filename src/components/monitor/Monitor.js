@@ -11,7 +11,7 @@ function Monitor() {
     const instanceStateApi = useInstanceStateApi(instanceApi.selectedInstanceId);
 
     const instanceId = instanceApi.selectedInstanceId;
-    const status = instanceStateApi.status;
+    const { status } = instanceStateApi;
 
     const [monitoring, setMonitoring] = useState(null);
 
