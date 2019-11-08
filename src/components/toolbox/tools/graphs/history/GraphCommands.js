@@ -81,6 +81,8 @@ function GraphCommands({ instanceId }) {
                 range[1].toISOString(),
                 [`cmdstat_${selectedField}`]);
 
+            alerts.forEach(alert => alert.instance = instanceId);
+
             setAlerts(alerts);
             setReports(reports);
         }
@@ -228,7 +230,7 @@ function GraphCommands({ instanceId }) {
                                     shape={'smooth'} />
                                 <Guide>
                                     {alerts.map(alert => {
-                                        const html = `<span class="graph-alert" onClick="window.dispatchEvent(new CustomEvent('graph-alert', { detail: { alertId: '${alert.id}' } }));">Alert 1</span>`;
+                                        const html = `<div class="graph-alert" onClick="window.dispatchEvent(new CustomEvent('graph-alert', { detail: { alertId: '${alert.id}' } }));" />`;
 
                                         return (
                                             <React.Fragment key={alert.id}>
@@ -244,7 +246,8 @@ function GraphCommands({ instanceId }) {
                                                     position={[moment(alert.id).unix(), 'max']}
                                                     alignX="left"
                                                     alignY="top"
-                                                    offsetX={10}
+                                                    offsetX={-7}
+                                                    offsetY={-5}
                                                     html={html} />
                                             </React.Fragment>
                                         );

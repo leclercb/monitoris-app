@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 import Icon from 'components/common/Icon';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useInstanceStateApi } from 'hooks/UseInstanceStateApi';
@@ -40,12 +41,12 @@ function Monitor() {
     return (
         <div className="monitor">
             <Icon icon="server" text={instanceApi.selectedInstance.title} color="#ffffff" globalClassName="monitor-item" />
-            <Icon icon="memory" text={getHumanFileSize(monitoring.used_memory)} color="#ffffff" globalClassName="monitor-item" />
-            <Icon icon="key" text={monitoring.total_keys} color="#ffffff" globalClassName="monitor-item" />
-            <Icon icon="users" text={monitoring.connected_clients} color="#ffffff" globalClassName="monitor-item" />
-            <Icon icon="spinner" text={monitoring.instantaneous_ops_per_sec} color="#ffffff" globalClassName="monitor-item" />
-            <Icon icon="tasks" text={monitoring.total_commands_processed} color="#ffffff" globalClassName="monitor-item" />
-            <Icon icon="clock" text={monitoring.uptime_in_seconds} color="#ffffff" globalClassName="monitor-item" />
+            <Icon icon="memory" text={`${getHumanFileSize(monitoring.used_memory)} used memory`} color="#ffffff" globalClassName="monitor-item" />
+            <Icon icon="key" text={`${monitoring.total_keys} keys`} color="#ffffff" globalClassName="monitor-item" />
+            <Icon icon="users" text={`${monitoring.connected_clients} connected clients`} color="#ffffff" globalClassName="monitor-item" />
+            <Icon icon="spinner" text={`${monitoring.instantaneous_ops_per_sec} ops/sec`} color="#ffffff" globalClassName="monitor-item" />
+            <Icon icon="tasks" text={`${monitoring.total_commands_processed} commands processed`} color="#ffffff" globalClassName="monitor-item" />
+            <Icon icon="clock" text={`${moment.duration(monitoring.uptime_in_seconds * 1000).humanize()} uptime`} color="#ffffff" globalClassName="monitor-item" />
         </div>
     );
 }

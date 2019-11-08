@@ -38,6 +38,8 @@ function GraphConnections({ instanceId }) {
                 range[1].toISOString(),
                 ['connected_clients', 'blocked_clients']);
 
+            alerts.forEach(alert => alert.instance = instanceId);
+
             setAlerts(alerts);
             setReports(reports);
         }
@@ -156,7 +158,7 @@ function GraphConnections({ instanceId }) {
                                 shape={'smooth'} />
                             <Guide>
                                 {alerts.map(alert => {
-                                    const html = `<span class="graph-alert" onClick="window.dispatchEvent(new CustomEvent('graph-alert', { detail: { alertId: '${alert.id}' } }));">Alert 1</span>`;
+                                    const html = `<div class="graph-alert" onClick="window.dispatchEvent(new CustomEvent('graph-alert', { detail: { alertId: '${alert.id}' } }));" />`;
 
                                     return (
                                         <React.Fragment key={alert.id}>
@@ -172,7 +174,8 @@ function GraphConnections({ instanceId }) {
                                                 position={[moment(alert.id).unix(), 'max']}
                                                 alignX="left"
                                                 alignY="top"
-                                                offsetX={10}
+                                                offsetX={-7}
+                                                offsetY={-5}
                                                 html={html} />
                                         </React.Fragment>
                                     );

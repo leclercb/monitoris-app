@@ -36,6 +36,8 @@ function GraphOperations({ instanceId }) {
                 range[1].toISOString(),
                 ['instantaneous_ops_per_sec']);
 
+            alerts.forEach(alert => alert.instance = instanceId);
+
             setAlerts(alerts);
             setReports(reports);
         }
@@ -142,7 +144,7 @@ function GraphOperations({ instanceId }) {
                                 shape={'smooth'} />
                             <Guide>
                                 {alerts.map(alert => {
-                                    const html = `<span class="graph-alert" onClick="window.dispatchEvent(new CustomEvent('graph-alert', { detail: { alertId: '${alert.id}' } }));">Alert 1</span>`;
+                                    const html = `<div class="graph-alert" onClick="window.dispatchEvent(new CustomEvent('graph-alert', { detail: { alertId: '${alert.id}' } }));" />`;
 
                                     return (
                                         <React.Fragment key={alert.id}>
@@ -158,7 +160,8 @@ function GraphOperations({ instanceId }) {
                                                 position={[moment(alert.id).unix(), 'max']}
                                                 alignX="left"
                                                 alignY="top"
-                                                offsetX={10}
+                                                offsetX={-7}
+                                                offsetY={-5}
                                                 html={html} />
                                         </React.Fragment>
                                     );

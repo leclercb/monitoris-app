@@ -57,6 +57,8 @@ function GraphMemory({ instanceId }) {
                     'used_memory_startup'
                 ]);
 
+            alerts.forEach(alert => alert.instance = instanceId);
+
             setAlerts(alerts);
             setReports(reports);
         }
@@ -196,7 +198,7 @@ function GraphMemory({ instanceId }) {
                                 shape={'smooth'} />
                             <Guide>
                                 {alerts.map(alert => {
-                                    const html = `<span class="graph-alert" onClick="window.dispatchEvent(new CustomEvent('graph-alert', { detail: { alertId: '${alert.id}' } }));">Alert 1</span>`;
+                                    const html = `<div class="graph-alert" onClick="window.dispatchEvent(new CustomEvent('graph-alert', { detail: { alertId: '${alert.id}' } }));" />`;
 
                                     return (
                                         <React.Fragment key={alert.id}>
@@ -212,7 +214,8 @@ function GraphMemory({ instanceId }) {
                                                 position={[moment(alert.id).unix(), 'max']}
                                                 alignX="left"
                                                 alignY="top"
-                                                offsetX={10}
+                                                offsetX={-7}
+                                                offsetY={-5}
                                                 html={html} />
                                         </React.Fragment>
                                     );

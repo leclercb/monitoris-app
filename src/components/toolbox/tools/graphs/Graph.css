@@ -1,7 +1,10 @@
 .graph-alert {
-    color: red;
     cursor: pointer;
-    white-space: nowrap;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    background: #fff3f0;
+    border: 3px solid #d2291f;
 }
 
 .graph-alert:hover {
