@@ -8,31 +8,68 @@ import { AutoSizer } from 'react-virtualized';
 import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
 import PromiseButton from 'components/common/PromiseButton';
+import { showGraphAlert } from 'components/toolbox/tools/graphs/GraphAlert';
 import withProCheck from 'containers/WithProCheck';
+import { useAlertApi } from 'hooks/UseAlertApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { getDateTimeFormat } from 'utils/SettingUtils';
+import 'components/toolbox/tools/graphs/Graph.css';
 
 function GraphConnections({ instanceId }) {
+    const alertApi = useAlertApi();
     const instanceApi = useInstanceApi();
     const settingsApi = useSettingsApi();
 
     const [range, setRange] = useState([moment().subtract(1, 'day'), moment()]);
+    const [alerts, setAlerts] = useState([]);
     const [reports, setReports] = useState([]);
 
     const refresh = async () => {
         if (range && range[0] && range[1]) {
+            const alerts = await instanceApi.getAlerts(
+                instanceId,
+                range[0].toISOString(),
+                range[1].toISOString());
+
             const reports = await instanceApi.getReports(
                 instanceId,
                 range[0].toISOString(),
                 range[1].toISOString(),
                 ['connected_clients', 'blocked_clients']);
 
+            setAlerts([
+                {
+                    "alert": "1b02cd83-65e8-48d8-9261-2fee7e5dbbf6",
+                    "currSeverity": "crit",
+                    "fields": {
+                        "connected_clients": {
+                            "severity": "crit",
+                            "value": "8"
+                        }
+                    },
+                    "id": "2019-11-07T19:28:41.670Z",
+                    "instance": "97e9389c-f82a-44dc-a946-c59a7df69bdc",
+                    "prevSeverity": "norm"
+                }
+            ]);
             setReports(reports);
         }
     };
 
     useEffect(() => {
+        const handler = event => {
+            const alert = alerts.find(alert => alert.id === event.detail.alertId);
+            showGraphAlert(alert, alertApi.alerts, instanceApi.instances, settingsApi.settings);
+        }
+
+        window.addEventListener('graph-alert', handler);
+
+        return () => window.removeEventListener('graph-alert', handler);
+    });
+
+    useEffect(() => {
+        setAlerts([]);
         setReports([]);
         refresh();
     }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -132,14 +169,28 @@ function GraphConnections({ instanceId }) {
                                 color="type"
                                 shape={'smooth'} />
                             <Guide>
-                                <Guide.Line
-                                    start={[1573154141, 'min']}
-                                    end={[1573154141, 'max']}
-                                    lineStyle={{
-                                        stroke: '#ff0000',
-                                        lineDash: [0, 2, 2],
-                                        lineWidth: 2
-                                    }} />
+                                {alerts.map(alert => {
+                                    const html = `<span class="graph-alert" onClick="window.dispatchEvent(new CustomEvent('graph-alert', { detail: { alertId: '${alert.id}' } }));">Alert 1</span>`;
+
+                                    return (
+                                        <React.Fragment>
+                                            <Guide.Line
+                                                start={[moment(alert.id).unix(), 'min']}
+                                                end={[moment(alert.id).unix(), 'max']}
+                                                lineStyle={{
+                                                    stroke: '#ff0000',
+                                                    lineDash: [0, 2, 2],
+                                                    lineWidth: 2
+                                                }} />
+                                            <Guide.Html
+                                                position={[moment(alert.id).unix(), 'max']}
+                                                alignX="left"
+                                                alignY="top"
+                                                offsetX={10}
+                                                html={html} />
+                                        </React.Fragment>
+                                    );
+                                })}
                             </Guide>
                         </Chart>
                     )}

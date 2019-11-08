@@ -50,11 +50,7 @@ function InstanceSider() {
                         <Menu.Item key={instance.id} instance={instance}>
                             <ObjectMenuItem
                                 object={instance}
-                                onManage={null}
-                                onEdit={null}
-                                onDelete={() => instanceApi.deleteInstance(instance.id)}
-                                dropType="task"
-                                onDrop={null} />
+                                onDelete={() => instanceApi.deleteInstance(instance.id)} />
                         </Menu.Item>
                     ))}
                 </Menu.SubMenu>

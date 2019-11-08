@@ -1,0 +1,9 @@
+.graph-alert {
+    color: red;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.graph-alert:hover {
+    font-weight: bold;
+}

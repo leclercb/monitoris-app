@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import DataSet from '@antv/data-set';
 import { DatePicker, Select } from 'antd';
-import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
+import { Axis, Chart, Geom, Guide, Legend, Tooltip } from 'bizcharts';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { AutoSizer } from 'react-virtualized';
 import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
 import PromiseButton from 'components/common/PromiseButton';
+import { showGraphAlert } from 'components/toolbox/tools/graphs/GraphAlert';
 import withProCheck from 'containers/WithProCheck';
+import { useAlertApi } from 'hooks/UseAlertApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { getHumanFileSize } from 'utils/FileUtils';
 import { getDateTimeFormat } from 'utils/SettingUtils';
 
 function GraphMemory({ instanceId }) {
+    const alertApi = useAlertApi();
     const instanceApi = useInstanceApi();
     const settingsApi = useSettingsApi();
 
     const [range, setRange] = useState([moment().subtract(1, 'day'), moment()]);
+    const [alerts, setAlerts] = useState([]);
     const [reports, setReports] = useState([]);
     const [selectedFields, setSelectedFields] = useState([
         'used_memory',
@@ -33,6 +37,11 @@ function GraphMemory({ instanceId }) {
 
     const refresh = async () => {
         if (range && range[0] && range[1]) {
+            const alerts = await instanceApi.getAlerts(
+                instanceId,
+                range[0].toISOString(),
+                range[1].toISOString());
+
             const reports = await instanceApi.getReports(
                 instanceId,
                 range[0].toISOString(),
@@ -48,11 +57,39 @@ function GraphMemory({ instanceId }) {
                     'used_memory_startup'
                 ]);
 
+            setAlerts([
+                {
+                    "alert": "1b02cd83-65e8-48d8-9261-2fee7e5dbbf6",
+                    "currSeverity": "crit",
+                    "fields": {
+                        "connected_clients": {
+                            "severity": "crit",
+                            "value": "8"
+                        }
+                    },
+                    "id": "2019-11-07T19:28:41.670Z",
+                    "instance": "97e9389c-f82a-44dc-a946-c59a7df69bdc",
+                    "prevSeverity": "norm"
+                }
+            ]);
             setReports(reports);
         }
     };
 
     useEffect(() => {
+        const handler = event => {
+            const alert = alerts.find(alert => alert.id === event.detail.alertId);
+            showGraphAlert(alert, alertApi.alerts, instanceApi.instances, settingsApi.settings);
+        }
+
+        window.addEventListener('graph-alert', handler);
+
+        return () => window.removeEventListener('graph-alert', handler);
+    });
+
+
+    useEffect(() => {
+        setAlerts([]);
         setReports([]);
         refresh();
     }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -171,6 +208,30 @@ function GraphMemory({ instanceId }) {
                                 size={2}
                                 color="type"
                                 shape={'smooth'} />
+                            <Guide>
+                                {alerts.map(alert => {
+                                    const html = `<span class="graph-alert" onClick="window.dispatchEvent(new CustomEvent('graph-alert', { detail: { alertId: '${alert.id}' } }));">Alert 1</span>`;
+
+                                    return (
+                                        <React.Fragment key={alert.id}>
+                                            <Guide.Line
+                                                start={[moment(alert.id).unix(), 'min']}
+                                                end={[moment(alert.id).unix(), 'max']}
+                                                lineStyle={{
+                                                    stroke: '#ff0000',
+                                                    lineDash: [0, 2, 2],
+                                                    lineWidth: 2
+                                                }} />
+                                            <Guide.Html
+                                                position={[moment(alert.id).unix(), 'max']}
+                                                alignX="left"
+                                                alignY="top"
+                                                offsetX={10}
+                                                html={html} />
+                                        </React.Fragment>
+                                    );
+                                })}
+                            </Guide>
                         </Chart>
                     )}
                 </AutoSizer>
