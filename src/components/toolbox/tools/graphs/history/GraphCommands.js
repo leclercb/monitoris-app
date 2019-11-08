@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import DataSet from '@antv/data-set';
 import { DatePicker, Empty, Select } from 'antd';
 import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
 import moment from 'moment';
@@ -15,7 +14,7 @@ import { parseRedisSubString } from 'utils/FormatUtils';
 import { getDateTimeFormat } from 'utils/SettingUtils';
 
 function GraphCommands({ instanceId }) {
-    const keys = [
+    const fields = [
         'auth',
         'client',
         'cluster',
@@ -24,8 +23,38 @@ function GraphCommands({ instanceId }) {
         'eval',
         'exec',
         'get',
+        'getrange',
+        'hdel',
+        'hget',
+        'hgetall',
+        'hincrby',
+        'hlen',
+        'hscan',
+        'hset',
+        'incrby',
         'info',
-        'set'
+        'keys',
+        'mget',
+        'multi',
+        'ping',
+        'pttl',
+        'publish',
+        'sadd',
+        'scan',
+        'scard',
+        'select',
+        'set',
+        'setex',
+        'slowlog',
+        'smembers',
+        'srandmember',
+        'srem',
+        'sscan',
+        'strlen',
+        'subscribe',
+        'ttl',
+        'type',
+        'watch'
     ];
 
     const instanceApi = useInstanceApi();
@@ -33,52 +62,33 @@ function GraphCommands({ instanceId }) {
 
     const [range, setRange] = useState([moment().subtract(1, 'day'), moment()]);
     const [reports, setReports] = useState([]);
-    const [selectedFields, setSelectedFields] = useState(['cmdstat_info_calls']);
+    const [selectedField, setSelectedField] = useState(undefined);
 
     const refresh = async () => {
-        if (range && range[0] && range[1]) {
+        if (range && range[0] && range[1] && selectedField) {
             const reports = await instanceApi.getReports(
                 instanceId,
                 range[0].toISOString(),
                 range[1].toISOString(),
-                keys.map(key => `cmdstat_${key}`));
+                [`cmdstat_${selectedField}`]);
 
             setReports(reports);
         }
     };
 
     useEffect(() => {
+        setReports([]);
         refresh();
-    }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
-
-    if (reports.length === 0) {
-        return (
-            <Panel.Sub>
-                <Empty description="No data to display" />
-            </Panel.Sub>
-        );
-    }
+    }, [instanceId, selectedField]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const data = reports.map(report => {
-        const item = {
-            timestamp: moment(report.id).unix()
+        const cmdStat = parseRedisSubString(report.info[`cmdstat_${selectedField}`]);
+
+        return {
+            timestamp: moment(report.id).unix(),
+            calls: Number.parseInt(cmdStat.calls),
+            usec_per_call: Number.parseFloat(cmdStat.usec_per_call)
         };
-
-        Object.keys(report.info).forEach(key => {
-            const cmdStat = parseRedisSubString(report.info[key]);
-            item[`${key}_calls`] = Number.parseInt(cmdStat.calls);
-        });
-
-        return item;
-    });
-
-    const dv = new DataSet.DataView();
-
-    dv.source(data).transform({
-        type: 'fold',
-        key: 'type',
-        value: 'value',
-        fields: selectedFields
     });
 
     const scale = {
@@ -86,14 +96,18 @@ function GraphCommands({ instanceId }) {
             alias: 'Timestamp',
             formatter: value => {
                 if (/^[0-9]+$/.test(value)) {
-                    return `${moment(value * 1000).format('HH:mm:ss')}`;
+                    return `${moment(value * 1000).format(getDateTimeFormat(settingsApi.settings))}`;
                 }
 
                 return '';
             }
         },
-        value: {
+        calls: {
             alias: 'Calls',
+            min: 0
+        },
+        usec_per_call: {
+            alias: 'Microseconds Per Call',
             min: 0
         }
     };
@@ -120,57 +134,80 @@ function GraphCommands({ instanceId }) {
                         <Icon icon="sync-alt" text="Query" />
                     </PromiseButton>
                     <Select
-                        mode="multiple"
-                        value={selectedFields}
-                        placeholder="Categories"
-                        onChange={value => setSelectedFields(value)}
+                        value={selectedField}
+                        showSearch={true}
+                        allowClear={true}
+                        placeholder="Please select a field"
+                        onChange={value => setSelectedField(value)}
                         style={{ minWidth: 300, marginLeft: 20 }}>
-                        {keys.map(key => (
-                            <Select.Option key={key} value={`cmdstat_${key}_calls`}>{key}</Select.Option>
+                        {fields.map(field => (
+                            <Select.Option key={field} value={field}>{field}</Select.Option>
                         ))}
                     </Select>
                 </Panel.Standard>
             </Panel.Sub>
-            <Panel.Sub grow>
-                <AutoSizer>
-                    {({ width, height }) => (
-                        <Chart width={width} height={height} data={dv} scale={scale} padding="auto" forceFit>
-                            <Legend />
-                            <Axis
-                                name="timestamp"
-                                title={{
-                                    autoRotate: true,
-                                    textStyle: {
-                                        fill: 'black',
-                                        fontWeight: 'bold'
-                                    }
-                                }} />
-                            <Axis
-                                name="value"
-                                title={{
-                                    autoRotate: true,
-                                    textStyle: {
-                                        fill: 'black',
-                                        fontWeight: 'bold'
-                                    }
-                                }} />
-                            <Tooltip
-                                crosshairs={{
-                                    type: 'y'
-                                }}
-                                g2-tooltip={{
-                                    width: '300px'
-                                }} />
-                            <Geom
-                                type="line"
-                                position="timestamp*value"
-                                size={2}
-                                color="type"
-                                shape={'smooth'} />
-                        </Chart>
-                    )}
-                </AutoSizer>
-            </Panel.Sub>
+            {!selectedField && (
+                <Panel.Sub>
+                    <Empty description="Please select a field" />
+                </Panel.Sub>
+            )}
+            {!!selectedField && (
+                <Panel.Sub grow>
+                    <AutoSizer>
+                        {({ width, height }) => (
+                            <Chart width={width} height={height} data={data} scale={scale} padding="auto" forceFit>
+                                <Legend />
+                                <Axis
+                                    name="timestamp"
+                                    title={{
+                                        autoRotate: true,
+                                        textStyle: {
+                                            fill: 'black',
+                                            fontWeight: 'bold'
+                                        }
+                                    }} />
+                                <Axis
+                                    name="calls"
+                                    title={{
+                                        autoRotate: true,
+                                        textStyle: {
+                                            fill: 'black',
+                                            fontWeight: 'bold'
+                                        }
+                                    }} />
+                                <Axis
+                                    name="usec_per_call"
+                                    title={{
+                                        autoRotate: true,
+                                        textStyle: {
+                                            fill: 'black',
+                                            fontWeight: 'bold'
+                                        }
+                                    }} />
+                                <Tooltip
+                                    crosshairs={{
+                                        type: 'y'
+                                    }}
+                                    g2-tooltip={{
+                                        width: '300px'
+                                    }} />
+                                <Geom
+                                    type="line"
+                                    position="timestamp*calls"
+                                    size={2}
+                                    color="#44a2fc"
+                                    shape={'smooth'} />
+                                <Geom
+                                    type="line"
+                                    position="timestamp*usec_per_call"
+                                    size={2}
+                                    color="#fad34b"
+                                    shape={'smooth'} />
+                            </Chart>
+                        )}
+                    </AutoSizer>
+                </Panel.Sub>
+            )}
         </React.Fragment>
     );
 }

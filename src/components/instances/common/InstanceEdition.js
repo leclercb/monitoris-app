@@ -61,20 +61,22 @@ function InstanceEdition({ instance, updateInstance }) {
                             </Button>
                         </Col>
                     </Row>
-                    <Row gutter={20} style={{ marginTop: 20 }}>
-                        <Col span={12} />
-                        <Col span={12}>
-                            <Popconfirm
-                                title={'Do you really want to delete the alert and info history of this instance ?'}
-                                onConfirm={clearHistory}
-                                okText="Yes"
-                                cancelText="No">
-                                <Button block>
-                                    <Icon icon="trash-alt" text="Clear alert and info history" />
-                                </Button>
-                            </Popconfirm>
-                        </Col>
-                    </Row>
+                    {appApi.pro && (
+                        <Row gutter={20} style={{ marginTop: 20 }}>
+                            <Col span={12} />
+                            <Col span={12}>
+                                <Popconfirm
+                                    title={'Do you really want to delete the alert and info history of this instance ?'}
+                                    onConfirm={clearHistory}
+                                    okText="Yes"
+                                    cancelText="No">
+                                    <Button block>
+                                        <Icon icon="trash-alt" text="Clear alert and info history" />
+                                    </Button>
+                                </Popconfirm>
+                            </Col>
+                        </Row>
+                    )}
                     <Divider style={{ marginTop: 30 }}>Connection Status</Divider>
                     {!instance.enabled && (
                         <DisabledStatus />

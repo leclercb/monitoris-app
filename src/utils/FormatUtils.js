@@ -1,4 +1,8 @@
 export function parseRedisInfo(value) {
+    if (!value) {
+        return {};
+    }
+
     const lines = value.split(/\r?\n/);
     const result = {};
 
@@ -21,6 +25,10 @@ export function parseRedisInfo(value) {
 }
 
 export function parseRedisString(value) {
+    if (!value) {
+        return [];
+    }
+
     const lines = value.split(/\r?\n/);
     const result = [];
 
@@ -52,6 +60,10 @@ export function parseRedisString(value) {
 }
 
 export function parseRedisSubString(value) {
+    if (!value) {
+        return {};
+    }
+
     const tokens = value.split(',');
     const result = {};
 

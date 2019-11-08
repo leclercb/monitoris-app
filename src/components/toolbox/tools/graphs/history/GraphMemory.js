@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DataSet from '@antv/data-set';
-import { DatePicker, Empty, Select } from 'antd';
+import { DatePicker, Select } from 'antd';
 import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -53,16 +53,9 @@ function GraphMemory({ instanceId }) {
     };
 
     useEffect(() => {
+        setReports([]);
         refresh();
     }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
-
-    if (reports.length === 0) {
-        return (
-            <Panel.Sub>
-                <Empty description="No data to display" />
-            </Panel.Sub>
-        );
-    }
 
     const data = reports.map(report => ({
         timestamp: moment(report.id).unix(),
@@ -90,7 +83,7 @@ function GraphMemory({ instanceId }) {
             alias: 'Timestamp',
             formatter: value => {
                 if (/^[0-9]+$/.test(value)) {
-                    return `${moment(value * 1000).format('HH:mm:ss')}`;
+                    return `${moment(value * 1000).format(getDateTimeFormat(settingsApi.settings))}`;
                 }
 
                 return '';
@@ -127,6 +120,7 @@ function GraphMemory({ instanceId }) {
                     <Select
                         mode="multiple"
                         value={selectedFields}
+                        showSearch={true}
                         placeholder="Categories"
                         onChange={value => setSelectedFields(value)}
                         style={{ minWidth: 300, marginLeft: 20 }}>

@@ -10,6 +10,7 @@ import AlertNotificationTypeTitle from 'components/alertnotificationtypes/AlertN
 import AlertTitle from 'components/alerts/common/AlertTitle';
 import AlertSelect from 'components/alerts/common/AlertSelect';
 import ColorPicker from 'components/common/ColorPicker';
+import ModalPasswordField from 'components/common/ModalPasswordField';
 import StarCheckbox from 'components/common/StarCheckbox';
 import InstanceSelect from 'components/instances/common/InstanceSelect';
 import InstancesSelect from 'components/instances/common/InstancesSelect';
@@ -174,14 +175,26 @@ export function getFieldComponents(type, options) {
             break;
         }
         case 'password': {
+            const mode = options && options.mode;
+
             configuration = {
                 render: value => value ? toStringPassword(value) : <span>&nbsp;</span>,
-                input: props => (
-                    <Input.Password
-                        onBlur={props.onCommit}
-                        onPressEnter={props.onCommit}
-                        {...removeExtraProps(props)} />
-                )
+                input: props => {
+                    if (mode === 'modal') {
+                        return (
+                            <ModalPasswordField
+                                onChange={props.onCommit}
+                                {...removeExtraProps(props)} />
+                        );
+                    }
+
+                    return (
+                        <Input.Password
+                            onBlur={props.onCommit}
+                            onPressEnter={props.onCommit}
+                            {...removeExtraProps(props)} />
+                    );
+                }
             };
 
             break;

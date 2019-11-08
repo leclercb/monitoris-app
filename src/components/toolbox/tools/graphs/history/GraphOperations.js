@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DatePicker, Empty } from 'antd';
+import { DatePicker } from 'antd';
 import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -32,16 +32,9 @@ function GraphOperations({ instanceId }) {
     };
 
     useEffect(() => {
+        setReports([]);
         refresh();
     }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
-
-    if (reports.length === 0) {
-        return (
-            <Panel.Sub>
-                <Empty description="No data to display" />
-            </Panel.Sub>
-        );
-    }
 
     const data = reports.map(report => ({
         timestamp: moment(report.id).unix(),
@@ -53,7 +46,7 @@ function GraphOperations({ instanceId }) {
             alias: 'Timestamp',
             formatter: value => {
                 if (/^[0-9]+$/.test(value)) {
-                    return `${moment(value * 1000).format('HH:mm:ss')}`;
+                    return `${moment(value * 1000).format(getDateTimeFormat(settingsApi.settings))}`;
                 }
 
                 return '';

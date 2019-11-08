@@ -78,7 +78,10 @@ export function getInstanceFields(type) {
                     id: 'password',
                     title: 'Password',
                     type: 'password',
-                    editable: true
+                    editable: true,
+                    options: {
+                        mode: 'modal'
+                    }
                 }
             );
             break;
