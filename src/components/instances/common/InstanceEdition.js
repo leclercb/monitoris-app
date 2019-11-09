@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, Col, Divider, Form, Popconfirm, Row } from 'antd';
+import { Button, Col, Divider, Popconfirm, Row } from 'antd';
 import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
 import AlertStatus from 'components/instances/common/AlertStatus';
@@ -98,9 +98,8 @@ function InstanceEdition({ instance, updateInstance }) {
 }
 
 InstanceEdition.propTypes = {
-    form: PropTypes.object.isRequired,
     instance: InstancePropType.isRequired,
     updateInstance: PropTypes.func.isRequired
 };
 
-export default Form.create({ name: 'instance' })(InstanceEdition);
+export default InstanceEdition;

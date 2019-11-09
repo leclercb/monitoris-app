@@ -193,8 +193,7 @@ function NotificationTable(props) {
                     message="HTTP and SMS notifications are only sent for &quot;Pro&quot; users."
                     type="warning"
                     showIcon
-                    style={{ marginTop: 20 }}
-                />
+                    style={{ marginTop: 20 }} />
             )}
         </React.Fragment>
     );

@@ -7,15 +7,11 @@ export function Main({ children, showMonitor }) {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100%',
-        paddingLeft: 25,
-        paddingRight: 25,
-        paddingBottom: 25,
-        spaceBetween: 25
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingBottom: 15,
+        spaceBetween: 15
     };
-
-    if (!showMonitor) {
-        style.paddingTop = 25;
-    }
 
     return (
         <div style={style}>
@@ -38,8 +34,8 @@ export function Sub({ children, backgroundColor, grow }) {
         flexDirection: 'column',
         backgroundColor: backgroundColor || '#ffffff',
         borderRadius: 5,
-        padding: 25,
-        marginBottom: 25,
+        padding: 15,
+        marginTop: 15,
         maxWidth: '100%',
         overflow: 'auto'
     };
