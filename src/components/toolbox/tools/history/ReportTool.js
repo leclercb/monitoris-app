@@ -4,6 +4,8 @@ import moment from 'moment';
 import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
 import PromiseButton from 'components/common/PromiseButton';
+import { getConfig } from 'config/Config';
+import withProCheck from 'containers/WithProCheck';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { formatDate, getDateTimeFormat, getTimeFormat } from 'utils/SettingUtils';
@@ -76,7 +78,7 @@ function ReportTool() {
                         allowClear={false}
                         disabledDate={current => {
                             return current && (
-                                current.isBefore(moment().subtract(7, 'day')) ||
+                                current.isBefore(moment().subtract(getConfig().instanceReportTtl, 'day')) ||
                                 current.isAfter(moment()));
                         }}
                         showTime={{
@@ -124,4 +126,4 @@ function ReportTool() {
     );
 }
 
-export default ReportTool;
+export default withProCheck(ReportTool);

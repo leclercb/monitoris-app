@@ -9,6 +9,7 @@ import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
 import PromiseButton from 'components/common/PromiseButton';
 import HistoryGuide from 'components/toolbox/tools/graphs/history/HistoryGuide';
+import { getConfig } from 'config/Config';
 import withProCheck from 'containers/WithProCheck';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
@@ -125,7 +126,7 @@ function GraphMemory({ instanceId }) {
                             allowClear={false}
                             disabledDate={current => {
                                 return current && (
-                                    current.isBefore(moment().subtract(7, 'day')) ||
+                                    current.isBefore(moment().subtract(getConfig().instanceReportTtl, 'day')) ||
                                     current.isAfter(moment()));
                             }}
                             showTime={{

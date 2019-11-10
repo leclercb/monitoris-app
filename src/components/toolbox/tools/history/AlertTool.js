@@ -6,6 +6,8 @@ import Panel from 'components/common/Panel';
 import PromiseButton from 'components/common/PromiseButton';
 import InstanceAlert from 'components/instances/alerts/InstanceAlert';
 import AlertTable from 'components/toolbox/tools/history/AlertTable';
+import { getConfig } from 'config/Config';
+import withProCheck from 'containers/WithProCheck';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { getDateTimeFormat } from 'utils/SettingUtils';
@@ -47,7 +49,7 @@ function AlertTool() {
                         allowClear={false}
                         disabledDate={current => {
                             return current && (
-                                current.isBefore(moment().subtract(7, 'day')) ||
+                                current.isBefore(moment().subtract(getConfig().instanceAlertTtl, 'day')) ||
                                 current.isAfter(moment()));
                         }}
                         showTime={{
@@ -80,4 +82,4 @@ function AlertTool() {
     );
 }
 
-export default AlertTool;
+export default withProCheck(AlertTool);

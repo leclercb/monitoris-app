@@ -1,6 +1,8 @@
 const config = {
     common: {
-        cloudItemSku: 'rm-cloud-pro-1y'
+        cloudItemSku: 'rm-cloud-pro-1y',
+        instanceAlertTtl: 7,
+        instanceReportTtl: 7
     },
     local: {
         apiUrl: 'http://localhost:2000',
