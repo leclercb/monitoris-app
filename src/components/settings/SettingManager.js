@@ -46,8 +46,7 @@ function SettingManager(props) {
                             className={item.id === selectedCategoryId ? 'selected-list-item' : null}>
                             <Icon icon={item.icon} text={item.title} />
                         </List.Item>
-                    )}
-                />
+                    )} />
             </Col>
             <Col span={2} />
             <Col span={16}>

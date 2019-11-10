@@ -28,10 +28,10 @@ Main.propTypes = {
     showMonitor: PropTypes.bool
 };
 
-export function Sub({ children, backgroundColor, grow }) {
+export function Sub({ children, backgroundColor, grow, flexDirection }) {
     const style = {
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: flexDirection || 'column',
         backgroundColor: backgroundColor || '#ffffff',
         borderRadius: 5,
         padding: 15,
@@ -42,7 +42,8 @@ export function Sub({ children, backgroundColor, grow }) {
 
     if (grow) {
         style.minHeight = 200;
-        style.flex = 1;
+        style.flex = '1 1 auto';
+        style.height = 0;
     }
 
     return (
@@ -55,7 +56,8 @@ export function Sub({ children, backgroundColor, grow }) {
 Sub.propTypes = {
     children: PropTypes.node,
     backgroundColor: PropTypes.string,
-    grow: PropTypes.bool
+    grow: PropTypes.bool,
+    flexDirection: PropTypes.string
 };
 
 export function Grow({ children }) {

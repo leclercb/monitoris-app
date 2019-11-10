@@ -4,7 +4,7 @@
     width: 14px;
     height: 14px;
     background: #fff3f0;
-    border: 3px solid #d2291f;
+    border: 3px solid transparent;
 }
 
 .graph-alert:hover {

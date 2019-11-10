@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Empty } from 'antd';
+import { Empty, Typography } from 'antd';
 import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
 import PropTypes from 'prop-types';
 import { AutoSizer } from 'react-virtualized';
@@ -74,9 +74,11 @@ function GraphMemory({ instanceId }) {
         <React.Fragment>
             <Panel.Sub>
                 <LeftRight right={(
-                    <span style={{ fontWeight: 'bold', marginLeft: 20 }}>
-                        {`Total System Memory: ${getHumanFileSize(Number.parseInt(instanceStateApi.info.total_system_memory))}`}
-                    </span>
+                    <div style={{ marginLeft: 20, paddingTop: 5 }}>
+                        <Typography.Title level={4} style={{ margin: 0 }}>
+                            {`Total System Memory: ${getHumanFileSize(Number.parseInt(instanceStateApi.info.total_system_memory))}`}
+                        </Typography.Title>
+                    </div>
                 )}>
                     <PromiseButton onClick={refresh}>
                         <Icon icon="sync-alt" text={`Refresh (${formatDate(instanceStateApi.info.timestamp, settingsApi.settings, true)})`} />

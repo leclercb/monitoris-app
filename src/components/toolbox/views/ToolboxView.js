@@ -12,6 +12,8 @@ import GraphHistoryCommands from 'components/toolbox/tools/graphs/history/GraphC
 import GraphHistoryConnections from 'components/toolbox/tools/graphs/history/GraphConnections';
 import GraphHistoryMemory from 'components/toolbox/tools/graphs/history/GraphMemory';
 import GraphHistoryOperations from 'components/toolbox/tools/graphs/history/GraphOperations';
+import AlertTool from 'components/toolbox/tools/history/AlertTool';
+import ReportTool from 'components/toolbox/tools/history/ReportTool';
 import ToolboxSider from 'components/toolbox/sider/ToolboxSider';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
@@ -44,6 +46,10 @@ function ToolboxView() {
                 return (<ClientTool />);
             case 'terminal':
                 return (<TerminalTool />);
+            case 'history:alert':
+                return (<AlertTool />);
+            case 'history:info':
+                return (<ReportTool />);
             case 'graphs:current:commands':
                 return (<GraphCurrentCommands instanceId={instanceId} />);
             case 'graphs:current:memory':

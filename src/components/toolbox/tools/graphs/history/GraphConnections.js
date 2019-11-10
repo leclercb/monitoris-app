@@ -1,60 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import DataSet from '@antv/data-set';
-import { DatePicker } from 'antd';
-import { Axis, Chart, Geom, Guide, Legend, Tooltip } from 'bizcharts';
+import { DatePicker, Spin } from 'antd';
+import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { AutoSizer } from 'react-virtualized';
 import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
 import PromiseButton from 'components/common/PromiseButton';
-import { showGraphAlert } from 'components/toolbox/tools/graphs/GraphAlert';
+import HistoryGuide from 'components/toolbox/tools/graphs/history/HistoryGuide';
 import withProCheck from 'containers/WithProCheck';
-import { useAlertApi } from 'hooks/UseAlertApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
-import { getDateTimeFormat } from 'utils/SettingUtils';
-import 'components/toolbox/tools/graphs/Graph.css';
+import { getDateTimeFormat, getTimeFormat } from 'utils/SettingUtils';
 
 function GraphConnections({ instanceId }) {
-    const alertApi = useAlertApi();
     const instanceApi = useInstanceApi();
     const settingsApi = useSettingsApi();
 
-    const [range, setRange] = useState([moment().subtract(1, 'day'), moment()]);
+    const [loading, setLoading] = useState(false);
+    const [range, setRange] = useState([moment().subtract(1, 'hour'), moment()]);
     const [alerts, setAlerts] = useState([]);
     const [reports, setReports] = useState([]);
 
     const refresh = async () => {
         if (range && range[0] && range[1]) {
-            const alerts = await instanceApi.getAlerts(
-                instanceId,
-                range[0].toISOString(),
-                range[1].toISOString());
+            setLoading(true);
 
-            const reports = await instanceApi.getReports(
-                instanceId,
-                range[0].toISOString(),
-                range[1].toISOString(),
-                ['connected_clients', 'blocked_clients']);
+            try {
+                const alerts = await instanceApi.getAlerts(
+                    instanceId,
+                    range[0].toISOString(),
+                    range[1].toISOString());
 
-            alerts.forEach(alert => alert.instance = instanceId);
+                const reports = await instanceApi.getReports(
+                    instanceId,
+                    range[0].toISOString(),
+                    range[1].toISOString(),
+                    ['connected_clients', 'blocked_clients']);
 
-            setAlerts(alerts);
-            setReports(reports);
+                alerts.forEach(alert => alert.instance = instanceId);
+
+                setAlerts(alerts);
+                setReports(reports);
+            } finally {
+                setLoading(false);
+            }
         }
     };
-
-    useEffect(() => {
-        const handler = event => {
-            const alert = alerts.find(alert => alert.id === event.detail.alertId);
-            showGraphAlert(alert, alertApi.alerts, instanceApi.instances, settingsApi.settings);
-        };
-
-        window.addEventListener('graph-alert', handler);
-
-        return () => window.removeEventListener('graph-alert', handler);
-    });
 
     useEffect(() => {
         setAlerts([]);
@@ -101,23 +94,26 @@ function GraphConnections({ instanceId }) {
         <React.Fragment>
             <Panel.Sub>
                 <Panel.Standard>
-                    <DatePicker.RangePicker
-                        value={range}
-                        onChange={setRange}
-                        allowClear={false}
-                        disabledDate={current => {
-                            return current && (
-                                current.isBefore(moment().subtract(5, 'day')) ||
-                                current.isAfter(moment()));
-                        }}
-                        showTime={{
-                            hideDisabledOptions: true,
-                            defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('11:59:59', 'HH:mm:ss')]
-                        }}
-                        format={getDateTimeFormat(settingsApi.settings)} />
-                    <PromiseButton onClick={refresh} style={{ marginLeft: 10 }}>
-                        <Icon icon="sync-alt" text="Query" />
-                    </PromiseButton>
+                    <Spin spinning={loading}>
+                        <DatePicker.RangePicker
+                            value={range}
+                            onChange={setRange}
+                            allowClear={false}
+                            disabledDate={current => {
+                                return current && (
+                                    current.isBefore(moment().subtract(7, 'day')) ||
+                                    current.isAfter(moment()));
+                            }}
+                            showTime={{
+                                format: getTimeFormat(settingsApi.settings, { hideSeconds: true }),
+                                hideDisabledOptions: true,
+                                defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('11:59:59', 'HH:mm:ss')]
+                            }}
+                            format={getDateTimeFormat(settingsApi.settings, { hideSeconds: true })} />
+                        <PromiseButton onClick={refresh} style={{ marginLeft: 10 }}>
+                            <Icon icon="sync-alt" text="Query" />
+                        </PromiseButton>
+                    </Spin>
                 </Panel.Standard>
             </Panel.Sub>
             <Panel.Sub grow>
@@ -156,31 +152,7 @@ function GraphConnections({ instanceId }) {
                                 size={2}
                                 color="type"
                                 shape={'smooth'} />
-                            <Guide>
-                                {alerts.map(alert => {
-                                    const html = `<div class="graph-alert" onClick="window.dispatchEvent(new CustomEvent('graph-alert', { detail: { alertId: '${alert.id}' } }));" />`;
-
-                                    return (
-                                        <React.Fragment key={alert.id}>
-                                            <Guide.Line
-                                                start={[moment(alert.id).unix(), 'min']}
-                                                end={[moment(alert.id).unix(), 'max']}
-                                                lineStyle={{
-                                                    stroke: '#ff0000',
-                                                    lineDash: [0, 2, 2],
-                                                    lineWidth: 2
-                                                }} />
-                                            <Guide.Html
-                                                position={[moment(alert.id).unix(), 'max']}
-                                                alignX="left"
-                                                alignY="top"
-                                                offsetX={-7}
-                                                offsetY={-5}
-                                                html={html} />
-                                        </React.Fragment>
-                                    );
-                                })}
-                            </Guide>
+                            <HistoryGuide alerts={alerts} />
                         </Chart>
                     )}
                 </AutoSizer>

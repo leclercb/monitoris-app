@@ -27,6 +27,7 @@ import {
     faFont,
     faHashtag,
     faHeartbeat,
+    faHistory,
     faInfoCircle,
     faKey,
     faLink,
@@ -87,6 +88,7 @@ library.add(faFilter);
 library.add(faFont);
 library.add(faHashtag);
 library.add(faHeartbeat);
+library.add(faHistory);
 library.add(faInfoCircle);
 library.add(faKey);
 library.add(faLink);

@@ -74,7 +74,7 @@ function InfoTool() {
                     </PromiseButton>
                 </Panel.Standard>
             </Panel.Sub>
-            <Panel.Sub>
+            <Panel.Sub grow>
                 <Table
                     dataSource={dataSource}
                     columns={columns}
