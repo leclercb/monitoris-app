@@ -10,7 +10,7 @@ import { getDefaultFormItemLayout, onCommitForm } from 'utils/FormUtils';
 
 function SettingManager(props) {
     const settingsApi = useSettingsApi();
-    const [selectedCategoryId, setSelectedCategoryId] = useState('general');
+    const [selectedCategoryId, setSelectedCategoryId] = useState('date');
 
     const categories = getCategories().filter(category => !category.mode || category.mode === process.env.REACT_APP_MODE);
     const category = categories.find(category => category.id === selectedCategoryId);
