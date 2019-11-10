@@ -6,11 +6,11 @@ import InstanceSelect from 'components/instances/common/InstanceSelect';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 
-function ToolboxSider() {
+function ToolSider() {
     const appApi = useAppApi();
     const instanceApi = useInstanceApi();
 
-    const [openKeys, setOpenKeys] = useState(['tools', 'history', 'graphs', 'graphs:current', 'graphs:history']);
+    const [openKeys, setOpenKeys] = useState(['tools', 'current', 'history']);
 
     const onSelect = event => {
         appApi.setSelectedToolId(event.key);
@@ -63,16 +63,20 @@ function ToolboxSider() {
                 mode="inline">
                 <Menu.SubMenu
                     key="tools"
-                    title={createCategorySubMenu('Toolbox', 'tools', () => onOpenChange('tools'))}>
-                    <Menu.Item key="info">
-                        <Icon icon="info-circle" text="Show Info" />
-                    </Menu.Item>
-                    <Menu.Item key="clients">
-                        <Icon icon="users" text="Clients" />
-                    </Menu.Item>
-                    <Menu.Item key="terminal">
-                        <Icon icon="terminal" text="Terminal" />
-                    </Menu.Item>
+                    title={createCategorySubMenu('Tools', 'tools', () => onOpenChange('tools'))}>
+                    <Menu.SubMenu
+                        key="current"
+                        title={createCategorySubMenu('Current', 'clock', () => onOpenChange('current'))}>
+                        <Menu.Item key="current:info">
+                            <Icon icon="info-circle" text="Show Info" />
+                        </Menu.Item>
+                        <Menu.Item key="current:clients">
+                            <Icon icon="users" text="Clients" />
+                        </Menu.Item>
+                        <Menu.Item key="current:terminal">
+                            <Icon icon="terminal" text="Terminal" />
+                        </Menu.Item>
+                    </Menu.SubMenu>
                     <Menu.SubMenu
                         key="history"
                         title={createCategorySubMenu('History', 'history', () => onOpenChange('history'))}>
@@ -83,40 +87,10 @@ function ToolboxSider() {
                             <Icon icon="info-circle" text="Info History" />
                         </Menu.Item>
                     </Menu.SubMenu>
-                    <Menu.SubMenu
-                        key="graphs"
-                        title={createCategorySubMenu('Graphs', 'chart-line', () => onOpenChange('graphs'))}>
-                        <Menu.SubMenu
-                            key="graphs:current"
-                            title={createCategorySubMenu('Current', 'clock', () => onOpenChange('graphs:current'))}>
-                            <Menu.Item key="graphs:current:commands">
-                                <Icon icon="chart-bar" text="Commands" />
-                            </Menu.Item>
-                            <Menu.Item key="graphs:current:memory">
-                                <Icon icon="chart-bar" text="Memory" />
-                            </Menu.Item>
-                        </Menu.SubMenu>
-                        <Menu.SubMenu
-                            key="graphs:history"
-                            title={createCategorySubMenu('History', 'history', () => onOpenChange('graphs:history'))}>
-                            <Menu.Item key="graphs:history:commands">
-                                <Icon icon="chart-line" text="Commands" />
-                            </Menu.Item>
-                            <Menu.Item key="graphs:history:connections">
-                                <Icon icon="chart-line" text="Connections" />
-                            </Menu.Item>
-                            <Menu.Item key="graphs:history:memory">
-                                <Icon icon="chart-line" text="Memory" />
-                            </Menu.Item>
-                            <Menu.Item key="graphs:history:operations">
-                                <Icon icon="chart-line" text="Operations" />
-                            </Menu.Item>
-                        </Menu.SubMenu>
-                    </Menu.SubMenu>
                 </Menu.SubMenu>
             </Menu>
         </div>
     );
 }
 
-export default ToolboxSider;
+export default ToolSider;

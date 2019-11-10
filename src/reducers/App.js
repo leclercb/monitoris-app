@@ -7,7 +7,8 @@ const App = () => (state = {
     selectedAlertId: null,
     selectedInstanceId: null,
     selectedDashboardId: 'status',
-    selectedToolId: 'info',
+    selectedGraphId: 'history:connections',
+    selectedToolId: 'current:info',
     joyride: {
         id: null,
         run: false
@@ -47,6 +48,11 @@ const App = () => (state = {
             return {
                 ...state,
                 selectedDashboardId: action.dashboardId
+            };
+        case 'SET_SELECTED_GRAPH_ID':
+            return {
+                ...state,
+                selectedGraphId: action.graphId
             };
         case 'SET_SELECTED_TOOL_ID':
             return {

@@ -47,24 +47,28 @@ function Header() {
         await appApi.setSettingManagerOptions({ visible: true });
     };
 
-    const onShowDashboardContent = async () => {
-        await appApi.setSelectedView('dashboard');
+    const onShowAlertsContent = async () => {
+        await appApi.setSelectedView('alerts');
+    };
+
+    const onShowInstancesContent = async () => {
+        await appApi.setSelectedView('instances');
     };
 
     const onShowExplorerContent = async () => {
         await appApi.setSelectedView('explorer');
     };
 
-    const onShowToolboxContent = async () => {
-        await appApi.setSelectedView('toolbox');
+    const onShowToolsContent = async () => {
+        await appApi.setSelectedView('tools');
     };
 
-    const onShowAlertContent = async () => {
-        await appApi.setSelectedView('alert');
+    const onShowGraphsContent = async () => {
+        await appApi.setSelectedView('graphs');
     };
 
-    const onShowInstanceContent = async () => {
-        await appApi.setSelectedView('instance');
+    const onShowDashboardsContent = async () => {
+        await appApi.setSelectedView('dashboards');
     };
 
     const createButton = (icon, text, onClick, disabled = false) => {
@@ -91,9 +95,14 @@ function Header() {
         )}>
             <Button.Group style={{ marginRight: 50 }}>
                 <PromiseButton
-                    type={appApi.selectedView === 'dashboard' ? 'dashed' : 'default'}
-                    onClick={onShowDashboardContent}>
-                    <Icon icon="chart-line" text="Dashboard" />
+                    type={appApi.selectedView === 'alerts' ? 'dashed' : 'default'}
+                    onClick={onShowAlertsContent}>
+                    <Icon icon="bell" text="Alerts" />
+                </PromiseButton>
+                <PromiseButton
+                    type={appApi.selectedView === 'instances' ? 'dashed' : 'default'}
+                    onClick={onShowInstancesContent}>
+                    <Icon icon="server" text="Instances" />
                 </PromiseButton>
                 <PromiseButton
                     type={appApi.selectedView === 'explorer' ? 'dashed' : 'default'}
@@ -101,37 +110,37 @@ function Header() {
                     <Icon icon="binoculars" text="Explorer" />
                 </PromiseButton>
                 <PromiseButton
-                    type={appApi.selectedView === 'toolbox' ? 'dashed' : 'default'}
-                    onClick={onShowToolboxContent}>
-                    <Icon icon="tools" text="Toolbox" />
+                    type={appApi.selectedView === 'tools' ? 'dashed' : 'default'}
+                    onClick={onShowToolsContent}>
+                    <Icon icon="tools" text="Tools" />
                 </PromiseButton>
                 <PromiseButton
-                    type={appApi.selectedView === 'instance' ? 'dashed' : 'default'}
-                    onClick={onShowInstanceContent}>
-                    <Icon icon="server" text="Instances" />
+                    type={appApi.selectedView === 'graphs' ? 'dashed' : 'default'}
+                    onClick={onShowGraphsContent}>
+                    <Icon icon="chart-line" text="Graphs" />
                 </PromiseButton>
                 <PromiseButton
-                    type={appApi.selectedView === 'alert' ? 'dashed' : 'default'}
-                    onClick={onShowAlertContent}>
-                    <Icon icon="bell" text="Alerts" />
+                    type={appApi.selectedView === 'dashboards' ? 'dashed' : 'default'}
+                    onClick={onShowDashboardsContent}>
+                    <Icon icon="chart-line" text="Dashboards" />
                 </PromiseButton>
             </Button.Group>
-            {appApi.selectedView === 'alert' ?
+            {appApi.selectedView === 'alerts' ?
                 createButton('plus', 'Add Alert', onAddAlert)
                 : null}
-            {appApi.selectedView === 'alert' ?
+            {appApi.selectedView === 'alerts' ?
                 createButton('trash-alt', 'Remove Alert', onRemoveAlert)
                 : null}
-            {appApi.selectedView === 'alert' ?
+            {appApi.selectedView === 'alerts' ?
                 createButton('print', 'Print Alerts', onPrintAlerts)
                 : null}
-            {appApi.selectedView === 'instance' ?
+            {appApi.selectedView === 'instances' ?
                 createButton('plus', 'Add Instance', onAddInstance)
                 : null}
-            {appApi.selectedView === 'instance' ?
+            {appApi.selectedView === 'instances' ?
                 createButton('trash-alt', 'Remove Instance', onRemoveInstance)
                 : null}
-            {appApi.selectedView === 'instance' ?
+            {appApi.selectedView === 'instances' ?
                 createButton('print', 'Print Instances', onPrintInstances)
                 : null}
             <Spacer />

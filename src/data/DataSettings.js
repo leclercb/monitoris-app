@@ -197,23 +197,27 @@ export function getCategories() {
                         values: [
                             {
                                 title: 'Alerts',
-                                value: 'alert'
+                                value: 'alerts'
                             },
                             {
-                                title: 'Dashboard',
-                                value: 'dashboard'
+                                title: 'Dashboards',
+                                value: 'dashboards'
                             },
                             {
                                 title: 'Explorer',
                                 value: 'explorer'
                             },
                             {
-                                title: 'Instances',
-                                value: 'instance'
+                                title: 'Graphs',
+                                value: 'graphs'
                             },
                             {
-                                title: 'Toolbox',
-                                value: 'toolbox'
+                                title: 'Instances',
+                                value: 'instances'
+                            },
+                            {
+                                title: 'Tools',
+                                value: 'tools'
                             }
                         ]
                     },
@@ -246,6 +250,14 @@ export function getCategories() {
                     visible: false
                 },
                 {
+                    id: 'graphViewSplitPaneSize',
+                    title: 'Graph view split pane size',
+                    type: 'number',
+                    value: 300,
+                    editable: false,
+                    visible: false
+                },
+                {
                     id: 'instanceViewSplitPaneSize',
                     title: 'Instance view split pane size',
                     type: 'number',
@@ -254,8 +266,8 @@ export function getCategories() {
                     visible: false
                 },
                 {
-                    id: 'toolboxViewSplitPaneSize',
-                    title: 'Toolbox view split pane size',
+                    id: 'toolViewSplitPaneSize',
+                    title: 'Tool view split pane size',
                     type: 'number',
                     value: 300,
                     editable: false,

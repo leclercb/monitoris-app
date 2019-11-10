@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DatePicker, Empty, Input, List, Table } from 'antd';
+import { DatePicker, Empty, Input, List, Spin, Table } from 'antd';
 import moment from 'moment';
 import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
@@ -15,6 +15,7 @@ function ReportTool() {
     const instanceId = instanceApi.selectedInstanceId;
     const settingsApi = useSettingsApi();
 
+    const [loading, setLoading] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const [range, setRange] = useState([moment().subtract(1, 'hour'), moment()]);
     const [reports, setReports] = useState([]);
@@ -22,19 +23,31 @@ function ReportTool() {
 
     const refresh = async () => {
         if (range && range[0] && range[1]) {
-            const reports = await instanceApi.getReports(
-                instanceId,
-                range[0].toISOString(),
-                range[1].toISOString(),
-                []);
+            setLoading(true);
 
-            setReports(reports);
+            try {
+                const reports = await instanceApi.getReports(
+                    instanceId,
+                    range[0].toISOString(),
+                    range[1].toISOString(),
+                    []);
+
+                setReports(reports);
+            } finally {
+                setLoading(false);
+            }
         }
     };
 
     const onSelectReport = async reportId => {
-        const report = await instanceApi.getReport(instanceId, reportId);
-        setSelectedReport(report);
+        setLoading(true);
+
+        try {
+            const report = await instanceApi.getReport(instanceId, reportId);
+            setSelectedReport(report);
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -64,32 +77,34 @@ function ReportTool() {
         <React.Fragment>
             <Panel.Sub>
                 <Panel.Standard>
-                    <Input.Search
-                        allowClear={true}
-                        onChange={event => setSearchValue(event.target.value)}
-                        onSearch={value => setSearchValue(value)}
-                        style={{
-                            width: 400,
-                            marginRight: 10
-                        }} />
-                    <DatePicker.RangePicker
-                        value={range}
-                        onChange={setRange}
-                        allowClear={false}
-                        disabledDate={current => {
-                            return current && (
-                                current.isBefore(moment().subtract(getConfig().instanceReportTtl, 'day')) ||
-                                current.isAfter(moment()));
-                        }}
-                        showTime={{
-                            format: getTimeFormat(settingsApi.settings, { hideSeconds: true }),
-                            hideDisabledOptions: true,
-                            defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('11:59:59', 'HH:mm:ss')]
-                        }}
-                        format={getDateTimeFormat(settingsApi.settings, { hideSeconds: true })} />
-                    <PromiseButton onClick={refresh} style={{ marginLeft: 10 }}>
-                        <Icon icon="sync-alt" text="Query" />
-                    </PromiseButton>
+                    <Spin spinning={loading}>
+                        <Input.Search
+                            allowClear={true}
+                            onChange={event => setSearchValue(event.target.value)}
+                            onSearch={value => setSearchValue(value)}
+                            style={{
+                                width: 400,
+                                marginRight: 10
+                            }} />
+                        <DatePicker.RangePicker
+                            value={range}
+                            onChange={setRange}
+                            allowClear={false}
+                            disabledDate={current => {
+                                return current && (
+                                    current.isBefore(moment().subtract(getConfig().instanceReportTtl, 'day')) ||
+                                    current.isAfter(moment()));
+                            }}
+                            showTime={{
+                                format: getTimeFormat(settingsApi.settings, { hideSeconds: true }),
+                                hideDisabledOptions: true,
+                                defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('11:59:59', 'HH:mm:ss')]
+                            }}
+                            format={getDateTimeFormat(settingsApi.settings, { hideSeconds: true })} />
+                        <PromiseButton onClick={refresh} style={{ marginLeft: 10 }}>
+                            <Icon icon="sync-alt" text="Query" />
+                        </PromiseButton>
+                    </Spin>
                 </Panel.Standard>
             </Panel.Sub>
             <Panel.Sub grow flexDirection="row">
@@ -102,6 +117,7 @@ function ReportTool() {
                             <List
                                 size="small"
                                 bordered={true}
+                                loading={loading}
                                 dataSource={reports}
                                 renderItem={report => (
                                     <List.Item

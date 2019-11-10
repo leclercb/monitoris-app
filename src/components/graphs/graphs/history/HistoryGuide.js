@@ -4,7 +4,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import ModalInstanceAlert from 'components/instances/alerts/ModalInstanceAlert';
 import { getSeverity } from 'data/DataSeverities';
-import 'components/toolbox/tools/graphs/Graph.css';
+import 'components/graphs/graphs/Graph.css';
 
 function HistoryGuide({ alerts }) {
     const [visibleInstanceAlert, setVisibleInstanceAlert] = useState(null);

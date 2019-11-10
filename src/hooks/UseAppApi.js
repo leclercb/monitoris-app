@@ -5,6 +5,7 @@ import {
     setAccountManagerOptions,
     setEditingCell,
     setSelectedDashboardId,
+    setSelectedGraphId,
     setSelectedToolId,
     setSettingManagerOptions
 } from 'actions/AppActions';
@@ -13,6 +14,7 @@ import {
     getAccountManager,
     getEditingCell,
     getSelectedDashboardId,
+    getSelectedGraphId,
     getSelectedToolId,
     getSettingManager,
     isPro
@@ -25,6 +27,7 @@ export function useAppApi() {
     const pro = useSelector(isPro);
     const selectedView = useSelector(getSelectedView);
     const selectedDashboardId = useSelector(getSelectedDashboardId);
+    const selectedGraphId = useSelector(getSelectedGraphId);
     const selectedToolId = useSelector(getSelectedToolId);
     const editingCell = useSelector(getEditingCell);
     const accountManager = useSelector(getAccountManager);
@@ -42,6 +45,11 @@ export function useAppApi() {
 
     const setSelectedDashboardIdCallback = useCallback(
         toolId => dispatch(setSelectedDashboardId(toolId)),
+        [dispatch]
+    );
+
+    const setSelectedGraphIdCallback = useCallback(
+        graphId => dispatch(setSelectedGraphId(graphId)),
         [dispatch]
     );
 
@@ -69,6 +77,7 @@ export function useAppApi() {
         pro,
         selectedView,
         selectedDashboardId,
+        selectedGraphId,
         selectedToolId,
         editingCell,
         accountManager,
@@ -76,6 +85,7 @@ export function useAppApi() {
         loadData: loadDataCallback,
         setSelectedView: setSelectedViewCallback,
         setSelectedDashboardId: setSelectedDashboardIdCallback,
+        setSelectedGraphId: setSelectedGraphIdCallback,
         setSelectedToolId: setSelectedToolIdCallback,
         setEditingCell: setEditingCellCallback,
         setAccountManagerOptions: setAccountManagerOptionsCallback,

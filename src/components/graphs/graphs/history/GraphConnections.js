@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import DataSet from '@antv/data-set';
 import { DatePicker, Spin } from 'antd';
 import { Axis, Chart, Geom, Legend, Tooltip } from 'bizcharts';
 import moment from 'moment';
@@ -7,14 +8,14 @@ import { AutoSizer } from 'react-virtualized';
 import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
 import PromiseButton from 'components/common/PromiseButton';
-import HistoryGuide from 'components/toolbox/tools/graphs/history/HistoryGuide';
+import HistoryGuide from 'components/graphs/graphs/history/HistoryGuide';
 import { getConfig } from 'config/Config';
 import withProCheck from 'containers/WithProCheck';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { getDateTimeFormat, getTimeFormat } from 'utils/SettingUtils';
 
-function GraphOperations({ instanceId }) {
+function GraphConnections({ instanceId }) {
     const instanceApi = useInstanceApi();
     const settingsApi = useSettingsApi();
 
@@ -37,7 +38,7 @@ function GraphOperations({ instanceId }) {
                     instanceId,
                     range[0].toISOString(),
                     range[1].toISOString(),
-                    ['instantaneous_ops_per_sec']);
+                    ['connected_clients', 'blocked_clients']);
 
                 alerts.forEach(alert => alert.instance = instanceId);
 
@@ -57,8 +58,21 @@ function GraphOperations({ instanceId }) {
 
     const data = reports.map(report => ({
         timestamp: moment(report.id).unix(),
-        instantaneous_ops_per_sec: Number.parseInt(report.info.instantaneous_ops_per_sec)
+        connected_clients: Number.parseInt(report.info.connected_clients),
+        blocked_clients: Number.parseInt(report.info.blocked_clients)
     }));
+
+    const dv = new DataSet.DataView();
+
+    dv.source(data).transform({
+        type: 'fold',
+        key: 'type',
+        value: 'value',
+        fields: [
+            'connected_clients',
+            'blocked_clients'
+        ]
+    });
 
     const scale = {
         timestamp: {
@@ -71,8 +85,8 @@ function GraphOperations({ instanceId }) {
                 return '';
             }
         },
-        instantaneous_ops_per_sec: {
-            alias: 'Operations Per Sec',
+        value: {
+            alias: 'Clients',
             min: 0
         }
     };
@@ -106,7 +120,7 @@ function GraphOperations({ instanceId }) {
             <Panel.Sub grow>
                 <AutoSizer>
                     {({ width, height }) => (
-                        <Chart width={width} height={height} data={data} scale={scale} padding="auto" forceFit>
+                        <Chart width={width} height={height} data={dv} scale={scale} padding="auto" forceFit>
                             <Legend />
                             <Axis
                                 name="timestamp"
@@ -118,7 +132,7 @@ function GraphOperations({ instanceId }) {
                                     }
                                 }} />
                             <Axis
-                                name="instantaneous_ops_per_sec"
+                                name="value"
                                 title={{
                                     autoRotate: true,
                                     textStyle: {
@@ -135,9 +149,9 @@ function GraphOperations({ instanceId }) {
                                 }} />
                             <Geom
                                 type="line"
-                                position="timestamp*instantaneous_ops_per_sec"
+                                position="timestamp*value"
                                 size={2}
-                                color="#44a2fc"
+                                color="type"
                                 shape={'smooth'} />
                             <HistoryGuide alerts={alerts} />
                         </Chart>
@@ -148,8 +162,8 @@ function GraphOperations({ instanceId }) {
     );
 }
 
-GraphOperations.propTypes = {
+GraphConnections.propTypes = {
     instanceId: PropTypes.string.isRequired
 };
 
-export default withProCheck(GraphOperations);
+export default withProCheck(GraphConnections);

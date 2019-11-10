@@ -7,7 +7,7 @@ import { AutoSizer } from 'react-virtualized';
 import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
 import PromiseButton from 'components/common/PromiseButton';
-import HistoryGuide from 'components/toolbox/tools/graphs/history/HistoryGuide';
+import HistoryGuide from 'components/graphs/graphs/history/HistoryGuide';
 import { getConfig } from 'config/Config';
 import withProCheck from 'containers/WithProCheck';
 import { useInstanceApi } from 'hooks/UseInstanceApi';

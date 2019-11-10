@@ -5,7 +5,7 @@ import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
 import PromiseButton from 'components/common/PromiseButton';
 import Spacer from 'components/common/Spacer';
-import ClientTable from 'components/toolbox/tools/ClientTable';
+import ClientTable from 'components/tools/tools/current/ClientTable';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { parseRedisString } from 'utils/FormatUtils';

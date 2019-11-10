@@ -7,6 +7,7 @@ export const getSelectedDb = state => state.app.selectedDb;
 export const getSelectedAlertId = state => state.app.selectedAlertId;
 export const getSelectedInstanceId = state => state.app.selectedInstanceId;
 export const getSelectedDashboardId = state => state.app.selectedDashboardId;
+export const getSelectedGraphId = state => state.app.selectedGraphId;
 export const getSelectedToolId = state => state.app.selectedToolId;
 
 export const getJoyrideOptions = state => state.app.joyride;

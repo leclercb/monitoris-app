@@ -105,6 +105,15 @@ export function setSelectedDashboardId(dashboardId) {
     };
 }
 
+export function setSelectedGraphId(graphId) {
+    return async dispatch => {
+        dispatch({
+            type: 'SET_SELECTED_GRAPH_ID',
+            graphId
+        });
+    };
+}
+
 export function setSelectedToolId(toolId) {
     return async dispatch => {
         dispatch({
