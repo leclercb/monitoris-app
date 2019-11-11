@@ -26,7 +26,7 @@ function AlertEdition({ alert, updateAlert, testNotification }) {
 
     useEffect(() => {
         updateSecondsRemaining();
-    }, [alert]);
+    }, [alert]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useInterval(() => {
         updateSecondsRemaining();
