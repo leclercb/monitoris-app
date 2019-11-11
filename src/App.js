@@ -104,9 +104,9 @@ function App() {
                                 <React.Fragment>
                                     <div>
                                         Alert &quot;
-                                            <AlertTitle alertId={message.alertId} />
+                                            <AlertTitle alertId={data.alert} />
                                         &quot; severity for instance &quot;
-                                            <InstanceTitle instanceId={message.instanceId} />
+                                            <InstanceTitle instanceId={data.instance} />
                                         &quot; changed from &quot;
                                             <SeverityTitle severityId={data.prevSeverity} />
                                         &quot; to &quot;
@@ -117,8 +117,6 @@ function App() {
                                         <Button size="small" onClick={() => {
                                             setVisibleInstanceAlert({
                                                 id: moment().toISOString(),
-                                                instance: message.instanceId,
-                                                alert: message.alertId,
                                                 ...data
                                             });
                                         }}>Show more</Button>
