@@ -8,7 +8,6 @@ function ModalPasswordField(props) {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
-        console.log('here', props.value);
         setValue(props.value);
         setVisible(false);
     }, [props.value]);

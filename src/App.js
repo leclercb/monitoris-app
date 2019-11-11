@@ -3,6 +3,7 @@ import { Button, notification } from 'antd';
 import moment from 'moment';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { Provider } from 'react-redux';
 import AlertTitle from 'components/alerts/common/AlertTitle';
 import ModalInstanceAlert from 'components/instances/alerts/ModalInstanceAlert';
 import InstanceTitle from 'components/instances/common/InstanceTitle';
@@ -14,6 +15,7 @@ import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { useWebSocketApi } from 'hooks/UseWebSocketApi';
+import { store } from 'store/Store';
 
 import 'App.css';
 import 'font-awesome.js';
@@ -101,7 +103,7 @@ function App() {
                         notification[currSeverity.notificationType]({
                             message: 'Alert',
                             description: (
-                                <React.Fragment>
+                                <Provider store={store}>
                                     <div>
                                         Alert &quot;
                                             <AlertTitle alertId={data.alert} />
@@ -121,7 +123,7 @@ function App() {
                                             });
                                         }}>Show more</Button>
                                     </div>
-                                </React.Fragment>
+                                </Provider>
                             ),
                             duration: 10
                         });
