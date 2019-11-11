@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import FilterConditionTree from 'components/filters/FilterConditionTree';
 import AlertForm from 'components/alerts/common/AlertForm';
 import NotificationTable from 'components/alerts/common/NotificationTable';
+import { getConfig } from 'config/Config';
 import { getAlertNotificationFields } from 'data/DataAlertNotificationFields';
 import { getRedisFields } from 'data/DataRedisFields';
 import { useInterval } from 'hooks/UseInterval';
@@ -13,18 +14,22 @@ import { AlertPropType } from 'proptypes/AlertPropTypes';
 function AlertEdition({ alert, updateAlert, testNotification }) {
     const [seconds, setSeconds] = useState(-1);
 
-    useEffect(() => {
+    const updateSecondsRemaining = () => {
         const s = moment().diff(moment(alert.updateDate), 'seconds');
 
-        if (s < 300) {
-            setSeconds(300 - s);
+        if (s < getConfig().alertUpdateDelay) {
+            setSeconds(getConfig().alertUpdateDelay - s);
+        } else {
+            setSeconds(-1);
         }
+    };
+
+    useEffect(() => {
+        updateSecondsRemaining();
     }, [alert]);
 
     useInterval(() => {
-        if (seconds >= 0) {
-            setSeconds(seconds - 1);
-        }
+        updateSecondsRemaining();
     }, 5000);
 
     const onUpdateNotifications = async notifications => {
