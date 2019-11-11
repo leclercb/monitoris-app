@@ -37,7 +37,7 @@ function App() {
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        const removeMessageListener = webSocketApi.addMessageListener(event => {
+        return webSocketApi.addMessageListener(event => {
             try {
                 const message = JSON.parse(event.data);
 
@@ -138,8 +138,6 @@ function App() {
                 // Skip message
             }
         });
-
-        return removeMessageListener;
     });
 
     return (

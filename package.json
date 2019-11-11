@@ -44,6 +44,7 @@
         "react-stripe-elements": "^5.1.0",
         "react-syntax-highlighter": "^11.0.2",
         "react-virtualized": "^9.21.1",
+        "reconnecting-websocket": "^4.2.0",
         "reduce-reducers": "^1.0.4",
         "redux": "^4.0.4",
         "redux-thunk": "^2.3.0",
