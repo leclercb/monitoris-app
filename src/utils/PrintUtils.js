@@ -24,7 +24,7 @@ export function printDocument(title, orientation = 'p') {
     doc.setFontSize(14);
     doc.setFontType('bold');
     doc.setTextColor(210, 41, 31);
-    doc.text(50, 30, 'RedisMon');
+    doc.text(50, 30, 'Monitoris');
 
     // Title
     doc.setFontSize(14);
