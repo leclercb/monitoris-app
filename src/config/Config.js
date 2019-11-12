@@ -1,7 +1,7 @@
 const config = {
     common: {
         alertUpdateDelay: 300,
-        cloudItemSku: 'rm-cloud-pro-1y',
+        cloudItemSku: 'mt-cloud-pro-1y',
         instanceAlertTtl: 7,
         instanceReportTtl: 7
     },
