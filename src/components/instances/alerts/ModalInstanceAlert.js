@@ -28,7 +28,7 @@ export function ModalInstanceAlert({ instanceAlert, visible, onClose }) {
 }
 
 ModalInstanceAlert.propTypes = {
-    instanceAlert: PropTypes.object.isRequired,
+    instanceAlert: PropTypes.object,
     visible: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired
 };
