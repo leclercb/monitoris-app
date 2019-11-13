@@ -1,10 +1,13 @@
+import moment from 'moment';
 import { getAlertNotificationTypes } from 'data/DataAlertNotificationTypes';
 import { getInstanceTypes } from 'data/DataInstanceTypes';
+import { getRedisTypes } from 'data/DataRedisTypes';
 import { getSeverities } from 'data/DataSeverities';
 import { getAlerts } from 'selectors/AlertSelectors';
 import { getInstances } from 'selectors/InstanceSelectors';
 import {
     compareBooleans,
+    compareDates,
     compareNumbers,
     compareObjects,
     compareStrings
@@ -12,6 +15,7 @@ import {
 import {
     toString,
     toStringBoolean,
+    toStringDate,
     toStringNumber,
     toStringObject,
     toStringObjects,
@@ -24,14 +28,19 @@ export function getFieldTypes() {
         'alertNotificationType',
         'boolean',
         'color',
+        'date',
+        'dateTime',
         'instance',
         'instances',
         'instanceType',
         'number',
         'password',
+        'redisType',
+        'select',
         'severities',
         'severity',
         'star',
+        'syntax',
         'text',
         'textarea'
     ];
@@ -197,6 +206,460 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 ],
                 conditionsFieldType: 'color',
                 options: []
+            };
+
+            break;
+        }
+        case 'date': {
+            const dateFormat = options && options.dateFormat ? options.dateFormat : 'DD/MM/YYYY';
+
+            configuration = {
+                title: 'Date',
+                allowCreation: true,
+                width: 250,
+                alwaysInEdition: false,
+                valuePropName: 'value',
+                compare: (a, b) => compareDates(a, b, false),
+                toString: value => toStringDate(value, dateFormat),
+                conditions: [
+                    {
+                        type: 'dateEqual',
+                        title: 'Equals',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue && !objectValue) {
+                                return true;
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(conditionValue).isSame(moment(objectValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateNotEqual',
+                        title: 'Does not equal',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue && !objectValue) {
+                                return false;
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return true;
+                            }
+
+                            return !moment(conditionValue).isSame(moment(objectValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateBefore',
+                        title: 'Before',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isBefore(moment(conditionValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateBeforeOrEqual',
+                        title: 'Before or equals',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isSameOrBefore(moment(conditionValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateAfter',
+                        title: 'After',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isAfter(moment(conditionValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateAfterOrEqual',
+                        title: 'After or equals',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isSameOrAfter(moment(conditionValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateTimeEqual',
+                        title: 'Equals',
+                        visible: false,
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue && !objectValue) {
+                                return true;
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(conditionValue).isSame(moment(objectValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateTimeNotEqual',
+                        title: 'Does not equal',
+                        visible: false,
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue && !objectValue) {
+                                return false;
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return true;
+                            }
+
+                            return !moment(conditionValue).isSame(moment(objectValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateTimeBefore',
+                        title: 'Before',
+                        visible: false,
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isBefore(moment(conditionValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateTimeBeforeOrEqual',
+                        title: 'Before or equals',
+                        visible: false,
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isSameOrBefore(moment(conditionValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateTimeAfter',
+                        title: 'After',
+                        visible: false,
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isAfter(moment(conditionValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateTimeAfterOrEqual',
+                        title: 'After or equals',
+                        visible: false,
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isSameOrAfter(moment(conditionValue), 'day');
+                        }
+                    }
+                ],
+                conditionsFieldType: 'date',
+                options: [
+                    {
+                        id: 'dateFormat',
+                        title: 'Date format',
+                        type: 'text'
+                    }
+                ]
+            };
+
+            break;
+        }
+        case 'dateTime': {
+            const dateFormat = options && options.dateFormat ? options.dateFormat : 'DD/MM/YYYY';
+            const timeFormat = options && options.timeFormat ? options.timeFormat : 'HH:mm';
+
+            configuration = {
+                title: 'Date time',
+                allowCreation: true,
+                width: 250,
+                alwaysInEdition: false,
+                valuePropName: 'value',
+                compare: (a, b) => compareDates(a, b, true),
+                toString: value => toStringDate(value, `${dateFormat} ${timeFormat}`),
+                conditions: [
+                    {
+                        type: 'dateEqual',
+                        title: 'Equals (compare date only)',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue && !objectValue) {
+                                return true;
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(conditionValue).isSame(moment(objectValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateNotEqual',
+                        title: 'Does not equal (compare date only)',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue && !objectValue) {
+                                return false;
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return true;
+                            }
+
+                            return !moment(conditionValue).isSame(moment(objectValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateBefore',
+                        title: 'Before (compare date only)',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isBefore(moment(conditionValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateBeforeOrEqual',
+                        title: 'Before or equals (compare date only)',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isSameOrBefore(moment(conditionValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateAfter',
+                        title: 'After (compare date only)',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isAfter(moment(conditionValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateAfterOrEqual',
+                        title: 'After or equals (compare date only)',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isSameOrAfter(moment(conditionValue), 'day');
+                        }
+                    },
+                    {
+                        type: 'dateTimeEqual',
+                        title: 'Equals (compare date and time)',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue && !objectValue) {
+                                return true;
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(conditionValue).isSame(moment(objectValue), 'minute');
+                        }
+                    },
+                    {
+                        type: 'dateTimeNotEqual',
+                        title: 'Does not equal (compare date and time)',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue && !objectValue) {
+                                return false;
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return true;
+                            }
+
+                            return !moment(conditionValue).isSame(moment(objectValue), 'minute');
+                        }
+                    },
+                    {
+                        type: 'dateTimeBefore',
+                        title: 'Before (compare date and time)',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isBefore(moment(conditionValue), 'minute');
+                        }
+                    },
+                    {
+                        type: 'dateTimeBeforeOrEqual',
+                        title: 'Before or equals (compare date and time)',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isSameOrBefore(moment(conditionValue), 'minute');
+                        }
+                    },
+                    {
+                        type: 'dateTimeAfter',
+                        title: 'After (compare date and time)',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isAfter(moment(conditionValue), 'minute');
+                        }
+                    },
+                    {
+                        type: 'dateTimeAfterOrEqual',
+                        title: 'After or equals (compare date and time)',
+                        apply: (conditionValue, objectValue) => {
+                            if (Number.isInteger(conditionValue)) {
+                                conditionValue = moment().add(Number.parseInt(conditionValue), 'days').toISOString();
+                            }
+
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return moment(objectValue).isSameOrAfter(moment(conditionValue), 'minute');
+                        }
+                    }
+                ],
+                conditionsFieldType: 'dateTime',
+                options: [
+                    {
+                        id: 'dateFormat',
+                        title: 'Date format',
+                        type: 'text'
+                    },
+                    {
+                        id: 'timeFormat',
+                        title: 'Time format',
+                        type: 'text'
+                    }
+                ]
             };
 
             break;
@@ -447,6 +910,76 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
 
             break;
         }
+        case 'redisType': {
+            configuration = {
+                title: 'Redis Type',
+                allowCreation: true,
+                width: 200,
+                alwaysInEdition: false,
+                valuePropName: 'value',
+                compare: (a, b) => compareObjects(a, b, getRedisTypes()),
+                toString: value => toStringObject(value, getRedisTypes()),
+                conditions: [
+                    {
+                        type: 'equal',
+                        title: 'Equals',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue === objectValue;
+                        }
+                    },
+                    {
+                        type: 'notEqual',
+                        title: 'Does not equal',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue !== objectValue;
+                        }
+                    }
+                ],
+                conditionsFieldType: 'redisType',
+                options: []
+            };
+
+            break;
+        }
+        case 'select': {
+            configuration = {
+                title: 'Select',
+                allowCreation: true,
+                width: 200,
+                alwaysInEdition: false,
+                valuePropName: 'value',
+                compare: (a, b) => compareStrings(a, b),
+                toString: value => toString(value),
+                conditions: [
+                    {
+                        type: 'equal',
+                        title: 'Equals',
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue === objectValue;
+                        }
+                    },
+                    {
+                        type: 'notEqual',
+                        title: 'Does not equal',
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue !== objectValue;
+                        }
+                    }
+                ],
+                conditionsFieldType: 'select',
+                options: [
+                    {
+                        id: 'values',
+                        title: 'Values',
+                        type: 'selectTags'
+                    }
+                ]
+            };
+
+            break;
+        }
         case 'severities': {
             configuration = {
                 title: 'Severities',
@@ -547,6 +1080,55 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     }
                 ],
                 conditionsFieldType: 'star',
+                options: []
+            };
+
+            break;
+        }
+        case 'syntax': {
+            configuration = {
+                title: 'Syntax',
+                allowCreation: true,
+                width: 250,
+                alwaysInEdition: false,
+                valuePropName: 'value',
+                compare: (a, b) => compareStrings(a, b),
+                toString: value => toString(value),
+                conditions: [
+                    {
+                        type: 'equal',
+                        title: 'Equals',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue === objectValue;
+                        }
+                    },
+                    {
+                        type: 'notEqual',
+                        title: 'Does not equal',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue !== objectValue;
+                        }
+                    },
+                    {
+                        type: 'contain',
+                        title: 'Contains',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return (objectValue || '').includes(conditionValue);
+                        }
+                    },
+                    {
+                        type: 'notContain',
+                        title: 'Does not contain',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return !(objectValue || '').includes(conditionValue);
+                        }
+                    }
+                ],
+                conditionsFieldType: 'syntax',
                 options: []
             };
 

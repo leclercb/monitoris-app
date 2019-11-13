@@ -1,6 +1,9 @@
 const config = {
     common: {
-        cloudItemSku: 'rm-cloud-pro-1y'
+        alertUpdateDelay: 300,
+        cloudItemSku: 'mt-cloud-pro-1y',
+        instanceAlertTtl: 7,
+        instanceReportTtl: 7
     },
     local: {
         apiUrl: 'http://localhost:2000',
@@ -24,18 +27,18 @@ const config = {
         }
     },
     dev: {
-        apiUrl: 'https://api-dev.redismon.app',
-        authUrl: 'https://auth-dev.redismon.app',
-        cloudUrl: 'https://www-dev.redismon.app/cloud',
-        maintenanceUrl: 'https://www-dev.redismon.app/maintenance',
-        proxyUrl: 'https://proxy-dev.redismon.app',
-        wsUrl: 'wss://ws-dev.redismon.app',
+        apiUrl: 'https://api-dev.monitoris.app',
+        authUrl: 'https://auth-dev.monitoris.app',
+        cloudUrl: 'https://www-dev.monitoris.app/cloud',
+        maintenanceUrl: 'https://www-dev.monitoris.app/maintenance',
+        proxyUrl: 'https://proxy-dev.monitoris.app',
+        wsUrl: 'wss://ws-dev.monitoris.app',
         auth: {
             region: 'eu-west-1',
             userPoolId: process.env.REACT_APP_AUTH_USERPOOLID,
             userPoolWebClientId: process.env.REACT_APP_AUTH_USERPOOLWEBCLIENTID,
             cookieStorage: {
-                domain: '.redismon.app',
+                domain: '.monitoris.app',
                 secure: true
             }
         },
@@ -45,18 +48,18 @@ const config = {
         }
     },
     prod: {
-        apiUrl: 'https://api.redismon.app',
-        authUrl: 'https://auth.redismon.app',
-        cloudUrl: 'https://www.redismon.app/cloud',
-        maintenanceUrl: 'https://www.redismon.app/maintenance',
-        proxyUrl: 'https://proxy.redismon.app',
-        wsUrl: 'wss://ws.redismon.app',
+        apiUrl: 'https://api.monitoris.app',
+        authUrl: 'https://auth.monitoris.app',
+        cloudUrl: 'https://www.monitoris.app/cloud',
+        maintenanceUrl: 'https://www.monitoris.app/maintenance',
+        proxyUrl: 'https://proxy.monitoris.app',
+        wsUrl: 'wss://ws.monitoris.app',
         auth: {
             region: 'eu-west-1',
             userPoolId: process.env.REACT_APP_AUTH_USERPOOLID,
             userPoolWebClientId: process.env.REACT_APP_AUTH_USERPOOLWEBCLIENTID,
             cookieStorage: {
-                domain: '.redismon.app',
+                domain: '.monitoris.app',
                 secure: true
             }
         },

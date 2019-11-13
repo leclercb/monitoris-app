@@ -50,11 +50,7 @@ function AlertSider() {
                         <Menu.Item key={alert.id} alert={alert}>
                             <ObjectMenuItem
                                 object={alert}
-                                onManage={null}
-                                onEdit={null}
-                                onDelete={() => alertApi.deleteAlert(alert.id)}
-                                dropType="task"
-                                onDrop={null} />
+                                onDelete={() => alertApi.deleteAlert(alert.id)} />
                         </Menu.Item>
                     ))}
                 </Menu.SubMenu>

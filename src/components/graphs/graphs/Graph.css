@@ -1,0 +1,12 @@
+.graph-alert {
+    cursor: pointer;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    background: #fff3f0;
+    border: 3px solid transparent;
+}
+
+.graph-alert:hover {
+    font-weight: bold;
+}

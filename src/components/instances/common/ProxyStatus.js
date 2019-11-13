@@ -1,8 +1,12 @@
 import React from 'react';
 import { Alert } from 'antd';
 import PropTypes from 'prop-types';
+import { useSettingsApi } from 'hooks/UseSettingsApi';
+import { formatDate } from 'utils/SettingUtils';
 
 function ProxyStatus({ status }) {
+    const settingsApi = useSettingsApi();
+
     return (
         <React.Fragment>
             {status && status.proxyConnected && (
@@ -12,12 +16,11 @@ function ProxyStatus({ status }) {
                         <div>
                             The proxy is currently connected.
                             <br />
-                            Refreshed on: {status.refreshDate}
+                            Refreshed on: {formatDate(status.refreshDate, settingsApi.settings, true)}
                         </div>
                     )}
                     type="success"
-                    showIcon
-                />
+                    showIcon />
             )}
             {status && !status.proxyConnected && (
                 <Alert
@@ -26,20 +29,18 @@ function ProxyStatus({ status }) {
                         <div>
                             The proxy is currently disconnected.
                             <br />
-                            Refreshed on: {status.refreshDate}
+                            Refreshed on: {formatDate(status.refreshDate, settingsApi.settings, true)}
                         </div>
                     )}
                     type="warning"
-                    showIcon
-                />
+                    showIcon />
             )}
             {!status && (
                 <Alert
                     message="Proxy Missing Status"
                     description="The proxy status has not been retrieved."
                     type="info"
-                    showIcon
-                />
+                    showIcon />
             )}
         </React.Fragment>
     );

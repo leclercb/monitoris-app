@@ -1,0 +1,20 @@
+.monitor {
+    display: flex;
+    justify-content: center;
+    color: #ffffff;
+    background-color: #d2291f;
+    font-weight: bold;
+    padding: 3px;
+    width: 100%;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.monitor.empty {
+    background-color: transparent;
+    padding: 0px;
+}
+
+.monitor-item {
+    margin: 0px 20px;
+}

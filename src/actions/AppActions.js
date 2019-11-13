@@ -69,6 +69,15 @@ export function setEditingCell(objectId, fieldId) {
     };
 }
 
+export function setSelectedDb(db) {
+    return async dispatch => {
+        dispatch({
+            type: 'SET_SELECTED_DB',
+            db
+        });
+    };
+}
+
 export function setSelectedAlertId(alertId) {
     return async dispatch => {
         dispatch({
@@ -96,28 +105,19 @@ export function setSelectedDashboardId(dashboardId) {
     };
 }
 
-export function setSelectedExplorerInstanceId(instanceId) {
+export function setSelectedGraphId(graphId) {
     return async dispatch => {
         dispatch({
-            type: 'SET_SELECTED_EXPLORER_INSTANCE_ID',
-            instanceId
+            type: 'SET_SELECTED_GRAPH_ID',
+            graphId
         });
     };
 }
 
-export function setSelectedExplorerDb(db) {
+export function setSelectedToolId(toolId) {
     return async dispatch => {
         dispatch({
-            type: 'SET_SELECTED_EXPLORER_DB',
-            db
-        });
-    };
-}
-
-export function setSelectedExplorerToolId(toolId) {
-    return async dispatch => {
-        dispatch({
-            type: 'SET_SELECTED_EXPLORER_TOOL_ID',
+            type: 'SET_SELECTED_TOOL_ID',
             toolId
         });
     };

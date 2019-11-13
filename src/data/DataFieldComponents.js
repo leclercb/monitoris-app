@@ -2,12 +2,18 @@
 
 import React from 'react';
 import { Checkbox, Input, InputNumber, Select } from 'antd';
+import moment from 'moment';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { getFieldType } from 'data/DataFieldTypes';
 import AlertNotificationTypeSelect from 'components/alertnotificationtypes/AlertNotificationTypeSelect';
 import AlertNotificationTypeTitle from 'components/alertnotificationtypes/AlertNotificationTypeTitle';
 import AlertTitle from 'components/alerts/common/AlertTitle';
 import AlertSelect from 'components/alerts/common/AlertSelect';
 import ColorPicker from 'components/common/ColorPicker';
+import DatePicker from 'components/common/DatePicker';
+import ExtendedDatePicker from 'components/common/ExtendedDatePicker';
+import ModalPasswordField from 'components/common/ModalPasswordField';
 import StarCheckbox from 'components/common/StarCheckbox';
 import InstanceSelect from 'components/instances/common/InstanceSelect';
 import InstancesSelect from 'components/instances/common/InstancesSelect';
@@ -15,6 +21,8 @@ import InstanceTitle from 'components/instances/common/InstanceTitle';
 import InstancesTitle from 'components/instances/common/InstancesTitle';
 import InstanceTypeSelect from 'components/instancetypes/InstanceTypeSelect';
 import InstanceTypeTitle from 'components/instancetypes/InstanceTypeTitle';
+import RedisTypeSelect from 'components/redistype/RedisTypeSelect';
+import RedisTypeTitle from 'components/redistype/RedisTypeTitle';
 import SeveritiesSelect from 'components/severities/SeveritiesSelect';
 import SeveritiesTitle from 'components/severities/SeveritiesTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
@@ -107,6 +115,103 @@ export function getFieldComponents(type, options) {
 
             break;
         }
+        case 'date': {
+            const extended = options && options.extended === true;
+            const dateFormat = options && options.dateFormat ? options.dateFormat : 'DD/MM/YYYY';
+
+            configuration = {
+                render: value => {
+                    if (extended && Number.isInteger(value)) {
+                        return value;
+                    }
+
+                    return value ? moment(value).format(dateFormat) : (<span>&nbsp;</span>);
+                },
+                input: props => {
+                    if (extended) {
+                        return (
+                            <ExtendedDatePicker
+                                onBlur={props.onCommit}
+                                onOpenChange={status => {
+                                    if (props.onCommit && !status) {
+                                        props.onCommit();
+                                    }
+                                }}
+                                format={dateFormat}
+                                {...removeExtraProps(props)} />
+                        );
+                    }
+
+                    return (
+                        <DatePicker
+                            onOpenChange={status => {
+                                if (props.onCommit && !status) {
+                                    props.onCommit();
+                                }
+                            }}
+                            onChange={value => {
+                                if (props.onCommit && value === null) {
+                                    props.onCommit();
+                                }
+                            }}
+                            format={dateFormat}
+                            {...removeExtraProps(props)} />
+                    );
+                }
+            };
+
+            break;
+        }
+        case 'dateTime': {
+            const extended = options && options.extended === true;
+            const dateFormat = options && options.dateFormat ? options.dateFormat : 'DD/MM/YYYY';
+            const timeFormat = options && options.timeFormat ? options.timeFormat : 'HH:mm';
+
+            configuration = {
+                render: value => {
+                    if (extended && Number.isInteger(value)) {
+                        return value;
+                    }
+
+                    return value ? moment(value).format(`${dateFormat} ${timeFormat}`) : (<span>&nbsp;</span>);
+                },
+                input: props => {
+                    if (extended) {
+                        return (
+                            <ExtendedDatePicker
+                                onBlur={props.onCommit}
+                                onOpenChange={status => {
+                                    if (props.onCommit && !status) {
+                                        props.onCommit();
+                                    }
+                                }}
+                                showTime={{ format: timeFormat }}
+                                format={`${dateFormat} ${timeFormat}`}
+                                {...removeExtraProps(props)} />
+                        );
+                    }
+
+                    return (
+                        <DatePicker
+                            onOpenChange={status => {
+                                if (props.onCommit && !status) {
+                                    props.onCommit();
+                                }
+                            }}
+                            onChange={value => {
+                                if (props.onCommit && value === null) {
+                                    props.onCommit();
+                                }
+                            }}
+                            showTime={{ format: timeFormat }}
+                            format={`${dateFormat} ${timeFormat}`}
+                            {...removeExtraProps(props)} />
+                    );
+                }
+            };
+
+            break;
+        }
         case 'instance': {
             configuration = {
                 render: value => (
@@ -170,13 +275,71 @@ export function getFieldComponents(type, options) {
             break;
         }
         case 'password': {
+            const mode = options && options.mode;
+
             configuration = {
                 render: value => value ? toStringPassword(value) : <span>&nbsp;</span>,
+                input: props => {
+                    if (mode === 'modal') {
+                        return (
+                            <ModalPasswordField
+                                onChange={props.onCommit}
+                                {...removeExtraProps(props)} />
+                        );
+                    }
+
+                    return (
+                        <Input.Password
+                            onBlur={props.onCommit}
+                            onPressEnter={props.onCommit}
+                            {...removeExtraProps(props)} />
+                    );
+                }
+            };
+
+            break;
+        }
+        case 'redisType': {
+            configuration = {
+                render: value => (
+                    <RedisTypeTitle typeId={value} />
+                ),
                 input: props => (
-                    <Input.Password
+                    <RedisTypeSelect
                         onBlur={props.onCommit}
-                        onPressEnter={props.onCommit}
+                        dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
+                )
+            };
+
+            break;
+        }
+        case 'select': {
+            let values = options && options.values ? options.values : [];
+            values = Array.isArray(values) ? values : [values];
+
+            configuration = {
+                render: value => (
+                    value ? value : <span>&nbsp;</span>
+                ),
+                input: props => (
+                    <Select
+                        onBlur={props.onCommit}
+                        dropdownMatchSelectWidth={false}
+                        {...removeExtraProps(props)}>
+                        {values.map(value => {
+                            value = typeof value === 'object' ? value : {
+                                title: value,
+                                value
+                            };
+
+                            return (
+                                <Select.Option key={value.value} value={value.value}>
+                                    {value.title}
+                                </Select.Option>
+                            );
+                        })}
+                    </Select>
                 )
             };
 
@@ -220,6 +383,31 @@ export function getFieldComponents(type, options) {
                 input: props => (
                     <StarCheckbox
                         onChange={props.onCommit}
+                        {...removeExtraProps(props)} />
+                )
+            };
+
+            break;
+        }
+        case 'syntax': {
+            const language = options && options.language ? options.language : 'json';
+
+            configuration = {
+                render: value => (
+                    <SyntaxHighlighter
+                        language={language}
+                        style={atomOneLight}
+                        customStyle={{
+                            wordBreak: 'break-all',
+                            whiteSpace: 'pre-wrap'
+                        }}>
+                        {value || ''}
+                    </SyntaxHighlighter>
+                ),
+                input: props => (
+                    <Input
+                        onBlur={props.onCommit}
+                        onPressEnter={props.onCommit}
                         {...removeExtraProps(props)} />
                 )
             };

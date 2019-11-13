@@ -6,7 +6,7 @@ import { useAlertApi } from 'hooks/UseAlertApi';
 
 export const AlertSelect = React.forwardRef(function AlertSelect(props, ref) {
     const alertApi = useAlertApi();
-    const value = alertApi.alerts.find(alert => alert.id === props.value) ? props.value : null;
+    const value = alertApi.alerts.find(alert => alert.id === props.value) ? props.value : undefined;
 
     return (
         <Select ref={ref} allowClear={true} {...props} value={value}>

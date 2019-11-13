@@ -5,7 +5,8 @@ import {
     setAccountManagerOptions,
     setEditingCell,
     setSelectedDashboardId,
-    setSelectedExplorerToolId,
+    setSelectedGraphId,
+    setSelectedToolId,
     setSettingManagerOptions
 } from 'actions/AppActions';
 import { setSelectedView } from 'actions/SettingActions';
@@ -13,7 +14,8 @@ import {
     getAccountManager,
     getEditingCell,
     getSelectedDashboardId,
-    getSelectedExplorerToolId,
+    getSelectedGraphId,
+    getSelectedToolId,
     getSettingManager,
     isPro
 } from 'selectors/AppSelectors';
@@ -25,7 +27,8 @@ export function useAppApi() {
     const pro = useSelector(isPro);
     const selectedView = useSelector(getSelectedView);
     const selectedDashboardId = useSelector(getSelectedDashboardId);
-    const selectedExplorerToolId = useSelector(getSelectedExplorerToolId);
+    const selectedGraphId = useSelector(getSelectedGraphId);
+    const selectedToolId = useSelector(getSelectedToolId);
     const editingCell = useSelector(getEditingCell);
     const accountManager = useSelector(getAccountManager);
     const settingManager = useSelector(getSettingManager);
@@ -45,8 +48,13 @@ export function useAppApi() {
         [dispatch]
     );
 
-    const setSelectedExplorerToolIdCallback = useCallback(
-        toolId => dispatch(setSelectedExplorerToolId(toolId)),
+    const setSelectedGraphIdCallback = useCallback(
+        graphId => dispatch(setSelectedGraphId(graphId)),
+        [dispatch]
+    );
+
+    const setSelectedToolIdCallback = useCallback(
+        toolId => dispatch(setSelectedToolId(toolId)),
         [dispatch]
     );
 
@@ -69,14 +77,16 @@ export function useAppApi() {
         pro,
         selectedView,
         selectedDashboardId,
-        selectedExplorerToolId,
+        selectedGraphId,
+        selectedToolId,
         editingCell,
         accountManager,
         settingManager,
         loadData: loadDataCallback,
         setSelectedView: setSelectedViewCallback,
         setSelectedDashboardId: setSelectedDashboardIdCallback,
-        setSelectedExplorerToolId: setSelectedExplorerToolIdCallback,
+        setSelectedGraphId: setSelectedGraphIdCallback,
+        setSelectedToolId: setSelectedToolIdCallback,
         setEditingCell: setEditingCellCallback,
         setAccountManagerOptions: setAccountManagerOptionsCallback,
         setSettingManagerOptions: setSettingManagerOptionsCallback

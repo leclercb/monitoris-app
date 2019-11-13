@@ -21,8 +21,7 @@ function InstanceList(props) {
                             <Icon icon="circle" color={item.color} text={item.title} />
                         </LeftRight>
                     </List.Item>
-                )}
-            />
+                )} />
             <Button onClick={() => props.addInstance()} style={{ marginTop: 5 }}>
                 <Icon icon="plus" text="Add" />
             </Button>

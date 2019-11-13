@@ -1,6 +1,7 @@
 import React from 'react';
 import { Empty } from 'antd';
 import SplitPane from 'react-split-pane';
+import Panel from 'components/common/Panel';
 import ConnectionsDashboard from 'components/dashboard/common/ConnectionsDashboard';
 import StatusDashboard from 'components/dashboard/common/StatusDashboard';
 import DashboardSider from 'components/dashboard/sider/DashboardSider';
@@ -22,7 +23,7 @@ function DashboardView() {
             case 'connections':
                 return (<ConnectionsDashboard />);
             default:
-                return (<Empty />);
+                return (<Empty description="Please select a dashboard" />);
         }
     };
 
@@ -34,11 +35,9 @@ function DashboardView() {
             onDragFinished={size => onDashboardViewSplitPaneSizeChange(size)}
             paneStyle={{ overflowY: 'auto' }}>
             <DashboardSider />
-            <div style={{ minHeight: '100%', padding: 25 }}>
-                <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
-                    {getDashboardFromId()}
-                </div>
-            </div>
+            <Panel.Main>
+                {getDashboardFromId()}
+            </Panel.Main>
         </SplitPane>
     );
 }

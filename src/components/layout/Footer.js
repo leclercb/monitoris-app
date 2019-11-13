@@ -8,7 +8,7 @@ function Footer() {
             <span>
                 <Logo size={12} />
                 <Spacer size={3} />
-                RedisMon &copy; 2019 Created by BL-IT
+                Monitoris &copy; 2019 Created by BL-IT
             </span>
         </React.Fragment>
     );

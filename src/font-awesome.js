@@ -6,9 +6,11 @@ import {
     faBell,
     faBinoculars,
     faCalendarAlt,
+    faChartBar,
     faChartLine,
     faCheck,
     faCircle,
+    faClock,
     faCloudShowersHeavy,
     faCloudSun,
     faCloudSunRain,
@@ -25,6 +27,7 @@ import {
     faFont,
     faHashtag,
     faHeartbeat,
+    faHistory,
     faInfoCircle,
     faKey,
     faLink,
@@ -33,9 +36,12 @@ import {
     faListUl,
     faLock,
     faLockOpen,
+    faMemory,
     faMinusSquare,
     faNetworkWired,
+    faPaintRoller,
     faPaperPlane,
+    faPlay,
     faPlus,
     faPlusSquare,
     faPrint,
@@ -48,9 +54,12 @@ import {
     faStar,
     faSun,
     faSyncAlt,
+    faTasks,
+    faTerminal,
     faTools,
     faTrashAlt,
-    faUser
+    faUser,
+    faUsers
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faAt);
@@ -58,9 +67,11 @@ library.add(faBarcode);
 library.add(faBell);
 library.add(faBinoculars);
 library.add(faCalendarAlt);
+library.add(faChartBar);
 library.add(faChartLine);
 library.add(faCheck);
 library.add(faCircle);
+library.add(faClock);
 library.add(faCloudShowersHeavy);
 library.add(faCloudSun);
 library.add(faCloudSunRain);
@@ -77,6 +88,7 @@ library.add(faFilter);
 library.add(faFont);
 library.add(faHashtag);
 library.add(faHeartbeat);
+library.add(faHistory);
 library.add(faInfoCircle);
 library.add(faKey);
 library.add(faLink);
@@ -85,9 +97,12 @@ library.add(faListOl);
 library.add(faListUl);
 library.add(faLock);
 library.add(faLockOpen);
+library.add(faMemory);
 library.add(faMinusSquare);
 library.add(faNetworkWired);
+library.add(faPaintRoller);
 library.add(faPaperPlane);
+library.add(faPlay);
 library.add(faPlus);
 library.add(faPlusSquare);
 library.add(faPrint);
@@ -100,6 +115,9 @@ library.add(faSpinner);
 library.add(faStar);
 library.add(faSun);
 library.add(faSyncAlt);
+library.add(faTasks);
+library.add(faTerminal);
 library.add(faTools);
 library.add(faTrashAlt);
 library.add(faUser);
+library.add(faUsers);

@@ -1,45 +1,45 @@
-import React from 'react';
-import { Empty } from 'antd';
+import React, { useState } from 'react';
 import SplitPane from 'react-split-pane';
-import InfoTool from 'components/explorer/tools/InfoTool';
-import ScanTool from 'components/explorer/tools/ScanTool';
+import Panel from 'components/common/Panel';
+import KeyData from 'components/explorer/keydata/KeyData';
 import ExplorerSider from 'components/explorer/sider/ExplorerSider';
-import { useAppApi } from 'hooks/UseAppApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 
 function ExplorerView() {
-    const appApi = useAppApi();
     const settingsApi = useSettingsApi();
+
+    const [keys, setKeys] = useState([]);
+    const [selectedObject, setSelectedObject] = useState(null);
 
     const onExplorerViewSplitPaneSizeChange = size => {
         settingsApi.updateSettings({ explorerViewSplitPaneSize: size });
     };
 
-    const getToolFromId = () => {
-        switch (appApi.selectedExplorerToolId) {
-            case 'info':
-                return (<InfoTool />);
-            case 'scan':
-                return (<ScanTool />);
-            default:
-                return (<Empty />);
-        }
+    const onKeyDeleted = async redisKey => {
+        setKeys(keys.filter(key => redisKey !== key));
+        setSelectedObject(null);
     };
 
     return (
-        <SplitPane
-            split="vertical"
-            minSize={200}
-            defaultSize={settingsApi.settings.explorerViewSplitPaneSize}
-            onDragFinished={size => onExplorerViewSplitPaneSizeChange(size)}
-            paneStyle={{ overflowY: 'auto' }}>
-            <ExplorerSider />
-            <div style={{ minHeight: '100%', padding: 25 }}>
-                <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
-                    {getToolFromId()}
-                </div>
-            </div>
-        </SplitPane>
+        <React.Fragment>
+            <SplitPane
+                split="vertical"
+                minSize={200}
+                defaultSize={settingsApi.settings.explorerViewSplitPaneSize}
+                onDragFinished={size => onExplorerViewSplitPaneSizeChange(size)}
+                paneStyle={{ overflowY: 'auto' }}>
+                <ExplorerSider
+                    keys={keys}
+                    setKeys={setKeys}
+                    selectedObject={selectedObject}
+                    setSelectedObject={setSelectedObject} />
+                <Panel.Main showMonitor>
+                    <KeyData
+                        object={selectedObject}
+                        onKeyDeleted={onKeyDeleted} />
+                </Panel.Main>
+            </SplitPane>
+        </React.Fragment>
     );
 }
 

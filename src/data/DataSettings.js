@@ -129,16 +129,49 @@ export function getCategories() {
                     options: {
                         values: [
                             {
-                                title: 'HH:mm',
-                                value: 'HH:mm'
+                                title: 'HH:mm:ss',
+                                value: 'HH:mm:ss'
                             },
                             {
-                                title: 'hh:mm a',
-                                value: 'hh:mm a'
+                                title: 'hh:mm:ss a',
+                                value: 'hh:mm:ss a'
                             }
                         ]
                     },
-                    value: 'HH:mm',
+                    value: 'HH:mm:ss',
+                    editable: true
+                }
+            ]
+        },
+        {
+            id: 'theme',
+            title: 'Theme & Colors',
+            icon: 'paint-roller',
+            settings: [
+                {
+                    id: 'resetDefaultColors',
+                    title: 'Reset default colors',
+                    type: 'button',
+                    value: (settings, updateSettings) => {
+                        updateSettings({
+                            evenColor: '#ffffff',
+                            oddColor: '#fff3f0'
+                        });
+                    },
+                    editable: true
+                },
+                {
+                    id: 'evenColor',
+                    title: 'Even color',
+                    type: 'color',
+                    value: '#ffffff',
+                    editable: true
+                },
+                {
+                    id: 'oddColor',
+                    title: 'Odd color',
+                    type: 'color',
+                    value: '#fff3f0',
                     editable: true
                 }
             ]
@@ -164,19 +197,27 @@ export function getCategories() {
                         values: [
                             {
                                 title: 'Alerts',
-                                value: 'alert'
+                                value: 'alerts'
                             },
                             {
-                                title: 'Dashboard',
-                                value: 'dashboard'
+                                title: 'Dashboards',
+                                value: 'dashboards'
                             },
                             {
                                 title: 'Explorer',
                                 value: 'explorer'
                             },
                             {
+                                title: 'Graphs',
+                                value: 'graphs'
+                            },
+                            {
                                 title: 'Instances',
-                                value: 'instance'
+                                value: 'instances'
+                            },
+                            {
+                                title: 'Tools',
+                                value: 'tools'
                             }
                         ]
                     },
@@ -209,8 +250,24 @@ export function getCategories() {
                     visible: false
                 },
                 {
+                    id: 'graphViewSplitPaneSize',
+                    title: 'Graph view split pane size',
+                    type: 'number',
+                    value: 300,
+                    editable: false,
+                    visible: false
+                },
+                {
                     id: 'instanceViewSplitPaneSize',
                     title: 'Instance view split pane size',
+                    type: 'number',
+                    value: 300,
+                    editable: false,
+                    visible: false
+                },
+                {
+                    id: 'toolViewSplitPaneSize',
+                    title: 'Tool view split pane size',
                     type: 'number',
                     value: 300,
                     editable: false,

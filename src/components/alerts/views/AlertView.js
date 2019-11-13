@@ -1,8 +1,9 @@
 import React from 'react';
-import { Empty } from 'antd';
 import SplitPane from 'react-split-pane';
 import AlertEdition from 'components/alerts/common/AlertEdition';
 import AlertSider from 'components/alerts/sider/AlertSider';
+import Panel from 'components/common/Panel';
+import EmptyAlert from 'components/common/empty/EmptyAlert';
 import { useAlertApi } from 'hooks/UseAlertApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 
@@ -22,17 +23,17 @@ function AlertView() {
             onDragFinished={size => onAlertViewSplitPaneSizeChange(size)}
             paneStyle={{ overflowY: 'auto' }}>
             <AlertSider />
-            <div style={{ minHeight: '100%', padding: 25 }}>
-                <div style={{ backgroundColor: '#ffffff', borderRadius: 5, padding: 25 }}>
+            <Panel.Main>
+                <Panel.Sub grow>
                     {alertApi.selectedAlert ? (
                         <AlertEdition
                             key={alertApi.selectedAlertId}
                             alert={alertApi.selectedAlert}
                             updateAlert={alertApi.updateAlert}
                             testNotification={alertApi.testNotification} />
-                    ) : <Empty description="Please select an alert" />}
-                </div>
-            </div>
+                    ) : (<EmptyAlert />)}
+                </Panel.Sub>
+            </Panel.Main>
         </SplitPane>
     );
 }

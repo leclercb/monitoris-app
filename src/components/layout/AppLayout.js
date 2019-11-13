@@ -6,10 +6,12 @@ import AlertView from 'components/alerts/views/AlertView';
 import DashboardView from 'components/dashboard/views/DashboardView';
 import ExplorerView from 'components/explorer/views/ExplorerView';
 import InstanceView from 'components/instances/views/InstanceView';
+import GraphView from 'components/graphs/views/GraphView';
 import Header from 'components/layout/Header';
 import ModalSettingManager from 'components/settings/ModalSettingManager';
 import NotificationManager from 'components/thread/NotificationManager';
 import ModalThreadManager from 'components/thread/ModalThreadManager';
+import ToolView from 'components/tools/views/ToolView';
 import { getSelectedView } from 'selectors/SettingSelectors';
 import { isBusy } from 'selectors/ThreadSelectors';
 
@@ -19,14 +21,18 @@ function AppLayout() {
 
     const getView = () => {
         switch (selectedView) {
-            case 'dashboard':
+            case 'alerts':
+                return <AlertView />;
+            case 'dashboards':
                 return <DashboardView />;
             case 'explorer':
                 return <ExplorerView />;
-            case 'alert':
-                return <AlertView />;
-            case 'instance':
+            case 'graphs':
+                return <GraphView />;
+            case 'instances':
                 return <InstanceView />;
+            case 'tools':
+                return <ToolView />;
             default:
                 return <AlertView />;
         }

@@ -14,7 +14,7 @@ import { updateProcess } from 'actions/ThreadActions';
 import { getConfig } from 'config/Config';
 import Constants from 'constants/Constants';
 import { getErrorMessages } from 'utils/CloudUtils';
-import { parseRedisString } from 'utils/FormatUtils';
+import { parseRedisInfo } from 'utils/FormatUtils';
 
 export function loadInstancesFromServer() {
     return loadObjectsFromServer('instances');
@@ -44,15 +44,9 @@ export function deleteInstance(instanceId, options = {}) {
     return deleteObject('instances', instanceId, options);
 }
 
-export function getStatus(instanceId) {
+export function getStatus(instanceId, silent = false) {
     return async dispatch => {
         const processId = uuid();
-
-        dispatch(updateProcess({
-            id: processId,
-            state: 'RUNNING',
-            title: 'Get status from server'
-        }));
 
         try {
             const result = await sendRequest(
@@ -74,33 +68,56 @@ export function getStatus(instanceId) {
                 }
             });
 
-            dispatch(updateProcess({
-                id: processId,
-                state: 'COMPLETED'
-            }));
-
             return result.data;
         } catch (error) {
-            dispatch(updateProcess({
-                id: processId,
-                state: 'ERROR',
-                error: getErrorMessages(error, true)
-            }));
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    title: 'Get status',
+                    error: getErrorMessages(error, true)
+                }));
+            }
 
             throw error;
         }
     };
 }
 
-export function getInfo(instanceId) {
+export function getMonitoring(instanceId, silent = false) {
     return async dispatch => {
         const processId = uuid();
 
-        dispatch(updateProcess({
-            id: processId,
-            state: 'RUNNING',
-            title: 'Get info from server'
-        }));
+        try {
+            const result = await sendRequest(
+                {
+                    headers: {
+                        Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+                    },
+                    method: 'GET',
+                    url: `${getConfig().proxyUrl}/api/v1/instances/${instanceId}/monitoring`,
+                    responseType: 'json'
+                });
+
+            return result.data;
+        } catch (error) {
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    title: 'Get monitoring',
+                    error: getErrorMessages(error, true)
+                }));
+            }
+
+            throw error;
+        }
+    };
+}
+
+export function getInfo(instanceId, silent = false) {
+    return async dispatch => {
+        const processId = uuid();
 
         try {
             const result = await sendRequest(
@@ -113,33 +130,32 @@ export function getInfo(instanceId) {
                     responseType: 'text'
                 });
 
-            const info = parseRedisString(result.data);
+            const info = parseRedisInfo(result.data);
 
             await dispatch({
-                type: 'ADD_INFO',
+                type: 'SET_INFO',
                 instanceId,
+                timestamp: moment().toISOString(),
                 info
             });
 
-            dispatch(updateProcess({
-                id: processId,
-                state: 'COMPLETED'
-            }));
-
             return info;
         } catch (error) {
-            dispatch(updateProcess({
-                id: processId,
-                state: 'ERROR',
-                error: getErrorMessages(error, true)
-            }));
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    title: 'Get info',
+                    error: getErrorMessages(error, true)
+                }));
+            }
 
             throw error;
         }
     };
 }
 
-export function executeCommand(instanceId, db, command, parameters) {
+export function executeCommand(instanceId, db, command, parameters, silent = false) {
     return async dispatch => {
         const processId = uuid();
 
@@ -159,6 +175,79 @@ export function executeCommand(instanceId, db, command, parameters) {
                     responseType: 'text'
                 });
 
+            return result.data;
+        } catch (error) {
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    title: 'Execute command',
+                    error: getErrorMessages(error, true)
+                }));
+            }
+
+            throw error;
+        }
+    };
+}
+
+export function getAlerts(instanceId, start, end, silent = false) {
+    return async dispatch => {
+        const processId = uuid();
+
+        try {
+            const result = await sendRequest(
+                {
+                    headers: {
+                        Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+                    },
+                    method: 'GET',
+                    url: `${getConfig().proxyUrl}/api/v1/instances/${instanceId}/alerts`,
+                    params: {
+                        start,
+                        end
+                    },
+                    responseType: 'json'
+                });
+
+            return result.data;
+        } catch (error) {
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    title: 'Get instance alerts',
+                    error: getErrorMessages(error, true)
+                }));
+            }
+
+            throw error;
+        }
+    };
+}
+
+export function clearAlerts(instanceId, silent = false) {
+    return async dispatch => {
+        const processId = uuid();
+
+        dispatch(updateProcess({
+            id: processId,
+            state: 'RUNNING',
+            title: 'Clear alert history',
+            notify: true
+        }));
+
+        try {
+            const result = await sendRequest(
+                {
+                    headers: {
+                        Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+                    },
+                    method: 'POST',
+                    url: `${getConfig().proxyUrl}/api/v1/instances/${instanceId}/alerts/clear`,
+                    responseType: 'json'
+                });
+
             dispatch(updateProcess({
                 id: processId,
                 state: 'COMPLETED'
@@ -166,12 +255,122 @@ export function executeCommand(instanceId, db, command, parameters) {
 
             return result.data;
         } catch (error) {
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    error: getErrorMessages(error, true)
+                }));
+            }
+
+            throw error;
+        }
+    };
+}
+
+export function getReport(instanceId, reportId, silent = false) {
+    return async dispatch => {
+        const processId = uuid();
+
+        try {
+            const result = await sendRequest(
+                {
+                    headers: {
+                        Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+                    },
+                    method: 'GET',
+                    url: `${getConfig().proxyUrl}/api/v1/instances/${instanceId}/reports/${reportId}`,
+                    responseType: 'json'
+                });
+
+            return result.data;
+        } catch (error) {
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    title: 'Get instance report',
+                    error: getErrorMessages(error, true)
+                }));
+            }
+
+            throw error;
+        }
+    };
+}
+
+export function getReports(instanceId, start, end, attributeNames, silent = false) {
+    return async dispatch => {
+        const processId = uuid();
+
+        try {
+            const result = await sendRequest(
+                {
+                    headers: {
+                        Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+                    },
+                    method: 'GET',
+                    url: `${getConfig().proxyUrl}/api/v1/instances/${instanceId}/reports`,
+                    params: {
+                        start,
+                        end,
+                        attributeNames: attributeNames.join(',')
+                    },
+                    responseType: 'json'
+                });
+
+            return result.data;
+        } catch (error) {
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    title: 'Get instance reports',
+                    error: getErrorMessages(error, true)
+                }));
+            }
+
+            throw error;
+        }
+    };
+}
+
+export function clearReports(instanceId, silent = false) {
+    return async dispatch => {
+        const processId = uuid();
+
+        dispatch(updateProcess({
+            id: processId,
+            state: 'RUNNING',
+            title: 'Clear info history',
+            notify: true
+        }));
+
+        try {
+            const result = await sendRequest(
+                {
+                    headers: {
+                        Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+                    },
+                    method: 'POST',
+                    url: `${getConfig().proxyUrl}/api/v1/instances/${instanceId}/reports/clear`,
+                    responseType: 'json'
+                });
+
             dispatch(updateProcess({
                 id: processId,
-                state: 'ERROR',
-                title: 'Execute command on server',
-                error: getErrorMessages(error, true)
+                state: 'COMPLETED'
             }));
+
+            return result.data;
+        } catch (error) {
+            if (!silent) {
+                dispatch(updateProcess({
+                    id: processId,
+                    state: 'ERROR',
+                    error: getErrorMessages(error, true)
+                }));
+            }
 
             throw error;
         }

@@ -14,7 +14,7 @@ const InstanceStates = () => (state = {}, action) => {
     } else {
         newState[action.instanceId] = {
             status: null,
-            info: []
+            info: null
         };
     }
 
@@ -23,11 +23,11 @@ const InstanceStates = () => (state = {}, action) => {
             newState[action.instanceId].status = action.status;
 
             return newState;
-        case 'ADD_INFO':
-            newState[action.instanceId].info = [
-                ...newState[action.instanceId].info,
-                action.info
-            ];
+        case 'SET_INFO':
+            newState[action.instanceId].info = {
+                timestamp: action.timestamp,
+                ...action.info
+            };
 
             return newState;
         default:

@@ -1,79 +1,180 @@
-import React, { useState } from 'react';
-import { InputNumber, Menu, Tooltip } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Input, InputNumber, Tooltip } from 'antd';
+import PropTypes from 'prop-types';
+import { AutoSizer, List } from 'react-virtualized';
 import Icon from 'components/common/Icon';
 import LeftRight from 'components/common/LeftRight';
-import { useAppApi } from 'hooks/UseAppApi';
-import { useInstanceApi } from 'hooks/UseInstanceApi';
+import ModalFieldForm from 'components/explorer/common/ModalFieldForm';
 import InstanceSelect from 'components/instances/common/InstanceSelect';
+import { useInstanceApi } from 'hooks/UseInstanceApi';
+import 'components/explorer/sider/ExplorerSider.css';
 
-function ExplorerSider() {
-    const appApi = useAppApi();
+const BATCH_SIZE = 1000;
+
+function ExplorerSider({ keys, setKeys, selectedObject, setSelectedObject }) {
     const instanceApi = useInstanceApi();
 
-    const [openKeys, setOpenKeys] = useState(['tools']);
+    const instanceId = instanceApi.selectedInstanceId;
+    const db = instanceApi.selectedDb;
 
-    const onSelect = event => {
-        appApi.setSelectedExplorerToolId(event.key);
+    const [scanResult, setScanResult] = useState(null);
+    const [searchValue, setSearchValue] = useState('*');
+    const [modalFieldFormVisible, setModalFieldFormVisible] = useState(false);
+
+    useEffect(() => {
+        setKeys([]);
+        setScanResult(null);
+        setSelectedObject(null);
+    }, [instanceId, db]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const executeScan = async value => {
+        const parameters = [scanResult ? scanResult[0] : 0, 'MATCH', value, 'COUNT', BATCH_SIZE];
+        const result = await instanceApi.executeCommand(instanceId, db, 'scan', parameters);
+        return result;
     };
 
-    const onOpenChange = key => {
-        const newOpenKeys = [...openKeys];
+    const scan = async value => {
+        setSearchValue(value);
 
-        if (newOpenKeys.includes(key)) {
-            newOpenKeys.splice(newOpenKeys.indexOf(key), 1);
-        } else {
-            newOpenKeys.push(key);
+        if (instanceId) {
+            const result = await executeScan(value);
+            setScanResult(result);
+            setKeys(result[1].sort());
         }
-
-        setOpenKeys(newOpenKeys);
     };
 
-    const createCategorySubMenu = (text, icon, onOpenChange) => {
-        return (
-            <LeftRight onClickLeft={onOpenChange}>
-                <Icon icon={icon} text={text} />
-            </LeftRight>
-        );
+    const continueScanning = async () => {
+        if (instanceId && scanResult) {
+            const result = await executeScan(searchValue);
+            setScanResult(result);
+            setKeys([
+                ...keys,
+                ...result[1]
+            ].sort());
+        }
+    };
+
+    const addKey = async values => {
+        setKeys([
+            ...keys,
+            values.key
+        ].sort());
+
+        setSelectedObject(values);
+        setModalFieldFormVisible(false);
     };
 
     return (
-        <div
-            className="joyride-task-sider"
-            style={{ backgroundColor: '#ffffff', height: '100%' }}>
-            <div style={{ width: '100%', padding: 10 }}>
-                <LeftRight right={(
-                    <Tooltip title="Selected database" placement="right">
-                        <InputNumber
-                            value={instanceApi.selectedExplorerDb}
-                            onChange={value => instanceApi.setSelectedExplorerDb(value)}
-                            style={{ width: 60, minWidth: 60, marginLeft: 5 }} />
-                    </Tooltip>
-                )}>
-                    <InstanceSelect
-                        value={instanceApi.selectedExplorerInstanceId}
-                        onChange={value => instanceApi.setSelectedExplorerInstanceId(value)}
-                        placeholder="Select an instance..."
-                        style={{ width: '100%' }} />
-                </LeftRight>
+        <React.Fragment>
+            <ModalFieldForm
+                fields={[
+                    {
+                        static: true,
+                        id: 'key',
+                        title: 'Key',
+                        type: 'text',
+                        editable: true
+                    },
+                    {
+                        static: true,
+                        id: 'type',
+                        title: 'Type',
+                        type: 'redisType',
+                        editable: true
+                    }
+                ]}
+                title={(<Icon icon="key" text="Add Key" />)}
+                visible={modalFieldFormVisible}
+                onOk={addKey}
+                onCancel={() => setModalFieldFormVisible(false)} />
+            <div className="explorer-sider">
+                <div className="explorer-sider-element">
+                    <LeftRight right={(
+                        <Tooltip title="Selected database" placement="right">
+                            <InputNumber
+                                value={instanceApi.selectedDb}
+                                onChange={value => instanceApi.setSelectedDb(value)}
+                                style={{ width: 60, minWidth: 60, marginLeft: 5 }} />
+                        </Tooltip>
+                    )}>
+                        <InstanceSelect
+                            value={instanceApi.selectedInstanceId}
+                            onChange={value => instanceApi.setSelectedInstanceId(value)}
+                            placeholder="Select an instance..."
+                            style={{ width: '100%' }} />
+                    </LeftRight>
+                </div>
+                {!!instanceId && (
+                    <div className="explorer-sider-element">
+                        <LeftRight right={(
+                            <React.Fragment>
+                                <Tooltip title="Continue Scanning" placement="right">
+                                    <Button
+                                        onClick={continueScanning}
+                                        disabled={!scanResult || scanResult[0] === '0'}
+                                        style={{ marginLeft: 5 }}>
+                                        <Icon icon="play" />
+                                    </Button>
+                                </Tooltip>
+                                <Tooltip title="Add Key" placement="right">
+                                    <Button
+                                        onClick={() => setModalFieldFormVisible(true)}
+                                        style={{ marginLeft: 5 }}>
+                                        <Icon icon="plus" />
+                                    </Button>
+                                </Tooltip>
+                            </React.Fragment>
+                        )}>
+                            <Input.Search
+                                placeholder="Key"
+                                allowClear={true}
+                                defaultValue={searchValue}
+                                onSearch={value => scan(value)}
+                                style={{ width: '100%' }} />
+                        </LeftRight>
+                    </div>
+                )}
+                {!!instanceId && (
+                    <div className="explorer-sider-element-grow">
+                        <AutoSizer>
+                            {({ width, height }) => (
+                                <List
+                                    className="explorer-list"
+                                    width={width}
+                                    height={height}
+                                    rowHeight={30}
+                                    rowCount={keys.length}
+                                    rowRenderer={({ index, key, style }) => {
+                                        const value = keys[index];
+                                        const selected = selectedObject && selectedObject.key === value;
+
+                                        return (
+                                            <div
+                                                key={key}
+                                                onClick={() => setSelectedObject({
+                                                    key: value,
+                                                    type: null
+                                                })}
+                                                className={`explorer-list-row ${selected ? 'selected' : ''}`}
+                                                style={style}>
+                                                <span>{value}</span>
+                                            </div>
+                                        );
+                                    }} />
+                            )}
+                        </AutoSizer>
+                    </div>
+                )}
             </div>
-            <Menu
-                selectedKeys={[appApi.selectedExplorerToolId]}
-                openKeys={openKeys}
-                onSelect={onSelect}
-                mode="inline">
-                <Menu.SubMenu
-                    key="tools"
-                    title={createCategorySubMenu('Tools', 'tools', () => onOpenChange('tools'))}>
-                    <Menu.Item key="info">
-                        <Icon icon="info-circle" text="Get Info" />
-                    </Menu.Item>
-                    <Menu.Item key="scan">
-                        <Icon icon="barcode" text="Scan" />
-                    </Menu.Item>
-                </Menu.SubMenu>
-            </Menu >
-        </div>
+        </React.Fragment>
     );
 }
+
+ExplorerSider.propTypes = {
+    keys: PropTypes.array.isRequired,
+    setKeys: PropTypes.func.isRequired,
+    selectedObject: PropTypes.object,
+    setSelectedObject: PropTypes.func.isRequired
+};
 
 export default ExplorerSider;

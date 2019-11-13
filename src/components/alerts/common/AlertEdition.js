@@ -1,39 +1,69 @@
-import React from 'react';
-import { Divider, Form } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Alert, Divider } from 'antd';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import FilterConditionTree from 'components/filters/FilterConditionTree';
 import AlertForm from 'components/alerts/common/AlertForm';
 import NotificationTable from 'components/alerts/common/NotificationTable';
+import { getConfig } from 'config/Config';
 import { getAlertNotificationFields } from 'data/DataAlertNotificationFields';
-import { AlertPropType } from 'proptypes/AlertPropTypes';
 import { getRedisFields } from 'data/DataRedisFields';
+import { useInterval } from 'hooks/UseInterval';
+import { AlertPropType } from 'proptypes/AlertPropTypes';
 
-function AlertEdition(props) {
-    const onUpdateNotifications = notifications => {
-        props.updateAlert({
-            ...props.alert,
+function AlertEdition({ alert, updateAlert, testNotification }) {
+    const [seconds, setSeconds] = useState(-1);
+
+    const updateSecondsRemaining = () => {
+        const s = moment().diff(moment(alert.updateDate), 'seconds');
+
+        if (s < getConfig().alertUpdateDelay) {
+            setSeconds(getConfig().alertUpdateDelay - s);
+        } else {
+            setSeconds(-1);
+        }
+    };
+
+    useEffect(() => {
+        updateSecondsRemaining();
+    }, [alert]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    useInterval(() => {
+        updateSecondsRemaining();
+    }, 5000);
+
+    const onUpdateNotifications = async notifications => {
+        await updateAlert({
+            ...alert,
             notifications
         });
     };
 
     return (
         <React.Fragment>
+            {seconds >= 0 && (
+                <Alert
+                    message={`The alert has been updated less than 5 minutes ago and is therefore not active yet. The updated alert will become active in ${moment.duration(seconds * 1000).humanize()}.`}
+                    type="info"
+                    showIcon
+                    style={{ marginBottom: 20 }} />
+            )}
             <AlertForm
-                alert={props.alert}
-                updateAlert={props.updateAlert} />
+                alert={alert}
+                updateAlert={updateAlert} />
             <Divider>Filters</Divider>
             <FilterConditionTree
-                filter={props.alert}
+                filter={alert}
                 context={{
                     fields: getRedisFields()
                 }}
-                updateFilter={props.updateAlert} />
+                updateFilter={updateAlert} />
             <Divider>Notifications</Divider>
             <NotificationTable
-                notifications={props.alert.notifications || []}
+                notifications={alert.notifications || []}
                 notificationFields={getAlertNotificationFields()}
                 updateNotifications={onUpdateNotifications}
-                testNotification={props.testNotification}
+                testNotification={testNotification}
                 orderSettingPrefix="alertNotificationColumnOrder_"
                 widthSettingPrefix="alertNotificationColumnWidth_" />
         </React.Fragment>
@@ -41,10 +71,9 @@ function AlertEdition(props) {
 }
 
 AlertEdition.propTypes = {
-    form: PropTypes.object.isRequired,
     alert: AlertPropType.isRequired,
     updateAlert: PropTypes.func.isRequired,
     testNotification: PropTypes.func.isRequired
 };
 
-export default Form.create({ name: 'alert' })(AlertEdition);
+export default AlertEdition;
