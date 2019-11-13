@@ -11,7 +11,7 @@ export function ProLockedMessage({ info }) {
         appApi.setAccountManagerOptions({ visible: true });
     };
 
-    let description = 'This feature requires a RedisMon Pro subscription !';
+    let description = 'This feature requires a Monitoris Pro subscription !';
 
     if (info) {
         description = 'TaskUnifier Pro has not been activated !';
@@ -21,7 +21,7 @@ export function ProLockedMessage({ info }) {
         <Empty
             image={(<Icon color="#ffecb3" icon="lock" size={64} />)}
             description={description}>
-            <Button type="primary" onClick={onShowAccount}>Go to account to subscribe to RedisMon Pro</Button>
+            <Button type="primary" onClick={onShowAccount}>Go to account to subscribe to Monitoris Pro</Button>
         </Empty>
     );
 }

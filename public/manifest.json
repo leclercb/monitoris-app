@@ -1,6 +1,6 @@
 {
-    "short_name": "RedisMon",
-    "name": "RedisMon - Redis Monitoring Tool",
+    "short_name": "Monitoris",
+    "name": "Monitoris - Redis Monitoring Tool",
     "icons": [
         {
             "src": "favicon.ico",

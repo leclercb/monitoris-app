@@ -12,7 +12,7 @@ export function CloudMaxObjectsReachedMessage({ setAccountManagerOptions }) {
         <Empty
             image={(<Icon color="#ffecb3" icon="lock" size={64} />)}
             description="You have reached the maximum number of objects !">
-            <Button type="primary" onClick={onShowAccount}>Go to account to subscribe to RedisMon Pro</Button>
+            <Button type="primary" onClick={onShowAccount}>Go to account to subscribe to Monitoris Pro</Button>
         </Empty>
     );
 }
