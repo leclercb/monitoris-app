@@ -17,7 +17,7 @@ function EmptyAlert({ hideSelect }) {
                 <PromiseButton onClick={async () => {
                     const alert = await alertApi.addAlert();
                     await alertApi.setSelectedAlertId(alert.id);
-                    await appApi.setSelectedView('alert');
+                    await appApi.setSelectedView('alerts');
                 }}>
                     <Icon icon="plus" text="Add your first alert" />
                 </PromiseButton>
