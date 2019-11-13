@@ -23,7 +23,7 @@ const config = {
         },
         stripe: {
             publicKey: 'pk_test_9v1ka0StPotw9LDKv7U4klpy00XoUX0SMH',
-            productId: 'prod_G2jWzVLWFNIRsz'
+            productId: 'prod_GAiy4Nm17oHcuA'
         }
     },
     dev: {
@@ -44,7 +44,7 @@ const config = {
         },
         stripe: {
             publicKey: 'pk_test_9v1ka0StPotw9LDKv7U4klpy00XoUX0SMH',
-            productId: 'prod_G2jWzVLWFNIRsz'
+            productId: 'prod_GAiy4Nm17oHcuA'
         }
     },
     prod: {
@@ -65,7 +65,7 @@ const config = {
         },
         stripe: {
             publicKey: 'pk_live_dDwP9dT6wVZSJ6utoo7mauC700I2IUls6o',
-            productId: ''
+            productId: 'prod_GAj2FA9HdNEUUi'
         }
     }
 };
