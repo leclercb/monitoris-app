@@ -14,6 +14,7 @@ import withProCheck from 'containers/WithProCheck';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { getHumanFileSize } from 'utils/FileUtils';
+import { fillGapsInArray } from 'utils/ReportUtils';
 import { getDateTimeFormat, getTimeFormat } from 'utils/SettingUtils';
 
 function GraphMemory({ instanceId }) {
@@ -76,7 +77,7 @@ function GraphMemory({ instanceId }) {
         refresh();
     }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const data = reports.map(report => ({
+    const data = fillGapsInArray(reports.map(report => ({
         timestamp: moment(report.id).unix(),
         used_memory: Number.parseInt(report.info.used_memory),
         used_memory_dataset: Number.parseInt(report.info.used_memory_dataset),
@@ -86,7 +87,7 @@ function GraphMemory({ instanceId }) {
         used_memory_rss: Number.parseInt(report.info.used_memory_rss),
         used_memory_scripts: Number.parseInt(report.info.used_memory_scripts),
         used_memory_startup: Number.parseInt(report.info.used_memory_startup)
-    }));
+    })));
 
     const dv = new DataSet.DataView();
 

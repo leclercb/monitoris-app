@@ -2,6 +2,8 @@ const config = {
     common: {
         alertUpdateDelay: 300,
         cloudItemSku: 'mt-cloud-pro-1y',
+        instanceQueueDelay: 60,
+        instanceQueueMaxDelay: 80,
         instanceAlertTtl: 7,
         instanceReportTtl: 7
     },

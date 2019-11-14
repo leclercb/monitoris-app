@@ -3,11 +3,8 @@ import { Table } from 'antd';
 import PropTypes from 'prop-types';
 import AlertTitle from 'components/alerts/common/AlertTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
-import { useAlertApi } from 'hooks/UseAlertApi';
 
 function AlertStatus({ status }) {
-    const alertApi = useAlertApi();
-
     const columns = [
         {
             title: 'Alert',

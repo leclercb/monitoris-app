@@ -13,6 +13,7 @@ import { getConfig } from 'config/Config';
 import withProCheck from 'containers/WithProCheck';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
+import { fillGapsInArray } from 'utils/ReportUtils';
 import { getDateTimeFormat, getTimeFormat } from 'utils/SettingUtils';
 
 function GraphConnections({ instanceId }) {
@@ -56,11 +57,11 @@ function GraphConnections({ instanceId }) {
         refresh();
     }, [instanceId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const data = reports.map(report => ({
+    const data = fillGapsInArray(reports.map(report => ({
         timestamp: moment(report.id).unix(),
         connected_clients: Number.parseInt(report.info.connected_clients),
         blocked_clients: Number.parseInt(report.info.blocked_clients)
-    }));
+    })));
 
     const dv = new DataSet.DataView();
 
