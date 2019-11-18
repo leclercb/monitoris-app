@@ -15,12 +15,6 @@ export function getAlertNotificationTypes() {
             title: 'Http(s)',
             color: '#0daabf',
             icon: 'paper-plane'
-        },
-        {
-            id: 'sms',
-            title: 'SMS',
-            color: '#0d6fbf',
-            icon: 'sms'
         }
     ];
 }
