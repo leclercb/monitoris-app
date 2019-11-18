@@ -49,8 +49,8 @@ function NotificationTable(props) {
         const notification = props.notifications.find(notification => notification.id === notificationId);
 
         if (notification) {
-            if (!appApi.pro && (notification.type === 'http' || notification.type === 'sms')) {
-                message.error('HTTP and SMS notifications are only sent for &quot;Pro&quot; users');
+            if (!appApi.pro && notification.type === 'http') {
+                message.error('HTTP notifications are only sent for &quot;Pro&quot; users');
                 return;
             }
 
@@ -190,7 +190,7 @@ function NotificationTable(props) {
             </div>
             {!appApi.pro && (
                 <Alert
-                    message="HTTP and SMS notifications are only sent for &quot;Pro&quot; users."
+                    message="HTTP notifications are only sent for &quot;Pro&quot; users."
                     type="warning"
                     showIcon
                     style={{ marginTop: 20 }} />

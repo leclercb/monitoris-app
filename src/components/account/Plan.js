@@ -21,7 +21,6 @@ function Plan({ plan, onSelectPlan }) {
                     (<strong key={3}>7 Days Info History</strong>),
                     'History Graphs',
                     'Email Notifications',
-                    'SMS Notififications',
                     'HTTP Notifications'
                 ];
             case 'Yearly':
@@ -31,7 +30,6 @@ function Plan({ plan, onSelectPlan }) {
                     (<strong key={3}>7 Days Info History</strong>),
                     'History Graphs',
                     'Email Notifications',
-                    'SMS Notififications',
                     'HTTP Notifications'
                 ];
             default:

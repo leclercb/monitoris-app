@@ -13,6 +13,7 @@ import withProCheck from 'containers/WithProCheck';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { parseRedisSubString } from 'utils/FormatUtils';
+import { fillGapsInArray } from 'utils/ReportUtils';
 import { getDateTimeFormat, getTimeFormat } from 'utils/SettingUtils';
 
 function GraphCommands({ instanceId }) {
@@ -100,7 +101,7 @@ function GraphCommands({ instanceId }) {
         refresh();
     }, [instanceId, selectedField]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const data = reports.map(report => {
+    const data = fillGapsInArray(reports.map(report => {
         const cmdStat = parseRedisSubString(report.info[`cmdstat_${selectedField}`]);
 
         return {
@@ -108,7 +109,7 @@ function GraphCommands({ instanceId }) {
             calls: Number.parseInt(cmdStat.calls),
             usec_per_call: Number.parseFloat(cmdStat.usec_per_call)
         };
-    });
+    }));
 
     const scale = {
         timestamp: {

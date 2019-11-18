@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const AlertNotificationTypePropType = PropTypes.oneOf(['email', 'sms', 'http']);
+export const AlertNotificationTypePropType = PropTypes.oneOf(['email', 'http']);
 
 export const AlertNotificationPropType = PropTypes.shape({
     id: PropTypes.string.isRequired,
