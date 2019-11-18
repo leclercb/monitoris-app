@@ -17,10 +17,10 @@ export function printDocument(title, orientation = 'p') {
     doc.setFillColor(210, 41, 31);
     doc.rect(0, 50, doc.internal.pageSize.getWidth(), 10, 'F');
 
-    // TaskUnifier Logo
+    // Monitoris Logo
     doc.addImage(logo, 'PNG', doc.internal.pageSize.getWidth() - 50, 10, 32, 32);
 
-    // TaskUnifier
+    // Monitoris
     doc.setFontSize(14);
     doc.setFontType('bold');
     doc.setTextColor(210, 41, 31);

@@ -14,7 +14,7 @@ export function ProLockedMessage({ info }) {
     let description = 'This feature requires a Monitoris Pro subscription !';
 
     if (info) {
-        description = 'TaskUnifier Pro has not been activated !';
+        description = 'Monitoris Pro has not been activated !';
     }
 
     return (
