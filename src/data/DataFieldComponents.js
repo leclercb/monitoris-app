@@ -13,6 +13,7 @@ import AlertSelect from 'components/alerts/common/AlertSelect';
 import ColorPicker from 'components/common/ColorPicker';
 import DatePicker from 'components/common/DatePicker';
 import ExtendedDatePicker from 'components/common/ExtendedDatePicker';
+import FileSizeField from 'components/common/FileSizeField';
 import ModalPasswordField from 'components/common/ModalPasswordField';
 import StarCheckbox from 'components/common/StarCheckbox';
 import InstanceSelect from 'components/instances/common/InstanceSelect';
@@ -27,7 +28,7 @@ import SeveritiesSelect from 'components/severities/SeveritiesSelect';
 import SeveritiesTitle from 'components/severities/SeveritiesTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
 import SeveritySelect from 'components/severities/SeveritySelect';
-import { toStringPassword } from 'utils/StringUtils';
+import { toStringFileSize, toStringNumber, toStringPassword } from 'utils/StringUtils';
 
 export function getDefaultGetValueFromEvent(e) {
     if (!e || !e.target) {
@@ -212,6 +213,18 @@ export function getFieldComponents(type, options) {
 
             break;
         }
+        case 'fileSize': {
+            configuration = {
+                render: value => <span>{toStringFileSize(value)}</span>,
+                input: props => (
+                    <FileSizeField
+                        onChange={props.onCommit}
+                        {...removeExtraProps(props)} />
+                )
+            };
+
+            break;
+        }
         case 'instance': {
             configuration = {
                 render: value => (
@@ -262,7 +275,7 @@ export function getFieldComponents(type, options) {
             const max = options && options.max ? options.max : Infinity;
 
             configuration = {
-                render: value => value ? value : <span>&nbsp;</span>,
+                render: value => <span>{toStringNumber(value)}</span>,
                 input: props => (
                     <InputNumber
                         onBlur={props.onCommit}

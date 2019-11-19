@@ -92,6 +92,7 @@ function ExplorerSider({ keys, setKeys, selectedObject, setSelectedObject }) {
                     <LeftRight right={(
                         <Tooltip title="Selected database" placement="right">
                             <InputNumber
+                                min={0}
                                 value={instanceApi.selectedDb}
                                 onChange={value => instanceApi.setSelectedDb(value)}
                                 style={{ width: 60, minWidth: 60, marginLeft: 5 }} />

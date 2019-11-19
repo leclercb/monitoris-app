@@ -15,9 +15,10 @@ export async function connectWebSocket() {
     url.searchParams.set('access_token', (await Auth.currentSession()).getAccessToken().getJwtToken());
 
     const options = {
+        maxRetries: 10,
         minReconnectionDelay: 1000,
-        maxReconnectionDelay: 1000,
-        reconnectionDelayGrowFactor: 1
+        maxReconnectionDelay: 10000,
+        reconnectionDelayGrowFactor: 1.2
     };
 
     // eslint-disable-next-line require-atomic-updates
