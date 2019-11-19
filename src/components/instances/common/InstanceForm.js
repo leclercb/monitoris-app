@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert, Form } from 'antd';
+import { getConfig } from 'config/Config';
 import { getInstanceFields } from 'data/DataInstanceFields';
 import { getInputForType } from 'data/DataFieldComponents';
 import { getValuePropNameForType } from 'data/DataFieldTypes';
@@ -20,6 +21,14 @@ function InstanceForm({ instance, updateInstance, form }) {
                 <Alert
                     message="Direct connection is only intended for development or testing servers. Do not use it for production !"
                     type="warning"
+                    showIcon
+                    style={{ marginBottom: 20 }}
+                />
+            )}
+            {instance.type === 'proxy' && (
+                <Alert
+                    message={(<span>Proxy connection requires a client. Client and documentation available <a href={getConfig().clientUrl}>here</a>.</span>)}
+                    type="info"
                     showIcon
                     style={{ marginBottom: 20 }}
                 />

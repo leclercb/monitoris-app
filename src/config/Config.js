@@ -10,6 +10,7 @@ const config = {
     local: {
         apiUrl: 'http://localhost:2000',
         authUrl: 'http://localhost:2300',
+        clientUrl: 'https://github.com/leclercb/monitoris-client',
         cloudUrl: 'http://localhost:2100/cloud',
         maintenanceUrl: 'http://localhost:2100/maintenance',
         proxyUrl: 'http://localhost:5000',
@@ -31,6 +32,7 @@ const config = {
     dev: {
         apiUrl: 'https://api-dev.monitoris.app',
         authUrl: 'https://auth-dev.monitoris.app',
+        clientUrl: 'https://github.com/leclercb/monitoris-client',
         cloudUrl: 'https://www-dev.monitoris.app/cloud',
         maintenanceUrl: 'https://www-dev.monitoris.app/maintenance',
         proxyUrl: 'https://proxy-dev.monitoris.app',
@@ -52,6 +54,7 @@ const config = {
     prod: {
         apiUrl: 'https://api.monitoris.app',
         authUrl: 'https://auth.monitoris.app',
+        clientUrl: 'https://github.com/leclercb/monitoris-client',
         cloudUrl: 'https://www.monitoris.app/cloud',
         maintenanceUrl: 'https://www.monitoris.app/maintenance',
         proxyUrl: 'https://proxy.monitoris.app',
