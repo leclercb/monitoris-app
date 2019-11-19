@@ -27,7 +27,7 @@ function InstanceForm({ instance, updateInstance, form }) {
             )}
             {instance.type === 'proxy' && (
                 <Alert
-                    message={(<span>Proxy connection requires a client. Client and documentation available <a href={getConfig().clientUrl}>here</a>.</span>)}
+                    message={(<span>Proxy connection requires a client. Client and documentation available <a href={getConfig().clientUrl} target="_blank" rel="noopener noreferrer">here</a>.</span>)}
                     type="info"
                     showIcon
                     style={{ marginBottom: 20 }}
