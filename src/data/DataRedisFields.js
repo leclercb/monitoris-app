@@ -58,7 +58,7 @@ export function getRedisFields() {
             static: true,
             id: 'total_net_input_bytes',
             title: 'Total Net Input Bytes',
-            type: 'number',
+            type: 'fileSize',
             editable: true,
             visible: true
         },
@@ -66,7 +66,7 @@ export function getRedisFields() {
             static: true,
             id: 'total_net_output_bytes',
             title: 'Total Net Output Bytes',
-            type: 'number',
+            type: 'fileSize',
             editable: true,
             visible: true
         },
@@ -74,7 +74,7 @@ export function getRedisFields() {
             static: true,
             id: 'total_system_memory',
             title: 'Total System Memory',
-            type: 'number',
+            type: 'fileSize',
             editable: true,
             visible: true
         },
@@ -130,7 +130,7 @@ export function getRedisFields() {
             static: true,
             id: 'used_memory',
             title: 'Used Memory',
-            type: 'number',
+            type: 'fileSize',
             editable: true,
             visible: true
         },
@@ -138,7 +138,7 @@ export function getRedisFields() {
             static: true,
             id: 'used_memory_dataset',
             title: 'Used Memory Dataset',
-            type: 'number',
+            type: 'fileSize',
             editable: true,
             visible: true
         },
@@ -146,7 +146,7 @@ export function getRedisFields() {
             static: true,
             id: 'used_memory_lua',
             title: 'Used Memory LUA',
-            type: 'number',
+            type: 'fileSize',
             editable: true,
             visible: true
         },
@@ -154,7 +154,7 @@ export function getRedisFields() {
             static: true,
             id: 'used_memory_overhead',
             title: 'Used Memory Overhead',
-            type: 'number',
+            type: 'fileSize',
             editable: true,
             visible: true
         },
@@ -162,7 +162,7 @@ export function getRedisFields() {
             static: true,
             id: 'used_memory_peak',
             title: 'Used Memory Peak',
-            type: 'number',
+            type: 'fileSize',
             editable: true,
             visible: true
         },
@@ -170,7 +170,7 @@ export function getRedisFields() {
             static: true,
             id: 'used_memory_rss',
             title: 'Used Memory RSS',
-            type: 'number',
+            type: 'fileSize',
             editable: true,
             visible: true
         },
@@ -178,7 +178,7 @@ export function getRedisFields() {
             static: true,
             id: 'used_memory_scripts',
             title: 'Used Memory Scripts',
-            type: 'number',
+            type: 'fileSize',
             editable: true,
             visible: true
         },
@@ -186,7 +186,7 @@ export function getRedisFields() {
             static: true,
             id: 'used_memory_startup',
             title: 'Used Memory Startup',
-            type: 'number',
+            type: 'fileSize',
             editable: true,
             visible: true
         }

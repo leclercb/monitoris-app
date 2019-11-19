@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { getHumanFileSize } from 'utils/FileUtils';
 
 export function toString(value) {
     if (typeof value === 'undefined' || value === null) {
@@ -26,6 +27,14 @@ export function toStringDate(value, format) {
     }
 
     return moment(value).format(format);
+}
+
+export function toStringFileSize(value) {
+    if (typeof value === 'undefined' || value === null) {
+        return '';
+    }
+
+    return getHumanFileSize(value);
 }
 
 export function toStringNumber(value, prefix = '', suffix = '') {

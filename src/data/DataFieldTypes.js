@@ -16,6 +16,7 @@ import {
     toString,
     toStringBoolean,
     toStringDate,
+    toStringFileSize,
     toStringNumber,
     toStringObject,
     toStringObjects,
@@ -30,6 +31,7 @@ export function getFieldTypes() {
         'color',
         'date',
         'dateTime',
+        'fileSize',
         'instance',
         'instances',
         'instanceType',
@@ -660,6 +662,87 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         type: 'text'
                     }
                 ]
+            };
+
+            break;
+        }
+        case 'fileSize': {
+            configuration = {
+                title: 'File Size',
+                allowCreation: true,
+                width: 150,
+                alwaysInEdition: false,
+                valuePropName: 'value',
+                compare: (a, b) => compareNumbers(a, b),
+                toString: value => toStringFileSize(value),
+                conditions: [
+                    {
+                        type: 'equal',
+                        title: 'Equals',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue === objectValue;
+                        }
+                    },
+                    {
+                        type: 'notEqual',
+                        title: 'Does not equal',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return conditionValue !== objectValue;
+                        }
+                    },
+                    {
+                        type: 'greaterThan',
+                        title: 'Greater than',
+                        multi: true,
+                        apply: (conditionValue, objectValue) => {
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return conditionValue < objectValue;
+                        }
+                    },
+                    {
+                        type: 'greaterThanOrEqual',
+                        title: 'Greater than or equal',
+                        multi: true,
+                        apply: (conditionValue, objectValue) => {
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return conditionValue <= objectValue;
+                        }
+                    },
+                    {
+                        type: 'lessThan',
+                        title: 'Less than',
+                        multi: true,
+                        apply: (conditionValue, objectValue) => {
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return conditionValue > objectValue;
+                        }
+                    },
+                    {
+                        type: 'lessThanOrEqual',
+                        title: 'Less than or equal',
+                        multi: true,
+                        apply: (conditionValue, objectValue) => {
+                            if (!conditionValue || !objectValue) {
+                                return false;
+                            }
+
+                            return conditionValue >= objectValue;
+                        }
+                    }
+                ],
+                conditionsFieldType: 'fileSize',
+                options: []
             };
 
             break;
