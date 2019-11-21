@@ -11,6 +11,7 @@ import {
 import { sendRequest } from 'actions/RequestActions';
 import { updateProcess } from 'actions/ThreadActions';
 import { getConfig } from 'config/Config';
+import Constants from 'constants/Constants';
 
 export function loadAlertsFromServer() {
     return loadObjectsFromServer('alerts');
@@ -21,7 +22,12 @@ export function setAlerts(alerts) {
 }
 
 export function addAlert(alert, options = {}) {
-    return addObject('alerts', alert, options);
+    return addObject('alerts', alert, options, {
+        title: '',
+        color: Constants.defaultObjectColor,
+        defaultSeverity: 'info',
+        historySize: 10
+    });
 }
 
 export function duplicateAlert(alert, options = {}) {
