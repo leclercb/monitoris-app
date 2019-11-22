@@ -2,13 +2,10 @@ import React from 'react';
 import { Button, Empty } from 'antd';
 import PropTypes from 'prop-types';
 import Icon from 'components/common/Icon';
-import { useAppApi } from 'hooks/UseAppApi';
 
-export function ProLockedMessage({ info }) {
-    const appApi = useAppApi();
-
+export function ProLockedMessage({ setAccountManagerOptions, info }) {
     const onShowAccount = async () => {
-        appApi.setAccountManagerOptions({ visible: true });
+        setAccountManagerOptions({ visible: true });
     };
 
     let description = 'This feature requires a Monitoris Pro subscription !';
@@ -27,6 +24,7 @@ export function ProLockedMessage({ info }) {
 }
 
 ProLockedMessage.propTypes = {
+    setAccountManagerOptions: PropTypes.func.isRequired,
     info: PropTypes.bool
 };
 
