@@ -12,8 +12,8 @@ import {
 import { sendRequest } from 'actions/RequestActions';
 import { updateProcess } from 'actions/ThreadActions';
 import { getConfig } from 'config/Config';
-import Constants from 'constants/Constants';
 import { getErrorMessages } from 'utils/CloudUtils';
+import { getRandomColor } from 'utils/ColorUtils';
 import { parseRedisInfo } from 'utils/FormatUtils';
 
 export function loadInstancesFromServer() {
@@ -26,9 +26,10 @@ export function setInstances(instances) {
 
 export function addInstance(instance, options = {}) {
     return addObject('instances', instance, options, {
-        title: '',
-        color: Constants.defaultObjectColor,
-        type: 'proxy'
+        title: 'My Instance',
+        color: getRandomColor(),
+        type: 'proxy',
+        enabled: true
     });
 }
 

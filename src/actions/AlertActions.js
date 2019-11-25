@@ -11,7 +11,7 @@ import {
 import { sendRequest } from 'actions/RequestActions';
 import { updateProcess } from 'actions/ThreadActions';
 import { getConfig } from 'config/Config';
-import Constants from 'constants/Constants';
+import { getRandomColor } from 'utils/ColorUtils';
 
 export function loadAlertsFromServer() {
     return loadObjectsFromServer('alerts');
@@ -23,8 +23,8 @@ export function setAlerts(alerts) {
 
 export function addAlert(alert, options = {}) {
     return addObject('alerts', alert, options, {
-        title: '',
-        color: Constants.defaultObjectColor,
+        title: 'My Alert',
+        color: getRandomColor(),
         defaultSeverity: 'info',
         historySize: 10
     });
