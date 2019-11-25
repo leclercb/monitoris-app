@@ -2,7 +2,7 @@
     "name": "monitoris-app",
     "description": "Monitoris - Redis Monitoring Tool",
     "author": "BL-IT",
-    "version": "0.1.0-alpha",
+    "version": "1.0.0",
     "private": true,
     "scripts": {
         "start": "REACT_APP_GIT_COMMIT_HASH=$(git rev-parse --short HEAD) craco start",
