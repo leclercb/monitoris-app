@@ -51,6 +51,14 @@ function InstanceForm({ instance, updateInstance, form }) {
                     </Form.Item>
                 ))}
             </Form>
+            {instance.type === 'proxy' && !instance.secret && (
+                <Alert
+                    message="A secret is mandatory for proxy connections"
+                    type="error"
+                    showIcon
+                    style={{ marginTop: 20 }}
+                />
+            )}
         </React.Fragment>
     );
 }

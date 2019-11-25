@@ -4,7 +4,6 @@ import Icon from 'components/common/Icon';
 import LeftRight from 'components/common/LeftRight';
 import Logo from 'components/common/Logo';
 import PromiseButton from 'components/common/PromiseButton';
-import Spacer from 'components/common/Spacer';
 import UserMenu from 'components/layout/UserMenu';
 import { useAlertApi } from 'hooks/UseAlertApi';
 import { useAppApi } from 'hooks/UseAppApi';
@@ -31,7 +30,7 @@ function Header() {
     };
 
     const onAddInstance = async () => {
-        const instance = await instanceApi.addInstance({ type: 'direct' });
+        const instance = await instanceApi.addInstance();
         await instanceApi.setSelectedInstanceId(instance.id);
     };
 
@@ -73,14 +72,11 @@ function Header() {
 
     const createButton = (icon, text, onClick, disabled = false) => {
         return (
-            <React.Fragment>
-                <Tooltip placement="bottom" title={text}>
-                    <PromiseButton onClick={onClick} disabled={disabled}>
-                        <Icon icon={icon} />
-                    </PromiseButton>
-                </Tooltip>
-                <Spacer />
-            </React.Fragment>
+            <Tooltip placement="bottom" title={text}>
+                <PromiseButton onClick={onClick} disabled={disabled}>
+                    <Icon icon={icon} />
+                </PromiseButton>
+            </Tooltip>
         );
     };
 
@@ -93,7 +89,7 @@ function Header() {
                 {process.env.REACT_APP_MODE === 'electron' ? (<Logo size={40} />) : (<UserMenu />)}
             </React.Fragment>
         )}>
-            <Button.Group style={{ marginRight: 50 }}>
+            <Button.Group style={{ marginRight: 20 }}>
                 <PromiseButton
                     type={appApi.selectedView === 'alerts' ? 'dashed' : 'default'}
                     onClick={onShowAlertsContent}>
@@ -125,27 +121,29 @@ function Header() {
                     <Icon icon="chart-line" text="Dashboards" />
                 </PromiseButton>
             </Button.Group>
-            {appApi.selectedView === 'alerts' ?
-                createButton('plus', 'Add Alert', onAddAlert)
-                : null}
-            {appApi.selectedView === 'alerts' ?
-                createButton('trash-alt', 'Remove Alert', onRemoveAlert)
-                : null}
-            {appApi.selectedView === 'alerts' ?
-                createButton('print', 'Print Alerts', onPrintAlerts)
-                : null}
-            {appApi.selectedView === 'instances' ?
-                createButton('plus', 'Add Instance', onAddInstance)
-                : null}
-            {appApi.selectedView === 'instances' ?
-                createButton('trash-alt', 'Remove Instance', onRemoveInstance)
-                : null}
-            {appApi.selectedView === 'instances' ?
-                createButton('print', 'Print Instances', onPrintInstances)
-                : null}
-            <Spacer />
-            <Spacer />
-            {createButton('cog', 'Settings', onSetSettingsVisible)}
+            <Button.Group style={{ marginRight: 20 }}>
+                {appApi.selectedView === 'alerts' ?
+                    createButton('plus', 'Add Alert', onAddAlert)
+                    : null}
+                {appApi.selectedView === 'alerts' ?
+                    createButton('trash-alt', 'Remove Alert', onRemoveAlert)
+                    : null}
+                {appApi.selectedView === 'alerts' ?
+                    createButton('print', 'Print Alerts', onPrintAlerts)
+                    : null}
+                {appApi.selectedView === 'instances' ?
+                    createButton('plus', 'Add Instance', onAddInstance)
+                    : null}
+                {appApi.selectedView === 'instances' ?
+                    createButton('trash-alt', 'Remove Instance', onRemoveInstance)
+                    : null}
+                {appApi.selectedView === 'instances' ?
+                    createButton('print', 'Print Instances', onPrintInstances)
+                    : null}
+            </Button.Group>
+            <Button.Group>
+                {createButton('cog', 'Settings', onSetSettingsVisible)}
+            </Button.Group>
         </LeftRight>
     );
 }

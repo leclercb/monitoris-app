@@ -15,7 +15,7 @@ function EmptyInstance({ hideSelect }) {
         return (
             <Empty description="You don't have any instance yet">
                 <PromiseButton onClick={async () => {
-                    const instance = await instanceApi.addInstance({ type: 'direct' });
+                    const instance = await instanceApi.addInstance();
                     await instanceApi.setSelectedInstanceId(instance.id);
                     await appApi.setSelectedView('instances');
                 }}>

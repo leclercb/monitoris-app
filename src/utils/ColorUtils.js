@@ -25,6 +25,10 @@ export function getColorFromIndex(index) {
     return colors[index % 20];
 }
 
+export function getRandomColor() {
+    return getColorFromIndex(Math.floor(Math.random() * 21));
+}
+
 export function addColorsToArray(array) {
     return array.map((item, index) => {
         item.color = getColorFromIndex(index);
