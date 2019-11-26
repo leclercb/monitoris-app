@@ -41,7 +41,7 @@ export function Sub({ children, backgroundColor, grow, flexDirection }) {
     };
 
     if (grow) {
-        style.minHeight = 200;
+        style.minHeight = 100;
         style.flex = '1 1 auto';
         style.height = 0;
     }
@@ -62,7 +62,7 @@ Sub.propTypes = {
 
 export function Grow({ children }) {
     const style = {
-        minHeight: 200,
+        minHeight: 100,
         maxWidth: '100%',
         overflow: 'auto',
         flex: 1
