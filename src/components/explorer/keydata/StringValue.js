@@ -48,17 +48,21 @@ function StringValue({ redisKey, refresh, length }) {
     if (edit) {
         return (
             <React.Fragment>
-                <Input.TextArea defaultValue={newValue} onChange={event => setNewValue(event.target.value)} />
-                <Button
-                    onClick={onEdit}
-                    style={{ marginTop: 10 }}>
-                    Save
+                <Panel.Grow>
+                    <Input.TextArea defaultValue={newValue} onChange={event => setNewValue(event.target.value)} />
+                </Panel.Grow>
+                <Panel.Standard>
+                    <Button
+                        onClick={onEdit}
+                        style={{ marginTop: 10 }}>
+                        Save
                 </Button>
-                <Button
-                    onClick={() => setEdit(false)}
-                    style={{ marginTop: 10, marginLeft: 10 }}>
-                    Cancel
+                    <Button
+                        onClick={() => setEdit(false)}
+                        style={{ marginTop: 10, marginLeft: 10 }}>
+                        Cancel
                 </Button>
+                </Panel.Standard>
             </React.Fragment>
         );
     }
