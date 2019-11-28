@@ -8,12 +8,14 @@ import UserMenu from 'components/layout/UserMenu';
 import { useAlertApi } from 'hooks/UseAlertApi';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useInstanceApi } from 'hooks/UseInstanceApi';
+import { useJoyrideApi } from 'hooks/UseJoyrideApi';
 import { usePrintApi } from 'hooks/UsePrintApi';
 
 function Header() {
     const appApi = useAppApi();
     const alertApi = useAlertApi();
     const instanceApi = useInstanceApi();
+    const joyrideApi = useJoyrideApi();
     const printApi = usePrintApi();
 
     const onAddAlert = async () => {
@@ -70,10 +72,18 @@ function Header() {
         await appApi.setSelectedView('dashboards');
     };
 
-    const createButton = (icon, text, onClick, disabled = false) => {
+    const onShowHelp = () => {
+        joyrideApi.setJoyrideOptions({
+            id: appApi.selectedView,
+            run: true,
+            stepIndex: 0
+        });
+    };
+
+    const createButton = (icon, text, onClick, disabled = false, className = '') => {
         return (
             <Tooltip placement="bottom" title={text}>
-                <PromiseButton onClick={onClick} disabled={disabled}>
+                <PromiseButton onClick={onClick} disabled={disabled} className={className}>
                     <Icon icon={icon} />
                 </PromiseButton>
             </Tooltip>
@@ -81,15 +91,17 @@ function Header() {
     };
 
     return (
-        <LeftRight right={(
-            <React.Fragment>
-                {appApi.pro ? (
-                    <img src="resources/images/pro_badge.png" height={32} alt="Pro" style={{ marginRight: 10 }} />
-                ) : null}
-                {process.env.REACT_APP_MODE === 'electron' ? (<Logo size={40} />) : (<UserMenu />)}
-            </React.Fragment>
-        )}>
-            <Button.Group style={{ marginRight: 20 }}>
+        <LeftRight
+            className="joyride-header"
+            right={(
+                <React.Fragment>
+                    {appApi.pro ? (
+                        <img src="resources/images/pro_badge.png" height={32} alt="Pro" style={{ marginRight: 10 }} />
+                    ) : null}
+                    {process.env.REACT_APP_MODE === 'electron' ? (<Logo size={40} />) : (<UserMenu />)}
+                </React.Fragment>
+            )}>
+            <Button.Group style={{ marginRight: 20 }} className="joyride-header-selected-view">
                 <PromiseButton
                     type={appApi.selectedView === 'alerts' ? 'dashed' : 'default'}
                     onClick={onShowAlertsContent}>
@@ -123,7 +135,7 @@ function Header() {
             </Button.Group>
             <Button.Group style={{ marginRight: 20 }}>
                 {appApi.selectedView === 'alerts' ?
-                    createButton('plus', 'Add Alert', onAddAlert)
+                    createButton('plus', 'Add Alert', onAddAlert, false, 'joyride-header-add-alert')
                     : null}
                 {appApi.selectedView === 'alerts' ?
                     createButton('trash-alt', 'Remove Alert', onRemoveAlert)
@@ -132,7 +144,7 @@ function Header() {
                     createButton('print', 'Print Alerts', onPrintAlerts)
                     : null}
                 {appApi.selectedView === 'instances' ?
-                    createButton('plus', 'Add Instance', onAddInstance)
+                    createButton('plus', 'Add Instance', onAddInstance, false, 'joyride-header-add-instance')
                     : null}
                 {appApi.selectedView === 'instances' ?
                     createButton('trash-alt', 'Remove Instance', onRemoveInstance)
@@ -141,8 +153,11 @@ function Header() {
                     createButton('print', 'Print Instances', onPrintInstances)
                     : null}
             </Button.Group>
+            <Button.Group style={{ marginRight: 20 }}>
+                {createButton('cog', 'Settings', onSetSettingsVisible, false, 'joyride-header-settings')}
+            </Button.Group>
             <Button.Group>
-                {createButton('cog', 'Settings', onSetSettingsVisible)}
+                {createButton('question-circle', 'Help', onShowHelp)}
             </Button.Group>
         </LeftRight>
     );
