@@ -133,26 +133,28 @@ function Header() {
                     <Icon icon="chart-line" text="Dashboards" />
                 </PromiseButton>
             </Button.Group>
-            <Button.Group style={{ marginRight: 20 }}>
-                {appApi.selectedView === 'alerts' ?
-                    createButton('plus', 'Add Alert', onAddAlert, false, 'joyride-header-add-alert')
-                    : null}
-                {appApi.selectedView === 'alerts' ?
-                    createButton('trash-alt', 'Remove Alert', onRemoveAlert)
-                    : null}
-                {appApi.selectedView === 'alerts' ?
-                    createButton('print', 'Print Alerts', onPrintAlerts)
-                    : null}
-                {appApi.selectedView === 'instances' ?
-                    createButton('plus', 'Add Instance', onAddInstance, false, 'joyride-header-add-instance')
-                    : null}
-                {appApi.selectedView === 'instances' ?
-                    createButton('trash-alt', 'Remove Instance', onRemoveInstance)
-                    : null}
-                {appApi.selectedView === 'instances' ?
-                    createButton('print', 'Print Instances', onPrintInstances)
-                    : null}
-            </Button.Group>
+            {(appApi.selectedView === 'alerts' || appApi.selectedView === 'instances') && (
+                <Button.Group style={{ marginRight: 20 }}>
+                    {appApi.selectedView === 'alerts' ?
+                        createButton('plus', 'Add Alert', onAddAlert, false, 'joyride-header-add-alert')
+                        : null}
+                    {appApi.selectedView === 'alerts' ?
+                        createButton('trash-alt', 'Remove Alert', onRemoveAlert)
+                        : null}
+                    {appApi.selectedView === 'alerts' ?
+                        createButton('print', 'Print Alerts', onPrintAlerts)
+                        : null}
+                    {appApi.selectedView === 'instances' ?
+                        createButton('plus', 'Add Instance', onAddInstance, false, 'joyride-header-add-instance')
+                        : null}
+                    {appApi.selectedView === 'instances' ?
+                        createButton('trash-alt', 'Remove Instance', onRemoveInstance)
+                        : null}
+                    {appApi.selectedView === 'instances' ?
+                        createButton('print', 'Print Instances', onPrintInstances)
+                        : null}
+                </Button.Group>
+            )}
             <Button.Group style={{ marginRight: 20 }}>
                 {createButton('cog', 'Settings', onSetSettingsVisible, false, 'joyride-header-settings')}
             </Button.Group>
