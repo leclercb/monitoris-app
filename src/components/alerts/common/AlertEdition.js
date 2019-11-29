@@ -15,7 +15,7 @@ function AlertEdition({ alert, updateAlert, testNotification }) {
     const [seconds, setSeconds] = useState(-1);
 
     const updateSecondsRemaining = () => {
-        const s = moment().diff(moment(alert.updateDate), 'seconds');
+        const s = moment().diff(moment(alert.updateDate), 'second');
 
         if (s < getConfig().alertUpdateDelay) {
             setSeconds(getConfig().alertUpdateDelay - s);
