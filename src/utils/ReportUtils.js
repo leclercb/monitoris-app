@@ -12,8 +12,8 @@ export function fillGapsInArray(array, property = 'timestamp') {
             continue;
         }
 
-        if (moment(nextItem[property] * 1000).diff(moment(currItem[property] * 1000), 'seconds') > getConfig().instanceQueueMaxDelay) {
-            array.splice(i + 1, 0, { [property]: moment(currItem[property] * 1000).add(getConfig().instanceQueueDelay, 'seconds').unix() });
+        if (moment(nextItem[property] * 1000).diff(moment(currItem[property] * 1000), 'second') > getConfig().instanceQueueMaxDelay) {
+            array.splice(i + 1, 0, { [property]: moment(currItem[property] * 1000).add(getConfig().instanceQueueDelay, 'second').unix() });
         }
     }
 
