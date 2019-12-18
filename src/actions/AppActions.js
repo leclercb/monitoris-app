@@ -51,7 +51,8 @@ export function _loadDataFromServer(options) {
         } catch (error) {
             dispatch(updateProcess({
                 id: processId,
-                state: 'ERROR'
+                state: 'ERROR',
+                error: error.toString()
             }));
 
             throw error;
