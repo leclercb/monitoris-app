@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export function getSettings() {
     const settings = {};
 
@@ -46,75 +48,75 @@ export function getCategories() {
                     options: {
                         values: [
                             {
-                                title: 'DD/MM/YYYY (18/01/2019)',
+                                title: `DD/MM/YYYY (${moment().format('DD/MM/YYYY')})`,
                                 value: 'DD/MM/YYYY'
                             },
                             {
-                                title: 'DD-MM-YYYY (18-01-2019)',
+                                title: `DD-MM-YYYY (${moment().format('DD-MM-YYYY')})`,
                                 value: 'DD-MM-YYYY'
                             },
                             {
-                                title: 'DD.MM.YYYY (18.01.2019)',
+                                title: `DD.MM.YYYY (${moment().format('DD.MM.YYYY')})`,
                                 value: 'DD.MM.YYYY'
                             },
                             {
-                                title: 'MM/DD/YYYY (01/18/2019)',
+                                title: `MM/DD/YYYY (${moment().format('MM/DD/YYYY')})`,
                                 value: 'MM/DD/YYYY'
                             },
                             {
-                                title: 'MM-DD-YYYY (01-18-2019)',
+                                title: `MM-DD-YYYY (${moment().format('MM-DD-YYYY')})`,
                                 value: 'MM-DD-YYYY'
                             },
                             {
-                                title: 'MM.DD.YYYY (01.18.2019)',
+                                title: `MM.DD.YYYY (${moment().format('MM.DD.YYYY')})`,
                                 value: 'MM.DD.YYYY'
                             },
                             {
-                                title: 'YYYY/MM/DD (2019/01/18)',
+                                title: `YYYY/MM/DD (${moment().format('YYYY/MM/DD')})`,
                                 value: 'YYYY/MM/DD'
                             },
                             {
-                                title: 'YYYY-MM-DD (2019-01-18)',
+                                title: `YYYY-MM-DD (${moment().format('YYYY-MM-DD')})`,
                                 value: 'YYYY-MM-DD'
                             },
                             {
-                                title: 'YYYY.MM.DD (2019.01.18)',
+                                title: `YYYY.MM.DD (${moment().format('YYYY.MM.DD')})`,
                                 value: 'YYYY.MM.DD'
                             },
                             {
-                                title: 'ddd DD/MM/YYYY (Fri 18/01/2019)',
+                                title: `ddd DD/MM/YYYY (${moment().format('ddd DD/MM/YYYY')})`,
                                 value: 'ddd DD/MM/YYYY'
                             },
                             {
-                                title: 'ddd DD-MM-YYYY (Fri 18-01-2019)',
+                                title: `ddd DD-MM-YYYY (${moment().format('ddd DD-MM-YYYY')})`,
                                 value: 'ddd DD-MM-YYYY'
                             },
                             {
-                                title: 'ddd DD.MM.YYYY (Fri 18.01.2019)',
+                                title: `ddd DD.MM.YYYY (${moment().format('ddd DD.MM.YYYY')})`,
                                 value: 'ddd DD.MM.YYYY'
                             },
                             {
-                                title: 'ddd MM/DD/YYYY (Fri 01/18/2019)',
+                                title: `ddd MM/DD/YYYY (${moment().format('ddd MM/DD/YYYY')})`,
                                 value: 'ddd MM/DD/YYYY'
                             },
                             {
-                                title: 'ddd MM-DD-YYYY (Fri 01-18-2019)',
+                                title: `ddd MM-DD-YYYY (${moment().format('ddd MM-DD-YYYY')})`,
                                 value: 'ddd MM-DD-YYYY'
                             },
                             {
-                                title: 'ddd MM.DD.YYYY (Fri 01.18.2019)',
+                                title: `ddd MM.DD.YYYY (${moment().format('ddd MM.DD.YYYY')})`,
                                 value: 'ddd MM.DD.YYYY'
                             },
                             {
-                                title: 'ddd YYYY/MM/DD (Fri 2019/01/18)',
+                                title: `ddd YYYY/MM/DD (${moment().format('ddd YYYY/MM/DD')})`,
                                 value: 'ddd YYYY/MM/DD'
                             },
                             {
-                                title: 'ddd YYYY-MM-DD (Fri 2019-01-18)',
+                                title: `ddd YYYY-MM-DD (${moment().format('ddd YYYY-MM-DD')})`,
                                 value: 'ddd YYYY-MM-DD'
                             },
                             {
-                                title: 'ddd YYYY.MM.DD (Fri 2019.01.18)',
+                                title: `ddd YYYY.MM.DD (${moment().format('ddd YYYY.MM.DD')})`,
                                 value: 'ddd YYYY.MM.DD'
                             }
                         ]

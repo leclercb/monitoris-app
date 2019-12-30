@@ -221,12 +221,29 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 width: 250,
                 alwaysInEdition: false,
                 valuePropName: 'value',
-                compare: (a, b) => compareDates(a, b, false),
-                toString: value => toStringDate(value, dateFormat),
+                compare: (a, b) => {
+                    if (Number.isInteger(a)) {
+                        a = moment().add(Number.parseInt(a), 'day').toISOString();
+                    }
+
+                    if (Number.isInteger(b)) {
+                        b = moment().add(Number.parseInt(b), 'day').toISOString();
+                    }
+
+                    return compareDates(a, b, false);
+                },
+                toString: value => {
+                    if (Number.isInteger(value)) {
+                        value = moment().add(Number.parseInt(value), 'day').toISOString();
+                    }
+
+                    return toStringDate(value, dateFormat);
+                },
                 conditions: [
                     {
                         type: 'dateEqual',
                         title: 'Equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -246,6 +263,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateNotEqual',
                         title: 'Does not equal',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -265,6 +283,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateBefore',
                         title: 'Before',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -280,6 +299,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateBeforeOrEqual',
                         title: 'Before or equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -295,6 +315,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateAfter',
                         title: 'After',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -310,6 +331,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateAfterOrEqual',
                         title: 'After or equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -325,6 +347,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateTimeEqual',
                         title: 'Equals',
+                        multi: false,
                         visible: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
@@ -345,6 +368,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateTimeNotEqual',
                         title: 'Does not equal',
+                        multi: false,
                         visible: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
@@ -365,6 +389,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateTimeBefore',
                         title: 'Before',
+                        multi: false,
                         visible: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
@@ -381,6 +406,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateTimeBeforeOrEqual',
                         title: 'Before or equals',
+                        multi: false,
                         visible: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
@@ -397,6 +423,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateTimeAfter',
                         title: 'After',
+                        multi: false,
                         visible: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
@@ -413,6 +440,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateTimeAfterOrEqual',
                         title: 'After or equals',
+                        multi: false,
                         visible: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
@@ -449,12 +477,29 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 width: 250,
                 alwaysInEdition: false,
                 valuePropName: 'value',
-                compare: (a, b) => compareDates(a, b, true),
-                toString: value => toStringDate(value, `${dateFormat} ${timeFormat}`),
+                compare: (a, b) => {
+                    if (Number.isInteger(a)) {
+                        a = moment().add(Number.parseInt(a), 'day').toISOString();
+                    }
+
+                    if (Number.isInteger(b)) {
+                        b = moment().add(Number.parseInt(b), 'day').toISOString();
+                    }
+
+                    return compareDates(a, b, true);
+                },
+                toString: value => {
+                    if (Number.isInteger(value)) {
+                        value = moment().add(Number.parseInt(value), 'day').toISOString();
+                    }
+
+                    return toStringDate(value, `${dateFormat} ${timeFormat}`);
+                },
                 conditions: [
                     {
                         type: 'dateEqual',
                         title: 'Equals (compare date only)',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -474,6 +519,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateNotEqual',
                         title: 'Does not equal (compare date only)',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -493,6 +539,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateBefore',
                         title: 'Before (compare date only)',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -508,6 +555,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateBeforeOrEqual',
                         title: 'Before or equals (compare date only)',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -523,6 +571,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateAfter',
                         title: 'After (compare date only)',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -538,6 +587,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateAfterOrEqual',
                         title: 'After or equals (compare date only)',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -553,6 +603,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateTimeEqual',
                         title: 'Equals (compare date and time)',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -572,6 +623,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateTimeNotEqual',
                         title: 'Does not equal (compare date and time)',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -591,6 +643,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateTimeBefore',
                         title: 'Before (compare date and time)',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -606,6 +659,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateTimeBeforeOrEqual',
                         title: 'Before or equals (compare date and time)',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -621,6 +675,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateTimeAfter',
                         title: 'After (compare date and time)',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -636,6 +691,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'dateTimeAfterOrEqual',
                         title: 'After or equals (compare date and time)',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             if (Number.isInteger(conditionValue)) {
                                 conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
@@ -1039,6 +1095,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'equal',
                         title: 'Equals',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue === objectValue;
                         }
@@ -1046,6 +1103,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     {
                         type: 'notEqual',
                         title: 'Does not equal',
+                        multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue !== objectValue;
                         }
@@ -1236,11 +1294,27 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         }
                     },
                     {
+                        type: 'equalIgnoreCase',
+                        title: 'Equals (ignore case)',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return (conditionValue || '').toUpperCase() === (objectValue || '').toUpperCase();
+                        }
+                    },
+                    {
                         type: 'notEqual',
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue !== objectValue;
+                        }
+                    },
+                    {
+                        type: 'notEqualIgnoreCase',
+                        title: 'Does not equal (ignore case)',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return (conditionValue || '').toUpperCase() !== (objectValue || '').toUpperCase();
                         }
                     },
                     {
@@ -1252,11 +1326,27 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         }
                     },
                     {
+                        type: 'containIgnoreCase',
+                        title: 'Contains (ignore case)',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return (objectValue || '').toUpperCase().includes((conditionValue || '').toUpperCase());
+                        }
+                    },
+                    {
                         type: 'notContain',
                         title: 'Does not contain',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
                             return !(objectValue || '').includes(conditionValue);
+                        }
+                    },
+                    {
+                        type: 'notContainIgnoreCase',
+                        title: 'Does not contain (ignore case)',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return !(objectValue || '').toUpperCase().includes((conditionValue || '').toUpperCase());
                         }
                     }
                 ],
@@ -1286,11 +1376,27 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         }
                     },
                     {
+                        type: 'equalIgnoreCase',
+                        title: 'Equals (ignore case)',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return (conditionValue || '').toUpperCase() === (objectValue || '').toUpperCase();
+                        }
+                    },
+                    {
                         type: 'notEqual',
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
                             return conditionValue !== objectValue;
+                        }
+                    },
+                    {
+                        type: 'notEqualIgnoreCase',
+                        title: 'Does not equal (ignore case)',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return (conditionValue || '').toUpperCase() !== (objectValue || '').toUpperCase();
                         }
                     },
                     {
@@ -1302,11 +1408,27 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         }
                     },
                     {
+                        type: 'containIgnoreCase',
+                        title: 'Contains (ignore case)',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return (objectValue || '').toUpperCase().includes((conditionValue || '').toUpperCase());
+                        }
+                    },
+                    {
                         type: 'notContain',
                         title: 'Does not contain',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
                             return !(objectValue || '').includes(conditionValue);
+                        }
+                    },
+                    {
+                        type: 'notContainIgnoreCase',
+                        title: 'Does not contain (ignore case)',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return !(objectValue || '').toUpperCase().includes((conditionValue || '').toUpperCase());
                         }
                     }
                 ],
