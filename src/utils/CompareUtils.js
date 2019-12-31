@@ -3,7 +3,7 @@ import moment from 'moment';
 export function compareBooleans(a, b) {
     const boolA = a ? true : false;
     const boolB = b ? true : false;
-    return boolB - boolA;
+    return boolA - boolB;
 }
 
 export function compareDates(a, b, useTime) {
@@ -19,13 +19,13 @@ export function compareDates(a, b, useTime) {
         return -1;
     }
 
-    return moment(b).diff(moment(a), useTime ? 'second' : 'day');
+    return moment(a).diff(moment(b), useTime ? 'second' : 'day');
 }
 
 export function compareNumbers(a, b) {
     const numA = a ? a : 0;
     const numB = b ? b : 0;
-    return numB - numA;
+    return numA - numB;
 }
 
 export function compareObjects(a, b, objects) {
