@@ -19,7 +19,6 @@ import { store } from 'store/Store';
 
 import 'App.css';
 import 'font-awesome.js';
-import 'rc-color-picker/assets/index.css';
 import 'react-virtualized/styles.css';
 import 'components/common/table/VirtualizedTable.css';
 

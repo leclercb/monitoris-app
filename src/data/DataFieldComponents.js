@@ -429,11 +429,16 @@ export function getFieldComponents(type, options) {
         }
         case 'textarea': {
             configuration = {
-                render: value => value ? value : <span>&nbsp;</span>,
+                render: value => (
+                    <Input.TextArea
+                        value={value}
+                        readOnly={true}
+                        autoSize={true} />
+                ),
                 input: props => (
                     <Input.TextArea
                         onBlur={props.onCommit}
-                        autosize={true}
+                        autoSize={true}
                         {...removeExtraProps(props)} />
                 )
             };

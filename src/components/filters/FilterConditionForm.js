@@ -48,7 +48,8 @@ function FilterConditionForm(props) {
                             extended: true
                         },
                         {
-                            onCommit
+                            onCommit,
+                            disabled: props.disabled
                         })
                 )}
                 <Spacer />
@@ -71,7 +72,8 @@ function FilterConditionForm(props) {
                             extended: true
                         },
                         {
-                            onCommit
+                            onCommit,
+                            disabled: props.disabled
                         })
                 )}
                 <Spacer />
@@ -98,7 +100,10 @@ function FilterConditionForm(props) {
                                 }
                             ]
                         })(
-                            getSelectForType(field.type, { onBlur: onCommit })
+                            getSelectForType(field.type, {
+                                onBlur: onCommit,
+                                disabled: props.disabled
+                            })
                         )}
                     </Form.Item>
                 </Col>
