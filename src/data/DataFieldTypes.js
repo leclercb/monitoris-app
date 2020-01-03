@@ -95,7 +95,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Equals',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            return (conditionValue || '') === (objectValue || '');
                         }
                     },
                     {
@@ -103,7 +103,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            return (conditionValue || '') !== (objectValue || '');
                         }
                     }
                 ],
@@ -128,7 +128,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Equals',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            return (conditionValue || '') === (objectValue || '');
                         }
                     },
                     {
@@ -136,7 +136,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            return (conditionValue || '') !== (objectValue || '');
                         }
                     }
                 ],
@@ -194,7 +194,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Equals',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            return (conditionValue || '') === (objectValue || '');
                         }
                     },
                     {
@@ -202,7 +202,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            return (conditionValue || '') !== (objectValue || '');
                         }
                     }
                 ],
@@ -737,7 +737,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Equals',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            return (conditionValue || 0) === (objectValue || 0);
                         }
                     },
                     {
@@ -745,7 +745,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            return (conditionValue || 0) !== (objectValue || 0);
                         }
                     },
                     {
@@ -753,11 +753,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Greater than',
                         multi: true,
                         apply: (conditionValue, objectValue) => {
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return conditionValue < objectValue;
+                            return (conditionValue || 0) < (objectValue || 0);
                         }
                     },
                     {
@@ -765,11 +761,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Greater than or equal',
                         multi: true,
                         apply: (conditionValue, objectValue) => {
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return conditionValue <= objectValue;
+                            return (conditionValue || 0) <= (objectValue || 0);
                         }
                     },
                     {
@@ -777,11 +769,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Less than',
                         multi: true,
                         apply: (conditionValue, objectValue) => {
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return conditionValue > objectValue;
+                            return (conditionValue || 0) > (objectValue || 0);
                         }
                     },
                     {
@@ -789,11 +777,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Less than or equal',
                         multi: true,
                         apply: (conditionValue, objectValue) => {
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return conditionValue >= objectValue;
+                            return (conditionValue || 0) >= (objectValue || 0);
                         }
                     }
                 ],
@@ -818,7 +802,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Equals',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            return (conditionValue || '') === (objectValue || '');
                         }
                     },
                     {
@@ -826,7 +810,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            return (conditionValue || '') !== (objectValue || '');
                         }
                     }
                 ],
@@ -890,7 +874,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Equals',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            return (conditionValue || '') === (objectValue || '');
                         }
                     },
                     {
@@ -898,7 +882,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            return (conditionValue || '') !== (objectValue || '');
                         }
                     }
                 ],
@@ -923,7 +907,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Equals',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            return (conditionValue || 0) === (objectValue || 0);
                         }
                     },
                     {
@@ -931,7 +915,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            return (conditionValue || 0) !== (objectValue || 0);
                         }
                     },
                     {
@@ -939,11 +923,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Greater than',
                         multi: true,
                         apply: (conditionValue, objectValue) => {
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return conditionValue < objectValue;
+                            return (conditionValue || 0) < (objectValue || 0);
                         }
                     },
                     {
@@ -951,11 +931,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Greater than or equal',
                         multi: true,
                         apply: (conditionValue, objectValue) => {
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return conditionValue <= objectValue;
+                            return (conditionValue || 0) <= (objectValue || 0);
                         }
                     },
                     {
@@ -963,11 +939,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Less than',
                         multi: true,
                         apply: (conditionValue, objectValue) => {
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return conditionValue > objectValue;
+                            return (conditionValue || 0) > (objectValue || 0);
                         }
                     },
                     {
@@ -975,11 +947,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Less than or equal',
                         multi: true,
                         apply: (conditionValue, objectValue) => {
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return conditionValue >= objectValue;
+                            return (conditionValue || 0) >= (objectValue || 0);
                         }
                     }
                 ],
@@ -1015,7 +983,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Equals',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            return (conditionValue || '') === (objectValue || '');
                         }
                     },
                     {
@@ -1023,7 +991,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            return (conditionValue || '') !== (objectValue || '');
                         }
                     },
                     {
@@ -1031,7 +999,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Contains',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return (objectValue || '').includes(conditionValue);
+                            return (objectValue || '').includes(conditionValue || '');
                         }
                     },
                     {
@@ -1039,7 +1007,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not contain',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return !(objectValue || '').includes(conditionValue);
+                            return !(objectValue || '').includes(conditionValue || '');
                         }
                     }
                 ],
@@ -1064,7 +1032,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Equals',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            return (conditionValue || '') === (objectValue || '');
                         }
                     },
                     {
@@ -1072,7 +1040,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            return (conditionValue || '') !== (objectValue || '');
                         }
                     }
                 ],
@@ -1097,7 +1065,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Equals',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            return (conditionValue || '') === (objectValue || '');
                         }
                     },
                     {
@@ -1105,7 +1073,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            return (conditionValue || '') !== (objectValue || '');
                         }
                     }
                 ],
@@ -1175,7 +1143,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Equals',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            return (conditionValue || '') === (objectValue || '');
                         }
                     },
                     {
@@ -1183,7 +1151,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            return (conditionValue || '') !== (objectValue || '');
                         }
                     }
                 ],
@@ -1241,7 +1209,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Equals',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            return (conditionValue || '') === (objectValue || '');
                         }
                     },
                     {
@@ -1249,7 +1217,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            return (conditionValue || '') !== (objectValue || '');
                         }
                     },
                     {
@@ -1257,7 +1225,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Contains',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return (objectValue || '').includes(conditionValue);
+                            return (objectValue || '').includes(conditionValue || '');
                         }
                     },
                     {
@@ -1265,7 +1233,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not contain',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return !(objectValue || '').includes(conditionValue);
+                            return !(objectValue || '').includes(conditionValue || '');
                         }
                     }
                 ],
@@ -1290,7 +1258,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Equals',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            return (conditionValue || '') === (objectValue || '');
                         }
                     },
                     {
@@ -1306,7 +1274,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            return (conditionValue || '') !== (objectValue || '');
                         }
                     },
                     {
@@ -1322,7 +1290,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Contains',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return (objectValue || '').includes(conditionValue);
+                            return (objectValue || '').includes(conditionValue || '');
                         }
                     },
                     {
@@ -1338,7 +1306,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not contain',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return !(objectValue || '').includes(conditionValue);
+                            return !(objectValue || '').includes(conditionValue || '');
                         }
                     },
                     {
@@ -1372,7 +1340,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Equals',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue === objectValue;
+                            return (conditionValue || '') === (objectValue || '');
                         }
                     },
                     {
@@ -1388,7 +1356,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not equal',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return conditionValue !== objectValue;
+                            return (conditionValue || '') !== (objectValue || '');
                         }
                     },
                     {
@@ -1404,7 +1372,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Contains',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return (objectValue || '').includes(conditionValue);
+                            return (objectValue || '').includes(conditionValue || '');
                         }
                     },
                     {
@@ -1420,7 +1388,7 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                         title: 'Does not contain',
                         multi: false,
                         apply: (conditionValue, objectValue) => {
-                            return !(objectValue || '').includes(conditionValue);
+                            return !(objectValue || '').includes(conditionValue || '');
                         }
                     },
                     {
