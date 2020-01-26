@@ -7,8 +7,8 @@
 
 # Monitoris
 
-[![Build Status](https://travis-ci.com/leclercb/monitoris-app.svg?branch=master)](https://travis-ci.com/leclercb/monitoris-app)
-[![Dependencies Status](https://david-dm.org/leclercb/monitoris-app/status.svg)](https://david-dm.org/leclercb/monitoris-app)
+![Build](https://github.com/leclercb/monitoris-app/workflows/Build/badge.svg?branch=master)
+[![Dependencies](https://david-dm.org/leclercb/monitoris-app/status.svg)](https://david-dm.org/leclercb/monitoris-app)
 
 Monitoris is a real-time monitoring tool for Redis.
 
