@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Tooltip } from 'antd';
 import Icon from 'components/common/Icon';
 import LeftRight from 'components/common/LeftRight';
-import Logo from 'components/common/Logo';
 import PromiseButton from 'components/common/PromiseButton';
 import UserMenu from 'components/layout/UserMenu';
 import { useAlertApi } from 'hooks/UseAlertApi';
@@ -98,37 +97,37 @@ function Header() {
                     {appApi.pro ? (
                         <img src="resources/images/pro_badge.png" height={32} alt="Pro" style={{ marginRight: 10 }} />
                     ) : null}
-                    {process.env.REACT_APP_MODE === 'electron' ? (<Logo size={40} />) : (<UserMenu />)}
+                    <UserMenu />
                 </React.Fragment>
             )}>
             <Button.Group style={{ marginRight: 20 }} className="joyride-header-selected-view">
                 <PromiseButton
-                    type={appApi.selectedView === 'alerts' ? 'dashed' : 'default'}
+                    type={appApi.selectedView === 'alerts' ? 'primary' : 'default'}
                     onClick={onShowAlertsContent}>
                     <Icon icon="bell" text="Alerts" />
                 </PromiseButton>
                 <PromiseButton
-                    type={appApi.selectedView === 'instances' ? 'dashed' : 'default'}
+                    type={appApi.selectedView === 'instances' ? 'primary' : 'default'}
                     onClick={onShowInstancesContent}>
                     <Icon icon="server" text="Instances" />
                 </PromiseButton>
                 <PromiseButton
-                    type={appApi.selectedView === 'explorer' ? 'dashed' : 'default'}
+                    type={appApi.selectedView === 'explorer' ? 'primary' : 'default'}
                     onClick={onShowExplorerContent}>
                     <Icon icon="binoculars" text="Explorer" />
                 </PromiseButton>
                 <PromiseButton
-                    type={appApi.selectedView === 'tools' ? 'dashed' : 'default'}
+                    type={appApi.selectedView === 'tools' ? 'primary' : 'default'}
                     onClick={onShowToolsContent}>
                     <Icon icon="tools" text="Tools" />
                 </PromiseButton>
                 <PromiseButton
-                    type={appApi.selectedView === 'graphs' ? 'dashed' : 'default'}
+                    type={appApi.selectedView === 'graphs' ? 'primary' : 'default'}
                     onClick={onShowGraphsContent}>
                     <Icon icon="chart-line" text="Graphs" />
                 </PromiseButton>
                 <PromiseButton
-                    type={appApi.selectedView === 'dashboards' ? 'dashed' : 'default'}
+                    type={appApi.selectedView === 'dashboards' ? 'primary' : 'default'}
                     onClick={onShowDashboardsContent}>
                     <Icon icon="chart-line" text="Dashboards" />
                 </PromiseButton>

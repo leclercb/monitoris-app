@@ -8,10 +8,10 @@ import { getValuePropNameForType } from 'data/DataFieldTypes';
 import { InstancePropType } from 'proptypes/InstancePropTypes';
 import { getDefaultFormItemLayout, onCommitForm } from 'utils/FormUtils';
 
-function InstanceForm({ instance, updateInstance, form }) {
-    const fields = getInstanceFields(instance.type);
+function InstanceForm({ instance, updateInstance }) {
+    const [form] = Form.useForm();
 
-    const { getFieldDecorator } = form;
+    const fields = getInstanceFields(instance.type);
 
     const formItemLayout = getDefaultFormItemLayout();
 
@@ -33,21 +33,20 @@ function InstanceForm({ instance, updateInstance, form }) {
                     style={{ marginBottom: 20 }}
                 />
             )}
-            <Form {...formItemLayout}>
+            <Form form={form} initialValues={instance} {...formItemLayout}>
                 {fields.filter(field => field.visible !== false).map(field => (
-                    <Form.Item key={field.id} label={field.title}>
-                        {getFieldDecorator(field.id, {
-                            valuePropName: getValuePropNameForType(field.type),
-                            initialValue: instance[field.id]
-                        })(
-                            getInputForType(
-                                field.type,
-                                field.options,
-                                {
-                                    readOnly: !field.editable,
-                                    onCommit: () => onCommitForm(form, instance, updateInstance)
-                                })
-                        )}
+                    <Form.Item
+                        key={field.id}
+                        name={field.id}
+                        label={field.title}
+                        valuePropName={getValuePropNameForType(field.type)}>
+                        {getInputForType(
+                            field.type,
+                            field.options,
+                            {
+                                readOnly: !field.editable,
+                                onCommit: () => onCommitForm(form, instance, updateInstance)
+                            })}
                     </Form.Item>
                 ))}
             </Form>
@@ -64,9 +63,8 @@ function InstanceForm({ instance, updateInstance, form }) {
 }
 
 InstanceForm.propTypes = {
-    form: PropTypes.object.isRequired,
     instance: InstancePropType.isRequired,
     updateInstance: PropTypes.func.isRequired
 };
 
-export default Form.create({ name: 'instance' })(InstanceForm);
+export default InstanceForm;

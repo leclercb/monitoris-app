@@ -17,7 +17,8 @@ const App = () => (state = {
         visible: false
     },
     settingManager: {
-        visible: false
+        visible: false,
+        category: 'date'
     }
 }, action) => {
     switch (action.type) {
@@ -79,7 +80,8 @@ const App = () => (state = {
             return {
                 ...state,
                 settingManager: {
-                    visible: 'visible' in action ? action.visible : state.settingManager.visible
+                    visible: 'visible' in action ? action.visible : state.settingManager.visible,
+                    category: 'category' in action ? action.category : state.settingManager.category
                 }
             };
         default:
