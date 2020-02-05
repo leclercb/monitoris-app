@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Tooltip } from 'antd';
 import Icon from 'components/common/Icon';
 import LeftRight from 'components/common/LeftRight';
-import Logo from 'components/common/Logo';
 import PromiseButton from 'components/common/PromiseButton';
 import UserMenu from 'components/layout/UserMenu';
 import { useAlertApi } from 'hooks/UseAlertApi';
@@ -98,7 +97,7 @@ function Header() {
                     {appApi.pro ? (
                         <img src="resources/images/pro_badge.png" height={32} alt="Pro" style={{ marginRight: 10 }} />
                     ) : null}
-                    {process.env.REACT_APP_MODE === 'electron' ? (<Logo size={40} />) : (<UserMenu />)}
+                    <UserMenu />
                 </React.Fragment>
             )}>
             <Button.Group style={{ marginRight: 20 }} className="joyride-header-selected-view">

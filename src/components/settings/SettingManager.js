@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Col, Form, List, Row } from 'antd';
+import { Col, Form, List, Row } from 'antd';
 import Icon from 'components/common/Icon';
+import PromiseButton from 'components/common/PromiseButton';
 import { getInputForType } from 'data/DataFieldComponents';
 import { getValuePropNameForType } from 'data/DataFieldTypes';
 import { getCategories, getCategorySettings } from 'data/DataSettings';
@@ -10,28 +11,64 @@ import { getDefaultFormItemLayout, onCommitForm } from 'utils/FormUtils';
 
 function SettingManager(props) {
     const settingsApi = useSettingsApi();
-    const [selectedCategoryId, setSelectedCategoryId] = useState('date');
 
-    const categories = getCategories().filter(category => !category.mode || category.mode === process.env.REACT_APP_MODE);
-    const category = categories.find(category => category.id === selectedCategoryId);
-    const settings = getCategorySettings(category).filter(setting =>
-        setting.visible !== false && (!setting.mode || setting.mode === process.env.REACT_APP_MODE));
+    const [form] = Form.useForm();
 
-    const getSettingValue = setting => {
-        if (setting.id in settingsApi.settings) {
-            return settingsApi.settings[setting.id];
-        } else {
-            return setting.value;
-        }
-    };
+    const categories = getCategories();
+    const category = categories.find(category => category.id === props.category);
+    const settings = getCategorySettings(category).filter(setting => setting.visible !== false);
 
     const onCategorySelection = category => {
-        setSelectedCategoryId(category.id);
+        props.onCategorySelection(category.id);
     };
 
-    const { getFieldDecorator } = props.form;
-
     const formItemLayout = getDefaultFormItemLayout();
+
+    const createElement = item => {
+        switch (item.type) {
+            case 'button':
+                return (
+                    <Form.Item label={item.title} style={{ width: '100%' }}>
+                        <PromiseButton
+                            danger={item.buttonType === 'danger'}
+                            type={item.buttonType === 'danger' ? 'default' : item.buttonType}
+                            onClick={() => item.value(settingsApi.settings, settingsApi.updateSettings, settingsApi.dispatch)}>
+                            {item.title}
+                        </PromiseButton>
+                    </Form.Item>
+                );
+            case 'component':
+                return (
+                    <div style={{ width: '100%', margin: '20px 0px' }}>
+                        {item.value(settingsApi.settings, settingsApi.updateSettings, settingsApi.dispatch)}
+                    </div>
+                );
+            case 'label':
+                return (
+                    <Form.Item label={item.title} style={{ width: '100%' }}>
+                        {item.value(settingsApi.settings, settingsApi.updateSettings, settingsApi.dispatch)}
+                    </Form.Item>
+                );
+            default:
+                return (
+                    <Form.Item
+                        name={item.id}
+                        label={item.title}
+                        valuePropName={getValuePropNameForType(item.type)}
+                        style={{ width: '100%' }}>
+                        {item.prefix}
+                        {getInputForType(
+                            item.type,
+                            item.options,
+                            {
+                                disabled: item.editable === false,
+                                onCommit: () => onCommitForm(form, {}, settingsApi.updateSettings)
+                            })}
+                        {item.suffix}
+                    </Form.Item>
+                );
+        }
+    };
 
     return (
         <Row>
@@ -43,55 +80,22 @@ function SettingManager(props) {
                     renderItem={item => (
                         <List.Item
                             onClick={() => onCategorySelection(item)}
-                            className={item.id === selectedCategoryId ? 'selected-list-item' : null}>
+                            className={item.id === props.category ? 'selected-list-item' : null}>
                             <Icon icon={item.icon} text={item.title} />
                         </List.Item>
-                    )} />
+                    )}
+                />
             </Col>
             <Col span={2} />
             <Col span={16}>
-                <Form {...formItemLayout}>
+                <Form form={form} initialValues={settingsApi.settings} {...formItemLayout}>
                     <List
                         size="small"
                         bordered={false}
                         dataSource={settings}
                         renderItem={item => (
                             <List.Item>
-                                {item.type === 'component' ?
-                                    (
-                                        <div style={{ width: '100%', margin: '20px 0px' }}>
-                                            {item.value(settingsApi.settings, settingsApi.updateSettings, settingsApi.dispatch)}
-                                        </div>
-                                    ) : (
-                                        <Form.Item label={item.title} style={{ width: '100%' }}>
-                                            {item.type === 'button' ? (
-                                                <Button
-                                                    type={item.buttonType}
-                                                    onClick={() => item.value(settingsApi.settings, settingsApi.updateSettings, settingsApi.dispatch)}>
-                                                    {item.title}
-                                                </Button>
-                                            ) : null}
-                                            {item.type === 'label' ? item.value(settingsApi.settings, settingsApi.updateSettings, settingsApi.dispatch) : null}
-                                            {item.type !== 'button' && item.type !== 'label' && item.type !== 'component' ? (
-                                                <React.Fragment>
-                                                    {item.prefix}
-                                                    {getFieldDecorator(item.id, {
-                                                        valuePropName: getValuePropNameForType(item.type),
-                                                        initialValue: getSettingValue(item)
-                                                    })(
-                                                        getInputForType(
-                                                            item.type,
-                                                            item.options,
-                                                            {
-                                                                disabled: item.editable === false,
-                                                                onCommit: () => onCommitForm(props.form, {}, settingsApi.updateSettings)
-                                                            })
-                                                    )}
-                                                    {item.suffix}
-                                                </React.Fragment>
-                                            ) : null}
-                                        </Form.Item>
-                                    )}
+                                {createElement(item)}
                             </List.Item>
                         )} />
                 </Form>
@@ -101,7 +105,8 @@ function SettingManager(props) {
 }
 
 SettingManager.propTypes = {
-    form: PropTypes.object.isRequired
+    category: PropTypes.string.isRequired,
+    onCategorySelection: PropTypes.func.isRequired
 };
 
-export default Form.create({ name: 'settings' })(SettingManager);
+export default SettingManager;

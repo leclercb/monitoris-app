@@ -9,29 +9,30 @@ import { getDefaultFormItemLayout, onCommitForm } from 'utils/FormUtils';
 
 const QUEUE_DELAY = 60;
 
-function AlertForm(props) {
+function AlertForm({ alert, updateAlert }) {
     const fields = getAlertFields();
-
-    const { getFieldDecorator } = props.form;
+    const [form] = Form.useForm();
 
     const formItemLayout = getDefaultFormItemLayout();
 
     return (
-        <Form {...formItemLayout}>
+        <Form form={form} initialValues={alert} {...formItemLayout}>
             {fields.filter(field => field.visible !== false).map(field => (
-                <Form.Item key={field.id} label={field.title}>
-                    {getFieldDecorator(field.id, {
-                        valuePropName: getValuePropNameForType(field.type),
-                        initialValue: props.alert[field.id]
-                    })(
-                        getInputForType(
+                <Form.Item
+                    key={field.id}
+                    label={field.title}>
+                    <Form.Item
+                        noStyle
+                        name={field.id}
+                        valuePropName={getValuePropNameForType(field.type)}>
+                        {getInputForType(
                             field.type,
                             field.options,
                             {
                                 disabled: !field.editable,
-                                onCommit: () => onCommitForm(props.form, props.alert, props.updateAlert)
-                            })
-                    )}
+                                onCommit: () => onCommitForm(form, alert, updateAlert)
+                            })}
+                    </Form.Item>
                     {field.id === 'historySize' && (
                         <Tooltip title={(
                             <React.Fragment>
@@ -50,9 +51,8 @@ function AlertForm(props) {
 }
 
 AlertForm.propTypes = {
-    form: PropTypes.object.isRequired,
     alert: AlertPropType.isRequired,
     updateAlert: PropTypes.func.isRequired
 };
 
-export default Form.create({ name: 'alert' })(AlertForm);
+export default AlertForm;
