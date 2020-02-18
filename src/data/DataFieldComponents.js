@@ -60,6 +60,8 @@ export function getFieldComponents(type, options) {
         return wrappedProps;
     };
 
+    const emptyOnCommit = () => { };
+
     switch (type) {
         case 'alert': {
             configuration = {
@@ -96,7 +98,7 @@ export function getFieldComponents(type, options) {
                 render: value => <Checkbox checked={!!value} />,
                 input: props => (
                     <Checkbox
-                        onChange={props.onCommit}
+                        onChange={props.onCommit || emptyOnCommit}
                         data-prevent-default={true}
                         {...removeExtraProps(props)} />
                 )
@@ -395,7 +397,7 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <StarCheckbox
-                        onChange={props.onCommit}
+                        onChange={props.onCommit || emptyOnCommit}
                         {...removeExtraProps(props)} />
                 )
             };
