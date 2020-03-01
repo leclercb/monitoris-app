@@ -3,7 +3,7 @@ import { Alert, Empty, message } from 'antd';
 import sortBy from 'lodash/sortBy';
 import PropTypes from 'prop-types';
 import { Column, Table } from 'react-virtualized';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import PromiseButton from 'components/common/PromiseButton';
 import Spacer from 'components/common/Spacer';
 import CellRenderer from 'components/common/table/CellRenderer';

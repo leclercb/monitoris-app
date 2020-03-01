@@ -1,4 +1,4 @@
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import { printDocument, printTable } from 'utils/PrintUtils';
 import { getAlertFields } from 'data/DataAlertFields';
 import { updateProcess } from 'actions/ThreadActions';
