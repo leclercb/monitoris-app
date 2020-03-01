@@ -1,4 +1,4 @@
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import { loadAlertsFromServer } from 'actions/AlertActions';
 import { loadInstancesFromServer } from 'actions/InstanceActions';
 import { loadSettingsFromServer } from 'actions/SettingActions';
