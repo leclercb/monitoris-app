@@ -28,7 +28,7 @@ function FilterConditionForm({ condition, context, onUpdate, disabled }) {
     const field = context.fields.find(field => field.id === condition.field);
     const conditionFieldType = getConditionsFieldTypeForType(field.type);
     const fieldConditions = getConditionsForType(field.type);
-    const fieldCondition = fieldConditions.find(condition => condition.type === condition.type);
+    const fieldCondition = fieldConditions.find(c => c.type === condition.type);
 
     const onCommit = () => onCommitForm(form, condition, onUpdate, { assign: true });
 
