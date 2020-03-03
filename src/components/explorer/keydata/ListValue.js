@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import Icon from 'components/common/Icon';
 import Panel from 'components/common/Panel';
 import Spacer from 'components/common/Spacer';
