@@ -43,7 +43,6 @@ export function Sub({ children, backgroundColor, grow, flexDirection }) {
     if (grow) {
         style.minHeight = 100;
         style.flex = '1 1 auto';
-        style.height = 0;
     }
 
     return (
