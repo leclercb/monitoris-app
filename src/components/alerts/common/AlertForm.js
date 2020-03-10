@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Icon, Tooltip } from 'antd';
 import { getAlertFields } from 'data/DataAlertFields';
@@ -14,6 +14,10 @@ function AlertForm({ alert, updateAlert }) {
     const [form] = Form.useForm();
 
     const formItemLayout = getDefaultFormItemLayout();
+
+    useEffect(() => {
+        form.resetFields();
+    }, [alert.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <Form form={form} initialValues={alert} {...formItemLayout}>

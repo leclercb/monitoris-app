@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Alert, Form } from 'antd';
 import { getConfig } from 'config/Config';
@@ -14,6 +14,10 @@ function InstanceForm({ instance, updateInstance }) {
     const fields = getInstanceFields(instance.type);
 
     const formItemLayout = getDefaultFormItemLayout();
+
+    useEffect(() => {
+        form.resetFields();
+    }, [instance.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <React.Fragment>
