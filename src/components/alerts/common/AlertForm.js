@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
+import { InfoCircleTwoTone } from '@ant-design/icons';
+import { Form, Tooltip } from 'antd';
 import PropTypes from 'prop-types';
-import { Form, Icon, Tooltip } from 'antd';
 import { getAlertFields } from 'data/DataAlertFields';
 import { getInputForType } from 'data/DataFieldComponents';
 import { getValuePropNameForType } from 'data/DataFieldTypes';
@@ -45,7 +46,7 @@ function AlertForm({ alert, updateAlert }) {
                                 <span>As the Redis instance is checked every {QUEUE_DELAY} seconds, it also means that the severity can decrease minimum (X * {QUEUE_DELAY}) seconds after an increase.</span>
                             </React.Fragment>
                         )}>
-                            <Icon type="info-circle" theme="twoTone" style={{ marginLeft: 10, fontSize: 16 }} />
+                            <InfoCircleTwoTone style={{ marginLeft: 10, fontSize: 16 }} />
                         </Tooltip>
                     )}
                 </Form.Item>

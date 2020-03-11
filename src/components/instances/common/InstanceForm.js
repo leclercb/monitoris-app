@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Alert, Form } from 'antd';
+import PropTypes from 'prop-types';
 import { getConfig } from 'config/Config';
 import { getInstanceFields } from 'data/DataInstanceFields';
 import { getInputForType } from 'data/DataFieldComponents';
