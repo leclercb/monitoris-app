@@ -16,7 +16,7 @@ function SettingManager(props) {
 
     useEffect(() => {
         form.resetFields();
-    }, [settingsApi.settings]); // eslint-disable-line react-hooks/exhaustive-deps
+    }); // eslint-disable-line react-hooks/exhaustive-deps
 
     const categories = getCategories();
     const category = categories.find(category => category.id === props.category);
