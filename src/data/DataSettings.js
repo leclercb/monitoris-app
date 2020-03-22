@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export function getSettings() {
+export function getSettingValues() {
     const settings = {};
 
     getCategories().forEach(category => {

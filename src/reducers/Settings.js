@@ -1,12 +1,12 @@
-import { getSettings } from 'data/DataSettings';
+import { getSettingValues } from 'data/DataSettings';
 
 const Settings = () => (state = {
-    ...getSettings()
+    ...getSettingValues()
 }, action) => {
     switch (action.type) {
         case 'SET_SETTINGS': {
             return {
-                ...getSettings(),
+                ...getSettingValues(),
                 ...action.settings
             };
         }
