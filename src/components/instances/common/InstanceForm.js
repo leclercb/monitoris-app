@@ -17,7 +17,7 @@ function InstanceForm({ instance, updateInstance }) {
 
     useEffect(() => {
         form.resetFields();
-    }, [instance.id]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [instance]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <React.Fragment>
