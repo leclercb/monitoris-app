@@ -18,7 +18,7 @@ function AlertForm({ alert, updateAlert }) {
 
     useEffect(() => {
         form.resetFields();
-    }, [alert.id]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [alert]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <Form form={form} initialValues={alert} {...formItemLayout}>
