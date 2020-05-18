@@ -80,11 +80,19 @@ function Header() {
     };
 
     const createButton = (icon, text, onClick, disabled = false, className = '') => {
+        const button = (
+            <PromiseButton onClick={onClick} disabled={disabled} className={className}>
+                <Icon icon={icon} />
+            </PromiseButton>
+        );
+
+        if (disabled) {
+            return button;
+        }
+
         return (
             <Tooltip placement="bottom" title={text}>
-                <PromiseButton onClick={onClick} disabled={disabled} className={className}>
-                    <Icon icon={icon} />
-                </PromiseButton>
+                {button}
             </Tooltip>
         );
     };
