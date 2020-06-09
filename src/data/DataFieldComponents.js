@@ -140,6 +140,11 @@ export function getFieldComponents(type, options) {
                                         props.onCommit();
                                     }
                                 }}
+                                onChange={value => {
+                                    if (props.onCommit && value === null) {
+                                        props.onCommit();
+                                    }
+                                }}
                                 format={dateFormat}
                                 {...removeExtraProps(props)} />
                         );
@@ -185,6 +190,11 @@ export function getFieldComponents(type, options) {
                                 onBlur={props.onCommit}
                                 onOpenChange={status => {
                                     if (props.onCommit && !status) {
+                                        props.onCommit();
+                                    }
+                                }}
+                                onChange={value => {
+                                    if (props.onCommit && value === null) {
                                         props.onCommit();
                                     }
                                 }}

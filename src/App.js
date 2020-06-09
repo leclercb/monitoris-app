@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, notification } from 'antd';
 import moment from 'moment';
 import { DndProvider } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Provider } from 'react-redux';
 import AlertTitle from 'components/alerts/common/AlertTitle';
 import ModalInstanceAlert from 'components/instances/alerts/ModalInstanceAlert';
