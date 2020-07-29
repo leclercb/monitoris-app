@@ -5,8 +5,8 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
-        "start": "REACT_APP_GIT_COMMIT_HASH=$(git rev-parse --short HEAD) craco start",
-        "build": "REACT_APP_GIT_COMMIT_HASH=$(git rev-parse --short HEAD) craco build",
+        "start": "REACT_APP_GIT_COMMIT_HASH=$(git rev-parse --short HEAD) craco --max_old_space_size=4096 start",
+        "build": "REACT_APP_GIT_COMMIT_HASH=$(git rev-parse --short HEAD) craco --max_old_space_size=4096 build",
         "build:amplify": "REACT_APP_GIT_COMMIT_HASH=$(git rev-parse --short HEAD) craco --max_old_space_size=4096 build",
         "lint": "eslint src",
         "test": "craco test"
