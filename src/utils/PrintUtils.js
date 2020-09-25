@@ -22,27 +22,27 @@ export function printDocument(title, orientation = 'p') {
 
     // Monitoris
     doc.setFontSize(14);
-    doc.setFontType('bold');
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor(210, 41, 31);
-    doc.text(50, 30, 'Monitoris');
+    doc.text('Monitoris', 50, 30);
 
     // Title
     doc.setFontSize(14);
-    doc.setFontType('bold');
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor(0, 0, 0);
-    doc.text(140, 30, title);
+    doc.text(title, 140, 30);
 
     // Print Date
     doc.setFontSize(8);
-    doc.setFontType('normal');
+    doc.setFont('helvetica', 'normal');
     doc.setTextColor(0, 0, 0);
 
     const printDateMsg = 'Print date: ' + moment(new Date()).format('DD-MM-YYYY HH:mm:ss');
 
     doc.text(
+        printDateMsg,
         doc.internal.pageSize.getWidth() - (doc.getStringUnitWidth(printDateMsg) * 8) - 20,
-        doc.internal.pageSize.getHeight() - 20,
-        printDateMsg);
+        doc.internal.pageSize.getHeight() - 20);
 
     // Default start y
     if (doc.autoTable.previous.finalY) {
