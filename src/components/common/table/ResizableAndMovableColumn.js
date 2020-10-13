@@ -7,7 +7,7 @@ import DraggableElement from 'components/common/table/DraggableElement';
 import { move } from 'utils/ArrayUtils';
 
 export const resizeHandler = (prefix, updateSettings) => (data, fieldId, width) => {
-    updateSettings(
+    return updateSettings(
         {
             [prefix + fieldId]: Math.max(10, width)
         },
@@ -20,18 +20,18 @@ export const resizeHandler = (prefix, updateSettings) => (data, fieldId, width) 
 export const moveHandler = (prefix, fields, settings, updateSettings) => (dragFieldId, dropFieldId) => {
     const updatedSettings = {};
 
-    const array = sortBy(fields, field => settings[prefix + field.id] || 0).map(field => field.id);
+    const array = sortBy(fields, field => (prefix + field.id) in settings ? settings[prefix + field.id] : field.defaultOrder || 0).map(field => field.id);
     move(array, array.indexOf(dragFieldId), array.indexOf(dropFieldId));
 
     array.forEach((fieldId, index) => {
         updatedSettings[prefix + fieldId] = index;
     });
 
-    updateSettings(updatedSettings);
+    return updateSettings(updatedSettings);
 };
 
 export function ResizableAndMovableColumn(props) {
-    const showSortIndicator = sortBy === props.dataKey;
+    const showSortIndicator = props.sortBy === props.dataKey && props.sortDirection;
 
     return (
         <React.Fragment key={props.dataKey}>
@@ -47,7 +47,7 @@ export function ResizableAndMovableColumn(props) {
                 {props.label}
             </DraggableElement>
             {showSortIndicator ? (
-                <SortIndicator key="SortIndicator" sortDirection={props.sortDirection} />
+                <SortIndicator key="SortIndicator" sortDirection={props.sortDirection === 'descending' ? 'DESC' : 'ASC'} />
             ) : null}
             <Draggable
                 axis="x"
@@ -65,7 +65,7 @@ export function ResizableAndMovableColumn(props) {
 
 ResizableAndMovableColumn.propTypes = {
     dataKey: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.node.isRequired,
     sortBy: PropTypes.string,
     sortDirection: PropTypes.string,
     onResize: PropTypes.func.isRequired,
