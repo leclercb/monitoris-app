@@ -13,7 +13,7 @@ function Icon({ icon, size, color, text, children, globalStyle, globalClassName,
                 <FontAwesomeIcon
                     icon={icon}
                     onClick={onIconClick}
-                    className={className}
+                    className={(className || '') + (color ? '' : ' colorable')}
                     style={{
                         fontSize: size ? size : undefined,
                         color: color ? color : Constants.color,

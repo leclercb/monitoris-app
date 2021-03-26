@@ -5,7 +5,6 @@ import { Checkbox, Input, InputNumber, Select } from 'antd';
 import moment from 'moment';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import { getFieldType } from 'data/DataFieldTypes';
 import AlertNotificationTypeSelect from 'components/alertnotificationtypes/AlertNotificationTypeSelect';
 import AlertNotificationTypeTitle from 'components/alertnotificationtypes/AlertNotificationTypeTitle';
 import AlertTitle from 'components/alerts/common/AlertTitle';
@@ -28,7 +27,8 @@ import SeveritiesSelect from 'components/severities/SeveritiesSelect';
 import SeveritiesTitle from 'components/severities/SeveritiesTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
 import SeveritySelect from 'components/severities/SeveritySelect';
-import { toStringFileSize, toStringNumber, toStringPassword } from 'utils/StringUtils';
+import { getConditionsForType } from 'data/DataFieldFilterTypes';
+import { toStringFileSize, toStringPassword } from 'utils/StringUtils';
 
 export function getDefaultGetValueFromEvent(e) {
     if (!e || !e.target) {
@@ -57,6 +57,7 @@ export function getFieldComponents(type, options) {
         const { ...wrappedProps } = props;
         delete wrappedProps.fieldMode;
         delete wrappedProps.onCommit;
+        delete wrappedProps.onStopEdition;
         return wrappedProps;
     };
 
@@ -134,15 +135,17 @@ export function getFieldComponents(type, options) {
                     if (extended) {
                         return (
                             <ExtendedDatePicker
-                                onBlur={props.onCommit}
-                                onOpenChange={status => {
-                                    if (props.onCommit && !status) {
+                                defaultOpened={props.fieldMode === 'table'}
+                                onChange={() => {
+                                    if (props.onCommit) {
                                         props.onCommit();
                                     }
                                 }}
-                                onChange={value => {
-                                    if (props.onCommit && value === null) {
-                                        props.onCommit();
+                                onOpenChange={status => {
+                                    if (!status) {
+                                        if (props.onStopEdition) {
+                                            props.onStopEdition();
+                                        }
                                     }
                                 }}
                                 format={dateFormat}
@@ -152,14 +155,17 @@ export function getFieldComponents(type, options) {
 
                     return (
                         <DatePicker
-                            onOpenChange={status => {
-                                if (props.onCommit && !status) {
+                            defaultOpened={props.fieldMode === 'table'}
+                            onChange={() => {
+                                if (props.onCommit) {
                                     props.onCommit();
                                 }
                             }}
-                            onChange={value => {
-                                if (props.onCommit && value === null) {
-                                    props.onCommit();
+                            onOpenChange={status => {
+                                if (!status) {
+                                    if (props.onStopEdition) {
+                                        props.onStopEdition();
+                                    }
                                 }
                             }}
                             format={dateFormat}
@@ -187,15 +193,17 @@ export function getFieldComponents(type, options) {
                     if (extended) {
                         return (
                             <ExtendedDatePicker
-                                onBlur={props.onCommit}
-                                onOpenChange={status => {
-                                    if (props.onCommit && !status) {
+                                defaultOpened={props.fieldMode === 'table'}
+                                onChange={() => {
+                                    if (props.onCommit) {
                                         props.onCommit();
                                     }
                                 }}
-                                onChange={value => {
-                                    if (props.onCommit && value === null) {
-                                        props.onCommit();
+                                onOpenChange={status => {
+                                    if (!status) {
+                                        if (props.onStopEdition) {
+                                            props.onStopEdition();
+                                        }
                                     }
                                 }}
                                 showTime={{ format: timeFormat }}
@@ -206,14 +214,17 @@ export function getFieldComponents(type, options) {
 
                     return (
                         <DatePicker
-                            onOpenChange={status => {
-                                if (props.onCommit && !status) {
+                            defaultOpened={props.fieldMode === 'table'}
+                            onChange={() => {
+                                if (props.onCommit) {
                                     props.onCommit();
                                 }
                             }}
-                            onChange={value => {
-                                if (props.onCommit && value === null) {
-                                    props.onCommit();
+                            onOpenChange={status => {
+                                if (!status) {
+                                    if (props.onStopEdition) {
+                                        props.onStopEdition();
+                                    }
                                 }
                             }}
                             showTime={{ format: timeFormat }}
@@ -287,7 +298,7 @@ export function getFieldComponents(type, options) {
             const max = options && options.max ? options.max : Infinity;
 
             configuration = {
-                render: value => <span>{toStringNumber(value)}</span>,
+                render: value => value ? value : <span>&nbsp;</span>,
                 input: props => (
                     <InputNumber
                         onBlur={props.onCommit}
@@ -440,17 +451,19 @@ export function getFieldComponents(type, options) {
             break;
         }
         case 'textarea': {
+            const autoSize = options && options.autoSize ? options.autoSize : false;
+
             configuration = {
                 render: value => (
                     <Input.TextArea
                         value={value}
                         readOnly={true}
-                        autoSize={true} />
+                        autoSize={autoSize} />
                 ),
                 input: props => (
                     <Input.TextArea
                         onBlur={props.onCommit}
-                        autoSize={true}
+                        autoSize={autoSize}
                         {...removeExtraProps(props)} />
                 )
             };
@@ -478,7 +491,7 @@ export function getFieldComponents(type, options) {
             dropdownMatchSelectWidth={false}
             placeholder="Condition"
             {...props}>
-            {getFieldType(type).conditions.filter(condition => condition.visible !== false).map(condition => (
+            {getConditionsForType(type).filter(condition => condition.visible !== false).map(condition => (
                 <Select.Option
                     key={condition.type}
                     value={condition.type}>

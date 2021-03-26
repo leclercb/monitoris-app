@@ -44,7 +44,7 @@ function AccountSubscription({ customer, onCustomerUpdated, stripe }) {
 
                 if (invoice.payment_intent.status === 'requires_action') {
                     const cardPaymentResult = await stripe.handleCardPayment(invoice.payment_intent.client_secret);
-                    console.debug('Handle Card Payment', cardPaymentResult);
+                    console.debug('Handle card payment', cardPaymentResult);
                 }
             }
 
@@ -179,4 +179,4 @@ AccountSubscription.propTypes = {
     stripe: PropTypes.object.isRequired
 };
 
-export default injectStripe(AccountSubscription); 
+export default injectStripe(AccountSubscription);

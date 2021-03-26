@@ -68,20 +68,10 @@ export function getToStringForType(type, options, value, state) {
     return getFieldType(type, options).toString(value, state);
 }
 
-export function getConditionsForType(type) {
-    return getFieldType(type).conditions;
-}
-
-export function getConditionsFieldTypeForType(type) {
-    return getFieldType(type).conditionsFieldType;
-}
-
 export function getFieldType(type, options) { // eslint-disable-line no-unused-vars
-    let configuration = null;
-
     switch (type) {
         case 'alert': {
-            configuration = {
+            return {
                 title: 'Alert',
                 allowCreation: true,
                 width: 200,
@@ -89,32 +79,11 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: (a, b, state) => compareObjects(a, b, getAlerts(state)),
                 toString: (value, state) => toStringObject(value, getAlerts(state)),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') === (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') !== (objectValue || '');
-                        }
-                    }
-                ],
-                conditionsFieldType: 'alert',
                 options: []
             };
-
-            break;
         }
         case 'alertNotificationType': {
-            configuration = {
+            return {
                 title: 'Alert Notification Type',
                 allowCreation: true,
                 width: 200,
@@ -122,32 +91,11 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: (a, b) => compareObjects(a, b, getAlertNotificationTypes()),
                 toString: value => toStringObject(value, getAlertNotificationTypes()),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') === (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') !== (objectValue || '');
-                        }
-                    }
-                ],
-                conditionsFieldType: 'alertNotificationType',
                 options: []
             };
-
-            break;
         }
         case 'boolean': {
-            configuration = {
+            return {
                 title: 'Boolean',
                 allowCreation: true,
                 width: 100,
@@ -155,32 +103,11 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'checked',
                 compare: (a, b) => compareBooleans(a, b),
                 toString: value => toStringBoolean(value),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return !!conditionValue === !!objectValue;
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return !!conditionValue !== !!objectValue;
-                        }
-                    }
-                ],
-                conditionsFieldType: 'boolean',
                 options: []
             };
-
-            break;
         }
         case 'color': {
-            configuration = {
+            return {
                 title: 'Color',
                 allowCreation: true,
                 width: 100,
@@ -188,34 +115,13 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'color',
                 compare: (a, b) => compareStrings(a, b),
                 toString: value => toString(value),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') === (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') !== (objectValue || '');
-                        }
-                    }
-                ],
-                conditionsFieldType: 'color',
                 options: []
             };
-
-            break;
         }
         case 'date': {
             const dateFormat = options && options.dateFormat ? options.dateFormat : 'DD/MM/YYYY';
 
-            configuration = {
+            return {
                 title: 'Date',
                 allowCreation: true,
                 width: 250,
@@ -239,223 +145,6 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
 
                     return toStringDate(value, dateFormat);
                 },
-                conditions: [
-                    {
-                        type: 'dateEqual',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue && !objectValue) {
-                                return true;
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(conditionValue).isSame(moment(objectValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateNotEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue && !objectValue) {
-                                return false;
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return true;
-                            }
-
-                            return !moment(conditionValue).isSame(moment(objectValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateBefore',
-                        title: 'Before',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isBefore(moment(conditionValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateBeforeOrEqual',
-                        title: 'Before or equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isSameOrBefore(moment(conditionValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateAfter',
-                        title: 'After',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isAfter(moment(conditionValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateAfterOrEqual',
-                        title: 'After or equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isSameOrAfter(moment(conditionValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateTimeEqual',
-                        title: 'Equals',
-                        multi: false,
-                        visible: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue && !objectValue) {
-                                return true;
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(conditionValue).isSame(moment(objectValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateTimeNotEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        visible: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue && !objectValue) {
-                                return false;
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return true;
-                            }
-
-                            return !moment(conditionValue).isSame(moment(objectValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateTimeBefore',
-                        title: 'Before',
-                        multi: false,
-                        visible: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isBefore(moment(conditionValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateTimeBeforeOrEqual',
-                        title: 'Before or equals',
-                        multi: false,
-                        visible: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isSameOrBefore(moment(conditionValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateTimeAfter',
-                        title: 'After',
-                        multi: false,
-                        visible: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isAfter(moment(conditionValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateTimeAfterOrEqual',
-                        title: 'After or equals',
-                        multi: false,
-                        visible: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isSameOrAfter(moment(conditionValue), 'day');
-                        }
-                    }
-                ],
-                conditionsFieldType: 'date',
                 options: [
                     {
                         id: 'dateFormat',
@@ -464,14 +153,12 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     }
                 ]
             };
-
-            break;
         }
         case 'dateTime': {
             const dateFormat = options && options.dateFormat ? options.dateFormat : 'DD/MM/YYYY';
             const timeFormat = options && options.timeFormat ? options.timeFormat : 'HH:mm';
 
-            configuration = {
+            return {
                 title: 'Date time',
                 allowCreation: true,
                 width: 250,
@@ -495,217 +182,6 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
 
                     return toStringDate(value, `${dateFormat} ${timeFormat}`);
                 },
-                conditions: [
-                    {
-                        type: 'dateEqual',
-                        title: 'Equals (compare date only)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue && !objectValue) {
-                                return true;
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(conditionValue).isSame(moment(objectValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateNotEqual',
-                        title: 'Does not equal (compare date only)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue && !objectValue) {
-                                return false;
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return true;
-                            }
-
-                            return !moment(conditionValue).isSame(moment(objectValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateBefore',
-                        title: 'Before (compare date only)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isBefore(moment(conditionValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateBeforeOrEqual',
-                        title: 'Before or equals (compare date only)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isSameOrBefore(moment(conditionValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateAfter',
-                        title: 'After (compare date only)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isAfter(moment(conditionValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateAfterOrEqual',
-                        title: 'After or equals (compare date only)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isSameOrAfter(moment(conditionValue), 'day');
-                        }
-                    },
-                    {
-                        type: 'dateTimeEqual',
-                        title: 'Equals (compare date and time)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue && !objectValue) {
-                                return true;
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(conditionValue).isSame(moment(objectValue), 'minute');
-                        }
-                    },
-                    {
-                        type: 'dateTimeNotEqual',
-                        title: 'Does not equal (compare date and time)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue && !objectValue) {
-                                return false;
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return true;
-                            }
-
-                            return !moment(conditionValue).isSame(moment(objectValue), 'minute');
-                        }
-                    },
-                    {
-                        type: 'dateTimeBefore',
-                        title: 'Before (compare date and time)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isBefore(moment(conditionValue), 'minute');
-                        }
-                    },
-                    {
-                        type: 'dateTimeBeforeOrEqual',
-                        title: 'Before or equals (compare date and time)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isSameOrBefore(moment(conditionValue), 'minute');
-                        }
-                    },
-                    {
-                        type: 'dateTimeAfter',
-                        title: 'After (compare date and time)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isAfter(moment(conditionValue), 'minute');
-                        }
-                    },
-                    {
-                        type: 'dateTimeAfterOrEqual',
-                        title: 'After or equals (compare date and time)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            if (Number.isInteger(conditionValue)) {
-                                conditionValue = moment().add(Number.parseInt(conditionValue), 'day').toISOString();
-                            }
-
-                            if (!conditionValue || !objectValue) {
-                                return false;
-                            }
-
-                            return moment(objectValue).isSameOrAfter(moment(conditionValue), 'minute');
-                        }
-                    }
-                ],
-                conditionsFieldType: 'dateTime',
                 options: [
                     {
                         id: 'dateFormat',
@@ -719,11 +195,9 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     }
                 ]
             };
-
-            break;
         }
         case 'fileSize': {
-            configuration = {
+            return {
                 title: 'File Size',
                 allowCreation: true,
                 width: 150,
@@ -731,64 +205,11 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: (a, b) => compareNumbers(a, b),
                 toString: value => toStringFileSize(value),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || 0) === (objectValue || 0);
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || 0) !== (objectValue || 0);
-                        }
-                    },
-                    {
-                        type: 'greaterThan',
-                        title: 'Greater than',
-                        multi: true,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || 0) < (objectValue || 0);
-                        }
-                    },
-                    {
-                        type: 'greaterThanOrEqual',
-                        title: 'Greater than or equal',
-                        multi: true,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || 0) <= (objectValue || 0);
-                        }
-                    },
-                    {
-                        type: 'lessThan',
-                        title: 'Less than',
-                        multi: true,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || 0) > (objectValue || 0);
-                        }
-                    },
-                    {
-                        type: 'lessThanOrEqual',
-                        title: 'Less than or equal',
-                        multi: true,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || 0) >= (objectValue || 0);
-                        }
-                    }
-                ],
-                conditionsFieldType: 'fileSize',
                 options: []
             };
-
-            break;
         }
         case 'instance': {
-            configuration = {
+            return {
                 title: 'Instance',
                 allowCreation: true,
                 width: 200,
@@ -796,32 +217,11 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: (a, b, state) => compareObjects(a, b, getInstances(state)),
                 toString: (value, state) => toStringObject(value, getInstances(state)),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') === (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') !== (objectValue || '');
-                        }
-                    }
-                ],
-                conditionsFieldType: 'instance',
                 options: []
             };
-
-            break;
         }
         case 'instances': {
-            configuration = {
+            return {
                 title: 'Instances',
                 allowCreation: true,
                 width: 200,
@@ -829,71 +229,23 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: () => 0,
                 toString: (value, state) => toStringObjects(value, getInstances(state)),
-                conditions: [
-                    {
-                        type: 'contain',
-                        title: 'Contains',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            const objectValues = objectValue || [];
-                            const conditionValues = conditionValue || [];
-
-                            return conditionValues.every(item => objectValues.includes(item));
-                        }
-                    },
-                    {
-                        type: 'notContain',
-                        title: 'Does not contain',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            const objectValues = objectValue || [];
-                            const conditionValues = conditionValue || [];
-
-                            return !conditionValues.every(item => objectValues.includes(item));
-                        }
-                    }
-                ],
-                conditionsFieldType: 'instances',
                 options: []
             };
-
-            break;
         }
         case 'instanceType': {
-            configuration = {
+            return {
                 title: 'Instance Type',
                 allowCreation: true,
                 width: 200,
                 alwaysInEdition: false,
                 valuePropName: 'value',
-                compare: (a, b, state) => compareObjects(a, b, getInstanceTypes(state)),
-                toString: (value, state) => toStringObject(value, getInstanceTypes(state)),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') === (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') !== (objectValue || '');
-                        }
-                    }
-                ],
-                conditionsFieldType: 'instanceType',
+                compare: (a, b) => compareObjects(a, b, getInstanceTypes()),
+                toString: value => toStringObject(value, getInstanceTypes()),
                 options: []
             };
-
-            break;
         }
         case 'number': {
-            configuration = {
+            return {
                 title: 'Number',
                 allowCreation: true,
                 width: 150,
@@ -901,57 +253,6 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: (a, b) => compareNumbers(a, b),
                 toString: value => toStringNumber(value),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || 0) === (objectValue || 0);
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || 0) !== (objectValue || 0);
-                        }
-                    },
-                    {
-                        type: 'greaterThan',
-                        title: 'Greater than',
-                        multi: true,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || 0) < (objectValue || 0);
-                        }
-                    },
-                    {
-                        type: 'greaterThanOrEqual',
-                        title: 'Greater than or equal',
-                        multi: true,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || 0) <= (objectValue || 0);
-                        }
-                    },
-                    {
-                        type: 'lessThan',
-                        title: 'Less than',
-                        multi: true,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || 0) > (objectValue || 0);
-                        }
-                    },
-                    {
-                        type: 'lessThanOrEqual',
-                        title: 'Less than or equal',
-                        multi: true,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || 0) >= (objectValue || 0);
-                        }
-                    }
-                ],
-                conditionsFieldType: 'number',
                 options: [
                     {
                         id: 'min',
@@ -965,11 +266,9 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     }
                 ]
             };
-
-            break;
         }
         case 'password': {
-            configuration = {
+            return {
                 title: 'Password',
                 allowCreation: true,
                 width: 250,
@@ -977,48 +276,11 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: (a, b) => compareStrings(a, b),
                 toString: value => toStringPassword(value),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') === (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') !== (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'contain',
-                        title: 'Contains',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (objectValue || '').includes(conditionValue || '');
-                        }
-                    },
-                    {
-                        type: 'notContain',
-                        title: 'Does not contain',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return !(objectValue || '').includes(conditionValue || '');
-                        }
-                    }
-                ],
-                conditionsFieldType: 'password',
                 options: []
             };
-
-            break;
         }
         case 'redisType': {
-            configuration = {
+            return {
                 title: 'Redis Type',
                 allowCreation: true,
                 width: 200,
@@ -1026,32 +288,11 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: (a, b) => compareObjects(a, b, getRedisTypes()),
                 toString: value => toStringObject(value, getRedisTypes()),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') === (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') !== (objectValue || '');
-                        }
-                    }
-                ],
-                conditionsFieldType: 'redisType',
                 options: []
             };
-
-            break;
         }
         case 'select': {
-            configuration = {
+            return {
                 title: 'Select',
                 allowCreation: true,
                 width: 200,
@@ -1059,25 +300,6 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: (a, b) => compareStrings(a, b),
                 toString: value => toString(value),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') === (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') !== (objectValue || '');
-                        }
-                    }
-                ],
-                conditionsFieldType: 'select',
                 options: [
                     {
                         id: 'values',
@@ -1086,11 +308,9 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                     }
                 ]
             };
-
-            break;
         }
         case 'severities': {
-            configuration = {
+            return {
                 title: 'Severities',
                 allowCreation: true,
                 width: 200,
@@ -1098,38 +318,11 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: () => 0,
                 toString: value => toStringObjects(value, getSeverities()),
-                conditions: [
-                    {
-                        type: 'contain',
-                        title: 'Contains',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            const objectValues = objectValue || [];
-                            const conditionValues = conditionValue || [];
-
-                            return conditionValues.every(item => objectValues.includes(item));
-                        }
-                    },
-                    {
-                        type: 'notContain',
-                        title: 'Does not contain',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            const objectValues = objectValue || [];
-                            const conditionValues = conditionValue || [];
-
-                            return !conditionValues.every(item => objectValues.includes(item));
-                        }
-                    }
-                ],
-                conditionsFieldType: 'severities',
                 options: []
             };
-
-            break;
         }
         case 'severity': {
-            configuration = {
+            return {
                 title: 'Severity',
                 allowCreation: true,
                 width: 200,
@@ -1137,32 +330,11 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: (a, b) => compareObjects(a, b, getSeverities()),
                 toString: value => toStringObject(value, getSeverities()),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') === (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') !== (objectValue || '');
-                        }
-                    }
-                ],
-                conditionsFieldType: 'severity',
                 options: []
             };
-
-            break;
         }
         case 'star': {
-            configuration = {
+            return {
                 title: 'Star',
                 allowCreation: true,
                 width: 100,
@@ -1170,32 +342,11 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'checked',
                 compare: (a, b) => compareBooleans(a, b),
                 toString: value => toStringBoolean(value),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return !!conditionValue === !!objectValue;
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return !!conditionValue !== !!objectValue;
-                        }
-                    }
-                ],
-                conditionsFieldType: 'star',
                 options: []
             };
-
-            break;
         }
         case 'syntax': {
-            configuration = {
+            return {
                 title: 'Syntax',
                 allowCreation: true,
                 width: 250,
@@ -1203,48 +354,11 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: (a, b) => compareStrings(a, b),
                 toString: value => toString(value),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') === (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') !== (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'contain',
-                        title: 'Contains',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (objectValue || '').includes(conditionValue || '');
-                        }
-                    },
-                    {
-                        type: 'notContain',
-                        title: 'Does not contain',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return !(objectValue || '').includes(conditionValue || '');
-                        }
-                    }
-                ],
-                conditionsFieldType: 'syntax',
                 options: []
             };
-
-            break;
         }
         case 'textarea': {
-            configuration = {
+            return {
                 title: 'Text Area',
                 allowCreation: false,
                 width: 250,
@@ -1252,81 +366,12 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: (a, b) => compareStrings(a, b),
                 toString: value => toString(value),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') === (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'equalIgnoreCase',
-                        title: 'Equals (ignore case)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '').toUpperCase() === (objectValue || '').toUpperCase();
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') !== (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'notEqualIgnoreCase',
-                        title: 'Does not equal (ignore case)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '').toUpperCase() !== (objectValue || '').toUpperCase();
-                        }
-                    },
-                    {
-                        type: 'contain',
-                        title: 'Contains',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (objectValue || '').includes(conditionValue || '');
-                        }
-                    },
-                    {
-                        type: 'containIgnoreCase',
-                        title: 'Contains (ignore case)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (objectValue || '').toUpperCase().includes((conditionValue || '').toUpperCase());
-                        }
-                    },
-                    {
-                        type: 'notContain',
-                        title: 'Does not contain',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return !(objectValue || '').includes(conditionValue || '');
-                        }
-                    },
-                    {
-                        type: 'notContainIgnoreCase',
-                        title: 'Does not contain (ignore case)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return !(objectValue || '').toUpperCase().includes((conditionValue || '').toUpperCase());
-                        }
-                    }
-                ],
-                conditionsFieldType: 'textarea',
                 options: []
             };
-
-            break;
         }
         case 'text':
         default: {
-            configuration = {
+            return {
                 title: 'Text',
                 allowCreation: true,
                 width: 250,
@@ -1334,79 +379,8 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: (a, b) => compareStrings(a, b),
                 toString: value => toString(value),
-                conditions: [
-                    {
-                        type: 'equal',
-                        title: 'Equals',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') === (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'equalIgnoreCase',
-                        title: 'Equals (ignore case)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '').toUpperCase() === (objectValue || '').toUpperCase();
-                        }
-                    },
-                    {
-                        type: 'notEqual',
-                        title: 'Does not equal',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '') !== (objectValue || '');
-                        }
-                    },
-                    {
-                        type: 'notEqualIgnoreCase',
-                        title: 'Does not equal (ignore case)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (conditionValue || '').toUpperCase() !== (objectValue || '').toUpperCase();
-                        }
-                    },
-                    {
-                        type: 'contain',
-                        title: 'Contains',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (objectValue || '').includes(conditionValue || '');
-                        }
-                    },
-                    {
-                        type: 'containIgnoreCase',
-                        title: 'Contains (ignore case)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return (objectValue || '').toUpperCase().includes((conditionValue || '').toUpperCase());
-                        }
-                    },
-                    {
-                        type: 'notContain',
-                        title: 'Does not contain',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return !(objectValue || '').includes(conditionValue || '');
-                        }
-                    },
-                    {
-                        type: 'notContainIgnoreCase',
-                        title: 'Does not contain (ignore case)',
-                        multi: false,
-                        apply: (conditionValue, objectValue) => {
-                            return !(objectValue || '').toUpperCase().includes((conditionValue || '').toUpperCase());
-                        }
-                    }
-                ],
-                conditionsFieldType: 'text',
                 options: []
             };
-
-            break;
         }
     }
-
-    return configuration;
 }

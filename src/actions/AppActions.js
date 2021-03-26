@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 import { loadAlertsFromServer } from 'actions/AlertActions';
 import { loadInstancesFromServer } from 'actions/InstanceActions';
 import { loadSettingsFromServer } from 'actions/SettingActions';
-import { checkIsBusy, updateProcess } from 'actions/ThreadActions';
+import { updateProcess } from 'actions/ThreadActions';
 import { merge } from 'utils/ObjectUtils';
 
 export function loadData(options) {
@@ -19,8 +19,6 @@ export function _loadDataFromServer(options) {
     }, options || {});
 
     return async (dispatch, getState) => {
-        await dispatch(checkIsBusy());
-
         const processId = uuid();
 
         dispatch(updateProcess({
