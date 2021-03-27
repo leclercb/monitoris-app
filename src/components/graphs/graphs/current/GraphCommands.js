@@ -93,7 +93,7 @@ function GraphCommands({ instanceId }) {
                                 name="command"
                                 title={{
                                     autoRotate: true,
-                                    textStyle: {
+                                    style: {
                                         fill: 'black',
                                         fontWeight: 'bold'
                                     }
@@ -103,7 +103,7 @@ function GraphCommands({ instanceId }) {
                                 position="left"
                                 title={{
                                     autoRotate: true,
-                                    textStyle: {
+                                    style: {
                                         fill: 'black',
                                         fontWeight: 'bold'
                                     }
@@ -113,7 +113,7 @@ function GraphCommands({ instanceId }) {
                                 position="right"
                                 title={{
                                     autoRotate: true,
-                                    textStyle: {
+                                    style: {
                                         fill: 'black',
                                         fontWeight: 'bold'
                                     }

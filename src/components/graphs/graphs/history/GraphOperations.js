@@ -113,7 +113,7 @@ function GraphOperations({ instanceId }) {
                                 name="timestamp"
                                 title={{
                                     autoRotate: true,
-                                    textStyle: {
+                                    style: {
                                         fill: 'black',
                                         fontWeight: 'bold'
                                     }
@@ -122,7 +122,7 @@ function GraphOperations({ instanceId }) {
                                 name="instantaneous_ops_per_sec"
                                 title={{
                                     autoRotate: true,
-                                    textStyle: {
+                                    style: {
                                         fill: 'black',
                                         fontWeight: 'bold'
                                     }
