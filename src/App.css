@@ -1,5 +1,14 @@
 /* Ant Design */
 
+.ant-alert-info {
+    background-color: #e6f7ff !important;
+    border: 1px solid #91d5ff !important;
+}
+
+.ant-alert-info .ant-alert-icon {
+    color: #1890ff !important;
+}
+
 .ant-btn {
     border-width: 1px !important;
 }

@@ -42,6 +42,40 @@ export function deleteAlert(alertId, options = {}) {
     return deleteObject('alerts', alertId, options);
 }
 
+export function loadNotificationLimits() {
+    return async dispatch => {
+        const processId = uuid();
+
+        try {
+            const result = await sendRequest(
+                {
+                    headers: {
+                        Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+                    },
+                    method: 'GET',
+                    url: `${getConfig().proxyUrl}/api/v1/notifications/limits`,
+                    responseType: 'json'
+                });
+
+            await dispatch({
+                type: 'SET_NOTIFICATION_LIMITS',
+                limits: result.data
+            });
+
+            return result.data;
+        } catch (error) {
+            dispatch(updateProcess({
+                id: processId,
+                state: 'ERROR',
+                title: 'Load notification limits',
+                error: error.toString()
+            }));
+
+            throw error;
+        }
+    };
+}
+
 export function testNotification(type, destination) {
     return async dispatch => {
         const processId = uuid();

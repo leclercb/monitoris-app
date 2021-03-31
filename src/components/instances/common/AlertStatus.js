@@ -64,7 +64,7 @@ function AlertStatus({ status }) {
                         <br />
                         <span>Severity history (since last notification):</span>
                         <Table
-                            dataSource={record.status.severityHistory}
+                            dataSource={(record.status.severityHistory || []).reverse()}
                             columns={historyColumns}
                             size="small"
                             style={{ marginTop: 10 }} />

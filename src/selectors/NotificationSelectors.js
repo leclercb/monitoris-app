@@ -1,0 +1,1 @@
+export const getNotificationLimits = state => state.notifications.limits;
