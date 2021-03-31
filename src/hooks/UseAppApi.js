@@ -20,6 +20,7 @@ import {
     isPro
 } from 'selectors/AppSelectors';
 import { getSelectedView } from 'selectors/SettingSelectors';
+import { checkIsBusy } from 'actions/ThreadActions';
 
 export function useAppApi() {
     const dispatch = useDispatch();
@@ -73,6 +74,11 @@ export function useAppApi() {
         [dispatch]
     );
 
+    const checkIsBusyCallback = useCallback(
+        (fn, silent) => dispatch(checkIsBusy(fn, silent)),
+        [dispatch]
+    );
+
     return {
         pro,
         selectedView,
@@ -89,6 +95,7 @@ export function useAppApi() {
         setSelectedToolId: setSelectedToolIdCallback,
         setEditingCell: setEditingCellCallback,
         setAccountManagerOptions: setAccountManagerOptionsCallback,
-        setSettingManagerOptions: setSettingManagerOptionsCallback
+        setSettingManagerOptions: setSettingManagerOptionsCallback,
+        checkIsBusy: checkIsBusyCallback
     };
 }

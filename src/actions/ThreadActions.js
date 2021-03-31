@@ -1,12 +1,53 @@
 import { v4 as uuid } from 'uuid';
 import { isBusy } from 'selectors/ThreadSelectors';
 
-export function checkIsBusy() {
+export function checkIsBusy(fn = null, silent = false) {
     return async (dispatch, getState) => {
         const state = getState();
 
         if (isBusy(state)) {
-            // TODO throw Error('Another process is currently running');
+            if (!silent) {
+                throw Error('Another process is currently running');
+            }
+
+            return;
+        }
+
+        if (fn) {
+            return fn();
+        }
+    };
+}
+
+export function runProcess(fn = null, title = 'User action') {
+    return async dispatch => {
+        const processId = uuid();
+
+        try {
+            dispatch(updateProcess({
+                id: processId,
+                state: 'RUNNING',
+                title
+            }));
+
+            let promises = Array.isArray(fn) ? fn : [fn];
+
+            let result = await Promise.all(promises);
+
+            dispatch(updateProcess({
+                id: processId,
+                state: 'COMPLETED'
+            }));
+
+            return Array.isArray(fn) ? result : result[0];
+        } catch (error) {
+            dispatch(updateProcess({
+                id: processId,
+                state: 'ERROR',
+                error: error.toString()
+            }));
+
+            throw error;
         }
     };
 }

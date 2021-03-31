@@ -32,7 +32,8 @@ function FilterList(props) {
                             <Icon icon="circle" color={item.color} text={item.title} />
                         </LeftRight>
                     </List.Item>
-                )} />
+                )}
+            />
             <Button onClick={() => props.addFilter(createNewFilter())} style={{ marginTop: 5 }}>
                 <Icon icon="plus" text="Add" />
             </Button>

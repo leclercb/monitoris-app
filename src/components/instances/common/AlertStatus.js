@@ -3,8 +3,18 @@ import { Table } from 'antd';
 import PropTypes from 'prop-types';
 import AlertTitle from 'components/alerts/common/AlertTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
+import { useSettingsApi } from 'hooks/UseSettingsApi';
+import { formatDate } from 'utils/SettingUtils';
 
 function AlertStatus({ status }) {
+    const settingsApi = useSettingsApi();
+
+    const dataSource = Object.keys((status ? status.alerts : {})).map(key => ({
+        key,
+        alertId: key,
+        status: status.alerts[key]
+    }));
+
     const columns = [
         {
             title: 'Alert',
@@ -14,24 +24,55 @@ function AlertStatus({ status }) {
         },
         {
             title: 'Severity',
+            dataIndex: ['status', 'lastNotifiedSeverity'],
+            key: 'severity.lastNotifiedSeverity',
+            render: value => (<SeverityTitle severityId={value} />) // eslint-disable-line react/display-name
+        }
+    ];
+
+    const historyColumns = [
+        {
+            title: 'Index',
+            dataIndex: 'index',
+            key: 'index',
+            render: (value, record, index) => index + 1
+        },
+        {
+            title: 'Creation date',
+            dataIndex: 'creationDate',
+            key: 'creationDate',
+            render: value => formatDate(value, settingsApi.settings, true)
+        },
+        {
+            title: 'Severity',
             dataIndex: 'severity',
             key: 'severity',
             render: value => (<SeverityTitle severityId={value} />) // eslint-disable-line react/display-name
         }
     ];
 
-    const dataSource = Object.keys((status ? status.alerts : {})).map(key => ({
-        key,
-        alertId: key,
-        severity: status.alerts[key]
-    }));
-
+    /* eslint-disable react/display-name */
     return (
         <Table
             dataSource={dataSource}
             columns={columns}
-            pagination={false} />
+            pagination={false}
+            expandable={{
+                expandedRowRender: record => (
+                    <React.Fragment>
+                        <span>Notification sent on: {formatDate(record.status.lastNotifiedSeverityTimestamp, settingsApi.settings, true)}</span>
+                        <br />
+                        <span>Severity history (since last notification):</span>
+                        <Table
+                            dataSource={record.status.severityHistory}
+                            columns={historyColumns}
+                            size="small"
+                            style={{ marginTop: 10 }} />
+                    </React.Fragment>
+                )
+            }} />
     );
+    /* eslint-enable react/display-name */
 }
 
 AlertStatus.propTypes = {

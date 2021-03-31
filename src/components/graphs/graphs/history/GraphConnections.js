@@ -127,7 +127,7 @@ function GraphConnections({ instanceId }) {
                                 name="timestamp"
                                 title={{
                                     autoRotate: true,
-                                    textStyle: {
+                                    style: {
                                         fill: 'black',
                                         fontWeight: 'bold'
                                     }
@@ -136,7 +136,7 @@ function GraphConnections({ instanceId }) {
                                 name="value"
                                 title={{
                                     autoRotate: true,
-                                    textStyle: {
+                                    style: {
                                         fill: 'black',
                                         fontWeight: 'bold'
                                     }

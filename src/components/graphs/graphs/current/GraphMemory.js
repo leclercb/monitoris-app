@@ -94,7 +94,7 @@ function GraphMemory({ instanceId }) {
                                 name="key"
                                 title={{
                                     autoRotate: true,
-                                    textStyle: {
+                                    style: {
                                         fill: 'black',
                                         fontWeight: 'bold'
                                     }
@@ -104,7 +104,7 @@ function GraphMemory({ instanceId }) {
                                 position="left"
                                 title={{
                                     autoRotate: true,
-                                    textStyle: {
+                                    style: {
                                         fill: 'black',
                                         fontWeight: 'bold'
                                     }

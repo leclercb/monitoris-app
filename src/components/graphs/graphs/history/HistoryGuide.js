@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Guide } from 'bizcharts';
+import { Annotation, Guide } from 'bizcharts';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import ModalInstanceAlert from 'components/instances/alerts/ModalInstanceAlert';
@@ -36,15 +36,13 @@ function HistoryGuide({ alerts }) {
                             <Guide.Line
                                 start={[moment(alert.id).unix(), 'min']}
                                 end={[moment(alert.id).unix(), 'max']}
-                                lineStyle={{
+                                style={{
                                     stroke: severity.color,
                                     lineDash: [0, 2, 2],
                                     lineWidth: 2
                                 }} />
-                            <Guide.Html
+                            <Annotation.Html
                                 position={[moment(alert.id).unix(), 'max']}
-                                alignX="left"
-                                alignY="top"
                                 offsetX={-7}
                                 offsetY={-5}
                                 html={html} />

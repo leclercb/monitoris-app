@@ -101,7 +101,7 @@ function GraphCommands({ instanceId }) {
         refresh();
     }, [instanceId, selectedField]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const data = fillGapsInArray(reports.map(report => {
+    const data = fillGapsInArray(reports.filter(report => !!report.info).map(report => {
         const cmdStat = parseRedisSubString(report.info[`cmdstat_${selectedField}`]);
 
         return {
@@ -184,7 +184,7 @@ function GraphCommands({ instanceId }) {
                                     name="timestamp"
                                     title={{
                                         autoRotate: true,
-                                        textStyle: {
+                                        style: {
                                             fill: 'black',
                                             fontWeight: 'bold'
                                         }
@@ -193,7 +193,7 @@ function GraphCommands({ instanceId }) {
                                     name="calls"
                                     title={{
                                         autoRotate: true,
-                                        textStyle: {
+                                        style: {
                                             fill: 'black',
                                             fontWeight: 'bold'
                                         }
@@ -202,7 +202,7 @@ function GraphCommands({ instanceId }) {
                                     name="usec_per_call"
                                     title={{
                                         autoRotate: true,
-                                        textStyle: {
+                                        style: {
                                             fill: 'black',
                                             fontWeight: 'bold'
                                         }

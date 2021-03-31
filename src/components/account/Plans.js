@@ -17,6 +17,7 @@ function Plans({ onSelectPlan }) {
                 setBusy(true);
                 const plans = await stripeApi.getPlans(getConfig().stripe.productId);
                 setPlans(plans);
+                console.debug('Plans', plans);
             } finally {
                 setBusy(false);
             }
