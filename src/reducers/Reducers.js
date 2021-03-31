@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import App from 'reducers/App';
 import InstanceStates from 'reducers/InstanceStates';
+import Notifications from 'reducers/Notifications';
 import Objects from 'reducers/Objects';
 import Session from 'reducers/Session';
 import Settings from 'reducers/Settings';
@@ -11,6 +12,7 @@ export default combineReducers({
     app: App(),
     instances: Objects('instances'),
     instanceStates: InstanceStates(),
+    notifications: Notifications(),
     session: Session(),
     settings: Settings(),
     thread: Thread()

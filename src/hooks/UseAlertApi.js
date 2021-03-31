@@ -1,9 +1,10 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addAlert, deleteAlert, duplicateAlert, testNotification, updateAlert } from 'actions/AlertActions';
+import { addAlert, deleteAlert, duplicateAlert, loadNotificationLimits, testNotification, updateAlert } from 'actions/AlertActions';
 import { setSelectedAlertId } from 'actions/AppActions';
 import { getAlerts, getSelectedAlert } from 'selectors/AlertSelectors';
 import { getSelectedAlertId } from 'selectors/AppSelectors';
+import { getNotificationLimits } from 'selectors/NotificationSelectors';
 
 export function useAlertApi() {
     const dispatch = useDispatch();
@@ -11,6 +12,7 @@ export function useAlertApi() {
 
     const selectedAlertId = useSelector(getSelectedAlertId);
     const selectedAlert = useSelector(getSelectedAlert);
+    const notificationLimits = useSelector(getNotificationLimits);
 
     const addAlertCallback = useCallback(
         alert => dispatch(addAlert(alert)),
@@ -37,6 +39,11 @@ export function useAlertApi() {
         [dispatch]
     );
 
+    const loadNotificationLimitsCallback = useCallback(
+        () => dispatch(loadNotificationLimits()),
+        [dispatch]
+    );
+
     const testNotificationCallback = useCallback(
         (type, destination) => dispatch(testNotification(type, destination)),
         [dispatch]
@@ -46,11 +53,13 @@ export function useAlertApi() {
         alerts,
         selectedAlertId,
         selectedAlert,
+        notificationLimits,
         addAlert: addAlertCallback,
         duplicateAlert: duplicateAlertCallback,
         updateAlert: updateAlertCallback,
         deleteAlert: deleteAlertCallback,
         setSelectedAlertId: setSelectedAlertIdCallback,
+        loadNotificationLimits: loadNotificationLimitsCallback,
         testNotification: testNotificationCallback
     };
 }

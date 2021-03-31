@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Empty, message } from 'antd';
 import sortBy from 'lodash/sortBy';
 import PropTypes from 'prop-types';
 import { Column, Table } from 'react-virtualized';
 import { v4 as uuid } from 'uuid';
+import AlertNotificationTypeTitle from 'components/alertnotificationtypes/AlertNotificationTypeTitle';
 import PromiseButton from 'components/common/PromiseButton';
 import Spacer from 'components/common/Spacer';
 import CellRenderer from 'components/common/table/CellRenderer';
 import { ResizableAndMovableColumn, moveHandler, resizeHandler } from 'components/common/table/ResizableAndMovableColumn';
 import { multiSelectionHandler } from 'components/common/table/VirtualizedTable';
 import Constants from 'constants/Constants';
+import { getAlertNotificationTypes } from 'data/DataAlertNotificationTypes';
 import { getWidthForType, isAlwaysInEditionForType } from 'data/DataFieldTypes';
+import { useAlertApi } from 'hooks/UseAlertApi';
 import { useAppApi } from 'hooks/UseAppApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { FieldPropType } from 'proptypes/FieldPropTypes';
@@ -19,9 +22,16 @@ import { move } from 'utils/ArrayUtils';
 import { getRowBackgroundColor } from 'utils/SettingUtils';
 
 function NotificationTable(props) {
+    const alertApi = useAlertApi();
     const appApi = useAppApi();
     const settingsApi = useSettingsApi();
     const [selectedNotificationIds, setSelectedNotificationIds] = useState([]);
+
+    useEffect(() => {
+        if (!alertApi.notificationLimits) {
+            alertApi.loadNotificationLimits();
+        }
+    }, [alertApi.notificationLimits]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const onAddNotification = async () => {
         await props.updateNotifications([
@@ -188,6 +198,26 @@ function NotificationTable(props) {
                     Send sample notification
                 </PromiseButton>
             </div>
+            {alertApi.notificationLimits && (
+                <Alert
+                    message={(
+                        <React.Fragment>
+                            <span>Usage of current month: </span>
+                            {alertApi.notificationLimits
+                                .filter(limit => getAlertNotificationTypes().find(type => type.id === limit.type))
+                                .map(limit => (
+                                    <React.Fragment key={limit.type}>
+                                        <span style={{ marginLeft: 30 }} />
+                                        <AlertNotificationTypeTitle alertNotificationTypeId={limit.type} />
+                                        <span>: <strong>{limit.count}</strong> out of <strong>{limit.limit}</strong></span>
+                                    </React.Fragment>
+                                ))}
+                        </React.Fragment>
+                    )}
+                    type="info"
+                    showIcon
+                    style={{ marginTop: 20 }} />
+            )}
             {!appApi.pro && (
                 <Alert
                     message="HTTP notifications are only sent for &quot;Pro&quot; users."
