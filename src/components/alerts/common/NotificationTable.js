@@ -60,7 +60,7 @@ function NotificationTable(props) {
 
         if (notification) {
             if (!appApi.pro && notification.type === 'http') {
-                message.error('HTTP notifications are only sent for &quot;Pro&quot; users');
+                message.error('HTTP notifications are only sent for "Pro" users');
                 return;
             }
 
