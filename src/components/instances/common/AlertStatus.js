@@ -26,7 +26,7 @@ function AlertStatus({ status }) {
             title: 'Severity',
             dataIndex: ['status', 'lastNotifiedSeverity'],
             key: 'severity.lastNotifiedSeverity',
-            render: value => (<SeverityTitle severityId={value} />) // eslint-disable-line react/display-name
+            render: value => (<SeverityTitle severityId={value || 'norm'} />) // eslint-disable-line react/display-name
         }
     ];
 
@@ -60,7 +60,7 @@ function AlertStatus({ status }) {
             expandable={{
                 expandedRowRender: record => (
                     <React.Fragment>
-                        <span>Notification sent on: {formatDate(record.status.lastNotifiedSeverityTimestamp, settingsApi.settings, true)}</span>
+                        <span>Last notification sent on: {record.status.lastNotifiedSeverityTimestamp ? formatDate(record.status.lastNotifiedSeverityTimestamp, settingsApi.settings, true) : 'never'}</span>
                         <br />
                         <span>Severity history (since last notification):</span>
                         <Table
