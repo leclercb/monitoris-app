@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table } from 'antd';
+import { Checkbox, Table } from 'antd';
 import PropTypes from 'prop-types';
 import AlertTitle from 'components/alerts/common/AlertTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
@@ -44,10 +44,21 @@ function AlertStatus({ status }) {
             render: value => formatDate(value, settingsApi.settings, true)
         },
         {
+            title: 'Successful',
+            dataIndex: 'successful',
+            key: 'successful',
+            render: value => (<Checkbox checked={value} disabled />) // eslint-disable-line react/display-name
+        },
+        {
             title: 'Severity',
             dataIndex: 'severity',
             key: 'severity',
             render: value => (<SeverityTitle severityId={value} />) // eslint-disable-line react/display-name
+        },
+        {
+            title: 'Error',
+            dataIndex: 'error',
+            key: 'error'
         }
     ];
 
