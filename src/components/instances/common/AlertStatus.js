@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox, Table } from 'antd';
+import { Alert, Checkbox, Table } from 'antd';
 import PropTypes from 'prop-types';
 import AlertTitle from 'components/alerts/common/AlertTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
@@ -58,7 +58,8 @@ function AlertStatus({ status }) {
         {
             title: 'Error',
             dataIndex: 'error',
-            key: 'error'
+            key: 'error',
+            render: value => (<Alert type="error" message={value} style={{ padding: '0px 5px' }} />) // eslint-disable-line react/display-name
         }
     ];
 
