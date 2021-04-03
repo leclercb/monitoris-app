@@ -59,7 +59,7 @@ function AlertStatus({ status }) {
             title: 'Error',
             dataIndex: 'error',
             key: 'error',
-            render: value => (<Alert type="error" message={value} style={{ padding: '0px 5px' }} />) // eslint-disable-line react/display-name
+            render: value => (value ? <Alert type="error" message={value} style={{ padding: '0px 5px' }} /> : <span>&nbsp;</span>) // eslint-disable-line react/display-name
         }
     ];
 
