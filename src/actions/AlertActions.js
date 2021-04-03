@@ -42,25 +42,30 @@ export function deleteAlert(alertId, options = {}) {
     return deleteObject('alerts', alertId, options);
 }
 
-export function testAlert(alertId, info) {
+export function testAlert(alertId, infoItems) {
     return async dispatch => {
         const processId = uuid();
 
         try {
-            await sendRequest({
+            const result = await sendRequest({
                 headers: {
                     Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
                 },
                 method: 'POST',
                 url: `${getConfig().proxyUrl}/api/v1/alerts/${alertId}/test`,
                 responseType: 'json',
-                data: info
+                data: infoItems.reduce((infoMap, infoItem) => {
+                    infoMap[infoItem.field] = infoItem.value;
+                    return infoMap;
+                }, {})
             });
 
             dispatch(updateProcess({
                 id: processId,
                 state: 'COMPLETED'
             }));
+
+            return result.data;
         } catch (error) {
             dispatch(updateProcess({
                 id: processId,

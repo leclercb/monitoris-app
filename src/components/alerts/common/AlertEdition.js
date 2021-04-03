@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Divider } from 'antd';
+import { Alert, Button, Divider } from 'antd';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import FilterConditionTree from 'components/filters/FilterConditionTree';
 import AlertForm from 'components/alerts/common/AlertForm';
+import ModalTestAlert from 'components/alerts/common/ModalTestAlert';
 import NotificationTable from 'components/alerts/common/NotificationTable';
+import FilterConditionTree from 'components/filters/FilterConditionTree';
 import { getConfig } from 'config/Config';
 import { getAlertNotificationFields } from 'data/DataAlertNotificationFields';
 import { getRedisFields } from 'data/DataRedisFields';
@@ -12,6 +13,7 @@ import { useInterval } from 'hooks/UseInterval';
 import { AlertPropType } from 'proptypes/AlertPropTypes';
 
 function AlertEdition({ alert, updateAlert, testNotification }) {
+    const [showModalTestAlert, setShowModalTestAlert] = useState(false);
     const [seconds, setSeconds] = useState(-1);
 
     const updateSecondsRemaining = () => {
@@ -58,6 +60,12 @@ function AlertEdition({ alert, updateAlert, testNotification }) {
                     fields: getRedisFields()
                 }}
                 updateFilter={updateAlert} />
+            <div style={{ marginTop: 10 }}>
+                <Button
+                    onClick={() => setShowModalTestAlert(true)}>
+                    Test alert conditions
+                </Button>
+            </div>
             <Divider>Notifications</Divider>
             <NotificationTable
                 notifications={alert.notifications || []}
@@ -66,6 +74,10 @@ function AlertEdition({ alert, updateAlert, testNotification }) {
                 testNotification={testNotification}
                 orderSettingPrefix="alertNotificationColumnOrder_"
                 widthSettingPrefix="alertNotificationColumnWidth_" />
+            <ModalTestAlert
+                alert={alert}
+                visible={showModalTestAlert}
+                onClose={() => setShowModalTestAlert(false)} />
         </React.Fragment>
     );
 }
