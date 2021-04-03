@@ -3,13 +3,12 @@ import { Descriptions, Table } from 'antd';
 import PropTypes from 'prop-types';
 import RedisFieldTitle from 'components/redisfield/RedisFieldTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
-import { getRedisField } from 'data/DataRedisFields';
 
 export function AlertConditionResult({ alertConditionResult }) {
     const columns = [
         {
             title: 'Field',
-            dataIndex: ['field', 'id'],
+            dataIndex: 'field',
             key: 'field',
             render: value => (<RedisFieldTitle fieldId={value} />) // eslint-disable-line react/display-name
         },
@@ -26,16 +25,11 @@ export function AlertConditionResult({ alertConditionResult }) {
         }
     ];
 
-    const dataSource = Object.keys(alertConditionResult.fields).map(key => {
-        const alertField = alertConditionResult.fields[key];
-        const redisField = getRedisField(key);
-
-        return {
-            field: redisField,
-            value: alertField.value,
-            severity: alertField.severity
-        };
-    });
+    const dataSource = Object.keys(alertConditionResult.fields).map(key => ({
+        field: key,
+        value: alertConditionResult.fields[key].value,
+        severity: alertConditionResult.fields[key].severity
+    }));
 
     return (
         <React.Fragment>
@@ -45,7 +39,7 @@ export function AlertConditionResult({ alertConditionResult }) {
                 </Descriptions.Item>
             </Descriptions>
             <Table
-                rowKey={record => record.field.id}
+                rowKey={record => record.field}
                 columns={columns}
                 dataSource={dataSource}
                 pagination={false}

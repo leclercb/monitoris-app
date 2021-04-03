@@ -6,7 +6,6 @@ import AlertTitle from 'components/alerts/common/AlertTitle';
 import InstanceTitle from 'components/instances/common/InstanceTitle';
 import RedisFieldTitle from 'components/redisfield/RedisFieldTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
-import { getRedisField } from 'data/DataRedisFields';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { getDateTimeFormat } from 'utils/SettingUtils';
 
@@ -16,7 +15,7 @@ export function InstanceAlert({ instanceAlert }) {
     const columns = [
         {
             title: 'Field',
-            dataIndex: ['field', 'id'],
+            dataIndex: 'field',
             key: 'field',
             render: value => (<RedisFieldTitle fieldId={value} />) // eslint-disable-line react/display-name
         },
@@ -33,16 +32,11 @@ export function InstanceAlert({ instanceAlert }) {
         }
     ];
 
-    const dataSource = Object.keys(instanceAlert.fields).map(key => {
-        const alertField = instanceAlert.fields[key];
-        const redisField = getRedisField(key);
-
-        return {
-            field: redisField,
-            value: alertField.value,
-            severity: alertField.severity
-        };
-    });
+    const dataSource = Object.keys(instanceAlert.fields).map(key => ({
+        field: key,
+        value: instanceAlert.fields[key].value,
+        severity: instanceAlert.fields[key].severity
+    }));
 
     return (
         <React.Fragment>
@@ -61,7 +55,7 @@ export function InstanceAlert({ instanceAlert }) {
                 </Descriptions.Item>
             </Descriptions>
             <Table
-                rowKey={record => record.field.id}
+                rowKey={record => record.field}
                 columns={columns}
                 dataSource={dataSource}
                 pagination={false}
