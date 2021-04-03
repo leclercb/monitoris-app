@@ -23,7 +23,7 @@ function InstanceForm({ instance, updateInstance }) {
         <React.Fragment>
             {instance.type === 'direct' && (
                 <Alert
-                    message="Direct connection is only intended for development or testing servers. Do not use it for production !"
+                    message="Direct connection is only intended for development or test servers. Do not use it for production !"
                     type="warning"
                     showIcon
                     style={{ marginBottom: 20 }}
