@@ -28,9 +28,9 @@ Main.propTypes = {
     showMonitor: PropTypes.bool
 };
 
-export function Sub({ children, backgroundColor, grow, flexDirection }) {
+export function Sub({ children, backgroundColor, display, grow, flexDirection }) {
     const style = {
-        display: 'flex',
+        display: display || 'flex',
         flexDirection: flexDirection || 'column',
         backgroundColor: backgroundColor || '#ffffff',
         borderRadius: 5,
@@ -55,6 +55,7 @@ export function Sub({ children, backgroundColor, grow, flexDirection }) {
 Sub.propTypes = {
     children: PropTypes.node,
     backgroundColor: PropTypes.string,
+    display: PropTypes.string,
     grow: PropTypes.bool,
     flexDirection: PropTypes.string
 };

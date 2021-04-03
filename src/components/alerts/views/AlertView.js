@@ -24,7 +24,7 @@ function AlertView() {
             paneStyle={{ overflowY: 'auto' }}>
             <AlertSider />
             <Panel.Main>
-                <Panel.Sub grow>
+                <Panel.Sub display="unset" grow>
                     {alertApi.selectedAlert ? (
                         <AlertEdition
                             key={alertApi.selectedAlertId}
