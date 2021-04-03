@@ -42,6 +42,43 @@ export function deleteAlert(alertId, options = {}) {
     return deleteObject('alerts', alertId, options);
 }
 
+export function testAlert(alertId, infoItems) {
+    return async dispatch => {
+        const processId = uuid();
+
+        try {
+            const result = await sendRequest({
+                headers: {
+                    Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+                },
+                method: 'POST',
+                url: `${getConfig().proxyUrl}/api/v1/alerts/${alertId}/test`,
+                responseType: 'json',
+                data: infoItems.reduce((infoMap, infoItem) => {
+                    infoMap[infoItem.field] = infoItem.value;
+                    return infoMap;
+                }, {})
+            });
+
+            dispatch(updateProcess({
+                id: processId,
+                state: 'COMPLETED'
+            }));
+
+            return result.data;
+        } catch (error) {
+            dispatch(updateProcess({
+                id: processId,
+                state: 'ERROR',
+                title: 'Test alert',
+                error: error.toString()
+            }));
+
+            throw error;
+        }
+    };
+}
+
 export function loadNotificationLimits() {
     return async dispatch => {
         const processId = uuid();
@@ -53,7 +90,7 @@ export function loadNotificationLimits() {
                         Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
                     },
                     method: 'GET',
-                    url: `${getConfig().proxyUrl}/api/v1/notifications/limits`,
+                    url: `${getConfig().proxyUrl}/api/v1/alerts/notifications/limits`,
                     responseType: 'json'
                 });
 
@@ -86,7 +123,7 @@ export function testNotification(type, destination) {
                     Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
                 },
                 method: 'POST',
-                url: `${getConfig().proxyUrl}/api/v1/notifications/test`,
+                url: `${getConfig().proxyUrl}/api/v1/alerts/notifications/test`,
                 responseType: 'json',
                 data: {
                     type,

@@ -75,6 +75,13 @@ export function getInstanceFields(type) {
                 },
                 {
                     static: true,
+                    id: 'username',
+                    title: 'Username',
+                    type: 'text',
+                    editable: true
+                },
+                {
+                    static: true,
                     id: 'password',
                     title: 'Password',
                     type: 'password',

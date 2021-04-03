@@ -21,6 +21,8 @@ import InstanceTitle from 'components/instances/common/InstanceTitle';
 import InstancesTitle from 'components/instances/common/InstancesTitle';
 import InstanceTypeSelect from 'components/instancetypes/InstanceTypeSelect';
 import InstanceTypeTitle from 'components/instancetypes/InstanceTypeTitle';
+import RedisFieldSelect from 'components/redisfield/RedisFieldSelect';
+import RedisFieldTitle from 'components/redisfield/RedisFieldTitle';
 import RedisTypeSelect from 'components/redistype/RedisTypeSelect';
 import RedisTypeTitle from 'components/redistype/RedisTypeTitle';
 import SeveritiesSelect from 'components/severities/SeveritiesSelect';
@@ -331,6 +333,21 @@ export function getFieldComponents(type, options) {
                             {...removeExtraProps(props)} />
                     );
                 }
+            };
+
+            break;
+        }
+        case 'redisField': {
+            configuration = {
+                render: value => (
+                    <RedisFieldTitle fieldId={value} />
+                ),
+                input: props => (
+                    <RedisFieldSelect
+                        onBlur={props.onCommit}
+                        dropdownMatchSelectWidth={false}
+                        {...removeExtraProps(props)} />
+                )
             };
 
             break;

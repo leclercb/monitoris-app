@@ -762,6 +762,29 @@ function getFieldFilterType(type) {
                 conditionsFieldType: 'password'
             };
         }
+        case 'redisField': {
+            return {
+                conditions: [
+                    {
+                        type: 'equal',
+                        title: 'Equals',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return (conditionValue || '') === (objectValue || '');
+                        }
+                    },
+                    {
+                        type: 'notEqual',
+                        title: 'Does not equal',
+                        multi: false,
+                        apply: (conditionValue, objectValue) => {
+                            return (conditionValue || '') !== (objectValue || '');
+                        }
+                    }
+                ],
+                conditionsFieldType: 'redisField'
+            };
+        }
         case 'redisType': {
             return {
                 conditions: [

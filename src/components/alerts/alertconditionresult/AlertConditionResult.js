@@ -1,18 +1,11 @@
 import React from 'react';
 import { Descriptions, Table } from 'antd';
-import moment from 'moment';
 import PropTypes from 'prop-types';
-import AlertTitle from 'components/alerts/common/AlertTitle';
-import InstanceTitle from 'components/instances/common/InstanceTitle';
 import RedisFieldTitle from 'components/redisfield/RedisFieldTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
 import { getRedisField } from 'data/DataRedisFields';
-import { useSettingsApi } from 'hooks/UseSettingsApi';
-import { getDateTimeFormat } from 'utils/SettingUtils';
 
-export function InstanceAlert({ instanceAlert }) {
-    const settingsApi = useSettingsApi();
-
+export function AlertConditionResult({ alertConditionResult }) {
     const columns = [
         {
             title: 'Field',
@@ -33,8 +26,8 @@ export function InstanceAlert({ instanceAlert }) {
         }
     ];
 
-    const dataSource = Object.keys(instanceAlert.fields).map(key => {
-        const alertField = instanceAlert.fields[key];
+    const dataSource = Object.keys(alertConditionResult.fields).map(key => {
+        const alertField = alertConditionResult.fields[key];
         const redisField = getRedisField(key);
 
         return {
@@ -47,17 +40,8 @@ export function InstanceAlert({ instanceAlert }) {
     return (
         <React.Fragment>
             <Descriptions column={1} bordered size="small">
-                <Descriptions.Item label="Date">
-                    {moment(instanceAlert.id).format(getDateTimeFormat(settingsApi.settings))}
-                </Descriptions.Item>
-                <Descriptions.Item label="Alert">
-                    <AlertTitle alertId={instanceAlert.alert} />
-                </Descriptions.Item>
-                <Descriptions.Item label="Instance">
-                    <InstanceTitle instanceId={instanceAlert.instance} />
-                </Descriptions.Item>
                 <Descriptions.Item label="Severity">
-                    <SeverityTitle severityId={instanceAlert.currSeverity} />
+                    <SeverityTitle severityId={alertConditionResult.severity} />
                 </Descriptions.Item>
             </Descriptions>
             <Table
@@ -71,8 +55,8 @@ export function InstanceAlert({ instanceAlert }) {
     );
 }
 
-InstanceAlert.propTypes = {
-    instanceAlert: PropTypes.object.isRequired
+AlertConditionResult.propTypes = {
+    alertConditionResult: PropTypes.object.isRequired
 };
 
-export default InstanceAlert;
+export default AlertConditionResult;

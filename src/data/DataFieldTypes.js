@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { getAlertNotificationTypes } from 'data/DataAlertNotificationTypes';
 import { getInstanceTypes } from 'data/DataInstanceTypes';
+import { getRedisFields } from 'data/DataRedisFields';
 import { getRedisTypes } from 'data/DataRedisTypes';
 import { getSeverities } from 'data/DataSeverities';
 import { getAlerts } from 'selectors/AlertSelectors';
@@ -37,6 +38,7 @@ export function getFieldTypes() {
         'instanceType',
         'number',
         'password',
+        'redisField',
         'redisType',
         'select',
         'severities',
@@ -276,6 +278,18 @@ export function getFieldType(type, options) { // eslint-disable-line no-unused-v
                 valuePropName: 'value',
                 compare: (a, b) => compareStrings(a, b),
                 toString: value => toStringPassword(value),
+                options: []
+            };
+        }
+        case 'redisField': {
+            return {
+                title: 'Redis Field',
+                allowCreation: true,
+                width: 200,
+                alwaysInEdition: false,
+                valuePropName: 'value',
+                compare: (a, b) => compareObjects(a, b, getRedisFields()),
+                toString: (value) => toStringObject(value, getRedisFields()),
                 options: []
             };
         }
