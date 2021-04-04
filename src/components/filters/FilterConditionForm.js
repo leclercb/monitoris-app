@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Form, Input, Row } from 'antd';
+import Spacer from 'components/common/Spacer';
 import SeverityTitle from 'components/severities/SeverityTitle';
 import { getInputForType, getSelectForType } from 'data/DataFieldComponents';
 import { getConditionsFieldTypeForType, getConditionsForType } from 'data/DataFieldFilterTypes';
@@ -8,7 +9,6 @@ import { getValuePropNameForType } from 'data/DataFieldTypes';
 import { useSeverityApi } from 'hooks/UseSeverityApi';
 import { FieldPropType } from 'proptypes/FieldPropTypes';
 import { onCommitForm } from 'utils/FormUtils';
-import Spacer from 'components/common/Spacer';
 
 function FilterConditionForm({ condition, context, onUpdate, disabled }) {
     const severityApi = useSeverityApi();
@@ -35,7 +35,34 @@ function FilterConditionForm({ condition, context, onUpdate, disabled }) {
     const fieldConditions = getConditionsForType(field.type);
     const fieldCondition = fieldConditions.find(c => c.type === condition.type);
 
-    const onCommit = () => onCommitForm(form, condition, onUpdate, { assign: true });
+    const setValues = object => {
+        if (!fieldCondition.multi) {
+            severityApi.writableSeverities.forEach(severity => {
+                delete object[`value_${severity.id}`];
+            });
+
+            object[`value_${object.severity}`] = object.value;
+        }
+
+        delete object.value;
+        delete object.severity;
+
+        return object;
+    };
+
+    const clearValues = object => {
+        severityApi.writableSeverities.forEach(severity => {
+            delete object[`value_${severity.id}`];
+        });
+
+        delete object.value;
+        delete object.severity;
+
+        return object;
+    };
+
+    const onCommitSetValues = () => onCommitForm(form, condition, onUpdate, { assign: true, convert: setValues });
+    const onCommitClearValues = () => onCommitForm(form, condition, onUpdate, { assign: true, convert: clearValues });
 
     let valueElement = null;
 
@@ -53,7 +80,7 @@ function FilterConditionForm({ condition, context, onUpdate, disabled }) {
                             extended: true
                         },
                         {
-                            onCommit,
+                            onCommit: onCommitSetValues,
                             disabled
                         })}
                 </Form.Item>
@@ -65,25 +92,59 @@ function FilterConditionForm({ condition, context, onUpdate, disabled }) {
 
     if (fieldCondition && !fieldCondition.multi) {
         valueElement = (
-            <Form.Item
-                name="value"
-                valuePropName={getValuePropNameForType(conditionFieldType)}>
-                {getInputForType(
-                    conditionFieldType,
-                    {
-                        ...(field.type === conditionFieldType ? field.options : {}),
-                        extended: true
-                    },
-                    {
-                        onCommit,
-                        disabled
-                    })}
+            <Form.Item key="value">
+                <div style={{ display: 'flex' }}>
+                    <Form.Item
+                        noStyle
+                        name="value"
+                        valuePropName={getValuePropNameForType(conditionFieldType)}>
+                        {getInputForType(
+                            conditionFieldType,
+                            {
+                                ...(field.type === conditionFieldType ? field.options : {}),
+                                extended: true
+                            },
+                            {
+                                onCommit: onCommitSetValues,
+                                disabled
+                            })}
+                    </Form.Item>
+                    <Form.Item
+                        noStyle
+                        name="severity"
+                        valuePropName={getValuePropNameForType('severity')}>
+                        {getInputForType(
+                            'severity',
+                            {
+                                extended: true
+                            },
+                            {
+                                onCommit: onCommitSetValues,
+                                disabled,
+                                style: { marginLeft: 10, width: 200 }
+                            })}
+                    </Form.Item>
+                </div>
             </Form.Item>
         );
     }
 
+    const extendedCondition = {
+        ...condition,
+        value: null,
+        severity: 'info'
+    };
+
+    for (let i = severityApi.writableSeverities.length - 1; i >= 0; i--) {
+        const severity = severityApi.writableSeverities[i];
+        if (`value_${severity.id}` in condition) {
+            extendedCondition.value = condition[`value_${severity.id}`];
+            extendedCondition.severity = severity.id;
+        }
+    }
+
     return (
-        <Form form={form} initialValues={condition} {...formItemLayout}>
+        <Form form={form} initialValues={extendedCondition} {...formItemLayout}>
             <Row gutter={10}>
                 <Col span={6}>
                     <Form.Item>
@@ -100,7 +161,7 @@ function FilterConditionForm({ condition, context, onUpdate, disabled }) {
                             }
                         ]}>
                         {getSelectForType(field.type, {
-                            onBlur: onCommit,
+                            onChange: onCommitClearValues,
                             disabled
                         })}
                     </Form.Item>
