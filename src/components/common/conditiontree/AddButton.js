@@ -17,6 +17,8 @@ function AddButton(props) {
         setMenuVisible(visible);
     };
 
+    const SHOW_OPERATOR_NOT = false;
+
     return (
         <Popover
             content={(
@@ -34,7 +36,7 @@ function AddButton(props) {
                         <Menu.SubMenu key="conditionGroup" title="Condition Group">
                             <Menu.Item key="conditionGroupAnd">AND</Menu.Item>
                             <Menu.Item key="conditionGroupOr">OR</Menu.Item>
-                            <Menu.Item key="conditionGroupNot">NOT</Menu.Item>
+                            {SHOW_OPERATOR_NOT && (<Menu.Item key="conditionGroupNot">NOT</Menu.Item>)}
                         </Menu.SubMenu>
                         {typeof props.menuItems === 'function' ? props.menuItems(filter) : props.menuItems}
                     </Menu>

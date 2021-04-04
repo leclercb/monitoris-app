@@ -25,7 +25,6 @@ export function addAlert(alert, options = {}) {
     return addObject('alerts', alert, options, {
         title: 'My Alert',
         color: getRandomColor(),
-        defaultSeverity: 'info',
         historySize: 10
     });
 }

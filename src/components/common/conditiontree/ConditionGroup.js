@@ -78,6 +78,8 @@ function ConditionGroup(props) {
 
     const { condition, parentCondition } = props;
 
+    const SHOW_OPERATOR_NOT = false;
+
     return (
         <div className="condition-group-container">
             <div
@@ -95,7 +97,7 @@ function ConditionGroup(props) {
                         }}>
                         <Select.Option value="AND">AND</Select.Option>
                         <Select.Option value="OR">OR</Select.Option>
-                        <Select.Option value="NOT">NOT</Select.Option>
+                        {SHOW_OPERATOR_NOT && (<Select.Option value="NOT">NOT</Select.Option>)}
                     </Select>
                 </div>
                 {!props.disabled && (

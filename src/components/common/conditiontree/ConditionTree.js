@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuid } from 'uuid';
 import { Empty } from 'antd';
@@ -9,7 +9,11 @@ import { clone } from 'utils/ObjectUtils';
 import 'components/common/conditiontree/ConditionTree.css';
 
 function ConditionTree(props) {
-    const rootCondition = clone(props.condition);
+    const [rootCondition, setRootCondition] = useState(null);
+
+    useEffect(() => {
+        setRootCondition(clone(props.condition));
+    }, [props.condition]);
 
     const onAdd = (condition, key) => {
         let newCondition = null;

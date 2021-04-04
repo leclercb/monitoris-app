@@ -42,13 +42,6 @@ export function getAlertFields() {
         },
         {
             static: true,
-            id: 'defaultSeverity',
-            title: 'Default severity',
-            type: 'severity',
-            editable: true
-        },
-        {
-            static: true,
             id: 'historySize',
             title: 'History Size',
             type: 'number',
