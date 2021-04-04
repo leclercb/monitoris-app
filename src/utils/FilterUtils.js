@@ -11,7 +11,11 @@ export function getFields(condition, fields) {
         const result = [];
 
         for (let i = 0; i < condition.conditions.length; i++) {
-            result.push(...getFields(condition.conditions[i], fields));
+            getFields(condition.conditions[i], fields).forEach(f => {
+                if (!result.includes(f)) {
+                    result.push(f);
+                }
+            });
         }
 
         return result;
