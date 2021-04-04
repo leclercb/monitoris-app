@@ -36,11 +36,13 @@ function FilterConditionForm({ condition, context, onUpdate, disabled }) {
     const fieldCondition = fieldConditions.find(c => c.type === condition.type);
 
     const setValues = object => {
-        severityApi.writableSeverities.forEach(severity => {
-            delete object[`value_${severity.id}`];
-        });
+        if (!fieldCondition.multi) {
+            severityApi.writableSeverities.forEach(severity => {
+                delete object[`value_${severity.id}`];
+            });
 
-        object[`value_${object.severity}`] = object.value;
+            object[`value_${object.severity}`] = object.value;
+        }
 
         delete object.value;
         delete object.severity;
