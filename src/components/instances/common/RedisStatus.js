@@ -18,6 +18,8 @@ function RedisStatus({ status }) {
                             <br />
                             Refreshed on: {formatDate(status.refreshDate, settingsApi.settings, true)}
                             <br />
+                            Last execution on: {status.lastExecutionTimestamp ? formatDate(status.lastExecutionTimestamp, settingsApi.settings, true) : 'never'}
+                            <br />
                             <span style={{ fontSize: 11, fontStyle: 'italic' }}>It can take up to 1 minute to get the updated status.</span>
                         </div>
                     )}
@@ -32,6 +34,8 @@ function RedisStatus({ status }) {
                             The Redis server is currently disconnected.
                             <br />
                             Refreshed on: {formatDate(status.refreshDate, settingsApi.settings, true)}
+                            <br />
+                            Disconnection count: {status.disconnectionCount}
                             <br />
                             <span style={{ fontSize: 11, fontStyle: 'italic' }}>It can take up to 1 minute to get the updated status.</span>
                         </div>
