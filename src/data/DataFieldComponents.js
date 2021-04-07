@@ -73,7 +73,7 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <AlertSelect
-                        onBlur={props.onCommit}
+                        onChange={props.onCommit}
                         dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
                 )
@@ -88,7 +88,7 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <AlertNotificationTypeSelect
-                        onBlur={props.onCommit}
+                        onChange={props.onCommit}
                         dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
                 )
@@ -257,7 +257,7 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <InstanceSelect
-                        onBlur={props.onCommit}
+                        onChange={props.onCommit}
                         dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
                 )
@@ -272,7 +272,7 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <InstancesSelect
-                        onBlur={props.onCommit}
+                        onChange={props.onCommit}
                         dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
                 )
@@ -287,7 +287,7 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <InstanceTypeSelect
-                        onBlur={props.onCommit}
+                        onChange={props.onCommit}
                         dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
                 )
@@ -344,7 +344,7 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <RedisFieldSelect
-                        onBlur={props.onCommit}
+                        onChange={props.onCommit}
                         dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
                 )
@@ -359,7 +359,7 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <RedisTypeSelect
-                        onBlur={props.onCommit}
+                        onChange={props.onCommit}
                         dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
                 )
@@ -377,7 +377,7 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <Select
-                        onBlur={props.onCommit}
+                        onChange={props.onCommit}
                         dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)}>
                         {values.map(value => {
@@ -405,7 +405,7 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <SeveritiesSelect
-                        onBlur={props.onCommit}
+                        onChange={props.onCommit}
                         dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
                 )
@@ -420,7 +420,7 @@ export function getFieldComponents(type, options) {
                 ),
                 input: props => (
                     <SeveritySelect
-                        onBlur={props.onCommit}
+                        onChange={props.onCommit}
                         dropdownMatchSelectWidth={false}
                         {...removeExtraProps(props)} />
                 )
