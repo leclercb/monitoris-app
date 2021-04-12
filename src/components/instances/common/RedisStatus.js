@@ -20,7 +20,7 @@ function RedisStatus({ status }) {
                             <br />
                             Last execution on: {status.lastExecutionTimestamp ? formatDate(status.lastExecutionTimestamp, settingsApi.settings, true) : 'never'}
                             <br />
-                            <span style={{ fontSize: 11, fontStyle: 'italic' }}>It can take up to 1 minute to get the updated status.</span>
+                            <span style={{ fontSize: 11, fontStyle: 'italic' }}>It can take up to 1 minute to get the updated connection status.</span>
                         </div>
                     )}
                     type="success"
@@ -35,9 +35,11 @@ function RedisStatus({ status }) {
                             <br />
                             Refreshed on: {formatDate(status.refreshDate, settingsApi.settings, true)}
                             <br />
+                            Last execution on: {status.lastExecutionTimestamp ? formatDate(status.lastExecutionTimestamp, settingsApi.settings, true) : 'never'}
+                            <br />
                             Disconnection count: {status.disconnectionCount}
                             <br />
-                            <span style={{ fontSize: 11, fontStyle: 'italic' }}>It can take up to 1 minute to get the updated status.</span>
+                            <span style={{ fontSize: 11, fontStyle: 'italic' }}>It can take up to 1 minute to get the updated connection status.</span>
                         </div>
                     )}
                     type="warning"
