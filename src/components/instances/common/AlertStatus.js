@@ -3,17 +3,22 @@ import { Alert, Checkbox, Table } from 'antd';
 import PropTypes from 'prop-types';
 import AlertTitle from 'components/alerts/common/AlertTitle';
 import SeverityTitle from 'components/severities/SeverityTitle';
+import { useAlertApi } from 'hooks/UseAlertApi';
 import { useSettingsApi } from 'hooks/UseSettingsApi';
 import { formatDate } from 'utils/SettingUtils';
 
 function AlertStatus({ status }) {
+    const alertApi = useAlertApi();
     const settingsApi = useSettingsApi();
 
-    const dataSource = Object.keys((status ? status.alerts : {})).map(key => ({
-        key,
-        alertId: key,
-        status: status.alerts[key]
-    }));
+    const dataSource = Object
+        .keys((status ? status.alerts : {}))
+        .filter(key => alertApi.alerts.find(alert => alert.id === key))
+        .map(key => ({
+            key,
+            alertId: key,
+            status: status.alerts[key]
+        }));
 
     const columns = [
         {
