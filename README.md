@@ -28,7 +28,7 @@ Only the frontend part (this repository) is open source.
 
 # Usage
 
-Create your account is start using Monitoris on [www.monitoris.app](https://www.monitoris.app)
+Create your account and start using Monitoris on [www.monitoris.app](https://www.monitoris.app)
 
 # License
 
