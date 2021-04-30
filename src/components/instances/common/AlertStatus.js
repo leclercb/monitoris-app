@@ -77,7 +77,7 @@ function AlertStatus({ status }) {
             expandable={{
                 expandedRowRender: record => (
                     <React.Fragment>
-                        <span>Last notification sent on: {record.status.lastNotifiedSeverityTimestamp ? formatDate(record.status.lastNotifiedSeverityTimestamp, settingsApi.settings, true) : 'never'}</span>
+                        <span>Last notification sent on: {record.status.lastNotifiedSeverityDate ? formatDate(record.status.lastNotifiedSeverityDate, settingsApi.settings, true) : 'never'}</span>
                         <br />
                         <span>Severity history (since last notification):</span>
                         <Table
