@@ -9951,10 +9951,10 @@ jest@26.6.0:
     import-local "^3.0.2"
     jest-cli "^26.6.0"
 
-jquery.terminal@^2.31.0:
-  version "2.31.0"
-  resolved "https://registry.yarnpkg.com/jquery.terminal/-/jquery.terminal-2.31.0.tgz#1613300dcd40041163d4154a9d8796191ca17215"
-  integrity sha512-PPYdUImAugjYuOVjTvICp/5BMYRe6WRMP7GG/UJ2hNvsCw0sGpszgsl353HKSNadGk+Z7q95RCYBLSfsnidYSA==
+jquery.terminal@^2.31.1:
+  version "2.31.1"
+  resolved "https://registry.yarnpkg.com/jquery.terminal/-/jquery.terminal-2.31.1.tgz#b87cc238e539cb7eca38c31278ad33721de5456c"
+  integrity sha512-JVCL3mOmE+NQ1SvwHyRtJ18ICEylHoLqh0mmi0HResjeE7v/85rREfoLDtYfJxDxCNpTrznGl3HEoUCfjHnycA==
   dependencies:
     "@jcubic/lily" "^0.3.0"
     "@types/jquery" "^3.5.10"
