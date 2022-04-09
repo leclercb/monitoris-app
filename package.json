@@ -30,7 +30,7 @@
         "jspdf": "^2.5.0",
         "jspdf-autotable": "^3.5.23",
         "lodash": "^4.17.21",
-        "moment": "^2.29.1",
+        "moment": "^2.29.2",
         "mousetrap": "^1.6.5",
         "qs": "^6.10.2",
         "react": "^17.0.2",
